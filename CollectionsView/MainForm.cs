@@ -37,6 +37,8 @@ namespace CollectionsView
             StackContent.DataSource = stackList;
             QueueContent.DataSource = queueList;
             ListContent.DataSource = listList;
+            Filter.Text = String.Empty;
+            SortedFlag.Checked = false;
         }
         
         // втолкнуть в стэк
@@ -52,7 +54,6 @@ namespace CollectionsView
                         stackList.Add(s1);
                     else
                         stackList.Insert(0, s1);
-                    StackContent.SelectedIndex = stackData.Count > 0 ? 0 : -1;
                 }
                 
             }
@@ -65,7 +66,6 @@ namespace CollectionsView
             {
                 string s1 = stackData.Pop();
                 stackList.RemoveAt(0);
-                StackContent.SelectedIndex = stackData.Count > 0 ? 0 : -1;
                 StackElement.Text = s1;
             }
         }
@@ -92,7 +92,6 @@ namespace CollectionsView
                 {
                     queueData.Enqueue(s1);
                     queueList.Add(s1);
-                    QueueContent.SelectedIndex = queueData.Count > 0 ? 0 : -1;
                     FirsInLine.Text = queueList.ElementAt(0);
                 }
 
@@ -103,11 +102,10 @@ namespace CollectionsView
         private void OnQuitQueue(object sender, EventArgs e)
         {
             if (queueData.Count < 1) return;
-            string s1 = queueData.Dequeue();
+            queueData.Dequeue();
+            string s1 = queueData.Count > 0 ? queueData.ToArray()[0] : String.Empty;
             queueList.RemoveAt(0);
             FirsInLine.Text = s1;
-            QueueContent.SelectedIndex = queueData.Count > 0 ? 0 : -1;
-
         }
         // добавить элемент в список
         private void OnAddToList(object sender, EventArgs e)
@@ -115,8 +113,12 @@ namespace CollectionsView
             string s1 = ListElementTextBox.Text;
             if(!String.IsNullOrEmpty(s1) && !String.IsNullOrWhiteSpace(s1))
             {
-                listData.Add(s1);
-                listList.Add(s1);
+                int idx = listData.FindIndex(x => x == s1);
+                if(idx < 0)
+                {
+                    listData.Add(s1);
+                    FormSortedAndFilteredView();
+                }
             }
 
         }
@@ -124,49 +126,78 @@ namespace CollectionsView
         private void OnDeleteFromList(object sender, EventArgs e)
         {
             string s1 = ListContent.SelectedItem.ToString();
-            listData.Remove(s1);
-            listList.Remove(s1);
+            if(listData.Remove(s1))
+                FormSortedAndFilteredView();
         }
-        // сортировать список
-        private void OnSortList(object sender, EventArgs e)
-        {
-            listData.Sort((x, y) => { return String.Compare(x,y); });
-            listList.Clear();
-            foreach (string s1 in listData)
-                listList.Add(s1);
-        }
-        // поиск элемента в списке
+        // поиск элемента в списке по фрагменту строки
         private void OnFindInList(object sender, EventArgs e)
         {
+            string s1 = ListElementTextBox.Text;
+            if (String.IsNullOrEmpty(s1) || String.IsNullOrWhiteSpace(s1)) return;
+            int idx = listList.ToList().FindIndex(x => x.ToLower().Contains(s1.ToLower()));
+            if (idx >= 0)
+                ListContent.SelectedIndex = idx;
 
-        }
-        // отфильтровать список
-        private void OnSetFilterList(object sender, EventArgs e)
-        {
 
         }
         // изменить элемент списка
         private void OnChangeListElement(object sender, EventArgs e)
         {
-            if (ListContent.SelectedIndex < 0) return;
-            string s1 = ListElementTextBox.Text;
-            string s2 = ListContent.SelectedItem.ToString();
+            int i = ListContent.SelectedIndex;
+            if (i < 0) return;
+            string s1 = ListElementTextBox.Text; // новое значение
+            string s2 = ListContent.SelectedItem.ToString(); // старое значение
             int idx = listData.FindIndex(x => x == s2);
-            if(idx > 0)
+            if(idx >= 0)
             {
                 listData.Insert(idx, s1);
                 listData.RemoveAt(idx + 1);
-                int idx1 = listList.IndexOf(s2);
-                listList.Insert(idx1, s1);
-                listList.RemoveAt(idx1 + 1);
+                FormSortedAndFilteredView();
+                ListContent.SelectedIndex = i;
             }
 
         }
-
+        // изменилось значение флага фильтрации
         private void OnItemChanged(object sender, EventArgs e)
         {
             if (ListContent.SelectedIndex < 0) return;
             ListElementTextBox.Text = ListContent.SelectedItem.ToString();
+        }
+
+        // установить есть сортировка или нет
+        private void OnChangeSortFlag(object sender, EventArgs e)
+        {
+            FormSortedAndFilteredView();
+        }
+        // сформировать сортированный отфильтрованный список
+        private void FormSortedAndFilteredView()
+        {
+            bool sorted = SortedFlag.Checked;
+            string filter = Filter.Text;
+            bool nofilter = String.IsNullOrEmpty(filter) || String.IsNullOrWhiteSpace(filter);
+            List<string> lst = null;
+            if (!sorted && !nofilter)
+                lst = listData.Where(x => x.ToLower().Contains(filter.ToLower())).ToList();
+            else if (sorted && !nofilter)
+                lst = listData.Where(x => x.ToLower().Contains(filter.ToLower())).OrderBy(x => x).ToList();
+            else if (sorted && nofilter)
+                lst = listData.OrderBy(x => x).ToList();
+            else
+                lst = listData;
+            listList = new BindingList<string>(lst);
+            ListContent.DataSource = listList;
+
+        }
+        // убрать фильтрацию списка, показать весь список
+        private void OnCleanFilter(object sender, EventArgs e)
+        {
+            Filter.Text = String.Empty;
+            FormSortedAndFilteredView();
+        }
+        // изменился фильтр
+        private void OnFilterChanged(object sender, EventArgs e)
+        {
+            FormSortedAndFilteredView();
         }
     }
 }
