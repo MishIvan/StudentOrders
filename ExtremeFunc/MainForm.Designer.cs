@@ -60,11 +60,11 @@ namespace FunExtremum
             this.xTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.iterationsGridView = new System.Windows.Forms.DataGridView();
-            this.FuncList = new System.Windows.Forms.ImageList(this.components);
-            this.FuncListView = new System.Windows.Forms.ListView();
             this.xv = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.yv = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FuncList = new System.Windows.Forms.ImageList(this.components);
+            this.FuncListView = new System.Windows.Forms.ListView();
             this.SolutionTabView.SuspendLayout();
             this.AutoTab.SuspendLayout();
             this.ManualTab.SuspendLayout();
@@ -125,15 +125,15 @@ namespace FunExtremum
             this.Iterations.AutoSize = true;
             this.Iterations.Location = new System.Drawing.Point(6, 82);
             this.Iterations.Name = "Iterations";
-            this.Iterations.Size = new System.Drawing.Size(90, 17);
+            this.Iterations.Size = new System.Drawing.Size(48, 17);
             this.Iterations.TabIndex = 5;
-            this.Iterations.Text = "Вычисления";
+            this.Iterations.Text = "          ";
             // 
             // Find
             // 
-            this.Find.Location = new System.Drawing.Point(432, 6);
+            this.Find.Location = new System.Drawing.Point(445, 9);
             this.Find.Name = "Find";
-            this.Find.Size = new System.Drawing.Size(196, 32);
+            this.Find.Size = new System.Drawing.Size(167, 32);
             this.Find.TabIndex = 6;
             this.Find.Text = "Искать экстремум";
             this.Find.UseVisualStyleBackColor = true;
@@ -296,6 +296,7 @@ namespace FunExtremum
             // 
             // iterationsGridView
             // 
+            this.iterationsGridView.AllowUserToDeleteRows = false;
             this.iterationsGridView.BackgroundColor = System.Drawing.SystemColors.Control;
             this.iterationsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.iterationsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -303,11 +304,41 @@ namespace FunExtremum
             this.yv,
             this.fv});
             this.iterationsGridView.Location = new System.Drawing.Point(32, 122);
+            this.iterationsGridView.MultiSelect = false;
             this.iterationsGridView.Name = "iterationsGridView";
+            this.iterationsGridView.ReadOnly = true;
             this.iterationsGridView.RowHeadersWidth = 51;
             this.iterationsGridView.RowTemplate.Height = 24;
+            this.iterationsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.iterationsGridView.Size = new System.Drawing.Size(448, 206);
             this.iterationsGridView.TabIndex = 0;
+            // 
+            // xv
+            // 
+            this.xv.DataPropertyName = "xv";
+            this.xv.HeaderText = "X";
+            this.xv.MinimumWidth = 6;
+            this.xv.Name = "xv";
+            this.xv.ReadOnly = true;
+            this.xv.Width = 125;
+            // 
+            // yv
+            // 
+            this.yv.DataPropertyName = "yv";
+            this.yv.HeaderText = "Y";
+            this.yv.MinimumWidth = 6;
+            this.yv.Name = "yv";
+            this.yv.ReadOnly = true;
+            this.yv.Width = 125;
+            // 
+            // fv
+            // 
+            this.fv.DataPropertyName = "fv";
+            this.fv.HeaderText = "F(X,Y)";
+            this.fv.MinimumWidth = 6;
+            this.fv.Name = "fv";
+            this.fv.ReadOnly = true;
+            this.fv.Width = 140;
             // 
             // FuncList
             // 
@@ -347,32 +378,11 @@ namespace FunExtremum
             this.FuncListView.Location = new System.Drawing.Point(12, 64);
             this.FuncListView.MultiSelect = false;
             this.FuncListView.Name = "FuncListView";
-            this.FuncListView.Size = new System.Drawing.Size(364, 334);
+            this.FuncListView.Size = new System.Drawing.Size(364, 361);
             this.FuncListView.TabIndex = 8;
             this.FuncListView.UseCompatibleStateImageBehavior = false;
             this.FuncListView.View = System.Windows.Forms.View.Tile;
             this.FuncListView.SelectedIndexChanged += new System.EventHandler(this.OnFunctionChanged);
-            // 
-            // xv
-            // 
-            this.xv.HeaderText = "X";
-            this.xv.MinimumWidth = 6;
-            this.xv.Name = "xv";
-            this.xv.Width = 125;
-            // 
-            // yv
-            // 
-            this.yv.HeaderText = "Y";
-            this.yv.MinimumWidth = 6;
-            this.yv.Name = "yv";
-            this.yv.Width = 125;
-            // 
-            // fv
-            // 
-            this.fv.HeaderText = "F(X,Y)";
-            this.fv.MinimumWidth = 6;
-            this.fv.Name = "fv";
-            this.fv.Width = 140;
             // 
             // MainForm
             // 

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace FunExtremum
 {
-    delegate float fun(float x, float y);
-    delegate float[] gradient(float x, float y);
+    public delegate float fun(float x, float y);
+    public delegate float[] gradient(float x, float y);
     internal class Functions
     {
         // параболическая функция и её градиент
