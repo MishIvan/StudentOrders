@@ -88,37 +88,44 @@ namespace FunExtremum
         // выбрать функцию
         private void OnFunctionChanged(object sender, EventArgs e)
         {
-            switch(FuncListView.SelectedItems[0].Index)
+            if(FuncListView.Items[0].Selected)
             {
-                case 0:
-                    Func = new fun(Functions.Quad);
-                    Grad = new gradient(Functions.GradientQuad);
-                    kmin = -1.0f;
-                    break;
-                case 1:
-                    Func = new fun(Functions.Boot);
-                    Grad = new gradient(Functions.GradientBoot);
-                    kmin = 1.0f;
-                    break;
-                case 2:
-                    Func = new fun(Functions.Bil);
-                    Grad = new gradient(Functions.GradientBil);
-                    kmin = 1.0f;
-                    break;
-                case 3:
-                    Func = new fun(Functions.Schvefel);
-                    Grad = null;
-                    break;
-                case 4:
-                    Func = new fun(Functions.Threehump);
-                    Grad = null;
-                    break;
-                case 5:
-                    Func = new fun(Functions.Levy);
-                    Grad = null;
-                    break;
+                Func = new fun(Functions.Quad);
+                Grad = new gradient(Functions.GradientQuad);
+                kmin = -1.0f;
 
             }
+            else if(FuncListView.Items[1].Selected)
+            {
+                Func = new fun(Functions.Boot);
+                Grad = new gradient(Functions.GradientBoot);
+                kmin = 1.0f;
+
+            }
+            else if (FuncListView.Items[2].Selected)
+            {
+                Func = new fun(Functions.Bil);
+                Grad = new gradient(Functions.GradientBil);
+                kmin = 1.0f;
+
+            }
+            else if (FuncListView.Items[3].Selected)
+            {
+                Func = new fun(Functions.Schvefel);
+                Grad = null;        
+            }
+            else if (FuncListView.Items[4].Selected)
+            {
+                Func = new fun(Functions.Threehump);
+                Grad = null;
+            }
+
+            else if (FuncListView.Items[5].Selected)
+            {
+                Func = new fun(Functions.Levy);
+                Grad = null;
+            }
+
         }
 
         private void OnLoad(object sender, EventArgs e)
