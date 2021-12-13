@@ -43,19 +43,13 @@ namespace FunExtremum
             return (1.5f - x + x * y) * (1.5f - x + x * y) + (2.25f - x + x * y * y) * (2.25f - x + x * y * y) +
                 (2.625f - x + x * y * y * y) * (2.625f - x + x * y * y * y);
         }
-        public static float[] GradientBilt(float x, float y)
-        {
-            float[] grad = new float[2];
-            grad[0] = 0.0f;
-            grad[1] = 0.0f;
-            return grad;
-        }
-
         public static float[] GradientBil(float x, float y)
         {
             float[] grad = new float[2];
-            grad[0] = 2.0f*(x+2*y-7.0f) + 4.0f*(2.0f*x + y - 5.0f);
-            grad[1] = 4.0f * (x + 2 * y - 7.0f) + 2.0f * (2.0f * x + y - 5.0f);
+            grad[0] = 2.0f* (1.5f - x + x * y)*(y - 1.0f) + 2.0f*(2.25f - x + x * y * y)*(1.0f - y*y) +
+                2.0f*(2.625f - x + x * y * y * y)*(y*y*y - 1.0f);
+            grad[1] = 2.0f * (1.5f - x + x * y) * x + 4.0f * (2.25f - x + x * y * y) * x * y +
+                2.0f * (2.625f - x + x * y * y * y) * x * y * y;
             return grad;
         }
 

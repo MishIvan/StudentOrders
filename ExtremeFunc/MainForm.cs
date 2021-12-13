@@ -36,12 +36,17 @@ namespace FunExtremum
 		
         private void ShowGraphic(object sender, EventArgs e)
         {
-            Graph g = new Graph(50, 50, FuncListView.SelectedItems[0].Index);
+            Graph g = new Graph(100, 100, FuncListView.SelectedItems[0].Index);
             g.Start();
 
         }
         private void RunExec(object sender, EventArgs e)
         {
+            if(Grad == null)
+            {
+                Iterations.Text = "Метод решения для функции не поддерживается";
+                return;
+            }
         	Find.Enabled = false;
             Iterations.Text = "Дождитесь завершения итерации...";
         	int i = 0;
@@ -97,6 +102,8 @@ namespace FunExtremum
                     break;
                 case 2:
                     Func = new fun(Functions.Bil);
+                    Grad = new gradient(Functions.GradientBil);
+                    kmin = 1.0f;
                     break;
                 case 3:
                     Func = new fun(Functions.Schvefel);
@@ -104,9 +111,11 @@ namespace FunExtremum
                     break;
                 case 4:
                     Func = new fun(Functions.Threehump);
+                    Grad = null;
                     break;
                 case 5:
                     Func = new fun(Functions.Levy);
+                    Grad = null;
                     break;
 
             }
