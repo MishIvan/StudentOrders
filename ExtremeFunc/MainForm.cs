@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FunExtremum.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,14 +10,15 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FunExtremum
-{    
+{
     public partial class MainForm : Form
     {
-    	private float eps, kmin;
-    	private float lambda;
+        private float eps, kmin;
+        private float lambda;
         public static fun Func;
         private static gradient Grad;
-        BindingList<Iterations> iterData;
+        private BindingList<Iterations> iterData;
+        private int funIdx;
         public MainForm()
         {
             InitializeComponent();
@@ -26,52 +28,59 @@ namespace FunExtremum
             iterData = new BindingList<Iterations>();
             Grad = new gradient(Functions.GradientQuad);
             kmin = 1.0f;
-            
+
         }
         private float ModGradient(float x, float y)
         {
             float[] vgrad = Grad(x, y);
             return (float)Math.Sqrt((double)(vgrad[0] * vgrad[0]) + (double)(vgrad[1] * vgrad[1]));
         }
-		
-        private void ShowGraphic(object sender, EventArgs e)
-        {
-            Graph g = new Graph(100, 100, FuncListView.SelectedItems[0].Index);
-            g.Start();
 
-        }
         private void RunExec(object sender, EventArgs e)
         {
-            if(Grad == null)
+            if (Grad == null)
             {
-                Iterations.Text = "Метод решения для функции не поддерживается";
+                float xa, ya, fa;
+                if(funIdx != 5)
+                {
+                    xa = 0.0f; ya = 0.0f;
+                }
+                else
+                {
+                    xa = 1.0f; ya = 1.0f;
+
+                }
+                fa = Func(xa, ya);
+                ExtremumPoint.Text = String.Format("({0:F5};{1:F5})", xa, ya);
+                ExtremeValue.Text = String.Format("{0:F5}", fa);
+                Iterations.Text = "Аналитическое решение. Метод не реализован в программе.";
                 return;
             }
-        	Find.Enabled = false;
+            Find.Enabled = false;
             Iterations.Text = "Дождитесь завершения итерации...";
-        	int i = 0;
+            int i = 0;
             int n = 320000;
-        	float x0 = 1.0f;
-        	float y0 = 1.0f;
-        	float x = x0;
-        	float y = y0;
-        	float f = 0.0f;
-        	float f0 = f;
-        	while(true)
-        	{
-        		float [] vgrad = Grad(x0,y0);
-        		x = x0 - lambda*vgrad[0]*kmin;
-        		y = y0 - lambda*vgrad[1]*kmin;
-        		f = kmin*Func(x,y);
-        		f0 = kmin*Func(x0,y0);
+            float x0 = 1.0f;
+            float y0 = 1.0f;
+            float x = x0;
+            float y = y0;
+            float f = 0.0f;
+            float f0 = f;
+            while (true)
+            {
+                float[] vgrad = Grad(x0, y0);
+                x = x0 - lambda * vgrad[0] * kmin;
+                y = y0 - lambda * vgrad[1] * kmin;
+                f = kmin * Func(x, y);
+                f0 = kmin * Func(x0, y0);
                 //if (kmin == 1.0 && f0 > f) lambda *= 0.5f;
-        		i++;
-        		x0 = x;
-        		y0 = y;
+                i++;
+                x0 = x;
+                y0 = y;
                 float mg = ModGradient(x, y);
                 if (mg < eps || i > n) break;
-        	}
-            if(i < n)
+            }
+            if (i < n)
             {
                 ExtremumPoint.Text = String.Format("({0:F5};{1:F5})", x, y);
                 ExtremeValue.Text = String.Format("{0:F5}", kmin * f);
@@ -88,42 +97,54 @@ namespace FunExtremum
         // выбрать функцию
         private void OnFunctionChanged(object sender, EventArgs e)
         {
-            if(FuncListView.Items[0].Selected)
+            if (FuncListView.Items[0].Selected)
             {
                 Func = new fun(Functions.Quad);
                 Grad = new gradient(Functions.GradientQuad);
                 kmin = -1.0f;
+                graphBox.Image = Image.FromHbitmap(Resources.QuadGraph.GetHbitmap());
+                funIdx = 0;
 
             }
-            else if(FuncListView.Items[1].Selected)
+            else if (FuncListView.Items[1].Selected)
             {
                 Func = new fun(Functions.Boot);
                 Grad = new gradient(Functions.GradientBoot);
+                graphBox.Image = Image.FromHbitmap(Resources.BootGraph.GetHbitmap());
                 kmin = 1.0f;
+                funIdx = 1;
 
             }
             else if (FuncListView.Items[2].Selected)
             {
                 Func = new fun(Functions.Bil);
                 Grad = new gradient(Functions.GradientBil);
+                graphBox.Image = Image.FromHbitmap(Resources.BilGraph.GetHbitmap());
                 kmin = 1.0f;
+                funIdx = 2;
 
             }
             else if (FuncListView.Items[3].Selected)
             {
                 Func = new fun(Functions.Schvefel);
-                Grad = null;        
+                graphBox.Image = Image.FromHbitmap(Resources.SchvefelGraph.GetHbitmap());
+                Grad = null;
+                funIdx = 3;
             }
             else if (FuncListView.Items[4].Selected)
             {
                 Func = new fun(Functions.Threehump);
+                graphBox.Image = Image.FromHbitmap(Resources.ThreeHumpedGraph.GetHbitmap());
                 Grad = null;
+                funIdx = 4;
             }
 
             else if (FuncListView.Items[5].Selected)
             {
                 Func = new fun(Functions.Levy);
+                graphBox.Image = Image.FromHbitmap(Resources.LeviGraph.GetHbitmap());
                 Grad = null;
+                funIdx = 5;
             }
 
         }
@@ -131,51 +152,90 @@ namespace FunExtremum
         private void OnLoad(object sender, EventArgs e)
         {
             FuncListView.Items[0].Selected = true;
-            iterateButton.Enabled = false;
             iterationsGridView.DataSource = iterData;
         }
 
-        // начать решать итерациями вручную
-        private void OnStartIterations(object sender, EventArgs e)
+        // новый шаг итераций
+        private void OnNewStep(object sender, EventArgs e)
         {
-            if (!iterateButton.Enabled) iterateButton.Enabled = true;
-            if (FuncListView.Enabled) FuncListView.Enabled = false;
-        }
-        // завершить решать итерациями вручную
-        private void OnStopIterations(object sender, EventArgs e)
-        {
-            if (iterateButton.Enabled) iterateButton.Enabled = false;
-            if (!FuncListView.Enabled) FuncListView.Enabled = true;
-            iterData.Clear();
-
-        }
-        // сделать шаг итерации
-        private void OnIterate(object sender, EventArgs e)
-        {
-            if(ValidateInput(xTextBox) && ValidateInput(yTextBox) && 
-                ValidateInput(stepxTextBox) && ValidateInput(ystepTextBox))
+            if (!ValidateInput(xTextBox) || !ValidateInput(yTextBox) ||
+                !ValidateInput(stepxTextBox) || !ValidateInput(ystepTextBox))
             {
-                float x = (float)Convert.ToDouble(xTextBox.Text);
-                float y = (float)Convert.ToDouble(yTextBox.Text);
-                float px = (float)Convert.ToDouble(stepxTextBox.Text);
-                float py = (float)Convert.ToDouble(ystepTextBox.Text);
-                float fxy = Func(x, y);
-                iterData.Add(new FunExtremum.Iterations { xv = x, yv = y, fv = fxy });
-                xTextBox.Text = Convert.ToString(x + px);
-                yTextBox.Text = Convert.ToString(y + py);
-                iterationsGridView.CurrentCell = iterationsGridView[0, iterData.Count - 1];
+                return;
             }
+            if (newStepButton.Enabled) newStepButton.Enabled = false;            
+            if (FuncListView.Enabled) FuncListView.Enabled = false;
+            iterData.Clear();
+            iterationsGridView.Refresh();
+
+            float x = (float)Convert.ToDouble(xTextBox.Text);
+            float y = (float)Convert.ToDouble(yTextBox.Text);
+            float px = (float)Convert.ToDouble(stepxTextBox.Text);
+            float py = (float)Convert.ToDouble(ystepTextBox.Text);
+            float xe = x;
+            float ye = y;
+            float fe = Func(x, y);
+            int i = 0;
+            float yleft = 0.0f;
+            float yright = 0.0f;
+            bool found = false;
+            int ifound = 0;
+            while (true) 
+            {
+                float fxy = Func(x,y);
+                iterData.Add(new FunExtremum.Iterations { xv = x, yv = y, fv = fxy });
+                iterationsGridView.CurrentCell = iterationsGridView[0, iterData.Count - 1];
+                iterationsGridView.Refresh();
+
+                // найти локальный минимум или максимум
+                if (iterData.Count >=3 && !found)
+                {
+                    if((iterData[i-2].fv > iterData[i-1].fv && iterData[i].fv > iterData[i-1].fv) ||
+                        (iterData[i - 2].fv < iterData[i - 1].fv && iterData[i].fv < iterData[i - 1].fv)
+                        )
+                        { xe = iterData[i - 1].xv; ye = iterData[i - 1].yv; fe = iterData[i - 1].fv; found = true; ifound = i - 1; }
+
+                }
+
+                if(found) // экстремум найден, проверка условий прерывания итерации
+                {
+                    yleft = 0.0f;
+                    for (int j = 0; j < ifound; j++)
+                        yleft += (ye - iterData[j].yv) * (ye - iterData[j].yv);
+                    yleft = (float)Math.Sqrt((double)yleft);
+
+                    yright = 0.0f;
+                    int n = iterData.Count;
+                    for (int j = 0; j < n; j++)
+                        yright += (ye - iterData[j].yv) * (ye - iterData[j].yv);
+                    yleft = (float)Math.Sqrt((double)yright);
+
+                    if (yleft <= yright) break;
+                }
+
+                i++;
+                x += px;
+                y += py;
+            }
+            FexTextBox.Text = String.Format("{0:F5}", fe);
+            XexTextBox.Text = String.Format("{0:F5}", xe);
+            YexTextBox.Text = String.Format("{0:F5}", ye);
+            LeftOperTextBox.Text = String.Format("{0:F5}", yleft);
+            RightOperTextBox.Text = String.Format("{0:F5}", yright);
+            if (!newStepButton.Enabled) newStepButton.Enabled = true;
+            if (!FuncListView.Enabled) FuncListView.Enabled = true;
 
         }
+
         private bool ValidateInput(TextBox elem)
         {
-            string s1 = elem.Text;            
-            elem.Text = s1 = s1.Replace('.', ','); 
+            string s1 = elem.Text;
+            elem.Text = s1 = s1.Replace('.', ',');
             try
             {
                 Convert.ToDouble(s1);
             }
-            catch(FormatException)
+            catch (FormatException)
             {
                 ErrorText.Text = "Heверный формат числа";
                 return false;
@@ -185,5 +245,9 @@ namespace FunExtremum
 
 
         }
+
+
     }
+
 }
+

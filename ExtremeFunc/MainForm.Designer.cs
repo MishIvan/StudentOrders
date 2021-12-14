@@ -31,26 +31,23 @@ namespace FunExtremum
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("", 0);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("", 1);
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("", 2);
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("", 3);
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("", 4);
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("", 5);
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("", 0);
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("", 1);
+            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("", 2);
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("", 3);
+            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("", 4);
+            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("", 5);
             this.label1 = new System.Windows.Forms.Label();
             this.ExtremeValue = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.ExtremumPoint = new System.Windows.Forms.TextBox();
-            this.ShowGraph = new System.Windows.Forms.Button();
             this.Iterations = new System.Windows.Forms.Label();
             this.Find = new System.Windows.Forms.Button();
             this.SolutionTabView = new System.Windows.Forms.TabControl();
             this.AutoTab = new System.Windows.Forms.TabPage();
             this.ManualTab = new System.Windows.Forms.TabPage();
             this.ErrorText = new System.Windows.Forms.Label();
-            this.stopIterationsButton = new System.Windows.Forms.Button();
-            this.startIterationsButton = new System.Windows.Forms.Button();
-            this.iterateButton = new System.Windows.Forms.Button();
+            this.newStepButton = new System.Windows.Forms.Button();
             this.ystepTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.stepxTextBox = new System.Windows.Forms.TextBox();
@@ -65,10 +62,23 @@ namespace FunExtremum
             this.fv = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FuncList = new System.Windows.Forms.ImageList(this.components);
             this.FuncListView = new System.Windows.Forms.ListView();
+            this.graphBox = new System.Windows.Forms.PictureBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.LeftOperTextBox = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.RightOperTextBox = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.FexTextBox = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.XexTextBox = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.YexTextBox = new System.Windows.Forms.TextBox();
             this.SolutionTabView.SuspendLayout();
             this.AutoTab.SuspendLayout();
             this.ManualTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iterationsGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.graphBox)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -109,17 +119,6 @@ namespace FunExtremum
             this.ExtremumPoint.Size = new System.Drawing.Size(179, 22);
             this.ExtremumPoint.TabIndex = 3;
             // 
-            // ShowGraph
-            // 
-            this.ShowGraph.Location = new System.Drawing.Point(12, 20);
-            this.ShowGraph.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ShowGraph.Name = "ShowGraph";
-            this.ShowGraph.Size = new System.Drawing.Size(196, 31);
-            this.ShowGraph.TabIndex = 4;
-            this.ShowGraph.Text = "Показать график";
-            this.ShowGraph.UseVisualStyleBackColor = true;
-            this.ShowGraph.Click += new System.EventHandler(this.ShowGraphic);
-            // 
             // Iterations
             // 
             this.Iterations.AutoSize = true;
@@ -144,11 +143,11 @@ namespace FunExtremum
             this.SolutionTabView.Alignment = System.Windows.Forms.TabAlignment.Left;
             this.SolutionTabView.Controls.Add(this.AutoTab);
             this.SolutionTabView.Controls.Add(this.ManualTab);
-            this.SolutionTabView.Location = new System.Drawing.Point(393, 60);
+            this.SolutionTabView.Location = new System.Drawing.Point(698, 17);
             this.SolutionTabView.Multiline = true;
             this.SolutionTabView.Name = "SolutionTabView";
             this.SolutionTabView.SelectedIndex = 0;
-            this.SolutionTabView.Size = new System.Drawing.Size(677, 369);
+            this.SolutionTabView.Size = new System.Drawing.Size(869, 406);
             this.SolutionTabView.TabIndex = 7;
             // 
             // AutoTab
@@ -170,10 +169,9 @@ namespace FunExtremum
             // ManualTab
             // 
             this.ManualTab.BackColor = System.Drawing.Color.Gainsboro;
+            this.ManualTab.Controls.Add(this.groupBox1);
             this.ManualTab.Controls.Add(this.ErrorText);
-            this.ManualTab.Controls.Add(this.stopIterationsButton);
-            this.ManualTab.Controls.Add(this.startIterationsButton);
-            this.ManualTab.Controls.Add(this.iterateButton);
+            this.ManualTab.Controls.Add(this.newStepButton);
             this.ManualTab.Controls.Add(this.ystepTextBox);
             this.ManualTab.Controls.Add(this.label6);
             this.ManualTab.Controls.Add(this.stepxTextBox);
@@ -186,7 +184,7 @@ namespace FunExtremum
             this.ManualTab.Location = new System.Drawing.Point(25, 4);
             this.ManualTab.Name = "ManualTab";
             this.ManualTab.Padding = new System.Windows.Forms.Padding(3);
-            this.ManualTab.Size = new System.Drawing.Size(648, 361);
+            this.ManualTab.Size = new System.Drawing.Size(840, 398);
             this.ManualTab.TabIndex = 1;
             this.ManualTab.Text = "Решить вручную";
             // 
@@ -200,35 +198,15 @@ namespace FunExtremum
             this.ErrorText.TabIndex = 12;
             this.ErrorText.Text = " ";
             // 
-            // stopIterationsButton
+            // newStepButton
             // 
-            this.stopIterationsButton.Location = new System.Drawing.Point(496, 179);
-            this.stopIterationsButton.Name = "stopIterationsButton";
-            this.stopIterationsButton.Size = new System.Drawing.Size(119, 31);
-            this.stopIterationsButton.TabIndex = 11;
-            this.stopIterationsButton.Text = "Завершить";
-            this.stopIterationsButton.UseVisualStyleBackColor = true;
-            this.stopIterationsButton.Click += new System.EventHandler(this.OnStopIterations);
-            // 
-            // startIterationsButton
-            // 
-            this.startIterationsButton.Location = new System.Drawing.Point(496, 122);
-            this.startIterationsButton.Name = "startIterationsButton";
-            this.startIterationsButton.Size = new System.Drawing.Size(119, 31);
-            this.startIterationsButton.TabIndex = 10;
-            this.startIterationsButton.Text = "Начать решение";
-            this.startIterationsButton.UseVisualStyleBackColor = true;
-            this.startIterationsButton.Click += new System.EventHandler(this.OnStartIterations);
-            // 
-            // iterateButton
-            // 
-            this.iterateButton.Location = new System.Drawing.Point(419, 63);
-            this.iterateButton.Name = "iterateButton";
-            this.iterateButton.Size = new System.Drawing.Size(114, 31);
-            this.iterateButton.TabIndex = 9;
-            this.iterateButton.Text = "Итерация";
-            this.iterateButton.UseVisualStyleBackColor = true;
-            this.iterateButton.Click += new System.EventHandler(this.OnIterate);
+            this.newStepButton.Location = new System.Drawing.Point(327, 18);
+            this.newStepButton.Name = "newStepButton";
+            this.newStepButton.Size = new System.Drawing.Size(153, 31);
+            this.newStepButton.TabIndex = 9;
+            this.newStepButton.Text = "Новый шаг";
+            this.newStepButton.UseVisualStyleBackColor = true;
+            this.newStepButton.Click += new System.EventHandler(this.OnNewStep);
             // 
             // ystepTextBox
             // 
@@ -356,26 +334,26 @@ namespace FunExtremum
             this.FuncListView.FullRowSelect = true;
             this.FuncListView.GridLines = true;
             this.FuncListView.HideSelection = false;
-            listViewItem1.StateImageIndex = 0;
-            listViewItem2.Checked = true;
-            listViewItem2.StateImageIndex = 1;
-            listViewItem3.Checked = true;
-            listViewItem3.StateImageIndex = 2;
-            listViewItem4.Checked = true;
-            listViewItem4.StateImageIndex = 3;
-            listViewItem5.Checked = true;
-            listViewItem5.StateImageIndex = 4;
-            listViewItem6.Checked = true;
-            listViewItem6.StateImageIndex = 5;
+            listViewItem7.StateImageIndex = 0;
+            listViewItem8.Checked = true;
+            listViewItem8.StateImageIndex = 1;
+            listViewItem9.Checked = true;
+            listViewItem9.StateImageIndex = 2;
+            listViewItem10.Checked = true;
+            listViewItem10.StateImageIndex = 3;
+            listViewItem11.Checked = true;
+            listViewItem11.StateImageIndex = 4;
+            listViewItem12.Checked = true;
+            listViewItem12.StateImageIndex = 5;
             this.FuncListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4,
-            listViewItem5,
-            listViewItem6});
+            listViewItem7,
+            listViewItem8,
+            listViewItem9,
+            listViewItem10,
+            listViewItem11,
+            listViewItem12});
             this.FuncListView.LargeImageList = this.FuncList;
-            this.FuncListView.Location = new System.Drawing.Point(12, 64);
+            this.FuncListView.Location = new System.Drawing.Point(12, 12);
             this.FuncListView.MultiSelect = false;
             this.FuncListView.Name = "FuncListView";
             this.FuncListView.Size = new System.Drawing.Size(364, 361);
@@ -384,19 +362,127 @@ namespace FunExtremum
             this.FuncListView.View = System.Windows.Forms.View.Tile;
             this.FuncListView.SelectedIndexChanged += new System.EventHandler(this.OnFunctionChanged);
             // 
+            // graphBox
+            // 
+            this.graphBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.graphBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.graphBox.ErrorImage = global::FunExtremum.Properties.Resources.QuadGraph;
+            this.graphBox.Image = global::FunExtremum.Properties.Resources.QuadGraph;
+            this.graphBox.InitialImage = global::FunExtremum.Properties.Resources.QuadGraph;
+            this.graphBox.Location = new System.Drawing.Point(394, 17);
+            this.graphBox.Name = "graphBox";
+            this.graphBox.Size = new System.Drawing.Size(288, 273);
+            this.graphBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.graphBox.TabIndex = 9;
+            this.graphBox.TabStop = false;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.YexTextBox);
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Controls.Add(this.XexTextBox);
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.FexTextBox);
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.RightOperTextBox);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.LeftOperTextBox);
+            this.groupBox1.Location = new System.Drawing.Point(510, 22);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(308, 193);
+            this.groupBox1.TabIndex = 13;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Условие окончания";
+            // 
+            // LeftOperTextBox
+            // 
+            this.LeftOperTextBox.Enabled = false;
+            this.LeftOperTextBox.Location = new System.Drawing.Point(7, 22);
+            this.LeftOperTextBox.Name = "LeftOperTextBox";
+            this.LeftOperTextBox.Size = new System.Drawing.Size(100, 22);
+            this.LeftOperTextBox.TabIndex = 0;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(125, 26);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(16, 17);
+            this.label7.TabIndex = 1;
+            this.label7.Text = "<";
+            // 
+            // RightOperTextBox
+            // 
+            this.RightOperTextBox.Enabled = false;
+            this.RightOperTextBox.Location = new System.Drawing.Point(159, 22);
+            this.RightOperTextBox.Name = "RightOperTextBox";
+            this.RightOperTextBox.Size = new System.Drawing.Size(100, 22);
+            this.RightOperTextBox.TabIndex = 2;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(7, 63);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(29, 17);
+            this.label8.TabIndex = 3;
+            this.label8.Text = "F*=";
+            // 
+            // FexTextBox
+            // 
+            this.FexTextBox.Enabled = false;
+            this.FexTextBox.Location = new System.Drawing.Point(43, 63);
+            this.FexTextBox.Name = "FexTextBox";
+            this.FexTextBox.Size = new System.Drawing.Size(100, 22);
+            this.FexTextBox.TabIndex = 4;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(7, 113);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(22, 17);
+            this.label9.TabIndex = 5;
+            this.label9.Text = "X*";
+            // 
+            // XexTextBox
+            // 
+            this.XexTextBox.Enabled = false;
+            this.XexTextBox.Location = new System.Drawing.Point(43, 113);
+            this.XexTextBox.Name = "XexTextBox";
+            this.XexTextBox.Size = new System.Drawing.Size(100, 22);
+            this.XexTextBox.TabIndex = 6;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(7, 157);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(22, 17);
+            this.label10.TabIndex = 7;
+            this.label10.Text = "Y*";
+            // 
+            // YexTextBox
+            // 
+            this.YexTextBox.Enabled = false;
+            this.YexTextBox.Location = new System.Drawing.Point(43, 157);
+            this.YexTextBox.Name = "YexTextBox";
+            this.YexTextBox.Size = new System.Drawing.Size(100, 22);
+            this.YexTextBox.TabIndex = 8;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1082, 435);
+            this.ClientSize = new System.Drawing.Size(1604, 435);
+            this.Controls.Add(this.graphBox);
             this.Controls.Add(this.FuncListView);
             this.Controls.Add(this.SolutionTabView);
-            this.Controls.Add(this.ShowGraph);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";
-            this.Text = "Поиск эсктремума функции";
+            this.Text = "Диагональный метод";
             this.Load += new System.EventHandler(this.OnLoad);
             this.SolutionTabView.ResumeLayout(false);
             this.AutoTab.ResumeLayout(false);
@@ -404,6 +490,9 @@ namespace FunExtremum
             this.ManualTab.ResumeLayout(false);
             this.ManualTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iterationsGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.graphBox)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -414,7 +503,6 @@ namespace FunExtremum
         private System.Windows.Forms.TextBox ExtremeValue;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox ExtremumPoint;
-        private System.Windows.Forms.Button ShowGraph;
         private System.Windows.Forms.Label Iterations;
         private System.Windows.Forms.Button Find;
         private System.Windows.Forms.TabControl SolutionTabView;
@@ -423,8 +511,7 @@ namespace FunExtremum
         private System.Windows.Forms.ImageList FuncList;
         private System.Windows.Forms.ListView FuncListView;
         private System.Windows.Forms.DataGridView iterationsGridView;
-        private System.Windows.Forms.Button startIterationsButton;
-        private System.Windows.Forms.Button iterateButton;
+        private System.Windows.Forms.Button newStepButton;
         private System.Windows.Forms.TextBox ystepTextBox;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox stepxTextBox;
@@ -433,11 +520,21 @@ namespace FunExtremum
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox xTextBox;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button stopIterationsButton;
         private System.Windows.Forms.Label ErrorText;
         private System.Windows.Forms.DataGridViewTextBoxColumn xv;
         private System.Windows.Forms.DataGridViewTextBoxColumn yv;
         private System.Windows.Forms.DataGridViewTextBoxColumn fv;
+        private System.Windows.Forms.PictureBox graphBox;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox RightOperTextBox;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox LeftOperTextBox;
+        private System.Windows.Forms.TextBox YexTextBox;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox XexTextBox;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox FexTextBox;
     }
 }
 
