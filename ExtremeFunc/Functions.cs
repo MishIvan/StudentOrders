@@ -62,12 +62,33 @@ namespace FunExtremum
             return -2.0f * x * x + 1.05f * (float)Math.Pow((double)x, 4.0) - (float)Math.Pow((double)x, 6.0) / 6.0f -
                 x * y - y * y;
         }
+        public static float[] GradientThreehump(float x, float y)
+        {
+            float[] grad = new float[2];
+            grad[0] = -4.0f*x + 4.2f*x*x*x - x*x*x*x*x - y;
+            grad[1] = -x - 2.0f*y;
+            return grad;
+        }
+
         public static float Levy(float x, float y)
         {
             return (float)(Math.Sin(3.0 * Math.PI * (double)x) * Math.Sin(3.0 * Math.PI * (double)x)) +
                 (1.0f - x) * (1.0f - x) * (1.0f - (float)(Math.Sin(3.0 * Math.PI * (double)y) * Math.Sin(3.0 * Math.PI * (double)y))) +
                 (1.0f - y) * (1.0f - y) * (1.0f + (float)(Math.Sin(2.0 * Math.PI * (double)y) * Math.Sin(2.0 * Math.PI * (double)y)));
         }
+        public static float[] GradientVevy(float x, float y)
+        {
+            float[] grad = new float[2];
+            grad[0] = (float)(
+                6.0*Math.PI*Math.Sin(3.0*Math.PI*x) + 2.0*(x- 1.0)*(1.0 +Math.Pow(Math.Sin(3.0*Math.PI*y),2.0))
+                );
+            grad[1] = (float)(
+                (x - 1.0)*(x -1.0)*6.0*Math.PI* Math.Sin(3.0 * Math.PI * y) + 2.0*(y-1.0)*
+                (1.0 + Math.Pow(Math.Sin(2.0 * Math.PI * y), 2.0)) + (y - 1.0)*(y - 1.0)*4.0*Math.PI* Math.Sin(2.0 * Math.PI * y)
+                );
+            return grad;
+        }
+
 
     }
 }

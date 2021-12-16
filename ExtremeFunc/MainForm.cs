@@ -53,7 +53,7 @@ namespace FunExtremum
                 fa = Func(xa, ya);
                 ExtremumPoint.Text = String.Format("({0:F5};{1:F5})", xa, ya);
                 ExtremeValue.Text = String.Format("{0:F5}", fa);
-                Iterations.Text = "Аналитическое решение. Метод не реализован в программе.";
+                Iterations.Text = "Аналитическое решение. Метод не реализован в программе для этой функции.";
                 return;
             }
             Find.Enabled = false;
@@ -134,8 +134,8 @@ namespace FunExtremum
             else if (FuncListView.Items[4].Selected)
             {
                 Func = new fun(Functions.Threehump);
+                Grad = new gradient(Functions.GradientThreehump);
                 graphBox.Image = Image.FromHbitmap(Resources.ThreeHumpedGraph.GetHbitmap());
-                Grad = null;
                 funIdx = 4;
             }
 
@@ -143,7 +143,7 @@ namespace FunExtremum
             {
                 Func = new fun(Functions.Levy);
                 graphBox.Image = Image.FromHbitmap(Resources.LeviGraph.GetHbitmap());
-                Grad = null;
+                Grad = new gradient(Functions.GradientVevy);
                 funIdx = 5;
             }
 
@@ -167,6 +167,7 @@ namespace FunExtremum
             if (FuncListView.Enabled) FuncListView.Enabled = false;
             iterData.Clear();
             iterationsGridView.Refresh();
+            if (graphButton.Enabled) graphButton.Enabled = false;
 
             float x = (float)Convert.ToDouble(xTextBox.Text);
             float y = (float)Convert.ToDouble(yTextBox.Text);
@@ -176,6 +177,7 @@ namespace FunExtremum
             float ye = y;
             float fe = Func(x, y);
             int i = 0;
+            int n = 3000;
             float yleft = 0.0f;
             float yright = 0.0f;
             bool found = false;
@@ -205,26 +207,58 @@ namespace FunExtremum
                     yleft = (float)Math.Sqrt((double)yleft);
 
                     yright = 0.0f;
-                    int n = iterData.Count;
-                    for (int j = 0; j < n; j++)
+                    int nn = iterData.Count;
+                    for (int j = 0; j < nn; j++)
                         yright += (ye - iterData[j].yv) * (ye - iterData[j].yv);
                     yleft = (float)Math.Sqrt((double)yright);
 
-                    if (yleft <= yright) break;
+                    if (yleft <= yright || i > n) break;
                 }
 
                 i++;
                 x += px;
                 y += py;
             }
-            FexTextBox.Text = String.Format("{0:F5}", fe);
-            XexTextBox.Text = String.Format("{0:F5}", xe);
-            YexTextBox.Text = String.Format("{0:F5}", ye);
+
+            if(i > n)
+            {
+                FexTextBox.Text = String.Empty;
+                XexTextBox.Text = String.Empty;
+                YexTextBox.Text = String.Empty;
+                LeftOperTextBox.Text = String.Empty;
+                ErrorText.Text = "Итерационный процесс не сходится";
+
+            }
+            else
+            {
+                FexTextBox.Text = String.Format("{0:F5}", fe);
+                XexTextBox.Text = String.Format("{0:F5}", xe);
+                YexTextBox.Text = String.Format("{0:F5}", ye);
+                ErrorText.Text = String.Empty;
+            }
             LeftOperTextBox.Text = String.Format("{0:F5}", yleft);
             RightOperTextBox.Text = String.Format("{0:F5}", yright);
             if (!newStepButton.Enabled) newStepButton.Enabled = true;
             if (!FuncListView.Enabled) FuncListView.Enabled = true;
+            if (!graphButton.Enabled) graphButton.Enabled = true;
 
+        }
+        // построить график по так называемой итерации
+        private void OnIterGraph(object sender, EventArgs e)
+        {
+            if (iterData.Count < 1) return;
+            int n = iterData.Count;
+            float [] x = new float[n];
+            float[] y = new float[n];
+            float[] z = new float[n];
+            for(int i = 0; i <n; i++)
+            {
+                x[i] = iterData[i].xv;
+                y[i] = iterData[i].yv;
+                z[i] = iterData[i].fv;
+            }
+            Graph gr = new Graph(x, y, z);
+            gr.Start();
         }
 
         private bool ValidateInput(TextBox elem)
