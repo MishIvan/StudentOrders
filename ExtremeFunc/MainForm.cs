@@ -167,7 +167,6 @@ namespace FunExtremum
             if (FuncListView.Enabled) FuncListView.Enabled = false;
             iterData.Clear();
             iterationsGridView.Refresh();
-            if (graphButton.Enabled) graphButton.Enabled = false;
 
             float x = (float)Convert.ToDouble(xTextBox.Text);
             float y = (float)Convert.ToDouble(yTextBox.Text);
@@ -203,14 +202,14 @@ namespace FunExtremum
                 {
                     yleft = 0.0f;
                     for (int j = 0; j < ifound; j++)
-                        yleft += (ye - iterData[j].yv) * (ye - iterData[j].yv);
+                        yleft += (fe - iterData[j].fv) * (fe - iterData[j].fv);
                     yleft = (float)Math.Sqrt((double)yleft);
 
                     yright = 0.0f;
                     int nn = iterData.Count;
                     for (int j = 0; j < nn; j++)
-                        yright += (ye - iterData[j].yv) * (ye - iterData[j].yv);
-                    yleft = (float)Math.Sqrt((double)yright);
+                        yright += (fe - iterData[j].fv) * (fe - iterData[j].fv);
+                    yright = (float)Math.Sqrt((double)yright);
 
                     if (yleft <= yright || i > n) break;
                 }
@@ -240,11 +239,10 @@ namespace FunExtremum
             RightOperTextBox.Text = String.Format("{0:F5}", yright);
             if (!newStepButton.Enabled) newStepButton.Enabled = true;
             if (!FuncListView.Enabled) FuncListView.Enabled = true;
-            if (!graphButton.Enabled) graphButton.Enabled = true;
 
         }
         // построить график по так называемой итерации
-        private void OnIterGraph(object sender, EventArgs e)
+/*        private void OnIterGraph(object sender, EventArgs e)
         {
             if (iterData.Count < 1) return;
             int n = iterData.Count;
@@ -259,7 +257,7 @@ namespace FunExtremum
             }
             Graph gr = new Graph(x, y, z);
             gr.Start();
-        }
+        }*/
 
         private bool ValidateInput(TextBox elem)
         {

@@ -31,12 +31,12 @@ namespace FunExtremum
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("", 0);
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("", 1);
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("", 2);
-            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("", 3);
-            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("", 4);
-            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("", 5);
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("", 0);
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("", 1);
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("", 2);
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("", 3);
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("", 4);
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("", 5);
             this.label1 = new System.Windows.Forms.Label();
             this.ExtremeValue = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -73,7 +73,6 @@ namespace FunExtremum
             this.FuncList = new System.Windows.Forms.ImageList(this.components);
             this.FuncListView = new System.Windows.Forms.ListView();
             this.graphBox = new System.Windows.Forms.PictureBox();
-            this.graphButton = new System.Windows.Forms.Button();
             this.SolutionTabView.SuspendLayout();
             this.AutoTab.SuspendLayout();
             this.ManualTab.SuspendLayout();
@@ -170,7 +169,6 @@ namespace FunExtremum
             // ManualTab
             // 
             this.ManualTab.BackColor = System.Drawing.Color.Gainsboro;
-            this.ManualTab.Controls.Add(this.graphButton);
             this.ManualTab.Controls.Add(this.groupBox1);
             this.ManualTab.Controls.Add(this.ErrorText);
             this.ManualTab.Controls.Add(this.newStepButton);
@@ -430,24 +428,24 @@ namespace FunExtremum
             this.FuncListView.FullRowSelect = true;
             this.FuncListView.GridLines = true;
             this.FuncListView.HideSelection = false;
-            listViewItem7.StateImageIndex = 0;
-            listViewItem8.Checked = true;
-            listViewItem8.StateImageIndex = 1;
-            listViewItem9.Checked = true;
-            listViewItem9.StateImageIndex = 2;
-            listViewItem10.Checked = true;
-            listViewItem10.StateImageIndex = 3;
-            listViewItem11.Checked = true;
-            listViewItem11.StateImageIndex = 4;
-            listViewItem12.Checked = true;
-            listViewItem12.StateImageIndex = 5;
+            listViewItem1.StateImageIndex = 0;
+            listViewItem2.Checked = true;
+            listViewItem2.StateImageIndex = 1;
+            listViewItem3.Checked = true;
+            listViewItem3.StateImageIndex = 2;
+            listViewItem4.Checked = true;
+            listViewItem4.StateImageIndex = 3;
+            listViewItem5.Checked = true;
+            listViewItem5.StateImageIndex = 4;
+            listViewItem6.Checked = true;
+            listViewItem6.StateImageIndex = 5;
             this.FuncListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem7,
-            listViewItem8,
-            listViewItem9,
-            listViewItem10,
-            listViewItem11,
-            listViewItem12});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4,
+            listViewItem5,
+            listViewItem6});
             this.FuncListView.LargeImageList = this.FuncList;
             this.FuncListView.Location = new System.Drawing.Point(12, 12);
             this.FuncListView.MultiSelect = false;
@@ -471,16 +469,6 @@ namespace FunExtremum
             this.graphBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.graphBox.TabIndex = 9;
             this.graphBox.TabStop = false;
-            // 
-            // graphButton
-            // 
-            this.graphButton.Location = new System.Drawing.Point(510, 242);
-            this.graphButton.Name = "graphButton";
-            this.graphButton.Size = new System.Drawing.Size(143, 33);
-            this.graphButton.TabIndex = 14;
-            this.graphButton.Text = "Построить график";
-            this.graphButton.UseVisualStyleBackColor = true;
-            this.graphButton.Click += new System.EventHandler(this.OnIterGraph);
             // 
             // MainForm
             // 
@@ -547,7 +535,6 @@ namespace FunExtremum
         private System.Windows.Forms.TextBox XexTextBox;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox FexTextBox;
-        private System.Windows.Forms.Button graphButton;
     }
 }
 
