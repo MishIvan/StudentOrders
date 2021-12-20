@@ -73,6 +73,7 @@ namespace FunExtremum
             this.FuncList = new System.Windows.Forms.ImageList(this.components);
             this.FuncListView = new System.Windows.Forms.ListView();
             this.graphBox = new System.Windows.Forms.PictureBox();
+            this.stopIterationButton = new System.Windows.Forms.Button();
             this.SolutionTabView.SuspendLayout();
             this.AutoTab.SuspendLayout();
             this.ManualTab.SuspendLayout();
@@ -169,6 +170,7 @@ namespace FunExtremum
             // ManualTab
             // 
             this.ManualTab.BackColor = System.Drawing.Color.Gainsboro;
+            this.ManualTab.Controls.Add(this.stopIterationButton);
             this.ManualTab.Controls.Add(this.groupBox1);
             this.ManualTab.Controls.Add(this.ErrorText);
             this.ManualTab.Controls.Add(this.newStepButton);
@@ -470,6 +472,16 @@ namespace FunExtremum
             this.graphBox.TabIndex = 9;
             this.graphBox.TabStop = false;
             // 
+            // stopIterationButton
+            // 
+            this.stopIterationButton.Location = new System.Drawing.Point(510, 245);
+            this.stopIterationButton.Name = "stopIterationButton";
+            this.stopIterationButton.Size = new System.Drawing.Size(184, 31);
+            this.stopIterationButton.TabIndex = 14;
+            this.stopIterationButton.Text = "Остановить итерацию";
+            this.stopIterationButton.UseVisualStyleBackColor = true;
+            this.stopIterationButton.Click += new System.EventHandler(this.OnStopIteration);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -535,6 +547,7 @@ namespace FunExtremum
         private System.Windows.Forms.TextBox XexTextBox;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox FexTextBox;
+        private System.Windows.Forms.Button stopIterationButton;
     }
 }
 

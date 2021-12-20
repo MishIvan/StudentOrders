@@ -6,11 +6,14 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FunExtremum
 {
+    delegate void EvtHandler(float x, float y, float fxy);
+    delegate void EvtText(float xe, float ye, float fe, float left, float right, bool converge);
     public partial class MainForm : Form
     {
         private float eps, kmin;
@@ -19,6 +22,7 @@ namespace FunExtremum
         private static gradient Grad;
         private BindingList<Iterations> iterData;
         private int funIdx;
+        private bool stopIteration;
         public MainForm()
         {
             InitializeComponent();
@@ -154,6 +158,36 @@ namespace FunExtremum
             FuncListView.Items[0].Selected = true;
             iterationsGridView.DataSource = iterData;
         }
+        private void AddRow(float x, float y, float fxy)
+        {
+            iterData.Add(new FunExtremum.Iterations { xv = x, yv = y, fv = fxy });
+            iterationsGridView.CurrentCell = iterationsGridView[0, iterData.Count - 1];
+            iterationsGridView.Refresh();
+        }
+        private void ShowText(float xe, float ye, float fe, float left, float right, bool converge)
+        {
+            if (!converge)
+            {
+                FexTextBox.Text = String.Empty;
+                XexTextBox.Text = String.Empty;
+                YexTextBox.Text = String.Empty;
+                LeftOperTextBox.Text = String.Empty;
+                ErrorText.Text = "Итерационный процесс не сходится";
+
+            }
+            else
+            {
+                FexTextBox.Text = String.Format("{0:F5}", fe);
+                XexTextBox.Text = String.Format("{0:F5}", xe);
+                YexTextBox.Text = String.Format("{0:F5}", ye);
+                ErrorText.Text = String.Empty;
+            }
+            LeftOperTextBox.Text = String.Format("{0:F5}", left);
+            RightOperTextBox.Text = String.Format("{0:F5}", right);
+            if (!newStepButton.Enabled) newStepButton.Enabled = true;
+            if (!FuncListView.Enabled) FuncListView.Enabled = true;
+
+        }
 
         // новый шаг итераций
         private void OnNewStep(object sender, EventArgs e)
@@ -172,33 +206,37 @@ namespace FunExtremum
             float y = (float)Convert.ToDouble(yTextBox.Text);
             float px = (float)Convert.ToDouble(stepxTextBox.Text);
             float py = (float)Convert.ToDouble(ystepTextBox.Text);
-            float xe = x;
-            float ye = y;
-            float fe = Func(x, y);
+            EvtHandler evt = new EvtHandler(AddRow);
+            EvtText evt1 = new EvtText(ShowText);
             int i = 0;
             int n = 3000;
-            float yleft = 0.0f;
-            float yright = 0.0f;
-            bool found = false;
-            int ifound = 0;
-            while (true) 
+            stopIteration = false;
+
+            Thread th = new Thread(() =>
             {
-                float fxy = Func(x,y);
-                iterData.Add(new FunExtremum.Iterations { xv = x, yv = y, fv = fxy });
-                iterationsGridView.CurrentCell = iterationsGridView[0, iterData.Count - 1];
-                iterationsGridView.Refresh();
+                float xe = x;
+                float ye = y;
+                float fe = Func(x, y);
+                float yleft = 0.0f;
+                float yright = 0.0f;
+                bool found = false;
+                int ifound = 0;
+            while (true)
+            {
+                float fxy = Func(x, y);
+                Invoke(evt, x, y, fxy);
 
                 // найти локальный минимум или максимум
-                if (iterData.Count >=3 && !found)
+                if (iterData.Count >= 3 && !found)
                 {
-                    if((iterData[i-2].fv > iterData[i-1].fv && iterData[i].fv > iterData[i-1].fv) ||
+                    if ((iterData[i - 2].fv > iterData[i - 1].fv && iterData[i].fv > iterData[i - 1].fv) ||
                         (iterData[i - 2].fv < iterData[i - 1].fv && iterData[i].fv < iterData[i - 1].fv)
                         )
-                        { xe = iterData[i - 1].xv; ye = iterData[i - 1].yv; fe = iterData[i - 1].fv; found = true; ifound = i - 1; }
+                    { xe = iterData[i - 1].xv; ye = iterData[i - 1].yv; fe = iterData[i - 1].fv; found = true; ifound = i - 1; }
 
                 }
 
-                if(found) // экстремум найден, проверка условий прерывания итерации
+                if (found) // экстремум найден, проверка условий прерывания итерации
                 {
                     yleft = 0.0f;
                     for (int j = 0; j < ifound; j++)
@@ -211,53 +249,24 @@ namespace FunExtremum
                         yright += (fe - iterData[j].fv) * (fe - iterData[j].fv);
                     yright = (float)Math.Sqrt((double)yright);
 
-                    if (yleft <= yright || i > n) break;
+                    if (yleft <= yright) break;
+                    }
+                    if (i > n || stopIteration) break;
+                    i++;
+                    x += px;
+                    y += py;
                 }
+                Invoke(evt1, xe, ye, fe, yleft, yright, !(i > n));
 
-                i++;
-                x += px;
-                y += py;
-            }
-
-            if(i > n)
-            {
-                FexTextBox.Text = String.Empty;
-                XexTextBox.Text = String.Empty;
-                YexTextBox.Text = String.Empty;
-                LeftOperTextBox.Text = String.Empty;
-                ErrorText.Text = "Итерационный процесс не сходится";
-
-            }
-            else
-            {
-                FexTextBox.Text = String.Format("{0:F5}", fe);
-                XexTextBox.Text = String.Format("{0:F5}", xe);
-                YexTextBox.Text = String.Format("{0:F5}", ye);
-                ErrorText.Text = String.Empty;
-            }
-            LeftOperTextBox.Text = String.Format("{0:F5}", yleft);
-            RightOperTextBox.Text = String.Format("{0:F5}", yright);
-            if (!newStepButton.Enabled) newStepButton.Enabled = true;
-            if (!FuncListView.Enabled) FuncListView.Enabled = true;
+            });
+            th.Start();
 
         }
-        // построить график по так называемой итерации
-/*        private void OnIterGraph(object sender, EventArgs e)
+
+        private void OnStopIteration(object sender, EventArgs e)
         {
-            if (iterData.Count < 1) return;
-            int n = iterData.Count;
-            float [] x = new float[n];
-            float[] y = new float[n];
-            float[] z = new float[n];
-            for(int i = 0; i <n; i++)
-            {
-                x[i] = iterData[i].xv;
-                y[i] = iterData[i].yv;
-                z[i] = iterData[i].fv;
-            }
-            Graph gr = new Graph(x, y, z);
-            gr.Start();
-        }*/
+            stopIteration = true;
+        }
 
         private bool ValidateInput(TextBox elem)
         {
