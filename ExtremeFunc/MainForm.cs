@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace FunExtremum
 {
-    delegate void EvtHandler(float x, float y, float fxy);
+    delegate void EvtHandler(int i, float x, float y, float fxy);
     delegate void EvtText(float xe, float ye, float fe, float left, float right, bool converge);
     public partial class MainForm : Form
     {
@@ -22,7 +22,6 @@ namespace FunExtremum
         private static gradient Grad;
         private BindingList<Iterations> iterData;
         private int funIdx;
-        private bool stopIteration;
         public MainForm()
         {
             InitializeComponent();
@@ -158,9 +157,9 @@ namespace FunExtremum
             FuncListView.Items[0].Selected = true;
             iterationsGridView.DataSource = iterData;
         }
-        private void AddRow(float x, float y, float fxy)
+        private void AddRow(int i, float x, float y, float fxy)
         {
-            iterData.Add(new FunExtremum.Iterations { xv = x, yv = y, fv = fxy });
+            iterData.Add(new FunExtremum.Iterations { istep = i, xv = x, yv = y, fv = fxy });
             iterationsGridView.CurrentCell = iterationsGridView[0, iterData.Count - 1];
             iterationsGridView.Refresh();
         }
@@ -172,7 +171,8 @@ namespace FunExtremum
                 XexTextBox.Text = String.Empty;
                 YexTextBox.Text = String.Empty;
                 LeftOperTextBox.Text = String.Empty;
-                ErrorText.Text = "Итерационный процесс не сходится";
+                RightOperTextBox.Text = String.Empty;
+                ErrorText.Text = "Итерационный процесс не сошёлся";
 
             }
             else
@@ -180,12 +180,14 @@ namespace FunExtremum
                 FexTextBox.Text = String.Format("{0:F5}", fe);
                 XexTextBox.Text = String.Format("{0:F5}", xe);
                 YexTextBox.Text = String.Format("{0:F5}", ye);
+                LeftOperTextBox.Text = String.Format("{0:F5}", left);
+                RightOperTextBox.Text = String.Format("{0:F5}", right);
                 ErrorText.Text = String.Empty;
             }
-            LeftOperTextBox.Text = String.Format("{0:F5}", left);
-            RightOperTextBox.Text = String.Format("{0:F5}", right);
             if (!newStepButton.Enabled) newStepButton.Enabled = true;
             if (!FuncListView.Enabled) FuncListView.Enabled = true;
+            if (!graphButton.Enabled) graphButton.Enabled = true;
+
 
         }
 
@@ -193,12 +195,20 @@ namespace FunExtremum
         private void OnNewStep(object sender, EventArgs e)
         {
             if (!ValidateInput(xTextBox) || !ValidateInput(yTextBox) ||
-                !ValidateInput(stepxTextBox) || !ValidateInput(ystepTextBox))
+                !ValidateInput(stepxTextBox) || !ValidateInput(ystepTextBox) ||
+                !ValidateInput(XnTextBox) || !ValidateInput(YnTextBox)
+                || !ValidateInput(epsTextBox)
+                )
             {
+                ErrorText.Text = "Heверный формат числа";
                 return;
             }
+            else
+                ErrorText.Text = String.Empty;
+
             if (newStepButton.Enabled) newStepButton.Enabled = false;            
             if (FuncListView.Enabled) FuncListView.Enabled = false;
+            if (graphButton.Enabled) graphButton.Enabled = false;
             iterData.Clear();
             iterationsGridView.Refresh();
 
@@ -206,11 +216,14 @@ namespace FunExtremum
             float y = (float)Convert.ToDouble(yTextBox.Text);
             float px = (float)Convert.ToDouble(stepxTextBox.Text);
             float py = (float)Convert.ToDouble(ystepTextBox.Text);
+            float xn = (float)Convert.ToDouble(XnTextBox.Text);
+            float yn = (float)Convert.ToDouble(YnTextBox.Text);
+            float eps = (float)Convert.ToDouble(epsTextBox.Text);
+
             EvtHandler evt = new EvtHandler(AddRow);
             EvtText evt1 = new EvtText(ShowText);
             int i = 0;
             int n = 3000;
-            stopIteration = false;
 
             Thread th = new Thread(() =>
             {
@@ -221,10 +234,13 @@ namespace FunExtremum
                 float yright = 0.0f;
                 bool found = false;
                 int ifound = 0;
+                float x0 = xe;
+                float y0 = ye;
+                float f0 = fe;
             while (true)
             {
                 float fxy = Func(x, y);
-                Invoke(evt, x, y, fxy);
+                Invoke(evt, i, x, y, fxy);
 
                 // найти локальный минимум или максимум
                 if (iterData.Count >= 3 && !found)
@@ -246,12 +262,18 @@ namespace FunExtremum
                     yright = 0.0f;
                     int nn = iterData.Count;
                     for (int j = 0; j < nn; j++)
-                        yright += (fe - iterData[j].fv) * (fe - iterData[j].fv);
-                    yright = (float)Math.Sqrt((double)yright);
+                        yright += (f0 - iterData[j].fv) * (f0 - iterData[j].fv);
+                    yright = (float)Math.Sqrt((double)yright)*eps;
 
                     if (yleft <= yright) break;
+                }
+                    // условие остановки несходящихся итераций
+                    if ((xn < x && xn > x0 && px > 0.0) || (xn > x && xn < x0 && px < 0.0)
+                    || (yn < y && yn > y0 && py > 0.0) || (yn > y && yn < y0 && py < 0.0)
+                    )
+                    {
+                        break;
                     }
-                    if (i > n || stopIteration) break;
                     i++;
                     x += px;
                     y += py;
@@ -263,9 +285,23 @@ namespace FunExtremum
 
         }
 
-        private void OnStopIteration(object sender, EventArgs e)
+        // построить график кривой
+        private void OnShowGraph(object sender, EventArgs e)
         {
-            stopIteration = true;
+            if (iterData.Count < 1) return;
+            int n = iterData.Count;
+            float[] x = new float[n];
+            float[] y = new float[n];
+            float[] z = new float[n];
+            for (int i = 0; i < n; i++)
+            {
+                x[i] = iterData[i].xv;
+                y[i] = iterData[i].yv;
+                z[i] = iterData[i].fv;
+            }
+            Graph gr = new Graph(x, y, z);
+            gr.Start();
+
         }
 
         private bool ValidateInput(TextBox elem)
@@ -277,11 +313,9 @@ namespace FunExtremum
                 Convert.ToDouble(s1);
             }
             catch (FormatException)
-            {
-                ErrorText.Text = "Heверный формат числа";
+            {                
                 return false;
             }
-            ErrorText.Text = "";
             return true;
 
 
