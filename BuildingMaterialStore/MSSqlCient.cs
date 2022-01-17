@@ -170,7 +170,7 @@ namespace BuildingMaterialStore
         {
             if (!isOpened) return;
             lst.Clear();
-            SqlCommand cmd = new SqlCommand("select DateSailing, Name, Unit, Count, Price, Summa from WarehouseView", conn);
+            SqlCommand cmd = new SqlCommand("select DateSailing, Name, Unit, Count, Price, Summa from SailingsView", conn);
             SqlDataReader rd = cmd.ExecuteReader();
             while (rd.Read())
             {
@@ -204,6 +204,24 @@ namespace BuildingMaterialStore
             return code;
 
         }
+        /// <summary>
+        /// Добавить продажу товара
+        /// </summary>
+        /// <param name="Name">Наименование</param>
+        /// <param name="count">кол-во</param>
+        /// <param name="price">цена</param>
+        /// <returns>число добавленных записей</returns>
+        public int AddSaling(String Name, double count, double price)
+        {
+            if (!isOpened) return -1;
+            DateTime dt = DateTime.Now;
+            String sdt = String.Format("{0:d4}{1:d2}{2:d2} {3:d2}:{4:d2}:{5:d2}", dt.Year, dt.Month, dt.Day,
+                dt.Hour, dt.Minute, dt.Second);
+
+            int code = ExecuteSQL($"exec Sailing '{Name}', {count}, {price}, '{sdt}'");
+            return code;
+
+        }
         /*        
 
                 public int AddSailing(int tabNumber, String productName, DateTime dt, double sum)
@@ -222,30 +240,7 @@ namespace BuildingMaterialStore
                                     dt.Hour, dt.Minute, dt.Second);
                     return ExecuteSQL($"exec DeleteSailing {tabNumber},'{productName}', '{sdt}'");
 
-                }
-                // есть ли товар с наименованием Name в таблице продаж
-                public bool ProductInSailings(String Name)
-                {
-                    if (!isOpened) return false;
-                    String sqlText = $"select dbo.ProductOrManagerSailingCount('{Name}', 0, 1)";
-                    SqlCommand cmd = new SqlCommand(sqlText, conn);
-                    int code = Convert.ToInt32(cmd.ExecuteScalar());
-                    return code > 0;
-
-
-                }
-
-                // есть ли менеджер с таб. ном. tabNumber в таблице продаж
-                public bool ManagerInSailings(int tabNumber)
-                {
-                    if (!isOpened) return false;
-                    String sqlText = $"select dbo.ProductOrManagerSailingCount('', {tabNumber}, 2)";
-                    SqlCommand cmd = new SqlCommand(sqlText, conn);
-                    int code = Convert.ToInt32(cmd.ExecuteScalar());
-                    return code > 0;
-
-
-                } */
+                }*/
 
     }
 }

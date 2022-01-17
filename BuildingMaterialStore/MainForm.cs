@@ -43,6 +43,10 @@ namespace BuildingMaterialStore
             sqlclient.FillFilteredWareList("", lstwn);
             wareComboBox.DataSource = new BindingList<String>(lstwn);
 
+            List<Sailing> lsts = new List<Sailing>();
+            sqlclient.FillSailingsList(lsts);
+            sailingsGridView.DataSource = new BindingList<Sailing>(lsts);
+
             errorMessage.Text = Resources.NO_ERROR;
 
         }
@@ -120,12 +124,16 @@ namespace BuildingMaterialStore
         private void OnWareMove(object sender, EventArgs e)
         {
             errorMessage.Text = Resources.NO_ERROR;
+            String name = "";
+            double count = 0.0;
+            double price = 0.0;
+
             // приход на склад
-            if(mainTabControl.SelectedIndex == 1)
+            if (mainTabControl.SelectedIndex == 1)
             {
-                String name = wareComboBox.Text;
-                double count = Convert.ToDouble(countTextBox.Text);
-                double price = Convert.ToDouble(priceTextBox.Text);
+                name = wareComboBox.Text;
+                count = Convert.ToDouble(countTextBox.Text);
+                price = Convert.ToDouble(priceTextBox.Text);
                 if (String.IsNullOrEmpty(name) || count == 0.0 || price == 0.0) return;
                 int code = sqlclient.AddToWarehouse(name, count, price);
                 if (code > 0)
@@ -143,6 +151,20 @@ namespace BuildingMaterialStore
             // списание в продажу
             if(mainTabControl.SelectedIndex == 2)
             {
+                name = wareComboBox.Text;
+                count = Convert.ToDouble(countTextBox.Text);
+                price = Convert.ToDouble(priceTextBox.Text);
+                if (String.IsNullOrEmpty(name) || count == 0.0 || price == 0.0) return;
+                int code = sqlclient.AddSaling(name, count, price);
+                if (code > 0)
+                {
+                    List<Sailing> lsts = new List<Sailing>();
+                    sqlclient.FillSailingsList(lsts);
+                    sailingsGridView.DataSource = new BindingList<Sailing>(lsts);
+
+                }
+                else
+                    errorMessage.Text = $"Не удалось осуществить продажу товара {name}. Возможно, отсутствует требуемое количество";
 
             }
         }
