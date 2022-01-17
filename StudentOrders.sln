@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtremeFunc", "ExtremeFunc\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollectionsView", "CollectionsView\CollectionsView.csproj", "{DA02D43E-4102-48D2-AEE6-26925C49DCF2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingMaterialStore", "BuildingMaterialStore\BuildingMaterialStore.csproj", "{BFCEAC62-5705-44FC-929C-ECB310A87571}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{DA02D43E-4102-48D2-AEE6-26925C49DCF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA02D43E-4102-48D2-AEE6-26925C49DCF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA02D43E-4102-48D2-AEE6-26925C49DCF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFCEAC62-5705-44FC-929C-ECB310A87571}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFCEAC62-5705-44FC-929C-ECB310A87571}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFCEAC62-5705-44FC-929C-ECB310A87571}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFCEAC62-5705-44FC-929C-ECB310A87571}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
