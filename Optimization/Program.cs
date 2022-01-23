@@ -12,7 +12,7 @@ namespace Optimization
     /// <param name="x">аргумент</param>
     /// <returns></returns>
     delegate double opt_fun(double x);
-    class Program
+    partial class Program
     {
         static double eps = 0.001;
         static double delta = 0.0001;
@@ -44,6 +44,15 @@ namespace Optimization
             Console.WriteLine(String.Format("Точка экстремума {0,15:F6}, экстремальное заначение {1,15:F6}\n\r",
                 xopt, functionForOptimize(xopt)));
 
+            Console.WriteLine("*** Метод средней точки ***\n\r");
+            MeanPoint(a, b, ref xopt, derivativefunctionForOptimize);
+            Console.WriteLine(String.Format("Точка экстремума {0,15:F6}, экстремальное заначение {1,15:F6}\n\r",
+                xopt, functionForOptimize(xopt)));
+
+            Console.WriteLine("*** Метод Ньютона ***\n\r");
+            Newton(a,ref xopt, derivativefunctionForOptimize, derivative2functionForOptimize);
+            Console.WriteLine(String.Format("Точка экстремума {0,15:F6}, экстремальное заначение {1,15:F6}\n\r",
+                xopt, functionForOptimize(xopt)));
 
             Console.WriteLine("Нажмите любую клавишу");
             Console.ReadKey();
@@ -56,13 +65,13 @@ namespace Optimization
         /// <param name="b">конечная точка интервала</param>
         /// <param name="xopt">точка экстремума</param>
         /// <param name="f1">функция оптимизации</param>
-        /// <returns>true - успешно, при ошибке </returns>
+        /// <returns>true - успешно, при ошибке - false</returns>
         static bool Dichotomy(double a, double b, ref double xopt, opt_fun f1)
         {
             if (a >= b) return false;
-            double d = (b - a) * 0.0005;
-            double x1 = (a + b) * 0.5 - d;
-            double x2 = (a + b) * 0.5 + d;
+            //double d = (b - a) * 0.0005;
+            double x1 = (a + b) * 0.5 - delta;
+            double x2 = (a + b) * 0.5 + delta;
             double a1 = a, b1 = b;
             while (true)
             {
@@ -80,8 +89,8 @@ namespace Optimization
                 }
                 if (Math.Abs(b1 - a1) <= eps || Math.Abs(v2 - v1) <= eps) break;
                 d = (b1 - a1) * 0.005;
-                x1 = (a1 + b1) * 0.5 - d;
-                x2 = (a1 + b1) * 0.5 + d;
+                x1 = (a1 + b1) * 0.5 - delta;
+                x2 = (a1 + b1) * 0.5 + delta;
             }
             xopt = (x1 - x2) * 0.5;
             return true;
@@ -93,7 +102,7 @@ namespace Optimization
         /// <param name="b">конечная точка интервала</param>
         /// <param name="xopt">точка экстремума</param>
         /// <param name="f1">функция оптимизации</param>
-        /// <returns>true - успешно, при ошибке </returns>
+        /// <returns>true - успешно, при ошибке - false</returns>
         static bool BitByBitSearch(double a, double b, ref double xopt, opt_fun f1)
         {
             if (a >= b) return false;
@@ -126,7 +135,7 @@ namespace Optimization
         /// <param name="b">конечная точка интервала</param>
         /// <param name="xopt">точка экстремума</param>
         /// <param name="f1">функция оптимизации</param>
-        /// <returns>true - успешно, при ошибке </returns>
+        /// <returns>true - успешно, при ошибке - false</returns>
         static bool GoldenCut(double a, double b, ref double xopt, opt_fun f1)
         {
             if (a >= b) return false;
@@ -153,24 +162,89 @@ namespace Optimization
             return true;
         }
 
+        /// <summary>
+        /// Метод средней точки
+        /// </summary>
+        /// <param name="a">начальная точка интевала</param>
+        /// <param name="b">конечная точка интервала</param>
+        /// <param name="xopt">точка экстремума</param>
+        /// <param name="f1d">производная функции оптимизации</param>
+        /// <returns>true - успешно, при ошибке - false</returns>
+        static bool MeanPoint(double a, double b, ref double xopt, opt_fun f1d)
+        {
+            if (a >= b) return false;
+            double d = (b - a) * 0.01;
+            double a1 = a;
+            double b1 = b;
+            // поиск на границах которрого производная меняет знак
+            while (f1d(a1)*f1d(b1) > 0.0)
+            {
+                a1 += d; b1 -= d;
+            }
+            if (f1d(a1) * f1d(b1) > 0.0) return false; // интервал не найден
+            // производная в окрестности нуля
+            if (Math.Abs(f1d(a1)) <= eps * 0.1) { xopt = a1; return true; }
+            if (Math.Abs(f1d(b1)) <= eps * 0.1) { xopt = b1; return true; }
+            double x = 0.0;
+            while(true)
+            {
+                x = (b1 + a1) * 0.5;
+                if (Math.Abs(f1d(x)) <= eps && Math.Abs(b1 - a1) <= eps) break;
+                if (f1d(x) > 0.0) b1 = x;
+                else a1 = x;
+            }
+            xopt = x;
+            return true;
+        }
+        /// <summary>
+        /// Метод Ньютона. Ищется корень производной от функции
+        /// </summary>
+        /// <param name="x0">Начальное приближение</param>
+        /// <param name="f1">Производная функции</param>
+        /// <param name="f1d">Вторая производная функции</param>
+        /// <returns>true - успешно, при ошибке - false</returns>
+        static bool Newton(double x0, ref double xopt, opt_fun f1, opt_fun f1d)
+        {
+            double x1 = x0;
+            int n = 3200, i = 0;
+            while(true)
+            {
+                x1 = x0 - f1(x0) / f1d(x0);
+                if (Math.Abs(x1 - x0) <= eps || i >= n) break;
+                x0 = x1;
+                i++;
+            }
+            xopt = x1;
+            return i >= n;
+        }
 
         /// <summary>
-        /// Функция для одномерной оптимизации
+        /// Вещественная функция вещественного переменного
         /// </summary>
-        /// <param name="x"></param>
-        /// <returns></returns>
+        /// <param name="x">вещественный аргумент</param>
+        /// <returns>вещественное значение</returns>
         static double functionForOptimize(double x)
         {
             return (1.0 + x) * x + 1.0 / (1 + x * x);
         }
         /// <summary>
-        /// Производная функции для одномерной оптимизации
+        /// Производная вещественной функция вещественного переменного
         /// </summary>
-        /// <param name="x"></param>
-        /// <returns></returns>
+        /// <param name="x">вещественный аргумент</param>
+        /// <returns>вещественное значение</returns>
         static double derivativefunctionForOptimize(double x)
         {
             return 1.0 + 2.0 * x - 2.0 * x / Math.Pow(1 + x * x, 2.0);
         }
+        /// <summary>
+        /// Вторая производная вещественной функция вещественного переменного
+        /// </summary>
+        /// <param name="x">вещественный аргумент</param>
+        /// <returns>вещественное значение</returns>
+        static double derivative2functionForOptimize(double x)
+        {
+            return 2.0 - 2.0 / Math.Pow(1 + x * x, 2.0) + 8.0*x*x / Math.Pow(1 + x * x, 3.0);
+        }
+
     }
 }
