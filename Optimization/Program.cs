@@ -55,13 +55,30 @@ namespace Optimization
                 xopt, functionForOptimize(xopt)));
 
             Result res = new Result { x = 0.0, y = 0.0, iter = 0 };
-            Console.WriteLine("*** Метод градиентного спуска ***\n\r");
+            Console.WriteLine("*** Метод градиентного спуска (функция 1) ***\n\r");
             if(GradientDescent(x0, minusfun1, minusgradfun1, getlambdafun1, res))
                 Console.WriteLine(String.Format("Точка экстремума ({0,15:F6};{1,15:F6}), экстремальное заначение {2,15:F6}. Число итераций {3,3:d}.\n\r",
                     res.x, res.y, fun1(res.x, res.y), res.iter));
 
             else
                 Console.WriteLine("Метод не сходится. Вычисления прерваны по достижении предельного числа итераций.\n\r");
+
+            res.x = 0.0; res.y = 0.0; res.iter = 0;
+            x0[0] = x0[1] = 0.0;
+            Console.WriteLine("*** Метод градиентного спуска (функция 2) ***\n\r");
+            if (GradientDescent(x0, fun2, gradfun2, null, res))
+                Console.WriteLine(String.Format("Точка экстремума ({0,15:F6};{1,15:F6}), экстремальное заначение {2,15:F6}. Число итераций {3,3:d}.\n\r",
+                    res.x, res.y, fun2(res.x, res.y), res.iter));
+
+            else
+                Console.WriteLine("Метод не сходится. Вычисления прерваны по достижении предельного числа итераций.\n\r");
+
+            res.x = 0.0; res.y = 0.0; res.iter = 0;
+            Console.WriteLine("*** Нелинейное программирование ***\n\r");
+            double m = 3.0, n = 2.0;
+            NonLinear(n, m, 10.0, 15.0, res);
+                Console.WriteLine(String.Format("Точка экстремума ({0,15:F6};{1,15:F6}), экстремальное заначение {2,15:F6}.\n\r",
+                    res.x, res.y, nFunc(res.x, res.y, n, m)));
 
 
             Console.WriteLine("Нажмите любую клавишу");

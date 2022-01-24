@@ -41,7 +41,7 @@ namespace Optimization
             int i = 1, n = 32000, j = 0;
             double[] x1 = new double[2];
             for (j = 0; j < 2; j++) x1[j] = x0[j];
-            double [] lambda = new double[] { 0.9, 0.9 };
+            double [] lambda = new double[] { 0.5, 0.5 };
             while(i <= n)
             {
                 double[] grad = gradf2(x0[0], x0[1]);
@@ -54,6 +54,7 @@ namespace Optimization
                     res.x = x1[0]; res.y = x1[1]; res.iter = i;
                     break;
                 }
+                if (flambda == null && f2(x1[0], x1[1]) > f2(x0[0], x0[1])) { lambda[0] *= 0.1; lambda[1] *= 0.1; }
                 for (j = 0; j < 2; j++) x0[j] = x1[j]; 
                 i++;
             }
@@ -95,6 +96,19 @@ namespace Optimization
             lambda[0] = (x1 + a / (2.0 * c)) / grad[0];
             lambda[1] = (x2 + b / (2.0 * d)) / grad[1];
             return lambda;
+        }
+
+        static double fun2(double x1, double x2)
+        {
+            return a * x1 + b * x2 + Math.Pow(e, c * x1 * x1 + d * x2 * x2);
+        }
+        static double [] gradfun2(double x1, double x2)
+        {
+            double[] gvect = new double[2] { 0.0, 0.0 };
+            gvect[0] = a + Math.Pow(e, c * x1 * x1 + d * x2 * x2)*Math.Log(e)*2.0*c*x1;
+            gvect[1] = b + Math.Pow(e, c * x1 * x1 + d * x2 * x2) * Math.Log(e) * 2.0 * d * x2;
+            return gvect;
+
         }
     }
 }
