@@ -80,6 +80,8 @@ namespace Optimization
                 Console.WriteLine(String.Format("Точка экстремума ({0,15:F6};{1,15:F6}), экстремальное заначение {2,15:F6}.\n\r",
                     res.x, res.y, nFunc(res.x, res.y, n, m)));
 
+            Console.WriteLine("*** Симплекс-метод ***\n\r");
+            SolveSimplex();
 
             Console.WriteLine("Нажмите любую клавишу");
             Console.ReadKey();

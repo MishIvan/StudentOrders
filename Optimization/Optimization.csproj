@@ -45,6 +45,8 @@
     <Compile Include="NonLinear.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Simplex.cs" />
+    <Compile Include="SimplexSolve.cs" />
     <Compile Include="TwoArguments.cs" />
   </ItemGroup>
   <ItemGroup>
