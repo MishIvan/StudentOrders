@@ -54,6 +54,16 @@ namespace Optimization
             Console.WriteLine(String.Format("Точка экстремума {0,15:F6}, экстремальное заначение {1,15:F6}\n\r",
                 xopt, functionForOptimize(xopt)));
 
+            Result res = new Result { x = 0.0, y = 0.0, iter = 0 };
+            Console.WriteLine("*** Метод градиентного спуска ***\n\r");
+            if(GradientDescent(x0, minusfun1, minusgradfun1, getlambdafun1, res))
+                Console.WriteLine(String.Format("Точка экстремума ({0,15:F6};{1,15:F6}), экстремальное заначение {2,15:F6}. Число итераций {3,3:d}.\n\r",
+                    res.x, res.y, fun1(res.x, res.y), res.iter));
+
+            else
+                Console.WriteLine("Метод не сходится. Вычисления прерваны по достижении предельного числа итераций.\n\r");
+
+
             Console.WriteLine("Нажмите любую клавишу");
             Console.ReadKey();
 
