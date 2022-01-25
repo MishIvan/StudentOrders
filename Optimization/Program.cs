@@ -83,6 +83,33 @@ namespace Optimization
             Console.WriteLine("*** Симплекс-метод ***\n\r");
             SolveSimplex();
 
+            Console.WriteLine("*** Транспортная задача (метод севверо-западного угла) ***\n\r");
+            // стоимости
+            double[,] c = { {2.0,4.0,1.0,4.0 },
+                            {3.0,2.0,4.0,1.0 },
+                            {4.0,9.0,2.0,9.0 }
+            };
+            double[] need = { 150.0, 100.0, 100.0, 200.0 }; // потребности
+            double[] fund = { 110.0, 220.0, 330.0 }; // запасы
+            double[,] x = SouthWestCorner(c, fund, need);
+            int k = x.GetUpperBound(0) + 1;
+            int p = x.GetUpperBound(1) + 1;
+            int i, j;
+            double sum = 0.0;
+            String s1 = "";
+            for (i = 0; i < k; i++)
+            {
+                s1 = "";
+                for (j = 0; j < p; j++)
+                {
+                    s1 += $"{x[i, j]}\t";                    
+                    sum += c[i, j] * x[i, j];
+                }
+                Console.WriteLine(s1);
+                Console.WriteLine("\r\n");
+            }
+            Console.WriteLine($"Сумма {sum}\r\n");
+
             Console.WriteLine("Нажмите любую клавишу");
             Console.ReadKey();
 

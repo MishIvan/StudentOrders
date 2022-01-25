@@ -7,11 +7,19 @@ using System.Threading.Tasks;
 namespace Optimization
 {
 
-        partial class Program
+    partial class Program
+    {
+        /// <summary>
+        /// Решение симплекс-методом
+        /// </summary>
+        static void SolveSimplex()
         {
-            static void SolveSimplex()
-            {
-                double[,] table = { {25, -3,  5},
+            // Матрица исходных данных.
+            // Первые строки - ограничения,
+            // последняя строка - коэффициенты со знаком минус и правая часть функции
+            // Правые части ограничений - первый столбец
+
+            double[,] table = { {25, -3,  5},
                                 {684, 2,  3},
                                 {690,  10,  5},
                                 {558, 3, 6},
@@ -33,6 +41,41 @@ namespace Optimization
                 Console.WriteLine();
                 Console.WriteLine("Решение:");
                 Console.WriteLine($"X[1] = {result[0]}, X[2] = {result[1]}");
-            }
         }
+
+        /// <summary>
+        ///  Метод серевро-западного угла транспортой задачи
+        /// </summary>
+        /// <param name="koef">стоимости</param>
+        /// <param name="fund">предложения</param>
+        /// <param name="need">потребности</param>
+        /// <returns>план перевозок</returns>
+        static double [,] SouthWestCorner(double [,] koef, double [] fund, double [] need)
+        {
+            int n = koef.GetUpperBound(0) + 1;
+            int m = koef.GetUpperBound(1) + 1;
+            double[,] mas = new double[n, m];
+            int i, j;
+
+            for(i=0; i<n;i++) 
+                for(j= 0;j<m;j++)   
+                if(fund[i] != 0.0 && need[j] != 0.0)
+                {
+                    if (fund[i] >= need[j])
+                    {
+                        mas[i, j] = need[j];
+                        fund[i] = fund[i] - need[j];
+                        need[j] = 0;
+                    }
+                    else
+                    {
+                        mas[i, j] = fund[i];
+                        need[j] = need[j] - fund[i];
+                        fund[i] = 0;
+                    }
+                }
+                else mas[i, j] = 0;
+        return mas;
+        }
+    }
 }

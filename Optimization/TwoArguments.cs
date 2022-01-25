@@ -42,19 +42,21 @@ namespace Optimization
             double[] x1 = new double[2];
             for (j = 0; j < 2; j++) x1[j] = x0[j];
             double [] lambda = new double[] { 0.5, 0.5 };
+            double nrm = 1.0;
             while(i <= n)
             {
                 double[] grad = gradf2(x0[0], x0[1]);
                 if (flambda != null)
                     lambda = flambda(x0[0], x0[1]);
-                for(j=0;j<2;j++) x1[j] = x0[j] - lambda[j] * grad[j];
-                double nrm = Math.Sqrt((x1[0] - x0[0])*(x1[0] - x0[0]) + (x1[1] - x0[1])* (x1[1] - x0[1]));
+                else
+                    for (j = 0; j < 2; j++) lambda[j] /= nrm;
+                for (j=0;j<2;j++) x1[j] = x0[j] - lambda[j] * grad[j];
+                nrm = Math.Sqrt((x1[0] - x0[0])*(x1[0] - x0[0]) + (x1[1] - x0[1])* (x1[1] - x0[1]));
                 if (nrm <= eps)
                 {
                     res.x = x1[0]; res.y = x1[1]; res.iter = i;
                     break;
                 }
-                if (flambda == null && f2(x1[0], x1[1]) > f2(x0[0], x0[1])) { lambda[0] *= 0.1; lambda[1] *= 0.1; }
                 for (j = 0; j < 2; j++) x0[j] = x1[j]; 
                 i++;
             }
