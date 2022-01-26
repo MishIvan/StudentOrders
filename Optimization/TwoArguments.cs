@@ -45,13 +45,17 @@ namespace Optimization
             double nrm = 1.0;
             while(i <= n)
             {
+                // вычисление градиента
                 double[] grad = gradf2(x0[0], x0[1]);
+                // вычисление параметра спуска
                 if (flambda != null)
                     lambda = flambda(x0[0], x0[1]);
                 else
                     for (j = 0; j < 2; j++) lambda[j] /= nrm;
+                // приближение xi+1 = xi + lambda*grad(f)
                 for (j=0;j<2;j++) x1[j] = x0[j] - lambda[j] * grad[j];
                 nrm = Math.Sqrt((x1[0] - x0[0])*(x1[0] - x0[0]) + (x1[1] - x0[1])* (x1[1] - x0[1]));
+                // условие остановки итерации
                 if (nrm <= eps)
                 {
                     res.x = x1[0]; res.y = x1[1]; res.iter = i;

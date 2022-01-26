@@ -77,5 +77,41 @@ namespace Optimization
                 else mas[i, j] = 0;
         return mas;
         }
+        /// <summary>
+        ///  Метод наименьшей стоимости транспортой задачи
+        /// </summary>
+        /// <param name="koef">стоимости</param>
+        /// <param name="fund">предложения</param>
+        /// <param name="need">потребности</param>
+        /// <returns>план перевозок</returns>
+        /*static double [,] MinCost(double[,] koef, double[] fund, double[] need)
+        {
+            int n = koef.GetUpperBound(0) + 1;
+            int m = koef.GetUpperBound(1) + 1;
+            double[,] mas = new double[n, m];
+            int i, j, ki, kj;
+            double k;
+
+            for (i = 0; i <n; i++) 
+            {
+                ki = 0;
+                kj = 0;
+                k = koef[ki,kj];
+                for (j = 0; j < m; j++) 
+                {
+                    if (k < koef[i, j])
+                    {
+                        k = koef[i, j];
+                        ki = i;
+                        kj = j;
+                    }
+                    
+                }
+                mas[i,j] = k;
+                koef[ki, kj] = fund[i] - koef[ki, kj];
+            }
+            return mas;
+
+        }*/
     }
 }

@@ -23,10 +23,27 @@ namespace Optimization
             Console.WriteLine("Введите интервал поиска экстремума\n\r");
 
             Console.WriteLine("Начальное значение: ");
-            double a = Convert.ToDouble(Console.ReadLine());
-
+            double a = 0.0;
+            try
+            {
+                a = Convert.ToDouble(Console.ReadLine());
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return;
+            }
             Console.WriteLine("Конечное значение: ");
-            double b = Convert.ToDouble(Console.ReadLine());
+            double b = 0.0;
+            try
+            { 
+                b = Convert.ToDouble(Console.ReadLine());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return;
+            }
 
             double xopt = 0.0;
             Console.WriteLine("*** Метод дихотомии ***\n\r");
@@ -83,7 +100,7 @@ namespace Optimization
             Console.WriteLine("*** Симплекс-метод ***\n\r");
             SolveSimplex();
 
-            Console.WriteLine("*** Транспортная задача (метод севверо-западного угла) ***\n\r");
+            Console.WriteLine("*** Транспортная задача (метод северо-западного угла) ***\n\r");
             // стоимости
             double[,] c = { {2.0,4.0,1.0,4.0 },
                             {3.0,2.0,4.0,1.0 },
@@ -109,6 +126,29 @@ namespace Optimization
                 Console.WriteLine("\r\n");
             }
             Console.WriteLine($"Сумма {sum}\r\n");
+
+            /*Console.WriteLine("*** Транспортная задача (метод наименьшей стоимости) ***\n\r");
+            need = new double[4] { 150.0, 100.0, 100.0, 200.0 }; // потребности
+            fund = new double[3] { 110.0, 220.0, 330.0 }; // запасы
+            x = MinCost(c, fund, need);
+            k = x.GetUpperBound(0) + 1;
+            p = x.GetUpperBound(1) + 1;
+
+            sum = 0.0;
+            s1 = "";
+            for (i = 0; i < k; i++)
+            {
+                s1 = "";
+                for (j = 0; j < p; j++)
+                {
+                    s1 += $"{x[i, j]}\t";
+                    sum += c[i, j] * x[i, j];
+                }
+                Console.WriteLine(s1);
+                Console.WriteLine("\r\n");
+            }
+            Console.WriteLine($"Сумма {sum}\r\n");*/
+
 
             Console.WriteLine("Нажмите любую клавишу");
             Console.ReadKey();
