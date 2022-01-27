@@ -60,6 +60,7 @@ namespace BuildingMaterialStore
             errorMessage.Text = Resources.NO_ERROR; 
             string unit = unitComboBox.Text;
             string name = wareNameTextBox.Text;
+            if (!CheckWareForAdd(name)) return;
             int code  = sqlclient.AddWare(name, unit);
             if (code > 0)
             {
@@ -114,7 +115,7 @@ namespace BuildingMaterialStore
         /// <param name="e"></param>
         private void OnClose(object sender, FormClosedEventArgs e)
         {
-            if (sqlclient.isOpened) sqlclient.Close();
+            if (sqlclient.isOpened) sqlclient.Dispose();
         }
         /// <summary>
         /// Отражение прихода товара или его продажи
@@ -127,14 +128,55 @@ namespace BuildingMaterialStore
             String name = "";
             double count = 0.0;
             double price = 0.0;
+            // ввод исходных данных и прверка правильности их ввода 
+            if(mainTabControl.SelectedIndex == 1 || mainTabControl.SelectedIndex == 2)
+            {
+                name = wareComboBox.Text;
+                if (String.IsNullOrEmpty(name) || String.IsNullOrWhiteSpace(name))
+                {
+                    errorMessage.Text = Resources.EMPTY_WARE_NAME;
+                    return;
+                }
+                else
+                {
+                    
+                    if(!sqlclient.WareExists(name))
+                    {
+                        errorMessage.Text = String.Format(Resources.WARE_NOT_EXISTS, name);
+                        return;
+                    }
+                }
 
+                try
+                {
+                    count = Convert.ToDouble(countTextBox.Text);
+                }
+                catch (Exception ex)
+                {
+                    errorMessage.Text = Resources.BAD_VALUE_QUANTITY + ex.Message;
+                    return;
+                }
+
+                try
+                {
+                    price = Convert.ToDouble(priceTextBox.Text);
+                }
+                catch (Exception ex)
+                {
+                    errorMessage.Text = Resources.BAD_VALUE_PRICE + ex.Message;
+                }
+
+                if (count == 0.0 || price == 0.0)
+                {
+                    errorMessage.Text = Resources.ZERO_VALUES;
+                    return;
+                }
+
+
+            }
             // приход на склад
             if (mainTabControl.SelectedIndex == 1)
             {
-                name = wareComboBox.Text;
-                count = Convert.ToDouble(countTextBox.Text);
-                price = Convert.ToDouble(priceTextBox.Text);
-                if (String.IsNullOrEmpty(name) || count == 0.0 || price == 0.0) return;
                 int code = sqlclient.AddToWarehouse(name, count, price);
                 if (code > 0)
                 {
@@ -151,10 +193,6 @@ namespace BuildingMaterialStore
             // списание в продажу
             if(mainTabControl.SelectedIndex == 2)
             {
-                name = wareComboBox.Text;
-                count = Convert.ToDouble(countTextBox.Text);
-                price = Convert.ToDouble(priceTextBox.Text);
-                if (String.IsNullOrEmpty(name) || count == 0.0 || price == 0.0) return;
                 int code = sqlclient.AddSaling(name, count, price);
                 if (code > 0)
                 {
@@ -179,5 +217,28 @@ namespace BuildingMaterialStore
             e.Handled = !(Char.IsDigit(ch) || ch == 8 || ch == ',');
 
         }
+        /// <summary>
+        /// Проверка, можно ли добавлять товар в справочник номенклатуры
+        /// </summary>
+        /// <returns>true - можно, false -  нельзя</returns>
+        private bool CheckWareForAdd(String wname)
+        {
+            errorMessage.Text = Resources.NO_ERROR;
+            bool isempty =  String.IsNullOrEmpty(wname) || String.IsNullOrWhiteSpace(wname);
+            if(isempty)
+            {
+                errorMessage.Text = Resources.EMPTY_WARE_NAME;
+                return false;
+            }
+
+            if(sqlclient.WareExists(wname))
+            {
+                errorMessage.Text = String.Format(Resources.WARE_IN_LIST,wname);
+                return false;
+
+            }
+            return true;
+        }
+
     }
 }

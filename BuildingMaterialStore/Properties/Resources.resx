@@ -117,7 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BAD_VALUE_PRICE" xml:space="preserve">
+    <value>Ошибка при задании цены: </value>
+  </data>
+  <data name="BAD_VALUE_QUANTITY" xml:space="preserve">
+    <value>Ошибка при задании количества: </value>
+  </data>
+  <data name="EMPTY_WARE_NAME" xml:space="preserve">
+    <value>Товар должен иметь наименование</value>
+  </data>
   <data name="NO_ERROR" xml:space="preserve">
     <value>Нет ошибок</value>
+  </data>
+  <data name="WARE_IN_LIST" xml:space="preserve">
+    <value>Товар {0} уже есть в списке номенклатуры</value>
+  </data>
+  <data name="WARE_NOT_EXISTS" xml:space="preserve">
+    <value>Товара {0} нет в списке номенклатуры</value>
+  </data>
+  <data name="ZERO_VALUES" xml:space="preserve">
+    <value>Недопустим ввод нулевой цены или нулевого количества</value>
   </data>
 </root>

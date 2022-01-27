@@ -61,11 +61,65 @@ namespace BuildingMaterialStore.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Ошибка при задании цены: .
+        /// </summary>
+        internal static string BAD_VALUE_PRICE {
+            get {
+                return ResourceManager.GetString("BAD_VALUE_PRICE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Ошибка при задании количества: .
+        /// </summary>
+        internal static string BAD_VALUE_QUANTITY {
+            get {
+                return ResourceManager.GetString("BAD_VALUE_QUANTITY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Товар должен иметь наименование.
+        /// </summary>
+        internal static string EMPTY_WARE_NAME {
+            get {
+                return ResourceManager.GetString("EMPTY_WARE_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Нет ошибок.
         /// </summary>
         internal static string NO_ERROR {
             get {
                 return ResourceManager.GetString("NO_ERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Товар {0} уже есть в списке номенклатуры.
+        /// </summary>
+        internal static string WARE_IN_LIST {
+            get {
+                return ResourceManager.GetString("WARE_IN_LIST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Товара {0} нет в списке номенклатуры.
+        /// </summary>
+        internal static string WARE_NOT_EXISTS {
+            get {
+                return ResourceManager.GetString("WARE_NOT_EXISTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Недопустим ввод нулевой цены или нулевого количества.
+        /// </summary>
+        internal static string ZERO_VALUES {
+            get {
+                return ResourceManager.GetString("ZERO_VALUES", resourceCulture);
             }
         }
     }

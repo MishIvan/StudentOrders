@@ -29,13 +29,14 @@ namespace BuildingMaterialStore
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.wareTabPage = new System.Windows.Forms.TabPage();
             this.deleteWareButton = new System.Windows.Forms.Button();
@@ -48,7 +49,14 @@ namespace BuildingMaterialStore
             this.wareNameTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.warehouseTabPage = new System.Windows.Forms.TabPage();
+            this.warehouseGridView = new System.Windows.Forms.DataGridView();
+            this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UnitColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CountColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SummaColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sailingTabPage = new System.Windows.Forms.TabPage();
+            this.sailingsGridView = new System.Windows.Forms.DataGridView();
             this.errorMessage = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.wareComboBox = new System.Windows.Forms.ComboBox();
@@ -56,14 +64,7 @@ namespace BuildingMaterialStore
             this.countTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.priceTextBox = new System.Windows.Forms.TextBox();
-            this.warehouseGridView = new System.Windows.Forms.DataGridView();
-            this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.UnitColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CountColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SummaColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.addMovingButton = new System.Windows.Forms.Button();
-            this.sailingsGridView = new System.Windows.Forms.DataGridView();
             this.DateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NameSailColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UnitSaleColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -74,8 +75,8 @@ namespace BuildingMaterialStore
             this.wareTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.waresGridView)).BeginInit();
             this.warehouseTabPage.SuspendLayout();
-            this.sailingTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.warehouseGridView)).BeginInit();
+            this.sailingTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sailingsGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -103,7 +104,7 @@ namespace BuildingMaterialStore
             this.wareTabPage.Location = new System.Drawing.Point(4, 25);
             this.wareTabPage.Name = "wareTabPage";
             this.wareTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.wareTabPage.Size = new System.Drawing.Size(812, 373);
+            this.wareTabPage.Size = new System.Drawing.Size(850, 373);
             this.wareTabPage.TabIndex = 0;
             this.wareTabPage.Text = "Номенклатура";
             // 
@@ -129,6 +130,8 @@ namespace BuildingMaterialStore
             // 
             // waresGridView
             // 
+            this.waresGridView.AllowUserToAddRows = false;
+            this.waresGridView.AllowUserToDeleteRows = false;
             this.waresGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.waresGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.NameWare,
@@ -207,6 +210,85 @@ namespace BuildingMaterialStore
             this.warehouseTabPage.TabIndex = 1;
             this.warehouseTabPage.Text = "Склад";
             // 
+            // warehouseGridView
+            // 
+            this.warehouseGridView.AllowUserToAddRows = false;
+            this.warehouseGridView.AllowUserToDeleteRows = false;
+            this.warehouseGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.warehouseGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.NameColumn,
+            this.UnitColumn,
+            this.CountColumn,
+            this.PriceColumn,
+            this.SummaColumn});
+            this.warehouseGridView.Location = new System.Drawing.Point(7, 26);
+            this.warehouseGridView.MultiSelect = false;
+            this.warehouseGridView.Name = "warehouseGridView";
+            this.warehouseGridView.ReadOnly = true;
+            this.warehouseGridView.RowHeadersWidth = 51;
+            this.warehouseGridView.RowTemplate.Height = 24;
+            this.warehouseGridView.Size = new System.Drawing.Size(739, 326);
+            this.warehouseGridView.TabIndex = 0;
+            // 
+            // NameColumn
+            // 
+            this.NameColumn.DataPropertyName = "Name";
+            this.NameColumn.HeaderText = "Наименование";
+            this.NameColumn.MaxInputLength = 128;
+            this.NameColumn.MinimumWidth = 6;
+            this.NameColumn.Name = "NameColumn";
+            this.NameColumn.ReadOnly = true;
+            this.NameColumn.Width = 200;
+            // 
+            // UnitColumn
+            // 
+            this.UnitColumn.DataPropertyName = "Unit";
+            this.UnitColumn.HeaderText = "Ед. изм.";
+            this.UnitColumn.MaxInputLength = 64;
+            this.UnitColumn.MinimumWidth = 6;
+            this.UnitColumn.Name = "UnitColumn";
+            this.UnitColumn.ReadOnly = true;
+            this.UnitColumn.Width = 125;
+            // 
+            // CountColumn
+            // 
+            this.CountColumn.DataPropertyName = "Count";
+            dataGridViewCellStyle8.Format = "N5";
+            dataGridViewCellStyle8.NullValue = null;
+            this.CountColumn.DefaultCellStyle = dataGridViewCellStyle8;
+            this.CountColumn.HeaderText = "Кол-во";
+            this.CountColumn.MaxInputLength = 15;
+            this.CountColumn.MinimumWidth = 6;
+            this.CountColumn.Name = "CountColumn";
+            this.CountColumn.ReadOnly = true;
+            this.CountColumn.Width = 125;
+            // 
+            // PriceColumn
+            // 
+            this.PriceColumn.DataPropertyName = "Price";
+            dataGridViewCellStyle9.Format = "N2";
+            dataGridViewCellStyle9.NullValue = null;
+            this.PriceColumn.DefaultCellStyle = dataGridViewCellStyle9;
+            this.PriceColumn.HeaderText = "Цена";
+            this.PriceColumn.MaxInputLength = 15;
+            this.PriceColumn.MinimumWidth = 6;
+            this.PriceColumn.Name = "PriceColumn";
+            this.PriceColumn.ReadOnly = true;
+            this.PriceColumn.Width = 125;
+            // 
+            // SummaColumn
+            // 
+            this.SummaColumn.DataPropertyName = "Summa";
+            dataGridViewCellStyle10.Format = "N2";
+            dataGridViewCellStyle10.NullValue = null;
+            this.SummaColumn.DefaultCellStyle = dataGridViewCellStyle10;
+            this.SummaColumn.HeaderText = "Сумма";
+            this.SummaColumn.MaxInputLength = 15;
+            this.SummaColumn.MinimumWidth = 6;
+            this.SummaColumn.Name = "SummaColumn";
+            this.SummaColumn.ReadOnly = true;
+            this.SummaColumn.Width = 125;
+            // 
             // sailingTabPage
             // 
             this.sailingTabPage.BackColor = System.Drawing.Color.Gainsboro;
@@ -216,6 +298,26 @@ namespace BuildingMaterialStore
             this.sailingTabPage.Size = new System.Drawing.Size(850, 373);
             this.sailingTabPage.TabIndex = 2;
             this.sailingTabPage.Text = "Продажи";
+            // 
+            // sailingsGridView
+            // 
+            this.sailingsGridView.AllowUserToAddRows = false;
+            this.sailingsGridView.AllowUserToDeleteRows = false;
+            this.sailingsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.sailingsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.DateColumn,
+            this.NameSailColumn,
+            this.UnitSaleColumn,
+            this.CountSailColumn,
+            this.PriceSailColumn,
+            this.SummaSailColumn});
+            this.sailingsGridView.Location = new System.Drawing.Point(7, 27);
+            this.sailingsGridView.Name = "sailingsGridView";
+            this.sailingsGridView.ReadOnly = true;
+            this.sailingsGridView.RowHeadersWidth = 51;
+            this.sailingsGridView.RowTemplate.Height = 24;
+            this.sailingsGridView.Size = new System.Drawing.Size(824, 322);
+            this.sailingsGridView.TabIndex = 0;
             // 
             // errorMessage
             // 
@@ -283,79 +385,6 @@ namespace BuildingMaterialStore
             this.priceTextBox.TabIndex = 5;
             this.priceTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnCountKeyPressed);
             // 
-            // warehouseGridView
-            // 
-            this.warehouseGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.warehouseGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.NameColumn,
-            this.UnitColumn,
-            this.CountColumn,
-            this.PriceColumn,
-            this.SummaColumn});
-            this.warehouseGridView.Location = new System.Drawing.Point(7, 26);
-            this.warehouseGridView.MultiSelect = false;
-            this.warehouseGridView.Name = "warehouseGridView";
-            this.warehouseGridView.ReadOnly = true;
-            this.warehouseGridView.RowHeadersWidth = 51;
-            this.warehouseGridView.RowTemplate.Height = 24;
-            this.warehouseGridView.Size = new System.Drawing.Size(739, 326);
-            this.warehouseGridView.TabIndex = 0;
-            // 
-            // NameColumn
-            // 
-            this.NameColumn.DataPropertyName = "Name";
-            this.NameColumn.HeaderText = "Наименование";
-            this.NameColumn.MaxInputLength = 128;
-            this.NameColumn.MinimumWidth = 6;
-            this.NameColumn.Name = "NameColumn";
-            this.NameColumn.ReadOnly = true;
-            this.NameColumn.Width = 200;
-            // 
-            // UnitColumn
-            // 
-            this.UnitColumn.DataPropertyName = "Unit";
-            this.UnitColumn.HeaderText = "Ед. изм.";
-            this.UnitColumn.MaxInputLength = 64;
-            this.UnitColumn.MinimumWidth = 6;
-            this.UnitColumn.Name = "UnitColumn";
-            this.UnitColumn.ReadOnly = true;
-            // 
-            // CountColumn
-            // 
-            this.CountColumn.DataPropertyName = "Count";
-            dataGridViewCellStyle1.Format = "N5";
-            dataGridViewCellStyle1.NullValue = null;
-            this.CountColumn.DefaultCellStyle = dataGridViewCellStyle1;
-            this.CountColumn.HeaderText = "Кол-во";
-            this.CountColumn.MaxInputLength = 15;
-            this.CountColumn.MinimumWidth = 6;
-            this.CountColumn.Name = "CountColumn";
-            this.CountColumn.ReadOnly = true;
-            // 
-            // PriceColumn
-            // 
-            this.PriceColumn.DataPropertyName = "Price";
-            dataGridViewCellStyle2.Format = "N2";
-            dataGridViewCellStyle2.NullValue = null;
-            this.PriceColumn.DefaultCellStyle = dataGridViewCellStyle2;
-            this.PriceColumn.HeaderText = "Цена";
-            this.PriceColumn.MaxInputLength = 15;
-            this.PriceColumn.MinimumWidth = 6;
-            this.PriceColumn.Name = "PriceColumn";
-            this.PriceColumn.ReadOnly = true;
-            // 
-            // SummaColumn
-            // 
-            this.SummaColumn.DataPropertyName = "Summa";
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = null;
-            this.SummaColumn.DefaultCellStyle = dataGridViewCellStyle3;
-            this.SummaColumn.HeaderText = "Сумма";
-            this.SummaColumn.MaxInputLength = 15;
-            this.SummaColumn.MinimumWidth = 6;
-            this.SummaColumn.Name = "SummaColumn";
-            this.SummaColumn.ReadOnly = true;
-            // 
             // addMovingButton
             // 
             this.addMovingButton.Location = new System.Drawing.Point(881, 120);
@@ -366,32 +395,16 @@ namespace BuildingMaterialStore
             this.addMovingButton.UseVisualStyleBackColor = true;
             this.addMovingButton.Click += new System.EventHandler(this.OnWareMove);
             // 
-            // sailingsGridView
-            // 
-            this.sailingsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.sailingsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.DateColumn,
-            this.NameSailColumn,
-            this.UnitSaleColumn,
-            this.CountSailColumn,
-            this.PriceSailColumn,
-            this.SummaSailColumn});
-            this.sailingsGridView.Location = new System.Drawing.Point(7, 27);
-            this.sailingsGridView.Name = "sailingsGridView";
-            this.sailingsGridView.RowHeadersWidth = 51;
-            this.sailingsGridView.RowTemplate.Height = 24;
-            this.sailingsGridView.Size = new System.Drawing.Size(824, 322);
-            this.sailingsGridView.TabIndex = 0;
-            // 
             // DateColumn
             // 
             this.DateColumn.DataPropertyName = "DateSailing";
-            dataGridViewCellStyle4.Format = "g";
-            dataGridViewCellStyle4.NullValue = null;
-            this.DateColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle11.Format = "g";
+            dataGridViewCellStyle11.NullValue = null;
+            this.DateColumn.DefaultCellStyle = dataGridViewCellStyle11;
             this.DateColumn.HeaderText = "Дата";
             this.DateColumn.MinimumWidth = 6;
             this.DateColumn.Name = "DateColumn";
+            this.DateColumn.ReadOnly = true;
             this.DateColumn.Width = 70;
             // 
             // NameSailColumn
@@ -400,6 +413,7 @@ namespace BuildingMaterialStore
             this.NameSailColumn.HeaderText = "Наименование";
             this.NameSailColumn.MinimumWidth = 6;
             this.NameSailColumn.Name = "NameSailColumn";
+            this.NameSailColumn.ReadOnly = true;
             this.NameSailColumn.Width = 220;
             // 
             // UnitSaleColumn
@@ -408,41 +422,46 @@ namespace BuildingMaterialStore
             this.UnitSaleColumn.HeaderText = "Ед. изм.";
             this.UnitSaleColumn.MinimumWidth = 6;
             this.UnitSaleColumn.Name = "UnitSaleColumn";
+            this.UnitSaleColumn.ReadOnly = true;
+            this.UnitSaleColumn.Width = 125;
             // 
             // CountSailColumn
             // 
             this.CountSailColumn.DataPropertyName = "Count";
-            dataGridViewCellStyle5.Format = "C5";
-            dataGridViewCellStyle5.NullValue = null;
-            this.CountSailColumn.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle12.Format = "N5";
+            dataGridViewCellStyle12.NullValue = null;
+            this.CountSailColumn.DefaultCellStyle = dataGridViewCellStyle12;
             this.CountSailColumn.HeaderText = "Кол-во";
             this.CountSailColumn.MaxInputLength = 15;
             this.CountSailColumn.MinimumWidth = 6;
             this.CountSailColumn.Name = "CountSailColumn";
+            this.CountSailColumn.ReadOnly = true;
             this.CountSailColumn.Width = 125;
             // 
             // PriceSailColumn
             // 
             this.PriceSailColumn.DataPropertyName = "Price";
-            dataGridViewCellStyle6.Format = "N2";
-            dataGridViewCellStyle6.NullValue = null;
-            this.PriceSailColumn.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle13.Format = "N2";
+            dataGridViewCellStyle13.NullValue = null;
+            this.PriceSailColumn.DefaultCellStyle = dataGridViewCellStyle13;
             this.PriceSailColumn.HeaderText = "Цена";
             this.PriceSailColumn.MaxInputLength = 15;
             this.PriceSailColumn.MinimumWidth = 6;
             this.PriceSailColumn.Name = "PriceSailColumn";
+            this.PriceSailColumn.ReadOnly = true;
             this.PriceSailColumn.Width = 125;
             // 
             // SummaSailColumn
             // 
             this.SummaSailColumn.DataPropertyName = "Summa";
-            dataGridViewCellStyle7.Format = "N2";
-            dataGridViewCellStyle7.NullValue = null;
-            this.SummaSailColumn.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle14.Format = "N2";
+            dataGridViewCellStyle14.NullValue = null;
+            this.SummaSailColumn.DefaultCellStyle = dataGridViewCellStyle14;
             this.SummaSailColumn.HeaderText = "Сумма";
             this.SummaSailColumn.MaxInputLength = 15;
             this.SummaSailColumn.MinimumWidth = 6;
             this.SummaSailColumn.Name = "SummaSailColumn";
+            this.SummaSailColumn.ReadOnly = true;
             this.SummaSailColumn.Width = 125;
             // 
             // MainForm
@@ -459,6 +478,7 @@ namespace BuildingMaterialStore
             this.Controls.Add(this.label3);
             this.Controls.Add(this.countTextBox);
             this.Controls.Add(this.label4);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "АРМ Менеджера";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnClose);
@@ -468,8 +488,8 @@ namespace BuildingMaterialStore
             this.wareTabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.waresGridView)).EndInit();
             this.warehouseTabPage.ResumeLayout(false);
-            this.sailingTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.warehouseGridView)).EndInit();
+            this.sailingTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sailingsGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

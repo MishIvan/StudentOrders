@@ -123,6 +123,27 @@
   <metadata name="UnitWare.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <metadata name="NameWare.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="UnitWare.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="NameColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="UnitColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="CountColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="PriceColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="SummaColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <metadata name="NameColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -156,4 +177,99 @@
   <metadata name="SummaSailColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <metadata name="DateColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="NameSailColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="UnitSaleColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="CountSailColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="PriceSailColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="SummaSailColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+        1f9BUXf/P1uF/z9cg/8or+b/Icj//yPC/f8hyP//KLDn/z5ehv8/W4T/QlB1/yyi1f8fteb/H3CH/wfA
+        1f0A6///AeP7kwD//wAPxeMBAP//AHdrTAKBdVoEkIRrA3VpTAN8cVQAALTmAAC15ikAyvT/AOr//wDx
+        /v4C5/3/Bun//xDR8P8bt9v/GM72/xnU//8czP//Hc3//xzM//8Z1P//GM73/xu43P8Q0vH/Bun//wLn
+        /f8A8f7/AOv//gDL9f8AtucyALXnAAqX6gQeRuMBHEXnAAAA/wBkYV0AcWVGAHJkRgAAruAAALjlEwDE
+        8uwA0/3/AdX9/gDg//8A5v7/AO7//wD0//8A7v7/AOr+/wDr//8A6v//AOv//wDq/v8A7v7/APP//wDu
+        //8A5v7/AOD//wHU/P4A0/7/AMbz9gC55h8AsuQAAL7tAgDq/wAAAAAAAAAAAAAAAAAAAAAAAAAAAADM
+        9wIAyPQAAMHvwQDT/f8A2f/8AN7//wDj//8B5/7/Aez+/wHx//8A7f//AOz//wDt//8A7P//AOz//wHw
+        //8B7P7/Aef+/wDj//8A3v//ANn//QDV/v8Aw/DWAGuwAgCUzQAAwe4BAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAL/tBAC66gAAvet4AM34/wDc//sA4P//AOX//wDq//8A8P//APT//wDw//8A8P//APD//wDw
+        //8A8P//APP//wDw//8A6v//AOX//wDg//8A2//7AND6/wC+7ZcAvesAAMDuBADC7wAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAwO4CALbnAAC45yAAxfHyANv//wDg//4A5f//AOr//wDw//8A9P//APL//wDz
+        //8A8///APP//wDy//8A8///APD//wDq//8A5f//AOD//wDc//0AyPT/ALrpPQC46AAAv+0DAMHuAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAADD8AAAv+0DALjpAAC87IcAz/f/AOP/+QDk//8A6f//AO///wDw
+        /v8A8/7/APb//wD1//8A9v//APT//wDu/f8A7///AOr//wDk//8A4v/6ANP6/wC+7bAAuesAAMTwAgDC
+        7wAAwu8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL/tAADA7gEAo9sAALzqCAC/7ccA1vr/AOf/+QDn
+        //4A7f//AOn8/wD0/v8A+f//APj//wD5//8A9///AOj7/wDs//8A5///AOb/+gDb/f8Awu/oALrqIQC1
+        5gAAv+0CAL/tAADF8wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwe8AAMLvAAC97AEAreIAALnpFgDA
+        7ssA0/j/AOb//QDt//sA4fr8APb+/wD7//8A+v//APr//wD6//8A4fn8AOr++wDo//0A2Pr/AMPv6QC6
+        6jUAtOcAAL3sAgC/7gAAwO4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwO4AAMDtAAC9
+        7AIAD40AALTmCQC87IkAyPL2ANX3/wDU9f4A+v79APz//gD7//4A+//+AP7//QDZ9/4A1Pf/AMzz/gC+
+        7a0At+gcAK/kAAC97AMAv+0AAL/tAADG8gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADE
+        8QAAwO0AAL/tAAC/7QIAvewCALfpAACy5xwAu+txALzsuwDZ9f0A////AP3//wD///4A4vf/AL7tywC9
+        7IQAtegvAMXxAADC7wIAv+0CAL/tAAC+7QAAwu8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAADE8QAAwO4AAL/tAADA7gEAwO4DAMPvAAD//wAA6voAAMHupQDP8vMA0fLmANHy8ADD
+        7sEAqOYLAKnnAAC/7QEAwe4DAMDuAgC/7QAAv+0AAMLvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwu8AALzrAAC76wAAwe4CAL7tBQDQ8gIAouUDAJDgEwCN
+        3xIAj98UAJvjBgD//wEAvu0FAMDuAwDI8gAAyPIAAMHuAADG8QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAsAAAALAAAACwAAAAuAAAALQAAAExAABRNFAFETwgAhE9QA
+        FQnIAAkJiAAJCVAABQEgAAMBIAAAAUAAAAGAAAABAAAAC4AAAIGAAACLgAAAn0AAAL9AAAE/QAABPyAA
+        Aj8gAAJ/UAAFf6gACv/SACX/6ECL//IAF/8=
+</value>
+  </data>
 </root>

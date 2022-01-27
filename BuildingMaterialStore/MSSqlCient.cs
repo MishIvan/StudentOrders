@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 
 namespace BuildingMaterialStore
 {
-    public class MSSqlCient
+    public class MSSqlCient : IDisposable
     {
         private SqlConnection conn;
         private string _errorText;
@@ -39,7 +39,7 @@ namespace BuildingMaterialStore
         /// <summary>
         /// закрытие соединения
         /// </summary>
-        public void Close()
+        public void Dispose()
         {
             if (isOpened) conn.Close();
         }
@@ -57,6 +57,20 @@ namespace BuildingMaterialStore
             return code;
         }
         /// <summary>
+        /// Проверка, нет ли товара с таким наименованием
+        /// </summary>
+        /// <param name="wName">наименование товара</param>
+        /// <returns>true - есть, false - нет</returns>
+        public bool WareExists(String wName)
+        {
+            if (!isOpened) return false;
+            String sqlText = $"select count(id) aa from Wares where name = '{wName}'";
+            SqlCommand cmd = new SqlCommand(sqlText, conn);
+            int id = (int)cmd.ExecuteScalar();
+            return id > 0;
+            
+        }
+        /// <summary>
         /// Добавить товар
         /// </summary>
         /// <param name="Name">Наименование</param>
@@ -64,7 +78,7 @@ namespace BuildingMaterialStore
         /// <returns></returns>
         public int AddWare(String Name, string UnitName)
         {
-            if (!isOpened) return -1;
+            if (!isOpened) return -1;            
 
             int code = ExecuteSQL($"exec AddWare '{Name}', '{UnitName}'");
             return code;
@@ -222,25 +236,6 @@ namespace BuildingMaterialStore
             return code;
 
         }
-        /*        
-
-                public int AddSailing(int tabNumber, String productName, DateTime dt, double sum)
-                {
-                    if (!isOpened) return -1;
-                    String sdt = String.Format("{0:d4}{1:d2}{2:d2} {3:d2}:{4:d2}:{5:d2}", dt.Year, dt.Month, dt.Day,
-                                    dt.Hour, dt.Minute, dt.Second);
-
-                    return ExecuteSQL($"exec AddSailing {tabNumber},'{productName}', '{sdt}', {sum}");
-                }
-
-                public int DeleteSailing(int tabNumber, String productName, DateTime dt)
-                {
-                    if (!isOpened) return -1;
-                    String sdt = String.Format("{0:d4}{1:d2}{2:d2} {3:d2}:{4:d2}:{5:d2}", dt.Year, dt.Month, dt.Day,
-                                    dt.Hour, dt.Minute, dt.Second);
-                    return ExecuteSQL($"exec DeleteSailing {tabNumber},'{productName}', '{sdt}'");
-
-                }*/
 
     }
 }
