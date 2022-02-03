@@ -39,7 +39,7 @@ namespace FuelStation
             this.fuelStationDataSet = new FuelStation.FuelStationDataSet();
             this.managersTabPage = new System.Windows.Forms.TabPage();
             this.managersListBox = new System.Windows.Forms.ListBox();
-            this.fuelStationDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.usersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.vehiclesTabPage = new System.Windows.Forms.TabPage();
             this.vehiclesGridView = new System.Windows.Forms.DataGridView();
             this.govnumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -66,6 +66,7 @@ namespace FuelStation
             this.govnumberDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.vehicleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.salingsViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.fuelStationDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label3 = new System.Windows.Forms.Label();
             this.wareComboBox = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -89,13 +90,12 @@ namespace FuelStation
             this.managerComboBox = new System.Windows.Forms.ComboBox();
             this.fullVehicleNameTableAdapter = new FuelStation.FuelStationDataSetTableAdapters.FullVehicleNameTableAdapter();
             this.usersTableAdapter = new FuelStation.FuelStationDataSetTableAdapters.UsersTableAdapter();
-            this.usersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.mainTabControl.SuspendLayout();
             this.wareTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.waresBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fuelStationDataSet)).BeginInit();
             this.managersTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fuelStationDataSetBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.usersBindingSource)).BeginInit();
             this.vehiclesTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.vehiclesGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.vehiclesBindingSource)).BeginInit();
@@ -105,10 +105,10 @@ namespace FuelStation
             this.sailingTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sailingsGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.salingsViewBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fuelStationDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainErrorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fullVehicleNameBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.queriesTableAdapterBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.usersBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // mainTabControl
@@ -182,10 +182,11 @@ namespace FuelStation
             this.mainToolTip.SetToolTip(this.managersListBox, "Список менеджеров");
             this.managersListBox.ValueMember = "ID";
             // 
-            // fuelStationDataSetBindingSource
+            // usersBindingSource
             // 
-            this.fuelStationDataSetBindingSource.DataSource = this.fuelStationDataSet;
-            this.fuelStationDataSetBindingSource.Position = 0;
+            this.usersBindingSource.DataMember = "Users";
+            this.usersBindingSource.DataSource = this.fuelStationDataSet;
+            this.usersBindingSource.Filter = "Status <>\'D\'";
             // 
             // vehiclesTabPage
             // 
@@ -456,6 +457,11 @@ namespace FuelStation
             this.salingsViewBindingSource.DataMember = "SalingsView";
             this.salingsViewBindingSource.DataSource = this.fuelStationDataSet;
             // 
+            // fuelStationDataSetBindingSource
+            // 
+            this.fuelStationDataSetBindingSource.DataSource = this.fuelStationDataSet;
+            this.fuelStationDataSetBindingSource.Position = 0;
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -529,6 +535,7 @@ namespace FuelStation
             this.editButton.TabIndex = 9;
             this.mainToolTip.SetToolTip(this.editButton, "Исправить приход ГСМ или продажу");
             this.editButton.UseVisualStyleBackColor = true;
+            this.editButton.Click += new System.EventHandler(this.OnEdit);
             // 
             // deleteButton
             // 
@@ -539,6 +546,7 @@ namespace FuelStation
             this.deleteButton.TabIndex = 8;
             this.mainToolTip.SetToolTip(this.deleteButton, "Удалить приход ГСМ на склад или продажу");
             this.deleteButton.UseVisualStyleBackColor = true;
+            this.deleteButton.Click += new System.EventHandler(this.OnDelete);
             // 
             // addButton
             // 
@@ -624,12 +632,6 @@ namespace FuelStation
             // 
             this.usersTableAdapter.ClearBeforeFill = true;
             // 
-            // usersBindingSource
-            // 
-            this.usersBindingSource.DataMember = "Users";
-            this.usersBindingSource.DataSource = this.fuelStationDataSet;
-            this.usersBindingSource.Filter = "Status <>\'D\'";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -658,7 +660,7 @@ namespace FuelStation
             ((System.ComponentModel.ISupportInitialize)(this.waresBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fuelStationDataSet)).EndInit();
             this.managersTabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.fuelStationDataSetBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.usersBindingSource)).EndInit();
             this.vehiclesTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.vehiclesGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.vehiclesBindingSource)).EndInit();
@@ -668,10 +670,10 @@ namespace FuelStation
             this.sailingTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sailingsGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.salingsViewBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fuelStationDataSetBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainErrorProvider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fullVehicleNameBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.queriesTableAdapterBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.usersBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

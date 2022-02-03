@@ -147,10 +147,10 @@ namespace FuelStation
                     else
                     {
                         recs = qadapter.AddWare(wareName);
-                        this.waresTableAdapter.Adapter.SelectCommand.CommandText = "select id, name from Wares";
-                            this.waresTableAdapter.Fill(this.fuelStationDataSet.Wares);
+                        this.waresTableAdapter.Fill(this.fuelStationDataSet.Wares);
                     }
                     break;
+
                 case 1: // менеджер
                     if (String.IsNullOrEmpty(userName) || String.IsNullOrWhiteSpace(userName))
                     {
@@ -163,16 +163,142 @@ namespace FuelStation
                         mainErrorProvider.SetError(managerComboBox, String.Format(Resources.USER_ALREADY_EXISTS, userName));
                         return;
                     }
-
                     else
                     {
                         recs = qadapter.AddUser(userName);
-                        this.usersTableAdapter.Adapter.SelectCommand.CommandText = "select id, name, password, status " +
-                            "from Users where status != 'D'";
                         this.usersTableAdapter.Fill(this.fuelStationDataSet.Users);
                     }
                     break;
+
+                case 2: // ТС
+                    foreach(DataGridViewRow row in vehiclesGridView.Rows)
+                    {
+                        String govnumber = row.Cells[0].Value == null ? String.Empty : row.Cells[0].Value.ToString();
+                        String vname = row.Cells[1].Value == null ? String.Empty : row.Cells[1].Value.ToString();
+                        object ob = qadapter.VehicleExists(govnumber);
+                        if (String.IsNullOrEmpty(govnumber) || String.IsNullOrWhiteSpace(govnumber) ||
+                            String.IsNullOrEmpty(vname) || String.IsNullOrWhiteSpace(vname) || 
+                        Convert.ToInt32(ob) > 0) continue;
+                        this.vehiclesTableAdapter.Insert(govnumber, vname);
+                    }
+                    this.vehiclesTableAdapter.Fill(this.fuelStationDataSet.Vehicles);
+                    break;
+
+                case 3: // Приходы
+                    break;
+                case 4: // Продажи
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        /// <summary>
+        /// Удаление из базы данных
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnDelete(object sender, EventArgs e)
+        {
+            int idx = mainTabControl.SelectedIndex;
+            FuelStationDataSetTableAdapters.QueriesTableAdapter qadapter =
+                this.queriesTableAdapterBindingSource.DataSource as FuelStationDataSetTableAdapters.QueriesTableAdapter;
+            long wareId = (wareComboBox.SelectedItem as DataRowView).Row.Field<long>("ID");
+            String wareName = (wareComboBox.SelectedItem as DataRowView).Row.Field<String>("Name");
+            long managerId = (managerComboBox.SelectedItem as DataRowView).Row.Field<long>("ID");
+            int recs = -1;
+            mainErrorProvider.Clear();
+            switch (idx)
+            {
+                case 0:
+                    recs = qadapter.DeleteWare(wareId);
+                    if(recs < 1)
+                    {
+                        mainErrorProvider.SetError(waresListBox, String.Format(Resources.WARE_IN_MOVE, wareName));
+                        return;
+                    }
+                    this.waresTableAdapter.Fill(this.fuelStationDataSet.Wares);
+                    break;
+                case 1:
+                    recs = qadapter.DeleteUser(managerId);
+                    if(recs > 0) this.usersTableAdapter.Fill(this.fuelStationDataSet.Users);
+                    break;
                 case 2:
+                    if (vehiclesGridView.SelectedRows.Count < 1) return;
+                    DataGridViewRow row = vehiclesGridView.SelectedRows[0];
+                    String govnumber = row.Cells[0].Value == null ? String.Empty : row.Cells[0].Value.ToString();
+                    if (String.IsNullOrEmpty(govnumber) || String.IsNullOrWhiteSpace(govnumber)) return;
+                    int? cnt = qadapter.VehiclesInSalingsCount(govnumber);
+                    if(!cnt.HasValue || (cnt.HasValue && cnt.Value < 1))
+                    {
+                        recs = qadapter.DeleteVehicle(govnumber);
+                        if(recs > 0) this.vehiclesTableAdapter.Fill(this.fuelStationDataSet.Vehicles);
+                    }
+                    else
+                    {
+                        mainErrorProvider.SetError(vehiclesGridView, 
+                            String.Format(Resources.VEHICLE_IN_SAILING, govnumber));
+                    }
+                    break;
+                case 3: // приход
+                case 4: // продажи
+                    break;
+                default:
+                    break;
+            }
+        }
+        /// <summary>
+        /// Правка данных в БД
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnEdit(object sender, EventArgs e)
+        {
+            int idx = mainTabControl.SelectedIndex;
+            FuelStationDataSetTableAdapters.QueriesTableAdapter qadapter =
+                this.queriesTableAdapterBindingSource.DataSource as FuelStationDataSetTableAdapters.QueriesTableAdapter;
+            
+            DataRow wareRow = (waresListBox.SelectedItem as DataRowView).Row;
+            long wareId = Convert.ToInt64(wareRow.ItemArray[0]);
+            String wareEditText = wareComboBox.Text;
+
+            DataRow managerRow = (managersListBox.SelectedItem as DataRowView).Row;            
+            String managerEditText = managerComboBox.Text;
+            long managerId = Convert.ToInt64(managerRow.ItemArray[0]);
+
+            DataRow vehicleRow = (vehiclesGridView.SelectedRows[0].DataBoundItem as DataRowView).Row;
+
+            mainErrorProvider.Clear();
+            int recs = -1;
+            switch (idx)
+            {
+                case 0:
+                    if(String.IsNullOrEmpty(wareEditText) || String.IsNullOrWhiteSpace(wareEditText))
+                    {
+                        mainErrorProvider.SetError(waresListBox, Resources.NAME_EMPTY);
+                        return;
+                    }
+                    recs = qadapter.ChangeWareName(wareEditText, wareId);
+                    if (recs > 0) this.waresTableAdapter.Fill(this.fuelStationDataSet.Wares);
+                    break;
+
+                case 1:
+                    if (String.IsNullOrEmpty(managerEditText) || String.IsNullOrWhiteSpace(managerEditText))
+                    {
+                        mainErrorProvider.SetError(waresListBox, Resources.NAME_EMPTY);
+                        return;
+                    }
+                    recs = qadapter.ChangeUserName(managerEditText, managerId);
+                    if (recs > 0) this.usersTableAdapter.Fill(this.fuelStationDataSet.Users);
+                    break;
+
+                case 2:
+                    if(vehicleRow != null)
+                    {
+                        recs = this.vehiclesTableAdapter.Update(vehicleRow);
+                        this.vehiclesTableAdapter.Fill(this.fuelStationDataSet.Vehicles);
+                    }
+                    break;
                 case 3:
                 case 4:
                     break;
@@ -180,6 +306,31 @@ namespace FuelStation
                     break;
             }
 
+        }
+        /// <summary>
+        /// Окончен ввод данных в 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnLeaveVehicleRow(object sender, DataGridViewCellEventArgs e)
+        {
+            int idx = e.RowIndex;
+            if (idx < 0) return;
+            DataGridViewRow row = vehiclesGridView.Rows[idx];
+            String govnumber = row.Cells[0].Value.ToString();
+            String name = row.Cells[1].Value.ToString();
+            bool emptyData = String.IsNullOrEmpty(govnumber) || String.IsNullOrWhiteSpace(govnumber)
+                || String.IsNullOrEmpty(name) || String.IsNullOrWhiteSpace(name);
+            if(row.IsNewRow)
+            {
+                if(!emptyData) this.vehiclesTableAdapter.Insert(govnumber, name);
+            }
+            else
+            {
+                DataRowView drow = row.DataBoundItem as DataRowView;             
+                this.vehiclesTableAdapter.Update(drow.Row);
+
+            }
         }
     }
 }

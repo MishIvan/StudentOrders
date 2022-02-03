@@ -118,7 +118,7 @@ namespace FuelStation.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Нельзя добавлять записи с пустым значением наименования.
+        ///   Ищет локализованную строку, похожую на Значение наименования не должно быть пустым.
         /// </summary>
         internal static string NAME_EMPTY {
             get {
@@ -145,11 +145,38 @@ namespace FuelStation.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Автомобиль с госномером {} хаходится в журнале продаж. Его нельзя удалять.
+        /// </summary>
+        internal static string VEHICLE_IN_SAILING {
+            get {
+                return ResourceManager.GetString("VEHICLE_IN_SAILING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Гос. номер или наименование ТС не должны быть пустыми.
+        /// </summary>
+        internal static string VEHICLE_PARAMS_EMPTY {
+            get {
+                return ResourceManager.GetString("VEHICLE_PARAMS_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на ГСМ с наименованием {0} уже есть в списке номенклатуры ГСМ.
         /// </summary>
         internal static string WARE_ALREADY_EXISTS {
             get {
                 return ResourceManager.GetString("WARE_ALREADY_EXISTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ГСМ {0} нельязя удалять. Для него был приход или он участвовоал в продажах.
+        /// </summary>
+        internal static string WARE_IN_MOVE {
+            get {
+                return ResourceManager.GetString("WARE_IN_MOVE", resourceCulture);
             }
         }
     }
