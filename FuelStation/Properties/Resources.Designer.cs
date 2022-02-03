@@ -109,7 +109,7 @@ namespace FuelStation.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Ввод пустого значения для количества недопустим.
+        ///   Ищет локализованную строку, похожую на Ввод пустого значения для цены недопустим.
         /// </summary>
         internal static string EMPTY_PRICE {
             get {
@@ -145,7 +145,7 @@ namespace FuelStation.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Автомобиль с госномером {} хаходится в журнале продаж. Его нельзя удалять.
+        ///   Ищет локализованную строку, похожую на Автомобиль с госномером {0} находится в журнале продаж. Его нельзя удалять.
         /// </summary>
         internal static string VEHICLE_IN_SAILING {
             get {
@@ -177,6 +177,15 @@ namespace FuelStation.Properties {
         internal static string WARE_IN_MOVE {
             get {
                 return ResourceManager.GetString("WARE_IN_MOVE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0}:нет такого наименования ГСМ.
+        /// </summary>
+        internal static string WARE_NOT_EXISTS {
+            get {
+                return ResourceManager.GetString("WARE_NOT_EXISTS", resourceCulture);
             }
         }
     }

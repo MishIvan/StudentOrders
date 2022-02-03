@@ -134,7 +134,7 @@
     <value>Ввод пустого значения для количества недопустим</value>
   </data>
   <data name="EMPTY_PRICE" xml:space="preserve">
-    <value>Ввод пустого значения для количества недопустим</value>
+    <value>Ввод пустого значения для цены недопустим</value>
   </data>
   <data name="NAME_EMPTY" xml:space="preserve">
     <value>Значение наименования не должно быть пустым</value>
@@ -146,7 +146,7 @@
     <value>Менеджер {0} уже есть в списке менеджеров</value>
   </data>
   <data name="VEHICLE_IN_SAILING" xml:space="preserve">
-    <value>Автомобиль с госномером {} хаходится в журнале продаж. Его нельзя удалять</value>
+    <value>Автомобиль с госномером {0} находится в журнале продаж. Его нельзя удалять</value>
   </data>
   <data name="VEHICLE_PARAMS_EMPTY" xml:space="preserve">
     <value>Гос. номер или наименование ТС не должны быть пустыми</value>
@@ -156,5 +156,8 @@
   </data>
   <data name="WARE_IN_MOVE" xml:space="preserve">
     <value>ГСМ {0} нельязя удалять. Для него был приход или он участвовоал в продажах</value>
+  </data>
+  <data name="WARE_NOT_EXISTS" xml:space="preserve">
+    <value>{0}:нет такого наименования ГСМ</value>
   </data>
 </root>

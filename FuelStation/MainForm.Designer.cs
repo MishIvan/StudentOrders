@@ -30,7 +30,13 @@ namespace FuelStation
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.wareTabPage = new System.Windows.Forms.TabPage();
@@ -47,24 +53,9 @@ namespace FuelStation
             this.vehiclesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.warehouseTabPage = new System.Windows.Forms.TabPage();
             this.warehouseGridView = new System.Windows.Forms.DataGridView();
-            this.wareIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.countDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.priceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.summaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.warehouseViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.sailingTabPage = new System.Windows.Forms.TabPage();
             this.sailingsGridView = new System.Windows.Forms.DataGridView();
-            this.wareIDDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dateSailingDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nameDataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.countDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.priceDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.summaDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.userIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.userDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.govnumberDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.vehicleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.salingsViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.fuelStationDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label3 = new System.Windows.Forms.Label();
@@ -90,6 +81,21 @@ namespace FuelStation
             this.managerComboBox = new System.Windows.Forms.ComboBox();
             this.fullVehicleNameTableAdapter = new FuelStation.FuelStationDataSetTableAdapters.FullVehicleNameTableAdapter();
             this.usersTableAdapter = new FuelStation.FuelStationDataSetTableAdapters.UsersTableAdapter();
+            this.wareIDDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dateSailingDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nameDataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.countDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.priceDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.summaDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.userIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.userDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.govnumberDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vehicleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.wareIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.countDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.priceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.summaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mainTabControl.SuspendLayout();
             this.wareTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.waresBindingSource)).BeginInit();
@@ -270,52 +276,6 @@ namespace FuelStation
             this.warehouseGridView.Size = new System.Drawing.Size(758, 361);
             this.warehouseGridView.TabIndex = 0;
             // 
-            // wareIDDataGridViewTextBoxColumn
-            // 
-            this.wareIDDataGridViewTextBoxColumn.DataPropertyName = "WareID";
-            this.wareIDDataGridViewTextBoxColumn.HeaderText = "WareID";
-            this.wareIDDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.wareIDDataGridViewTextBoxColumn.Name = "wareIDDataGridViewTextBoxColumn";
-            this.wareIDDataGridViewTextBoxColumn.ReadOnly = true;
-            this.wareIDDataGridViewTextBoxColumn.Visible = false;
-            this.wareIDDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // nameDataGridViewTextBoxColumn1
-            // 
-            this.nameDataGridViewTextBoxColumn1.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn1.HeaderText = "Наименование";
-            this.nameDataGridViewTextBoxColumn1.MinimumWidth = 6;
-            this.nameDataGridViewTextBoxColumn1.Name = "nameDataGridViewTextBoxColumn1";
-            this.nameDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.nameDataGridViewTextBoxColumn1.Width = 125;
-            // 
-            // countDataGridViewTextBoxColumn
-            // 
-            this.countDataGridViewTextBoxColumn.DataPropertyName = "Count";
-            this.countDataGridViewTextBoxColumn.HeaderText = "Кол-во";
-            this.countDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.countDataGridViewTextBoxColumn.Name = "countDataGridViewTextBoxColumn";
-            this.countDataGridViewTextBoxColumn.ReadOnly = true;
-            this.countDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // priceDataGridViewTextBoxColumn
-            // 
-            this.priceDataGridViewTextBoxColumn.DataPropertyName = "Price";
-            this.priceDataGridViewTextBoxColumn.HeaderText = "Цена";
-            this.priceDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
-            this.priceDataGridViewTextBoxColumn.ReadOnly = true;
-            this.priceDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // summaDataGridViewTextBoxColumn
-            // 
-            this.summaDataGridViewTextBoxColumn.DataPropertyName = "Summa";
-            this.summaDataGridViewTextBoxColumn.HeaderText = "Сумма";
-            this.summaDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.summaDataGridViewTextBoxColumn.Name = "summaDataGridViewTextBoxColumn";
-            this.summaDataGridViewTextBoxColumn.ReadOnly = true;
-            this.summaDataGridViewTextBoxColumn.Width = 125;
-            // 
             // warehouseViewBindingSource
             // 
             this.warehouseViewBindingSource.DataMember = "WarehouseView";
@@ -356,101 +316,6 @@ namespace FuelStation
             this.sailingsGridView.RowTemplate.Height = 24;
             this.sailingsGridView.Size = new System.Drawing.Size(824, 356);
             this.sailingsGridView.TabIndex = 0;
-            // 
-            // wareIDDataGridViewTextBoxColumn1
-            // 
-            this.wareIDDataGridViewTextBoxColumn1.DataPropertyName = "WareID";
-            this.wareIDDataGridViewTextBoxColumn1.HeaderText = "WareID";
-            this.wareIDDataGridViewTextBoxColumn1.MinimumWidth = 6;
-            this.wareIDDataGridViewTextBoxColumn1.Name = "wareIDDataGridViewTextBoxColumn1";
-            this.wareIDDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.wareIDDataGridViewTextBoxColumn1.Visible = false;
-            this.wareIDDataGridViewTextBoxColumn1.Width = 125;
-            // 
-            // dateSailingDataGridViewTextBoxColumn
-            // 
-            this.dateSailingDataGridViewTextBoxColumn.DataPropertyName = "DateSailing";
-            dataGridViewCellStyle1.Format = "g";
-            dataGridViewCellStyle1.NullValue = null;
-            this.dateSailingDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dateSailingDataGridViewTextBoxColumn.HeaderText = "Дата";
-            this.dateSailingDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.dateSailingDataGridViewTextBoxColumn.Name = "dateSailingDataGridViewTextBoxColumn";
-            this.dateSailingDataGridViewTextBoxColumn.ReadOnly = true;
-            this.dateSailingDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // nameDataGridViewTextBoxColumn2
-            // 
-            this.nameDataGridViewTextBoxColumn2.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn2.HeaderText = "Наименовани ГСМ";
-            this.nameDataGridViewTextBoxColumn2.MinimumWidth = 6;
-            this.nameDataGridViewTextBoxColumn2.Name = "nameDataGridViewTextBoxColumn2";
-            this.nameDataGridViewTextBoxColumn2.ReadOnly = true;
-            this.nameDataGridViewTextBoxColumn2.Width = 125;
-            // 
-            // countDataGridViewTextBoxColumn1
-            // 
-            this.countDataGridViewTextBoxColumn1.DataPropertyName = "Count";
-            this.countDataGridViewTextBoxColumn1.HeaderText = "Кол-во";
-            this.countDataGridViewTextBoxColumn1.MinimumWidth = 6;
-            this.countDataGridViewTextBoxColumn1.Name = "countDataGridViewTextBoxColumn1";
-            this.countDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.countDataGridViewTextBoxColumn1.Width = 125;
-            // 
-            // priceDataGridViewTextBoxColumn1
-            // 
-            this.priceDataGridViewTextBoxColumn1.DataPropertyName = "Price";
-            this.priceDataGridViewTextBoxColumn1.HeaderText = "Цена";
-            this.priceDataGridViewTextBoxColumn1.MinimumWidth = 6;
-            this.priceDataGridViewTextBoxColumn1.Name = "priceDataGridViewTextBoxColumn1";
-            this.priceDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.priceDataGridViewTextBoxColumn1.Width = 125;
-            // 
-            // summaDataGridViewTextBoxColumn1
-            // 
-            this.summaDataGridViewTextBoxColumn1.DataPropertyName = "Summa";
-            this.summaDataGridViewTextBoxColumn1.HeaderText = "Сумма";
-            this.summaDataGridViewTextBoxColumn1.MinimumWidth = 6;
-            this.summaDataGridViewTextBoxColumn1.Name = "summaDataGridViewTextBoxColumn1";
-            this.summaDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.summaDataGridViewTextBoxColumn1.Width = 125;
-            // 
-            // userIDDataGridViewTextBoxColumn
-            // 
-            this.userIDDataGridViewTextBoxColumn.DataPropertyName = "UserID";
-            this.userIDDataGridViewTextBoxColumn.HeaderText = "UserID";
-            this.userIDDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.userIDDataGridViewTextBoxColumn.Name = "userIDDataGridViewTextBoxColumn";
-            this.userIDDataGridViewTextBoxColumn.ReadOnly = true;
-            this.userIDDataGridViewTextBoxColumn.Visible = false;
-            this.userIDDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // userDataGridViewTextBoxColumn
-            // 
-            this.userDataGridViewTextBoxColumn.DataPropertyName = "User";
-            this.userDataGridViewTextBoxColumn.HeaderText = "Менеджер";
-            this.userDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.userDataGridViewTextBoxColumn.Name = "userDataGridViewTextBoxColumn";
-            this.userDataGridViewTextBoxColumn.ReadOnly = true;
-            this.userDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // govnumberDataGridViewTextBoxColumn1
-            // 
-            this.govnumberDataGridViewTextBoxColumn1.DataPropertyName = "govnumber";
-            this.govnumberDataGridViewTextBoxColumn1.HeaderText = "Гос. номер";
-            this.govnumberDataGridViewTextBoxColumn1.MinimumWidth = 6;
-            this.govnumberDataGridViewTextBoxColumn1.Name = "govnumberDataGridViewTextBoxColumn1";
-            this.govnumberDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.govnumberDataGridViewTextBoxColumn1.Width = 125;
-            // 
-            // vehicleDataGridViewTextBoxColumn
-            // 
-            this.vehicleDataGridViewTextBoxColumn.DataPropertyName = "Vehicle";
-            this.vehicleDataGridViewTextBoxColumn.HeaderText = "Наим. ТС";
-            this.vehicleDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.vehicleDataGridViewTextBoxColumn.Name = "vehicleDataGridViewTextBoxColumn";
-            this.vehicleDataGridViewTextBoxColumn.ReadOnly = true;
-            this.vehicleDataGridViewTextBoxColumn.Width = 125;
             // 
             // salingsViewBindingSource
             // 
@@ -632,6 +497,162 @@ namespace FuelStation
             // 
             this.usersTableAdapter.ClearBeforeFill = true;
             // 
+            // wareIDDataGridViewTextBoxColumn1
+            // 
+            this.wareIDDataGridViewTextBoxColumn1.DataPropertyName = "WareID";
+            this.wareIDDataGridViewTextBoxColumn1.HeaderText = "WareID";
+            this.wareIDDataGridViewTextBoxColumn1.MinimumWidth = 6;
+            this.wareIDDataGridViewTextBoxColumn1.Name = "wareIDDataGridViewTextBoxColumn1";
+            this.wareIDDataGridViewTextBoxColumn1.ReadOnly = true;
+            this.wareIDDataGridViewTextBoxColumn1.Visible = false;
+            this.wareIDDataGridViewTextBoxColumn1.Width = 125;
+            // 
+            // dateSailingDataGridViewTextBoxColumn
+            // 
+            this.dateSailingDataGridViewTextBoxColumn.DataPropertyName = "DateSailing";
+            dataGridViewCellStyle4.Format = "g";
+            dataGridViewCellStyle4.NullValue = null;
+            this.dateSailingDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            this.dateSailingDataGridViewTextBoxColumn.HeaderText = "Дата";
+            this.dateSailingDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.dateSailingDataGridViewTextBoxColumn.Name = "dateSailingDataGridViewTextBoxColumn";
+            this.dateSailingDataGridViewTextBoxColumn.ReadOnly = true;
+            this.dateSailingDataGridViewTextBoxColumn.Width = 125;
+            // 
+            // nameDataGridViewTextBoxColumn2
+            // 
+            this.nameDataGridViewTextBoxColumn2.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn2.HeaderText = "Наименовани ГСМ";
+            this.nameDataGridViewTextBoxColumn2.MinimumWidth = 6;
+            this.nameDataGridViewTextBoxColumn2.Name = "nameDataGridViewTextBoxColumn2";
+            this.nameDataGridViewTextBoxColumn2.ReadOnly = true;
+            this.nameDataGridViewTextBoxColumn2.Width = 125;
+            // 
+            // countDataGridViewTextBoxColumn1
+            // 
+            this.countDataGridViewTextBoxColumn1.DataPropertyName = "Count";
+            dataGridViewCellStyle5.Format = "N0";
+            this.countDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle5;
+            this.countDataGridViewTextBoxColumn1.HeaderText = "Кол-во";
+            this.countDataGridViewTextBoxColumn1.MinimumWidth = 6;
+            this.countDataGridViewTextBoxColumn1.Name = "countDataGridViewTextBoxColumn1";
+            this.countDataGridViewTextBoxColumn1.ReadOnly = true;
+            this.countDataGridViewTextBoxColumn1.Width = 125;
+            // 
+            // priceDataGridViewTextBoxColumn1
+            // 
+            this.priceDataGridViewTextBoxColumn1.DataPropertyName = "Price";
+            dataGridViewCellStyle6.Format = "N2";
+            dataGridViewCellStyle6.NullValue = null;
+            this.priceDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle6;
+            this.priceDataGridViewTextBoxColumn1.HeaderText = "Цена";
+            this.priceDataGridViewTextBoxColumn1.MinimumWidth = 6;
+            this.priceDataGridViewTextBoxColumn1.Name = "priceDataGridViewTextBoxColumn1";
+            this.priceDataGridViewTextBoxColumn1.ReadOnly = true;
+            this.priceDataGridViewTextBoxColumn1.Width = 125;
+            // 
+            // summaDataGridViewTextBoxColumn1
+            // 
+            this.summaDataGridViewTextBoxColumn1.DataPropertyName = "Summa";
+            dataGridViewCellStyle7.Format = "N2";
+            dataGridViewCellStyle7.NullValue = null;
+            this.summaDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle7;
+            this.summaDataGridViewTextBoxColumn1.HeaderText = "Сумма";
+            this.summaDataGridViewTextBoxColumn1.MinimumWidth = 6;
+            this.summaDataGridViewTextBoxColumn1.Name = "summaDataGridViewTextBoxColumn1";
+            this.summaDataGridViewTextBoxColumn1.ReadOnly = true;
+            this.summaDataGridViewTextBoxColumn1.Width = 125;
+            // 
+            // userIDDataGridViewTextBoxColumn
+            // 
+            this.userIDDataGridViewTextBoxColumn.DataPropertyName = "UserID";
+            this.userIDDataGridViewTextBoxColumn.HeaderText = "UserID";
+            this.userIDDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.userIDDataGridViewTextBoxColumn.Name = "userIDDataGridViewTextBoxColumn";
+            this.userIDDataGridViewTextBoxColumn.ReadOnly = true;
+            this.userIDDataGridViewTextBoxColumn.Visible = false;
+            this.userIDDataGridViewTextBoxColumn.Width = 125;
+            // 
+            // userDataGridViewTextBoxColumn
+            // 
+            this.userDataGridViewTextBoxColumn.DataPropertyName = "User";
+            this.userDataGridViewTextBoxColumn.HeaderText = "Менеджер";
+            this.userDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.userDataGridViewTextBoxColumn.Name = "userDataGridViewTextBoxColumn";
+            this.userDataGridViewTextBoxColumn.ReadOnly = true;
+            this.userDataGridViewTextBoxColumn.Width = 125;
+            // 
+            // govnumberDataGridViewTextBoxColumn1
+            // 
+            this.govnumberDataGridViewTextBoxColumn1.DataPropertyName = "govnumber";
+            this.govnumberDataGridViewTextBoxColumn1.HeaderText = "Гос. номер";
+            this.govnumberDataGridViewTextBoxColumn1.MinimumWidth = 6;
+            this.govnumberDataGridViewTextBoxColumn1.Name = "govnumberDataGridViewTextBoxColumn1";
+            this.govnumberDataGridViewTextBoxColumn1.ReadOnly = true;
+            this.govnumberDataGridViewTextBoxColumn1.Width = 125;
+            // 
+            // vehicleDataGridViewTextBoxColumn
+            // 
+            this.vehicleDataGridViewTextBoxColumn.DataPropertyName = "Vehicle";
+            this.vehicleDataGridViewTextBoxColumn.HeaderText = "Наим. ТС";
+            this.vehicleDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.vehicleDataGridViewTextBoxColumn.Name = "vehicleDataGridViewTextBoxColumn";
+            this.vehicleDataGridViewTextBoxColumn.ReadOnly = true;
+            this.vehicleDataGridViewTextBoxColumn.Width = 125;
+            // 
+            // wareIDDataGridViewTextBoxColumn
+            // 
+            this.wareIDDataGridViewTextBoxColumn.DataPropertyName = "WareID";
+            this.wareIDDataGridViewTextBoxColumn.HeaderText = "ИД товара";
+            this.wareIDDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.wareIDDataGridViewTextBoxColumn.Name = "wareIDDataGridViewTextBoxColumn";
+            this.wareIDDataGridViewTextBoxColumn.ReadOnly = true;
+            this.wareIDDataGridViewTextBoxColumn.Visible = false;
+            this.wareIDDataGridViewTextBoxColumn.Width = 125;
+            // 
+            // nameDataGridViewTextBoxColumn1
+            // 
+            this.nameDataGridViewTextBoxColumn1.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn1.HeaderText = "Наименование";
+            this.nameDataGridViewTextBoxColumn1.MinimumWidth = 6;
+            this.nameDataGridViewTextBoxColumn1.Name = "nameDataGridViewTextBoxColumn1";
+            this.nameDataGridViewTextBoxColumn1.ReadOnly = true;
+            this.nameDataGridViewTextBoxColumn1.Width = 200;
+            // 
+            // countDataGridViewTextBoxColumn
+            // 
+            this.countDataGridViewTextBoxColumn.DataPropertyName = "Count";
+            dataGridViewCellStyle1.Format = "N0";
+            this.countDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            this.countDataGridViewTextBoxColumn.HeaderText = "Кол-во";
+            this.countDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.countDataGridViewTextBoxColumn.Name = "countDataGridViewTextBoxColumn";
+            this.countDataGridViewTextBoxColumn.ReadOnly = true;
+            this.countDataGridViewTextBoxColumn.Width = 125;
+            // 
+            // priceDataGridViewTextBoxColumn
+            // 
+            this.priceDataGridViewTextBoxColumn.DataPropertyName = "Price";
+            dataGridViewCellStyle2.Format = "N2";
+            this.priceDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            this.priceDataGridViewTextBoxColumn.HeaderText = "Цена";
+            this.priceDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
+            this.priceDataGridViewTextBoxColumn.ReadOnly = true;
+            this.priceDataGridViewTextBoxColumn.Width = 125;
+            // 
+            // summaDataGridViewTextBoxColumn
+            // 
+            this.summaDataGridViewTextBoxColumn.DataPropertyName = "Summa";
+            dataGridViewCellStyle3.Format = "N2";
+            dataGridViewCellStyle3.NullValue = null;
+            this.summaDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            this.summaDataGridViewTextBoxColumn.HeaderText = "Сумма";
+            this.summaDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.summaDataGridViewTextBoxColumn.Name = "summaDataGridViewTextBoxColumn";
+            this.summaDataGridViewTextBoxColumn.ReadOnly = true;
+            this.summaDataGridViewTextBoxColumn.Width = 150;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -710,23 +731,8 @@ namespace FuelStation
         private FuelStationDataSetTableAdapters.WaresTableAdapter waresTableAdapter;
         private System.Windows.Forms.BindingSource warehouseViewBindingSource;
         private FuelStationDataSetTableAdapters.WarehouseViewTableAdapter warehouseViewTableAdapter;
-        private System.Windows.Forms.DataGridViewTextBoxColumn wareIDDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn countDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn summaDataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource salingsViewBindingSource;
         private FuelStationDataSetTableAdapters.SalingsViewTableAdapter salingsViewTableAdapter;
-        private System.Windows.Forms.DataGridViewTextBoxColumn wareIDDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dateSailingDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn countDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn summaDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn userIDDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn userDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn govnumberDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn vehicleDataGridViewTextBoxColumn;
         private System.Windows.Forms.TabPage managersTabPage;
         private System.Windows.Forms.BindingSource fuelStationDataSetBindingSource;
         private System.Windows.Forms.BindingSource queriesTableAdapterBindingSource;
@@ -739,6 +745,21 @@ namespace FuelStation
         private System.Windows.Forms.DataGridViewTextBoxColumn govnumberDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource usersBindingSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn wareIDDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dateSailingDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn countDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn summaDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn userIDDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn userDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn govnumberDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn vehicleDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn wareIDDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn countDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn summaDataGridViewTextBoxColumn;
     }
 }
 

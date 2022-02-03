@@ -49,6 +49,7 @@ namespace FuelStation
             // TODO: данная строка кода позволяет загрузить данные в таблицу "fuelStationDataSet.Wares". При необходимости она может быть перемещена или удалена.
             this.waresTableAdapter.Fill(this.fuelStationDataSet.Wares);
             this.queriesTableAdapterBindingSource.DataSource = new FuelStationDataSetTableAdapters.QueriesTableAdapter();
+            warehouseGridView.Columns[0].Visible = false;
 
 
         }
@@ -70,23 +71,29 @@ namespace FuelStation
         /// <param name="e"></param>
         private void CountValidating(object sender, CancelEventArgs e)
         {
+            ValidateCount();
+        }
+        private bool ValidateCount()
+        {
             String scount = countTextBox.Text;
             _count = double.NaN;
-            if(String.IsNullOrEmpty(scount) || String.IsNullOrWhiteSpace(scount))
+            if (String.IsNullOrEmpty(scount) || String.IsNullOrWhiteSpace(scount))
             {
                 mainErrorProvider.SetError(countTextBox, Resources.EMPTY_COUNT);
-                return;
+                return false;
             }
-            try 
+            try
             {
                 _count = Convert.ToDouble(scount);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 mainErrorProvider.SetError(countTextBox, Resources.COUNT_ERROR);
-                return;
+                return false;
             }
             mainErrorProvider.Clear();
+            return true;
+
         }
         /// <summary>
         /// Проверка правильности ввода цены
@@ -96,12 +103,16 @@ namespace FuelStation
 
         private void OnPriceValidating(object sender, CancelEventArgs e)
         {
+            ValidatePrice();
+        }
+        private bool ValidatePrice()
+        {
             String sprice = priceTextBox.Text;
             _price = double.NaN;
             if (String.IsNullOrEmpty(sprice) || String.IsNullOrWhiteSpace(sprice))
             {
                 mainErrorProvider.SetError(priceTextBox, Resources.EMPTY_PRICE);
-                return;
+                return false;
             }
             try
             {
@@ -110,9 +121,10 @@ namespace FuelStation
             catch (Exception)
             {
                 mainErrorProvider.SetError(priceTextBox, Resources.PRICE_ERROR);
-                return;
+                return false;
             }
             mainErrorProvider.Clear();
+            return true;
 
         }
         /// <summary>
@@ -182,10 +194,22 @@ namespace FuelStation
                         this.vehiclesTableAdapter.Insert(govnumber, vname);
                     }
                     this.vehiclesTableAdapter.Fill(this.fuelStationDataSet.Vehicles);
+                    this.fullVehicleNameTableAdapter.Fill(this.fuelStationDataSet.FullVehicleName);
                     break;
 
                 case 3: // Приходы
+                    if (!ValidateCount() || !ValidatePrice()) return; 
+                    id = qadapter.WareByName(wareName);
+                    if(!id.HasValue || (id.HasValue && id.Value < 1))
+                    {
+                        mainErrorProvider.SetError(wareComboBox,
+                            String.Format(Resources.WARE_NOT_EXISTS, wareName));
+                        return;
+                    }
+                    qadapter.InventoryReceipt(wareName, _count, _price);
+                    this.warehouseViewTableAdapter.Fill(this.fuelStationDataSet.WarehouseView);
                     break;
+
                 case 4: // Продажи
                     break;
                 default:
@@ -232,7 +256,12 @@ namespace FuelStation
                     if(!cnt.HasValue || (cnt.HasValue && cnt.Value < 1))
                     {
                         recs = qadapter.DeleteVehicle(govnumber);
-                        if(recs > 0) this.vehiclesTableAdapter.Fill(this.fuelStationDataSet.Vehicles);
+                        if (recs > 0)
+                        {
+                            this.vehiclesTableAdapter.Fill(this.fuelStationDataSet.Vehicles);
+                            this.fullVehicleNameTableAdapter.Fill(this.fuelStationDataSet.FullVehicleName);
+                        }
+
                     }
                     else
                     {
