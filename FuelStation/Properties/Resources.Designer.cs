@@ -145,11 +145,29 @@ namespace FuelStation.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на {0}: нет такого менеджера.
+        /// </summary>
+        internal static string USER_NOT_EXISTS {
+            get {
+                return ResourceManager.GetString("USER_NOT_EXISTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Автомобиль с госномером {0} находится в журнале продаж. Его нельзя удалять.
         /// </summary>
         internal static string VEHICLE_IN_SAILING {
             get {
                 return ResourceManager.GetString("VEHICLE_IN_SAILING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0}: нет ТС с таким гос. номером.
+        /// </summary>
+        internal static string VEHICLE_NOT_EXISTS {
+            get {
+                return ResourceManager.GetString("VEHICLE_NOT_EXISTS", resourceCulture);
             }
         }
         
@@ -181,7 +199,7 @@ namespace FuelStation.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на {0}:нет такого наименования ГСМ.
+        ///   Ищет локализованную строку, похожую на {0}: нет такого наименования ГСМ.
         /// </summary>
         internal static string WARE_NOT_EXISTS {
             get {

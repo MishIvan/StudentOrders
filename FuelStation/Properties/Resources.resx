@@ -145,8 +145,14 @@
   <data name="USER_ALREADY_EXISTS" xml:space="preserve">
     <value>Менеджер {0} уже есть в списке менеджеров</value>
   </data>
+  <data name="USER_NOT_EXISTS" xml:space="preserve">
+    <value>{0}: нет такого менеджера</value>
+  </data>
   <data name="VEHICLE_IN_SAILING" xml:space="preserve">
     <value>Автомобиль с госномером {0} находится в журнале продаж. Его нельзя удалять</value>
+  </data>
+  <data name="VEHICLE_NOT_EXISTS" xml:space="preserve">
+    <value>{0}: нет ТС с таким гос. номером</value>
   </data>
   <data name="VEHICLE_PARAMS_EMPTY" xml:space="preserve">
     <value>Гос. номер или наименование ТС не должны быть пустыми</value>
@@ -158,6 +164,6 @@
     <value>ГСМ {0} нельязя удалять. Для него был приход или он участвовоал в продажах</value>
   </data>
   <data name="WARE_NOT_EXISTS" xml:space="preserve">
-    <value>{0}:нет такого наименования ГСМ</value>
+    <value>{0}: нет такого наименования ГСМ</value>
   </data>
 </root>

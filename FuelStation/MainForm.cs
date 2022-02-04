@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FuelStation.Properties;
-using Dapper;
 
 namespace FuelStation
 {
@@ -50,6 +49,7 @@ namespace FuelStation
             this.waresTableAdapter.Fill(this.fuelStationDataSet.Wares);
             this.queriesTableAdapterBindingSource.DataSource = new FuelStationDataSetTableAdapters.QueriesTableAdapter();
             warehouseGridView.Columns[0].Visible = false;
+            sailingsGridView.Columns[0].Visible = false;
 
 
         }
@@ -211,6 +211,15 @@ namespace FuelStation
                     break;
 
                 case 4: // Продажи
+                    String fullVehicleName = vehicleComboBox.Text;
+                    DateTime dt = DateTime.Now;
+                    String govnum = "";
+                    if(ValidateSailing(wareName, userName, fullVehicleName, ref govnum))
+                    {
+                        recs = qadapter.Sailing(wareName, _count, _price, dt, userName, govnum);
+                        if (recs > 0)
+                            this.salingsViewTableAdapter.Fill(this.fuelStationDataSet.SalingsView);
+                    }
                     break;
                 default:
                     break;
@@ -337,29 +346,140 @@ namespace FuelStation
 
         }
         /// <summary>
-        /// Окончен ввод данных в 
+        /// Проверка ввода данных для 
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnLeaveVehicleRow(object sender, DataGridViewCellEventArgs e)
+        /// <param name="ware"></param>
+        /// <param name="manager"></param>
+        /// <returns>true - в случае правильности ввода, false - если возникли ошибки ввода</returns>
+        private bool ValidateSailing(String ware, String manager, String fullVehicleName, ref String govNumber)
         {
-            int idx = e.RowIndex;
-            if (idx < 0) return;
-            DataGridViewRow row = vehiclesGridView.Rows[idx];
-            String govnumber = row.Cells[0].Value.ToString();
-            String name = row.Cells[1].Value.ToString();
-            bool emptyData = String.IsNullOrEmpty(govnumber) || String.IsNullOrWhiteSpace(govnumber)
-                || String.IsNullOrEmpty(name) || String.IsNullOrWhiteSpace(name);
-            if(row.IsNewRow)
+            String[] vehicle = fullVehicleName.Split(new String[] { " ном. " }, StringSplitOptions.None);
+            long? id = null;
+            FuelStationDataSetTableAdapters.QueriesTableAdapter qadapter =
+                this.queriesTableAdapterBindingSource.DataSource as FuelStationDataSetTableAdapters.QueriesTableAdapter;
+            mainErrorProvider.Clear();
+
+            if (String.IsNullOrEmpty(ware) || String.IsNullOrWhiteSpace(ware))
             {
-                if(!emptyData) this.vehiclesTableAdapter.Insert(govnumber, name);
+                mainErrorProvider.SetError(wareComboBox, Resources.NAME_EMPTY);
+                return false;
             }
             else
             {
-                DataRowView drow = row.DataBoundItem as DataRowView;             
-                this.vehiclesTableAdapter.Update(drow.Row);
+                id = qadapter.WareByName(ware);
+                if(!id.HasValue || (id.HasValue && id.Value < 1))
+                {
+                    mainErrorProvider.SetError(wareComboBox, String.Format(Resources.WARE_NOT_EXISTS, ware));
+                    return false;
+                }
+            }
+
+            if (String.IsNullOrEmpty(manager) || String.IsNullOrWhiteSpace(manager))
+            {
+                mainErrorProvider.SetError(managerComboBox, Resources.NAME_EMPTY);
+                return false;
+            }
+            else
+            {
+                id = qadapter.UserByName(manager);
+                if (!id.HasValue || (id.HasValue && id.Value < 1))
+                {
+                    mainErrorProvider.SetError(managerComboBox, String.Format(Resources.USER_NOT_EXISTS, manager));
+                    return false;
+                }
+            }
+
+            if (String.IsNullOrEmpty(vehicle[0]) || String.IsNullOrWhiteSpace(vehicle[0]))
+            {
+                mainErrorProvider.SetError(vehicleComboBox, Resources.NAME_EMPTY);
+                return false;
+            }
+            else
+            {
+                object v = qadapter.VehicleExists(vehicle[0]);
+                if (Convert.ToInt32(v) == 0)
+                {
+                    mainErrorProvider.SetError(vehicleComboBox, String.Format(Resources.VEHICLE_NOT_EXISTS, vehicle[0]));
+                    return false;
+                }
+            }
+
+            if (!ValidateCount() || !ValidatePrice()) return false;
+            govNumber = vehicle[0];
+            return true;
+        }
+        /// <summary>
+        /// Нажатие ENTER при выборе менеждера 
+        /// Поиск производится по первым буквам фамилии
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnKeyPressManager(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+            if(ch == 13)
+            {
+                String searchText = managerComboBox.Text;
+                if (String.IsNullOrEmpty(searchText) || String.IsNullOrWhiteSpace(searchText)) return;
+                char first = searchText[0];
+                // нижний регистр тоже можно задавать
+                if (char.IsLower(first))
+                {
+                    searchText = char.ToUpper(first).ToString() + searchText.Substring(1) + '%'.ToString();
+                    
+                }
+                else
+                    searchText += '%'.ToString();
+
+                FuelStationDataSetTableAdapters.QueriesTableAdapter qadapter =
+                    this.queriesTableAdapterBindingSource.DataSource as FuelStationDataSetTableAdapters.QueriesTableAdapter;
+                String name = qadapter.GetFirstManagerName(searchText);
+                if(name != null)
+                {
+                    int idx = managerComboBox.FindString(name);
+                    if (idx >= 0)
+                        managerComboBox.SelectedIndex = idx;
+                }
 
             }
+        }
+        /// <summary>
+        /// Нажатие ENTER при выборе ГСМ 
+        /// Поиск производится по включению текста в наименование ГСМ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnKeyPressWare(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+           if(Convert.ToInt32(ch) == 13)
+           {
+                String searchText = wareComboBox.Text;
+                if (String.IsNullOrEmpty(searchText) || String.IsNullOrWhiteSpace(searchText)) return;
+                searchText = '%'.ToString() + searchText.ToLower()+'%'.ToString();
+                FuelStationDataSetTableAdapters.QueriesTableAdapter qadapter =
+                    this.queriesTableAdapterBindingSource.DataSource as FuelStationDataSetTableAdapters.QueriesTableAdapter;
+                String name = qadapter.GetFirstWareName(searchText)?.ToString();
+                if (name != null)
+                {
+                    int idx = wareComboBox.FindString(name);
+                    if (idx >= 0)
+                        wareComboBox.SelectedIndex = idx;
+                }
+
+           }
+
+        }
+        /// <summary>
+        /// Изменилась вкладка на форме
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnSelectMainTab(object sender, EventArgs e)
+        {
+            mainErrorProvider.Clear();
+            int idx = mainTabControl.SelectedIndex;
+            deleteButton.Enabled = editButton.Enabled = idx < 3;
         }
     }
 }
