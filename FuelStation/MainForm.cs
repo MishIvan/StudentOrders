@@ -317,7 +317,15 @@ namespace FuelStation
                         return;
                     }
                     recs = qadapter.ChangeWareName(wareEditText, wareId);
-                    if (recs > 0) this.waresTableAdapter.Fill(this.fuelStationDataSet.Wares);
+                    if (recs > 0)
+                    {
+                        this.waresTableAdapter.Fill(this.fuelStationDataSet.Wares);
+                        this.warehouseViewTableAdapter.Fill(this.fuelStationDataSet.WarehouseView);
+                        this.salingsViewTableAdapter.Fill(this.fuelStationDataSet.SalingsView);
+                        warehouseGridView.Columns[0].Visible = false;
+                        sailingsGridView.Columns[0].Visible = false;
+                        
+                    }
                     break;
 
                 case 1:
@@ -327,14 +335,27 @@ namespace FuelStation
                         return;
                     }
                     recs = qadapter.ChangeUserName(managerEditText, managerId);
-                    if (recs > 0) this.usersTableAdapter.Fill(this.fuelStationDataSet.Users);
+                    if (recs > 0)
+                    {
+                        this.usersTableAdapter.Fill(this.fuelStationDataSet.Users);
+                        this.warehouseViewTableAdapter.Fill(this.fuelStationDataSet.WarehouseView);
+                        this.salingsViewTableAdapter.Fill(this.fuelStationDataSet.SalingsView);
+                        warehouseGridView.Columns[0].Visible = false;
+                        sailingsGridView.Columns[0].Visible = false;
+                    }
                     break;
 
                 case 2:
                     if(vehicleRow != null)
                     {
                         recs = this.vehiclesTableAdapter.Update(vehicleRow);
-                        this.vehiclesTableAdapter.Fill(this.fuelStationDataSet.Vehicles);
+                        if(recs > 0)
+                        {
+                            this.vehiclesTableAdapter.Fill(this.fuelStationDataSet.Vehicles);
+                            this.warehouseViewTableAdapter.Fill(this.fuelStationDataSet.WarehouseView);
+                            this.salingsViewTableAdapter.Fill(this.fuelStationDataSet.SalingsView);
+                        }
+
                     }
                     break;
                 case 3:
@@ -346,10 +367,12 @@ namespace FuelStation
 
         }
         /// <summary>
-        /// Проверка ввода данных для 
+        /// Проверка ввода данных для операции продажи
         /// </summary>
-        /// <param name="ware"></param>
-        /// <param name="manager"></param>
+        /// <param name="ware">Наименование ГСМ</param>
+        /// <param name="manager">ФИО менеджера</param>
+        /// <param name="fullVehicleName">Наименование ТС в виде <Наименование>" ном. "<гос. номер></param>
+        /// <param name="govNumber"></param>
         /// <returns>true - в случае правильности ввода, false - если возникли ошибки ввода</returns>
         private bool ValidateSailing(String ware, String manager, String fullVehicleName, ref String govNumber)
         {
@@ -479,7 +502,8 @@ namespace FuelStation
         {
             mainErrorProvider.Clear();
             int idx = mainTabControl.SelectedIndex;
-            deleteButton.Enabled = editButton.Enabled = idx < 3;
+            deleteButton.Enabled = idx < 3;
+            editButton.Enabled = idx < 2;
         }
     }
 }

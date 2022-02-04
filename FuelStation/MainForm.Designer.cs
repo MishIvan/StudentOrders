@@ -61,6 +61,16 @@ namespace FuelStation
             this.warehouseViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.sailingTabPage = new System.Windows.Forms.TabPage();
             this.sailingsGridView = new System.Windows.Forms.DataGridView();
+            this.wareIDColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dateSailingDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nameDataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.countDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.priceDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.summaDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.userIDColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.userDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.govnumberDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vehicleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.salingsViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.fuelStationDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label3 = new System.Windows.Forms.Label();
@@ -86,16 +96,6 @@ namespace FuelStation
             this.managerComboBox = new System.Windows.Forms.ComboBox();
             this.fullVehicleNameTableAdapter = new FuelStation.FuelStationDataSetTableAdapters.FullVehicleNameTableAdapter();
             this.usersTableAdapter = new FuelStation.FuelStationDataSetTableAdapters.UsersTableAdapter();
-            this.wareIDColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dateSailingDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nameDataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.countDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.priceDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.summaDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.userIDColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.userDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.govnumberDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.vehicleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mainTabControl.SuspendLayout();
             this.wareTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.waresBindingSource)).BeginInit();
@@ -371,188 +371,6 @@ namespace FuelStation
             this.sailingsGridView.Size = new System.Drawing.Size(824, 356);
             this.sailingsGridView.TabIndex = 0;
             // 
-            // salingsViewBindingSource
-            // 
-            this.salingsViewBindingSource.DataMember = "SalingsView";
-            this.salingsViewBindingSource.DataSource = this.fuelStationDataSet;
-            // 
-            // fuelStationDataSetBindingSource
-            // 
-            this.fuelStationDataSetBindingSource.DataSource = this.fuelStationDataSet;
-            this.fuelStationDataSetBindingSource.Position = 0;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(21, 16);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(140, 17);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Номенклатура ГСМ:";
-            // 
-            // wareComboBox
-            // 
-            this.wareComboBox.DataSource = this.waresBindingSource;
-            this.wareComboBox.DisplayMember = "Name";
-            this.wareComboBox.FormattingEnabled = true;
-            this.wareComboBox.Location = new System.Drawing.Point(166, 16);
-            this.wareComboBox.MaxLength = 128;
-            this.wareComboBox.Name = "wareComboBox";
-            this.wareComboBox.Size = new System.Drawing.Size(341, 24);
-            this.wareComboBox.TabIndex = 1;
-            this.wareComboBox.ValueMember = "Name";
-            this.wareComboBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnKeyPressWare);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(516, 57);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(90, 17);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Количество:";
-            // 
-            // countTextBox
-            // 
-            this.countTextBox.Location = new System.Drawing.Point(613, 57);
-            this.countTextBox.MaxLength = 15;
-            this.countTextBox.Name = "countTextBox";
-            this.countTextBox.Size = new System.Drawing.Size(100, 22);
-            this.countTextBox.TabIndex = 3;
-            this.countTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnCountKeyPressed);
-            this.countTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.CountValidating);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(730, 57);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(47, 17);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Цена:";
-            // 
-            // priceTextBox
-            // 
-            this.priceTextBox.Location = new System.Drawing.Point(784, 57);
-            this.priceTextBox.MaxLength = 15;
-            this.priceTextBox.Name = "priceTextBox";
-            this.priceTextBox.Size = new System.Drawing.Size(111, 22);
-            this.priceTextBox.TabIndex = 5;
-            this.priceTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnCountKeyPressed);
-            this.priceTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.OnPriceValidating);
-            // 
-            // mainErrorProvider
-            // 
-            this.mainErrorProvider.ContainerControl = this;
-            // 
-            // editButton
-            // 
-            this.editButton.Image = global::FuelStation.Properties.Resources.edit;
-            this.editButton.Location = new System.Drawing.Point(924, 329);
-            this.editButton.Name = "editButton";
-            this.editButton.Size = new System.Drawing.Size(64, 64);
-            this.editButton.TabIndex = 9;
-            this.mainToolTip.SetToolTip(this.editButton, "Исправить приход ГСМ или продажу");
-            this.editButton.UseVisualStyleBackColor = true;
-            this.editButton.Click += new System.EventHandler(this.OnEdit);
-            // 
-            // deleteButton
-            // 
-            this.deleteButton.Image = global::FuelStation.Properties.Resources.delete;
-            this.deleteButton.Location = new System.Drawing.Point(924, 225);
-            this.deleteButton.Name = "deleteButton";
-            this.deleteButton.Size = new System.Drawing.Size(64, 64);
-            this.deleteButton.TabIndex = 8;
-            this.mainToolTip.SetToolTip(this.deleteButton, "Удалить приход ГСМ на склад или продажу");
-            this.deleteButton.UseVisualStyleBackColor = true;
-            this.deleteButton.Click += new System.EventHandler(this.OnDelete);
-            // 
-            // addButton
-            // 
-            this.addButton.Image = global::FuelStation.Properties.Resources.add;
-            this.addButton.Location = new System.Drawing.Point(924, 121);
-            this.addButton.Name = "addButton";
-            this.addButton.Size = new System.Drawing.Size(64, 64);
-            this.addButton.TabIndex = 7;
-            this.mainToolTip.SetToolTip(this.addButton, "Добавить ГСМ на склад или создать продажу");
-            this.addButton.UseVisualStyleBackColor = true;
-            this.addButton.Click += new System.EventHandler(this.OnAdd);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(21, 57);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(171, 17);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "Транспортное средство:";
-            // 
-            // vehicleComboBox
-            // 
-            this.vehicleComboBox.DataSource = this.fullVehicleNameBindingSource;
-            this.vehicleComboBox.DisplayMember = "fullName";
-            this.vehicleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.vehicleComboBox.FormattingEnabled = true;
-            this.vehicleComboBox.Location = new System.Drawing.Point(198, 54);
-            this.vehicleComboBox.Name = "vehicleComboBox";
-            this.vehicleComboBox.Size = new System.Drawing.Size(255, 24);
-            this.vehicleComboBox.TabIndex = 11;
-            this.vehicleComboBox.ValueMember = "fullName";
-            // 
-            // fullVehicleNameBindingSource
-            // 
-            this.fullVehicleNameBindingSource.DataMember = "FullVehicleName";
-            this.fullVehicleNameBindingSource.DataSource = this.fuelStationDataSet;
-            // 
-            // vehiclesTableAdapter
-            // 
-            this.vehiclesTableAdapter.ClearBeforeFill = true;
-            // 
-            // waresTableAdapter
-            // 
-            this.waresTableAdapter.ClearBeforeFill = true;
-            // 
-            // warehouseViewTableAdapter
-            // 
-            this.warehouseViewTableAdapter.ClearBeforeFill = true;
-            // 
-            // salingsViewTableAdapter
-            // 
-            this.salingsViewTableAdapter.ClearBeforeFill = true;
-            // 
-            // queriesTableAdapterBindingSource
-            // 
-            this.queriesTableAdapterBindingSource.DataSource = typeof(FuelStation.FuelStationDataSetTableAdapters.QueriesTableAdapter);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(526, 19);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(80, 17);
-            this.label1.TabIndex = 12;
-            this.label1.Text = "Менеджер:";
-            // 
-            // managerComboBox
-            // 
-            this.managerComboBox.DataSource = this.usersBindingSource;
-            this.managerComboBox.DisplayMember = "Name";
-            this.managerComboBox.FormattingEnabled = true;
-            this.managerComboBox.Location = new System.Drawing.Point(613, 14);
-            this.managerComboBox.Name = "managerComboBox";
-            this.managerComboBox.Size = new System.Drawing.Size(282, 24);
-            this.managerComboBox.TabIndex = 13;
-            this.managerComboBox.ValueMember = "Name";
-            this.managerComboBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnKeyPressManager);
-            // 
-            // fullVehicleNameTableAdapter
-            // 
-            this.fullVehicleNameTableAdapter.ClearBeforeFill = true;
-            // 
-            // usersTableAdapter
-            // 
-            this.usersTableAdapter.ClearBeforeFill = true;
-            // 
             // wareIDColumn
             // 
             this.wareIDColumn.DataPropertyName = "WareID";
@@ -655,6 +473,188 @@ namespace FuelStation
             this.vehicleDataGridViewTextBoxColumn.Name = "vehicleDataGridViewTextBoxColumn";
             this.vehicleDataGridViewTextBoxColumn.ReadOnly = true;
             this.vehicleDataGridViewTextBoxColumn.Width = 130;
+            // 
+            // salingsViewBindingSource
+            // 
+            this.salingsViewBindingSource.DataMember = "SalingsView";
+            this.salingsViewBindingSource.DataSource = this.fuelStationDataSet;
+            // 
+            // fuelStationDataSetBindingSource
+            // 
+            this.fuelStationDataSetBindingSource.DataSource = this.fuelStationDataSet;
+            this.fuelStationDataSetBindingSource.Position = 0;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(21, 16);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(140, 17);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Номенклатура ГСМ:";
+            // 
+            // wareComboBox
+            // 
+            this.wareComboBox.DataSource = this.waresBindingSource;
+            this.wareComboBox.DisplayMember = "Name";
+            this.wareComboBox.FormattingEnabled = true;
+            this.wareComboBox.Location = new System.Drawing.Point(166, 16);
+            this.wareComboBox.MaxLength = 128;
+            this.wareComboBox.Name = "wareComboBox";
+            this.wareComboBox.Size = new System.Drawing.Size(287, 24);
+            this.wareComboBox.TabIndex = 1;
+            this.wareComboBox.ValueMember = "Name";
+            this.wareComboBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnKeyPressWare);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(480, 57);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(90, 17);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Количество:";
+            // 
+            // countTextBox
+            // 
+            this.countTextBox.Location = new System.Drawing.Point(577, 57);
+            this.countTextBox.MaxLength = 15;
+            this.countTextBox.Name = "countTextBox";
+            this.countTextBox.Size = new System.Drawing.Size(100, 22);
+            this.countTextBox.TabIndex = 3;
+            this.countTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnCountKeyPressed);
+            this.countTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.CountValidating);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(694, 57);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(47, 17);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "Цена:";
+            // 
+            // priceTextBox
+            // 
+            this.priceTextBox.Location = new System.Drawing.Point(748, 57);
+            this.priceTextBox.MaxLength = 15;
+            this.priceTextBox.Name = "priceTextBox";
+            this.priceTextBox.Size = new System.Drawing.Size(111, 22);
+            this.priceTextBox.TabIndex = 5;
+            this.priceTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnCountKeyPressed);
+            this.priceTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.OnPriceValidating);
+            // 
+            // mainErrorProvider
+            // 
+            this.mainErrorProvider.ContainerControl = this;
+            // 
+            // editButton
+            // 
+            this.editButton.Image = global::FuelStation.Properties.Resources.edit;
+            this.editButton.Location = new System.Drawing.Point(924, 329);
+            this.editButton.Name = "editButton";
+            this.editButton.Size = new System.Drawing.Size(64, 64);
+            this.editButton.TabIndex = 9;
+            this.mainToolTip.SetToolTip(this.editButton, "Исправить приход ГСМ или продажу");
+            this.editButton.UseVisualStyleBackColor = true;
+            this.editButton.Click += new System.EventHandler(this.OnEdit);
+            // 
+            // deleteButton
+            // 
+            this.deleteButton.Image = global::FuelStation.Properties.Resources.delete;
+            this.deleteButton.Location = new System.Drawing.Point(924, 225);
+            this.deleteButton.Name = "deleteButton";
+            this.deleteButton.Size = new System.Drawing.Size(64, 64);
+            this.deleteButton.TabIndex = 8;
+            this.mainToolTip.SetToolTip(this.deleteButton, "Удалить приход ГСМ на склад или продажу");
+            this.deleteButton.UseVisualStyleBackColor = true;
+            this.deleteButton.Click += new System.EventHandler(this.OnDelete);
+            // 
+            // addButton
+            // 
+            this.addButton.Image = global::FuelStation.Properties.Resources.add;
+            this.addButton.Location = new System.Drawing.Point(924, 121);
+            this.addButton.Name = "addButton";
+            this.addButton.Size = new System.Drawing.Size(64, 64);
+            this.addButton.TabIndex = 7;
+            this.mainToolTip.SetToolTip(this.addButton, "Добавить ГСМ на склад или создать продажу");
+            this.addButton.UseVisualStyleBackColor = true;
+            this.addButton.Click += new System.EventHandler(this.OnAdd);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(21, 57);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(171, 17);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Транспортное средство:";
+            // 
+            // vehicleComboBox
+            // 
+            this.vehicleComboBox.DataSource = this.fullVehicleNameBindingSource;
+            this.vehicleComboBox.DisplayMember = "fullName";
+            this.vehicleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.vehicleComboBox.FormattingEnabled = true;
+            this.vehicleComboBox.Location = new System.Drawing.Point(198, 54);
+            this.vehicleComboBox.Name = "vehicleComboBox";
+            this.vehicleComboBox.Size = new System.Drawing.Size(255, 24);
+            this.vehicleComboBox.TabIndex = 11;
+            this.vehicleComboBox.ValueMember = "fullName";
+            // 
+            // fullVehicleNameBindingSource
+            // 
+            this.fullVehicleNameBindingSource.DataMember = "FullVehicleName";
+            this.fullVehicleNameBindingSource.DataSource = this.fuelStationDataSet;
+            // 
+            // vehiclesTableAdapter
+            // 
+            this.vehiclesTableAdapter.ClearBeforeFill = true;
+            // 
+            // waresTableAdapter
+            // 
+            this.waresTableAdapter.ClearBeforeFill = true;
+            // 
+            // warehouseViewTableAdapter
+            // 
+            this.warehouseViewTableAdapter.ClearBeforeFill = true;
+            // 
+            // salingsViewTableAdapter
+            // 
+            this.salingsViewTableAdapter.ClearBeforeFill = true;
+            // 
+            // queriesTableAdapterBindingSource
+            // 
+            this.queriesTableAdapterBindingSource.DataSource = typeof(FuelStation.FuelStationDataSetTableAdapters.QueriesTableAdapter);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(480, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(80, 17);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "Менеджер:";
+            // 
+            // managerComboBox
+            // 
+            this.managerComboBox.DataSource = this.usersBindingSource;
+            this.managerComboBox.DisplayMember = "Name";
+            this.managerComboBox.FormattingEnabled = true;
+            this.managerComboBox.Location = new System.Drawing.Point(577, 16);
+            this.managerComboBox.Name = "managerComboBox";
+            this.managerComboBox.Size = new System.Drawing.Size(282, 24);
+            this.managerComboBox.TabIndex = 13;
+            this.managerComboBox.ValueMember = "Name";
+            this.managerComboBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnKeyPressManager);
+            // 
+            // fullVehicleNameTableAdapter
+            // 
+            this.fullVehicleNameTableAdapter.ClearBeforeFill = true;
+            // 
+            // usersTableAdapter
+            // 
+            this.usersTableAdapter.ClearBeforeFill = true;
             // 
             // MainForm
             // 
