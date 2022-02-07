@@ -139,6 +139,9 @@
   <data name="NAME_EMPTY" xml:space="preserve">
     <value>Значение наименования не должно быть пустым</value>
   </data>
+  <data name="NOT_SUFFUCIENT_RESIDUE" xml:space="preserve">
+    <value>{0}: не хватает остатков на складе</value>
+  </data>
   <data name="PRICE_ERROR" xml:space="preserve">
     <value>Неверный формат цены</value>
   </data>

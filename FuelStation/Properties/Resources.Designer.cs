@@ -127,6 +127,15 @@ namespace FuelStation.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на {0}: не хватает остатков на складе.
+        /// </summary>
+        internal static string NOT_SUFFUCIENT_RESIDUE {
+            get {
+                return ResourceManager.GetString("NOT_SUFFUCIENT_RESIDUE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Неверный формат цены.
         /// </summary>
         internal static string PRICE_ERROR {

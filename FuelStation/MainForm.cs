@@ -15,10 +15,15 @@ namespace FuelStation
     {
         private double _count;
         private double _price;
+        private String oldGovnNumber;
+        private String oldVehicleName;
+        int currentIdx;
         public MainForm()
         {
             InitializeComponent();
             _count = _price = double.NaN;
+            oldGovnNumber = oldVehicleName = String.Empty;
+            currentIdx = -1;
         }
         /// <summary>
         /// обработчик начальной загрузки
@@ -218,7 +223,14 @@ namespace FuelStation
                     {
                         recs = qadapter.Sailing(wareName, _count, _price, dt, userName, govnum);
                         if (recs > 0)
+                        {
+                            this.warehouseViewTableAdapter.Fill(this.fuelStationDataSet.WarehouseView);
                             this.salingsViewTableAdapter.Fill(this.fuelStationDataSet.SalingsView);
+                            sailingsGridView.Columns[0].Visible = false;
+                        }
+                        else
+                            mainErrorProvider.SetError(sailingsGridView, 
+                                String.Format(Resources.NOT_SUFFUCIENT_RESIDUE, wareName));
                     }
                     break;
                 default:
@@ -419,16 +431,16 @@ namespace FuelStation
             }
             else
             {
-                object v = qadapter.VehicleExists(vehicle[0]);
+                object v = qadapter.VehicleExists(vehicle[1]);
                 if (Convert.ToInt32(v) == 0)
                 {
-                    mainErrorProvider.SetError(vehicleComboBox, String.Format(Resources.VEHICLE_NOT_EXISTS, vehicle[0]));
+                    mainErrorProvider.SetError(vehicleComboBox, String.Format(Resources.VEHICLE_NOT_EXISTS, vehicle[1]));
                     return false;
                 }
             }
 
             if (!ValidateCount() || !ValidatePrice()) return false;
-            govNumber = vehicle[0];
+            govNumber = vehicle[1];
             return true;
         }
         /// <summary>
@@ -504,6 +516,48 @@ namespace FuelStation
             int idx = mainTabControl.SelectedIndex;
             deleteButton.Enabled = idx < 3;
             editButton.Enabled = idx < 2;
+        }
+        /// <summary>
+        /// Начать редактирование ТС, запомнить прежние значения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnVehicleEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            currentIdx = e.RowIndex;
+            oldGovnNumber = oldVehicleName = String.Empty;
+            if (currentIdx < 0) return;
+            DataGridViewRow row = vehiclesGridView.Rows[currentIdx];
+            if (row.IsNewRow) return;
+            oldGovnNumber = row.Cells[0].Value.ToString();
+            oldVehicleName = row.Cells[1].Value.ToString();
+
+        }
+        /// <summary>
+        /// Закончить редактирование ТС. Изменить ТС
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnVehicleLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            int idx = e.RowIndex;
+            if (idx < 0 || currentIdx != idx) return;
+            DataGridViewRow row = vehiclesGridView.Rows[idx];
+            vehiclesGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            String newGovnNumber = row.Cells[0].Value.ToString();
+            String newVehicleName = row.Cells[1].Value.ToString();
+            if (newGovnNumber == oldGovnNumber && newVehicleName == oldVehicleName) return;
+            FuelStationDataSetTableAdapters.QueriesTableAdapter qadapter =
+                this.queriesTableAdapterBindingSource.DataSource as FuelStationDataSetTableAdapters.QueriesTableAdapter;
+
+            int recs = qadapter.ChangeVehicle(oldGovnNumber, oldVehicleName, newGovnNumber, newVehicleName);
+            if(recs > 0)
+            {
+                this.vehiclesTableAdapter.Fill(this.fuelStationDataSet.Vehicles);
+                this.salingsViewTableAdapter.Fill(this.fuelStationDataSet.SalingsView);
+                sailingsGridView.Columns[0].Visible = false;
+            }
+
         }
     }
 }

@@ -222,6 +222,8 @@ namespace FuelStation
             this.vehiclesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.vehiclesGridView.Size = new System.Drawing.Size(470, 323);
             this.vehiclesGridView.TabIndex = 5;
+            this.vehiclesGridView.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnVehicleEnter);
+            this.vehiclesGridView.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnVehicleLeave);
             // 
             // govnumberDataGridViewTextBoxColumn
             // 
