@@ -31,11 +31,15 @@ void RunTask5(int n)
     std::cout << "Сумма отрицательных элеметов: " << SumElements(v1, true) << std::endl;
     std::cout << "Сумма положительтных элеметов: " << SumElements(v1, false) << std::endl;
 }
+void RunTask8(int n)
+{
+    InputOutputTriangle(n);
+}
 
 int main(int argc, char* argv[])
 {
     setlocale(LC_ALL,"");
 
-    //InputOutputTriangle(5);
+    
 }
 

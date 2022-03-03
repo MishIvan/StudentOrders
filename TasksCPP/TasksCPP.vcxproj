@@ -141,9 +141,11 @@
   <ItemGroup>
     <ClCompile Include="Tasks.cpp" />
     <ClCompile Include="TasksCPP.cpp" />
+    <ClCompile Include="Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tasks.h" />
+    <ClInclude Include="Triangle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
