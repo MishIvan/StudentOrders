@@ -12,5 +12,6 @@ public:
 	double Square();
 	bool IsSingular();
 	double Angle(int i);
+	bool IsRightAngled();
 };
 

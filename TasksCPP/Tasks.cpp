@@ -96,6 +96,33 @@ double SumElements(std::vector<double> v1, bool isNegative)
 	}
 	return sum;
 }
+/// ----------------------------------------------------------
+/// Задача №6
+/// ----------------------------------------------------------
+
+/// <summary>
+/// Возвращает вектор, элементы которого расположены в обратном порядке
+/// относительно исходного вектора
+/// </summary>
+/// <param name="Src">исходный вектор</param>
+/// <returns>вектор в обратном порядке</returns>
+std::vector<int> ReverseVector(std::vector<int> &Src)
+{
+	std::vector<int> Dest;
+	for (std::vector<int>::reverse_iterator it = Src.rbegin(); it != Src.rend(); ++it)
+		Dest.push_back(*it);
+	return Dest;
+}
+/// <summary>
+/// Убрать из вектора первый и последний элементы
+/// </summary>
+/// <param name="Src">вектор</param>
+void DeleteFirstAndLast(std::vector<int> &Src)
+{
+	std::vector<int>::iterator it = Src.erase(Src.begin());
+	int n = Src.size();
+	Src.erase(it + n - 1);
+}
 
 /// ----------------------------------------------------------
 /// Задача №8
@@ -104,7 +131,7 @@ double SumElements(std::vector<double> v1, bool isNegative)
 /// <summary>
 /// Рассчитать количество прямоугольных и равносторонних треугольников
 /// </summary>
-/// <param name="n"></param>
+/// <param name="n">Количество треугольников</param>
 void InputOutputTriangle(int n)
 {
 	std::vector<SidedTriangle> vt(n);	
@@ -124,6 +151,7 @@ void InputOutputTriangle(int n)
 	}
 	std::cout << "Равносторонних треугольников: " << nes << std::endl;
 	std::cout << "Прямоугольных тругольниов: " << nra << std::endl;
+	vt.~vector();
 
 }
 

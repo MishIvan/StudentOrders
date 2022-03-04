@@ -94,6 +94,17 @@ double Triangle::Angle(int i)
 	case 3:	// угол C
 		return acos(Scalar(C, A, B) / (c * b)) * 180.0 / PI;
 	}
+	return 0.0;
+}
+/// <summary>
+/// явл€етс€ ли треугольник пр€моугольным
+/// </summary>
+/// <returns>true - тругольник пр€моугольный, false - треугольник не пр€моугольный</returns>
+bool Triangle::IsRightAngled()
+{
+	for (int i = 0; i < 3; i++)
+		if (abs(Angle(i) - 90.0) < EPS) return true;
+	return false;
 }
 
 
