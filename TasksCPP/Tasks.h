@@ -6,7 +6,7 @@
 bool IsVectorsCollinear(std::vector<double> v1, std::vector<double> v2);
 double SumElements(std::vector<double> v1, bool isNegative);
 std::vector<int> ReverseVector(std::vector<int> &Src);
-void DeleteFirstAndLast(std::vector<int> &Src);
+void EraseFirstAndLast(std::vector<int> &Src);
 
 /// <summary>
 /// Треугольник задачаемый длинами трёх сторон

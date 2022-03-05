@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "Tasks.h"
+#include "Integer.h"
 #include <vector>
 #include <string>
 
@@ -53,6 +54,49 @@ void RunTask2(int n)
     v2.~vector();
 }
 
+// задача №4
+void RunTask4()
+{
+    std::cout << "Введите последовательность целых чисел:\r\n";
+    std::vector<Integer> v1;
+    int k = -1;
+    while (true)
+    {
+        std::cin >> k;
+        if (k > 0) {
+            Integer ival(k);
+            v1.push_back(ival);
+        }
+        else break;
+    }
+    k = v1.size();
+    int nsimple = 0;
+    int nperfect = 0;
+    for (int i = 0; i < k; i++)
+    {
+        v1[i].FindDividers();
+        int val = v1[i].GetValue();
+        if (v1[i].IsSimple())
+        {
+            std::cout << "Число " << val  << " простое" << std::endl;
+            nsimple++;
+        }
+            
+        if (v1[i].IsPerfect())
+        {
+            std::cout << "Число " << val << " совершенное" << std::endl;
+            nperfect++;
+        }            
+    }
+    std::cout << "Простых чисел " << nsimple << ", совершенных " << nperfect << std::endl;
+    // Очистить память
+    for (int i = 0; i < k; i++)
+    {
+        v1[i].~Integer();
+    }
+    v1.~vector();
+
+}
 // задача №5
 void RunTask5(int n)
 {    
@@ -82,12 +126,12 @@ void RunTask6(int n)
         std::cout << v2[i] << " ";
 
     std::cout << "\r\nИсходный вектор с удалалённым первым и последним элементом: ";
-    DeleteFirstAndLast(v1);
+    EraseFirstAndLast(v1);
     int k = v1.size();
     for (int i = 0; i < k; i++)
         std::cout << v1[i] << " ";
         
-    DeleteFirstAndLast(v2);
+    EraseFirstAndLast(v2);
     std::cout << "\r\nВектор с элементами в обратном порядке с удалалённым первым и последним элементом: ";
     k = v2.size();
     for (int i = 0; i < k; i++)
@@ -129,6 +173,9 @@ int main(int argc, char* argv[])
         break;
     case 2:
         RunTask2(3);
+        break;
+    case 4:
+        RunTask4();
         break;
     case 5:
         RunTask5(7);

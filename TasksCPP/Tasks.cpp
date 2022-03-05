@@ -117,11 +117,10 @@ std::vector<int> ReverseVector(std::vector<int> &Src)
 /// Убрать из вектора первый и последний элементы
 /// </summary>
 /// <param name="Src">вектор</param>
-void DeleteFirstAndLast(std::vector<int> &Src)
+void EraseFirstAndLast(std::vector<int> &Src)
 {
 	std::vector<int>::iterator it = Src.erase(Src.begin());
-	int n = Src.size();
-	Src.erase(it + n - 1);
+	Src.erase(it + Src.size() - 1);
 }
 
 /// ----------------------------------------------------------
