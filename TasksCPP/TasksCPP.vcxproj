@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClInclude Include="Integer.h" />
     <ClInclude Include="Tasks.h" />
+    <ClInclude Include="TasksCPP.h" />
     <ClInclude Include="Triangle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

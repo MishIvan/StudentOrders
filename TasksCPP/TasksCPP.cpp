@@ -6,6 +6,7 @@
 #include "Integer.h"
 #include <vector>
 #include <string>
+#include "TasksCPP.h"
 
 // задача №1
 double f1(double ang)
@@ -146,6 +147,22 @@ void RunTask8(int n)
 {
     InputOutputTriangle(n);
 }
+/// <summary>
+/// Получить полный путь файла в папке, из которой запускается исполняемый файл программы
+/// </summary>
+/// <param name="fullExePath">полный путь запуска программы</param>
+/// <param name="dataFileName">ммя файла данных в каталоге, где расположен исполняемый файл</param>
+/// <returns>Полное имя файла данных</returns>
+char * GetFullPathInWD(char* fullExePath, const char *dataFileName)
+{
+    char * fileName =  new char[1024];
+    strcpy_s(fileName, 1024, fullExePath);
+    std::string s1 = fileName;
+    int k = s1.find_last_of('\\');
+    s1.replace(k+1, s1.size() - 1, dataFileName);
+    strcpy_s(fileName, 1024, s1.data());
+    return fileName;    
+}
 
 int main(int argc, char* argv[])
 {
@@ -167,8 +184,7 @@ int main(int argc, char* argv[])
 
     }
     
-    int k;
-    std::string s1;
+    char* path;
 
     switch (itask)
     {
@@ -188,12 +204,9 @@ int main(int argc, char* argv[])
         RunTask6(5);
         break;
     case 7:
-        char fileName[1024];
-        strcpy_s(fileName, argv[0]);
-        s1 = fileName;
-        k = s1.find_last_of('\\');
-        s1.replace(k, s1.size() - 1, "\\Matrix.txt");
-        ReadMatrix(s1.data());
+        path = GetFullPathInWD(argv[0], "Matrix.txt");
+        ReadMatrix(path);
+        delete path;
         break;
     case 8:
         RunTask8(4);
