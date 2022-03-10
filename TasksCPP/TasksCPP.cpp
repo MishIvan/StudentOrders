@@ -166,6 +166,10 @@ int main(int argc, char* argv[])
         return -1;
 
     }
+    
+    int k;
+    std::string s1;
+
     switch (itask)
     {
     case 1:
@@ -182,6 +186,14 @@ int main(int argc, char* argv[])
         break;
     case 6:
         RunTask6(5);
+        break;
+    case 7:
+        char fileName[1024];
+        strcpy_s(fileName, argv[0]);
+        s1 = fileName;
+        k = s1.find_last_of('\\');
+        s1.replace(k, s1.size() - 1, "\\Matrix.txt");
+        ReadMatrix(s1.data());
         break;
     case 8:
         RunTask8(4);

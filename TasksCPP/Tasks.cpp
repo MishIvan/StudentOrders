@@ -1,7 +1,13 @@
 #include <vector>
 #include <iostream>
+#include <fstream>
 #include "Tasks.h"
+#include <direct.h>
+#include <windows.h>
+#include <tchar.h>
 
+#define MATRIX_ROWS 4
+#define MATRIX_COLUMNS 5
 /// ----------------------------------------------------------
 /// Задача №2
 /// ----------------------------------------------------------
@@ -152,6 +158,60 @@ void InputOutputTriangle(int n)
 	std::cout << "Прямоугольных тругольниов: " << nra << std::endl;
 	vt.~vector();
 
+}
+ // Задание 7
+void ReadMatrix(const char* fileName)
+{
+	std::fstream inp;
+	inp.open(fileName, std::ios::in);
+	int matrix[MATRIX_ROWS][MATRIX_COLUMNS];
+	if (inp.is_open())
+	{
+		for (int i = 0; i < MATRIX_ROWS; i++)
+			for (int j = 0; j < MATRIX_COLUMNS; j++)
+				inp >> matrix[i][j];
+
+		// количество столбцов содержащих хотя бы один нулевой элемент
+		int k = 0;
+		for (int j = 0; j < MATRIX_COLUMNS; j++)
+			for (int i =0; i < MATRIX_ROWS; i++)
+				if (matrix[i][j] == 0) {
+					k++; break;
+				}
+		std::cout << "Количество столбцов, содержащих хотя бы один нулевой элемент: " << k << std::endl;
+		
+		
+		// номер строки, в которой находится самая длинная серия элементов
+		std::vector<int> series(MATRIX_ROWS);
+		for (int i = 0; i < MATRIX_ROWS; i++)
+		{
+			int p = 0; // самая длинная серия в строке
+			int kmax = 1;
+			while (p < MATRIX_COLUMNS)
+			{
+				int val = matrix[i][p]; k = 1;
+				for (int j = 0; j < MATRIX_COLUMNS; j++)
+					if (matrix[i][j] == val && p != j) k++;
+
+				if (k > kmax) kmax = k;
+				p++;
+			}
+			series[i] = kmax;			
+		}
+
+		k = 1;
+		int p = -1;
+		for (int i = 0; i < series.size(); i++)
+		{
+			if (series[i] > k && series[i] != 1) { k = series[i]; p = i; }
+		}
+		if(p > 0)
+			std::cout << "Строка с самой длииной серией : " << p+1 << std::endl;
+		else
+			std::cout << "Элементы строк матрицы различаются" << std::endl;
+
+	}
+	inp.close();
 }
 
 		
