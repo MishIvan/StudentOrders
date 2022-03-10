@@ -164,7 +164,12 @@ void ReadMatrix(const char* fileName)
 {
 	std::fstream inp;
 	inp.open(fileName, std::ios::in);
-	int matrix[MATRIX_ROWS][MATRIX_COLUMNS];
+	// объявление локального массива
+	//int matrix[MATRIX_ROWS][MATRIX_COLUMNS];
+	// динамический массив
+	int** matrix = new int* [MATRIX_ROWS];
+	for (int i = 0; i < MATRIX_ROWS; i++)
+		matrix[i] = new int[MATRIX_COLUMNS];
 	if (inp.is_open())
 	{
 		for (int i = 0; i < MATRIX_ROWS; i++)
@@ -209,6 +214,11 @@ void ReadMatrix(const char* fileName)
 			std::cout << "Строка с самой длииной серией : " << p+1 << std::endl;
 		else
 			std::cout << "Элементы строк матрицы различаются" << std::endl;
+
+		// для локального массива убрать операторы с delete
+		for (int i = 0; i < MATRIX_ROWS; i++)
+			delete matrix[i];
+		delete matrix;
 
 	}
 	inp.close();
