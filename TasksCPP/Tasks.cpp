@@ -5,6 +5,7 @@
 #include <direct.h>
 #include <windows.h>
 #include <tchar.h>
+#include "Student.h"
 
 #define MATRIX_ROWS 4
 #define MATRIX_COLUMNS 5
@@ -159,7 +160,9 @@ void InputOutputTriangle(int n)
 	vt.~vector();
 
 }
- // Задание 7
+
+// Задание 7
+
 void ReadMatrix(const char* fileName)
 {
 	std::fstream inp;
@@ -220,6 +223,175 @@ void ReadMatrix(const char* fileName)
 			delete matrix[i];
 		delete matrix;
 
+	}
+	inp.close();
+}
+
+// Задача 16
+
+/// <summary>
+/// Упорядочивание списка студентов сначала по ФИО, потом по группе
+/// </summary>
+/// <param name="students">список студентов</param>
+void SortStudents(std::vector<STUDENT>& students)
+{
+	std::vector<STUDENT> sorted;
+	
+	std::string s1;	
+	std::vector<STUDENT>::iterator it;
+	while (!students.empty())
+	{
+		s1 = students[0].getName() + students[0].getGroup();
+		// найти индекс первого студента в алфавитном порядке
+		int k = -1;
+		int n = students.size();
+		for (int i = 0; i < n; i++)
+		{
+			STUDENT student = students[i];
+			std::string ng = student.getName() + student.getGroup();
+			// найти 
+			if (ng < s1) {
+				s1 = ng; k = i;
+			}
+		}
+
+		// перенести в сортированный список
+		if (k >= 0)
+		{
+			sorted.push_back(students[k]);
+			it = students.begin();
+			students.erase(it + k);
+		}
+		else 
+		{
+			if (!students.empty())
+			{
+				sorted.push_back(students[0]);
+				it = students.begin();
+				students.erase(it);
+			}
+		}
+	}
+
+	// Перенесение элементов в исходный список из сортированного
+	int n = sorted.size();
+	for (int i = 0; i < n; i++)
+	{
+		students.push_back(sorted[i]);
+	}
+	sorted.~vector();
+}
+
+/// <summary>
+/// Упорядочивание списка студентов сначала по ФИО, потом по группе
+/// </summary>
+/// <param name="fileName">имя файла</param>
+/// <param name="students">список студентов</param>
+void ReadStudentsFromFile(const char * fileName, std::vector<STUDENT>& students)
+{
+	std::fstream inp;
+	inp.open(fileName, std::ios::in);
+	if (inp.is_open())
+	{
+		int n;
+		char buff1[512], buff2[16];
+		std::string name, group;
+		std::vector<int> vmarks;
+		inp >> n;
+		int marks[5];
+		for (int i = 0; i < n; i++)
+		{
+			inp >> buff1 >> buff2;
+			strcat_s(buff1, 512, " ");
+			strcat_s(buff1, 512, buff2);
+			name = buff1;
+			inp >> buff1;
+			group = buff1;
+			inp >> marks[0] >> marks[1] >> marks[2] >> marks[3] >> marks[4];
+			vmarks.clear();
+			for (int j = 0; j < 5; j++)
+				vmarks.push_back(marks[j]);
+			STUDENT student(name, group, vmarks);
+			students.push_back(student);
+		}
+
+	}
+	inp.close();
+
+}
+
+/// <summary>
+/// Запись информации о студентах в двоичный файл 
+/// </summary>
+/// <param name="fileName">имя файла</param>
+/// <param name="students">список студентов</param>
+void WriteStudentsToFileB(const char* fileName, std::vector<STUDENT>& students)
+{
+	std::fstream inp;
+	inp.open(fileName, std::ios::out | std::ios::binary);
+	if (inp.is_open())
+	{
+		int n = students.size();
+		inp.write((char *)&n, sizeof(int));
+		for (int i = 0; i < n; i++)
+		{
+			int m = students[i].getName().size();
+			inp.write((char*)&m, sizeof(int));
+			inp.write(students[i].getName().data(), m);
+
+			m = students[i].getGroup().size();
+			inp.write((char*)&m, sizeof(int));
+			inp.write(students[i].getGroup().data(), m);
+			
+			for (int j = 0; j < 5; j++)
+			{
+				m = students[i].getMark(j);
+				inp.write((char*)&m, sizeof(int));
+			}
+				
+		}
+	}
+	inp.close();
+}
+
+/// <summary>
+/// Считывание информации о студентах в двоичный файла
+/// </summary>
+/// <param name="fileName">имя файла</param>
+/// <param name="students">список студентов</param>
+void ReadStudentsFromFileB(const char* fileName, std::vector<STUDENT>& students)
+{
+	std::fstream inp;
+	inp.open(fileName, std::ios::in | std::ios::binary);
+	std::string name, group;
+	std::vector<int> mark(5);
+
+	if (inp.is_open())
+	{
+		int n;
+		int m;
+		inp.read((char *)&n, sizeof(int));
+		char buff[512];
+		for (int i = 0; i < n; i++)
+		{
+			inp.read((char*)&m, sizeof(int));
+			inp.read(buff, m);
+			buff[m] = '\0';
+			name = buff;
+			inp.read((char*)&m, sizeof(int));
+			buff[0] = '\0';
+			inp.read(buff, m);
+			buff[m] = '\0';
+			group = buff;
+			for (int j = 0; j < 5; j++)
+			{
+				inp.read((char*)&m, sizeof(int));
+				mark[j] = m;
+			}
+								
+			STUDENT student(name, group, mark);
+			students.push_back(student);
+		}
 	}
 	inp.close();
 }

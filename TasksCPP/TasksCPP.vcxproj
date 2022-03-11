@@ -140,12 +140,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Integer.cpp" />
+    <ClCompile Include="Student.cpp" />
     <ClCompile Include="Tasks.cpp" />
     <ClCompile Include="TasksCPP.cpp" />
     <ClCompile Include="Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Integer.h" />
+    <ClInclude Include="Student.h" />
     <ClInclude Include="Tasks.h" />
     <ClInclude Include="TasksCPP.h" />
     <ClInclude Include="Triangle.h" />

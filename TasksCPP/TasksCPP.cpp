@@ -7,6 +7,8 @@
 #include <vector>
 #include <string>
 #include "TasksCPP.h"
+#include "Student.h"
+#include <Windows.h>
 
 // задача №1
 double f1(double ang)
@@ -147,6 +149,81 @@ void RunTask8(int n)
 {
     InputOutputTriangle(n);
 }
+// задача №9
+void RunTask9(char* fullExeFileName)
+{
+    std::vector<STUDENT> students;
+    char path[1024];
+    GetFullPathInWD(fullExeFileName, "Students.txt", path);
+    ReadStudentsFromFile(path,students);
+    GetFullPathInWD(fullExeFileName, "Students.bin", path);
+    WriteStudentsToFileB(path, students);
+    students.clear();
+    ReadStudentsFromFileB(path, students);
+
+    std::cout << "Информация о студентах, полученная из двоичного файла\r\n";
+    int n = students.size();
+    for (int i = 0; i < n; i++)
+    {
+        STUDENT student = students[i];            
+        std::cout << "\r\nФИО: " << student.getName() << std::endl;
+        std::cout << "Группа: " << student.getGroup() << std::endl;
+        std::cout << "Оценки: ";
+        for (int j = 0; j < 5; j++)
+            std::cout << students[i].getMark(j) << " ";
+    }
+
+    students.~vector();
+}
+
+// задача №16
+void RunTask16(int nst)
+{
+    std::string name, group; 
+    std::vector<int> mark(5);
+    std::vector<STUDENT> students;
+    char buff1[512], buff2[16];
+    for (int i = 0; i < nst; i++)
+    {
+        std::cout << "Введите ФИО студента: ";
+        std::cin >> buff1 >> buff2;
+        strcat_s(buff1, 512, " ");
+        strcat_s(buff1, 512, buff2);
+        name = buff1;
+        std::cout << "Введите группу студента: ";
+        std::cin >> buff1;
+        group = buff1;
+        std::cout << "Введите оценки студента: " << std::endl;
+        for (int j = 0; j < 5; j++)
+            std::cin >> mark[j];
+        STUDENT st(name, group, mark);
+        students.push_back(st);
+    } 
+
+    SortStudents(students); // сортировка списка студентов
+
+    // вывод студентов получивших плохие отметки
+    int n = students.size();
+    int k = 0;
+    for (int i = 0; i < n; i++)
+    {
+        STUDENT student = students[i];
+        if (student.HasBadMark())
+        {
+            if (k == 0) std::cout << "Студенты, получившие плохие оценки\r\n";
+            std::cout << "\r\nФИО: " << student.getName() << std::endl;
+            std::cout << "Группа: " << student.getGroup() << std::endl;
+            std::cout << "Оценки: ";
+            for (int j = 0; j < 5; j++)
+                std::cout << students[i].getMark(j) << " ";
+            k++;
+        }
+    }
+    if (k < 1)
+        std::cout << "Нет студентов, получивших плохие оценки\r\n";
+
+    students.~vector();
+}
 /// <summary>
 /// Получить полный путь файла в папке, из которой запускается исполняемый файл программы
 /// </summary>
@@ -171,6 +248,8 @@ void GetFullPathInWD(char* fullExePath, const char *dataFileName, char * fullFil
 int main(int argc, char* argv[])
 {
     setlocale(LC_ALL,"");
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
     if (argc < 2)
     {
         std::cout << "Не указан номер задачи. Укажите номер задачи.";
@@ -189,6 +268,7 @@ int main(int argc, char* argv[])
     }
 
     char path[1024];
+    std::string name;
     switch (itask)
     {
     case 1:
@@ -212,6 +292,12 @@ int main(int argc, char* argv[])
         break;
     case 8:
         RunTask8(4);
+        break;
+    case 9:
+        RunTask9(argv[0]);
+        break;
+    case 16:
+        RunTask16(5);
         break;
     default:
         return 0;
