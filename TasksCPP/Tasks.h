@@ -3,6 +3,10 @@
 # include <math.h>
 #include "Student.h"
 
+#define MATRIX_ROWS 4
+#define MATRIX_COLUMNS 5
+
+
 #define EPS 1.0e-8
 #define PI 3.1415926535897932384626433832795
 

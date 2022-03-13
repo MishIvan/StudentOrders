@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Integer.cpp" />
+    <ClCompile Include="MTempl.cpp" />
     <ClCompile Include="Student.cpp" />
     <ClCompile Include="Tasks.cpp" />
     <ClCompile Include="TasksCPP.cpp" />

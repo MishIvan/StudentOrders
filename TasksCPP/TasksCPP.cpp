@@ -6,9 +6,11 @@
 #include "Integer.h"
 #include <vector>
 #include <string>
+#include <fstream>
 #include "TasksCPP.h"
 #include "Student.h"
 #include <Windows.h>
+#include "MTempl.cpp"
 
 // задача №1
 double f1(double ang)
@@ -204,6 +206,35 @@ void RunTask10(char *fullExeFileName)
     Find2digitsNumbersInFile(path);
 }
 
+// задача №12
+void RunTask12(const char* fullFileName)
+{
+    int rows, cols;
+    std::fstream inp;
+    inp.open(fullFileName, std::ios::in);
+    // динамический массив
+    if (inp.is_open())
+    {
+        inp >> rows >> cols;
+        double** matrix = new double* [rows];
+        for (int i = 0; i < rows; i++)
+            matrix[i] = new double[cols];
+
+        for (int i = 0; i < rows; i++)
+            for (int j = 0; j < cols; j++)
+                inp >> matrix[i][j];
+
+        ReadMatrixT(matrix, rows, cols);
+
+        for (int i = 0; i < rows; i++)
+            delete matrix[i];
+        delete matrix;
+
+    }
+    inp.close();
+
+}
+
 // задача №16
 void RunTask16(int nst)
 {
@@ -327,10 +358,15 @@ int main(int argc, char* argv[])
         RunTask8(4);
         break;
     case 9:
+    case 17:
         RunTask9(argv[0]);
         break;
     case 10:
         RunTask10(argv[0]);
+        break;
+    case 12:
+        GetFullPathInWD(argv[0], "MatrixT.txt", path);
+        RunTask12(path);
         break;
     case 16:
         RunTask16(5);

@@ -9,8 +9,6 @@
 #include <string>
 #include <regex>
 
-#define MATRIX_ROWS 4
-#define MATRIX_COLUMNS 5
 /// ----------------------------------------------------------
 /// Задача №2
 /// ----------------------------------------------------------
@@ -165,6 +163,10 @@ void InputOutputTriangle(int n)
 
 // Задание 7
 
+/// <summary>
+/// Считать целочисленную матрицу из файла
+/// </summary>
+/// <param name="fileName"></param>
 void ReadMatrix(const char* fileName)
 {
 	std::fstream inp;
@@ -228,6 +230,7 @@ void ReadMatrix(const char* fileName)
 	}
 	inp.close();
 }
+
 
 // Задача 16
 
@@ -438,4 +441,5 @@ void ReadStudentsFromFileB(const char* fileName, std::vector<STUDENT>& students)
 	}
 	inp.close();
 }
-		
+
+ 		
