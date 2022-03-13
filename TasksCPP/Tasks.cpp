@@ -6,6 +6,8 @@
 #include <windows.h>
 #include <tchar.h>
 #include "Student.h"
+#include <string>
+#include <regex>
 
 #define MATRIX_ROWS 4
 #define MATRIX_COLUMNS 5
@@ -395,5 +397,45 @@ void ReadStudentsFromFileB(const char* fileName, std::vector<STUDENT>& students)
 	}
 	inp.close();
 }
-
+/// <summary>
+/// Найти все строки в файле, содержащие двузначные числа
+/// и вывести эти строки на консоль
+/// </summary>
+/// <param name="fileName">полное имя файла, откуда считываются строки</param>
+ void Find2digitsNumbersInFile(const char* fileName)
+{
+	std::fstream inp;
+	inp.open(fileName, std::ios::in);
+	std::string s1, s2;
+	if (inp.is_open())
+	{
+		// считывание строк
+		while (getline(inp, s1))
+		{
+			// определить, содержит ли строка двузначное число
+			std::smatch m;
+			std::regex e("[+-]?[0-9]+");   // поиск целых чисел
+			s2 = s1;
+			bool contains = false;
+			
+			// поиск всех чисел в строке
+			while (std::regex_search(s2, m, e)) {
+				int n = m.size();
+				for (int i=0; i < n; i++)
+				{
+					int value = std::stoi(m[i]);
+			
+					// является ли число двузначным?
+					if (abs(value) < 100 && abs(value) >= 10 && !contains)
+					{
+						std::cout << "Строка " << s1 << " содержит двузначное число\r\n";
+						contains = true;
+					}						
+				}
+				s2 = m.suffix().str();
+			}
+		}
+	}
+	inp.close();
+}
 		

@@ -57,6 +57,26 @@ void RunTask2(int n)
     v2.~vector();
 }
 
+// Задача №3
+
+/// <summary>
+/// Функция, значение которй нужно вычислить в задании 
+/// </summary>
+/// <param name="x">аргумент функции</param>
+/// <returns>значение функции</returns>
+double func_t3(double x)
+{
+    return x >= 0.0 ? x * x : -x;
+}
+void RunTask3()
+{
+    double arg;
+    std::cout << "Введите аргумент функции: ";
+    std::cin >> arg;
+    std::cout << "\r\nЗначение функции: " << func_t3(arg) << std::endl;
+
+}
+
 // задача №4
 void RunTask4()
 {
@@ -176,6 +196,14 @@ void RunTask9(char* fullExeFileName)
     students.~vector();
 }
 
+// задача №10
+void RunTask10(char *fullExeFileName)
+{
+    char path[1024];
+    GetFullPathInWD(fullExeFileName, "Digits.txt", path);
+    Find2digitsNumbersInFile(path);
+}
+
 // задача №16
 void RunTask16(int nst)
 {
@@ -252,7 +280,8 @@ int main(int argc, char* argv[])
     SetConsoleOutputCP(1251);
     if (argc < 2)
     {
-        std::cout << "Не указан номер задачи. Укажите номер задачи.";
+        std::cout << "Не указан номер задачи. Укажите номер задачи.\r\n";
+        std::cout << "Запуск <путь программы> <номер задачи>";
         return -1;
     }
     int itask = 0;
@@ -269,6 +298,7 @@ int main(int argc, char* argv[])
 
     char path[1024];
     std::string name;
+
     switch (itask)
     {
     case 1:
@@ -276,6 +306,9 @@ int main(int argc, char* argv[])
         break;
     case 2:
         RunTask2(3);
+        break;
+    case 3: 
+        RunTask3();
         break;
     case 4:
         RunTask4();
@@ -296,10 +329,14 @@ int main(int argc, char* argv[])
     case 9:
         RunTask9(argv[0]);
         break;
+    case 10:
+        RunTask10(argv[0]);
+        break;
     case 16:
         RunTask16(5);
         break;
     default:
+        std::cout << "Задача № " << itask << " отсутствует\r\n";
         return 0;
     }
     return 1;   

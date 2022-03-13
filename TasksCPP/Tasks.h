@@ -15,6 +15,7 @@ void SortStudents(std::vector<STUDENT>& students);
 void ReadStudentsFromFile(const char* fileName, std::vector<STUDENT>& students);
 void WriteStudentsToFileB(const char* fileName, std::vector<STUDENT>& students);
 void ReadStudentsFromFileB(const char* fileName, std::vector<STUDENT>& students);
+void Find2digitsNumbersInFile(const char* fileName);
 
 /// <summary>
 /// Треугольник задачаемый длинами трёх сторон
