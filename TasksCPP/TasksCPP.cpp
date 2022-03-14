@@ -11,6 +11,7 @@
 #include "Student.h"
 #include <Windows.h>
 #include "MTempl.cpp"
+#include "Complex.h"
 
 // задача №1
 double f1(double ang)
@@ -235,6 +236,52 @@ void RunTask12(const char* fullFileName)
 
 }
 
+// задача №13
+void RunTask13(const char* fileName)
+{
+    // Считать числа a,b,c,d из файла
+    std::fstream inp;
+    inp.open(fileName, std::ios::in);
+    Complex a, b, c, d;
+    if (inp.is_open())
+    {
+        int n;
+        double re, im;
+        inp >> n;
+        for (int i = 0; i < n; i++)
+        {
+            inp >> re >> im;
+            Complex val(re, im);
+            switch (i)
+            {
+            case 0:
+                a = val; break;
+            case 1:
+                b = val; break;
+            case 2:
+                c = val; break;
+            case 3:
+                d = val; break;
+            }
+        }
+        // проверить сопряжённость чисел a - (b+c)/d и d*(a+c)/a
+        Complex val = b + c;
+        val = val / d;
+        Complex r1 = a - val;
+        Complex cr1 = r1.Conjugate();
+        val = a + c;
+        val = val / a;
+        Complex r2 = d * val;
+        std::cout << "Число a - (b+c)/d : " << r1.ToString() << std::endl;
+        std::cout << "Число d*(a+c)/a : " << r2.ToString() << std::endl;
+        if (cr1 == r2)
+            std::cout << "Числа a - (b+c)/d и d*(a+c)/a являются сопряжёнными" << std::endl;
+        else
+            std::cout << "Числа a - (b+c)/d и d*(a+c)/a НЕ являются сопряжёнными" << std::endl;
+    }
+    inp.close();
+}
+
 // задача №16
 void RunTask16(int nst)
 {
@@ -367,6 +414,10 @@ int main(int argc, char* argv[])
     case 12:
         GetFullPathInWD(argv[0], "MatrixT.txt", path);
         RunTask12(path);
+        break;
+    case 13:
+        GetFullPathInWD(argv[0], "Complex.txt", path);
+        RunTask13(path);
         break;
     case 16:
         RunTask16(5);
