@@ -207,6 +207,17 @@ void RunTask10(char *fullExeFileName)
     Find2digitsNumbersInFile(path);
 }
 
+// Задача №11
+void RunTask11(const char* fileName)
+{
+    std::vector<double> vdata = { 1.0, 5.0, -12.0, -13.0, -17.0, 7.0, 8.0, -45.0, -78.0, 12.0, 15.0, -17.0, - 13.0, -28.0, 45.0, 48.0 };
+    WriteDoublesToBinFile(fileName, vdata);
+    vdata.clear();
+    ReadDoublesToBinFile(fileName, vdata);
+    double sum = FindMaxLongNegative(vdata);
+    std::cout << "Сумма последней группы отрицательных элементов: " << sum << std::endl;
+}
+
 // задача №12
 void RunTask12(const char* fullFileName)
 {
@@ -411,6 +422,11 @@ int main(int argc, char* argv[])
     case 10:
         RunTask10(argv[0]);
         break;
+    case 11:
+        GetFullPathInWD(argv[0], "Doubles.bin", path);
+        RunTask11(path);
+        break;
+
     case 12:
         GetFullPathInWD(argv[0], "MatrixT.txt", path);
         RunTask12(path);

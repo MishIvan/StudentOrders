@@ -20,6 +20,9 @@ void ReadStudentsFromFile(const char* fileName, std::vector<STUDENT>& students);
 void WriteStudentsToFileB(const char* fileName, std::vector<STUDENT>& students);
 void ReadStudentsFromFileB(const char* fileName, std::vector<STUDENT>& students);
 void Find2digitsNumbersInFile(const char* fileName);
+void WriteDoublesToBinFile(const char* fileName, std::vector<double>& vdata);
+void ReadDoublesToBinFile(const char* fileName, std::vector<double>& vdata);
+double FindMaxLongNegative(std::vector<double> vdata);
 
 /// <summary>
 /// Треугольник задачаемый длинами трёх сторон

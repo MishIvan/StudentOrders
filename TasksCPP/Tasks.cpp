@@ -442,4 +442,76 @@ void ReadStudentsFromFileB(const char* fileName, std::vector<STUDENT>& students)
 	inp.close();
 }
 
- 		
+ // Задача №11
+
+ /// <summary>
+ /// Записать последовательность вещественных чисел в двоичный файл
+ /// </summary>
+ /// <param name="fileName">имя файла</param>
+ /// <param name="vdata">вектор с данными, которые требуется записать</param>
+ void WriteDoublesToBinFile(const char* fileName, std::vector<double> &vdata)
+ {
+	 std::fstream inp;
+	 inp.open(fileName, std::ios::out | std::ios::binary);
+
+	 if (inp.is_open())
+	 {
+		 int n = vdata.size();
+		 inp.write((char*)&n, sizeof(int));
+		 for (int i = 0; i < n; i++)
+		 {
+			 double val = vdata[i];
+			 inp.write((char*)&val, sizeof(double));
+		 }
+		 
+	 }
+	 inp.close();
+ }
+
+ /// <summary>
+ /// Считать последовательность вещественных чисел из двоичного файла
+ /// </summary>
+ /// <param name="fileName">имя файла</param>
+ /// <param name="vdata">вектор с данными, в который будут считаны данные</param>
+ void ReadDoublesToBinFile(const char* fileName, std::vector<double>& vdata)
+ {
+	 std::fstream inp;
+	 inp.open(fileName, std::ios::in | std::ios::binary);
+
+	 if (inp.is_open())
+	 {		 
+		 int n;
+		 inp.read((char*)&n, sizeof(int));
+		 for (int i = 0; i < n; i++)
+		 {
+			 double val;
+			 inp.read((char*)&val, sizeof(double));
+			 vdata.push_back(val);
+		 }		 
+	 }
+	 inp.close();
+ }
+ /// <summary>
+ /// Найти сумму последней серии отрицательных элементов
+ /// </summary>
+ /// <param name="vdata">последовательность вещественных чисел для поиска</param>
+ /// <returns>сумма последней серии отрицательных элементов</returns>
+ double FindMaxLongNegative(std::vector<double> vdata)
+ {
+	 int n = vdata.size();
+	 double sum = 0.0, sumlast = 0.0;
+	 for (int i = 0; i < n; i++)
+	 {
+		 if (vdata[i] < 0.0)
+		 {
+			 sum += vdata[i];
+		 }
+		 else
+		 {
+			 if(sum != 0) sumlast = sum;
+			 sum = 0.0;
+		 }
+
+	 }
+	 return sumlast;
+ }
