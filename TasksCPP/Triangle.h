@@ -19,5 +19,6 @@ public:
 	bool IsSingular();
 	double Angle(int i);
 	bool IsRightAngled();
+	double HypotenuseLength();
 };
 

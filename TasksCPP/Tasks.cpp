@@ -8,6 +8,7 @@
 #include "Student.h"
 #include <string>
 #include <regex>
+#include "Triangle.h"
 
 /// ----------------------------------------------------------
 /// Задача №2
@@ -161,7 +162,9 @@ void InputOutputTriangle(int n)
 
 }
 
-// Задание 7
+// ------------------------------------------
+// Задача №7
+// ------------------------------------------
 
 /// <summary>
 /// Считать целочисленную матрицу из файла
@@ -231,8 +234,9 @@ void ReadMatrix(const char* fileName)
 	inp.close();
 }
 
-
-// Задача 16
+// ------------------------------
+// Задача №16
+// ------------------------------
 
 /// <summary>
 /// Упорядочивание списка студентов сначала по ФИО, потом по группе
@@ -442,7 +446,9 @@ void ReadStudentsFromFileB(const char* fileName, std::vector<STUDENT>& students)
 	inp.close();
 }
 
+ // ------------------------------
  // Задача №11
+ // ------------------------------
 
  /// <summary>
  /// Записать последовательность вещественных чисел в двоичный файл
@@ -515,3 +521,34 @@ void ReadStudentsFromFileB(const char* fileName, std::vector<STUDENT>& students)
 	 }
 	 return sumlast;
  }
+
+ // ------------------------------
+ // Задача №14
+ // ------------------------------
+
+ /// <summary>
+ /// Считывание данных о треугольниках из файла
+ /// </summary>
+ /// <param name="fileName">имя файла</param>
+ /// <param name="tdata">вектор с данными о треугольниках</param>
+ void ReadTrianglesFromFile(char* fileName, std::vector<Triangle> &tdata)
+ {
+	 std::fstream inp;
+	 inp.open(fileName, std::ios::in);
+
+	 if (inp.is_open())
+	 {
+		 int n;
+		 inp >> n;
+		 Point2D A, B, C;
+		 for (int i = 0; i < n; i++)
+		 {
+			 inp >> A.x >> A.y >> B.x >> B.y >> C.x >> C.y;
+			 Triangle t(A, B, C);
+			 tdata.push_back(t);
+		 }
+	 }
+	 inp.close();
+
+ }
+

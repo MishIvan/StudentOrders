@@ -2,6 +2,7 @@
 #include <vector>
 # include <math.h>
 #include "Student.h"
+#include "Triangle.h"
 
 #define MATRIX_ROWS 4
 #define MATRIX_COLUMNS 5
@@ -23,6 +24,7 @@ void Find2digitsNumbersInFile(const char* fileName);
 void WriteDoublesToBinFile(const char* fileName, std::vector<double>& vdata);
 void ReadDoublesToBinFile(const char* fileName, std::vector<double>& vdata);
 double FindMaxLongNegative(std::vector<double> vdata);
+void ReadTrianglesFromFile(char* fileName, std::vector<Triangle> &tdata);
 
 /// <summary>
 /// Треугольник задачаемый длинами трёх сторон

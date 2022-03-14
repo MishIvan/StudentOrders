@@ -293,6 +293,51 @@ void RunTask13(const char* fileName)
     inp.close();
 }
 
+// задача №14
+void RunTask14(char* fileName)
+{
+    std::vector<Triangle> tdata;
+    ReadTrianglesFromFile(fileName, tdata);
+    int n = tdata.size();
+
+    // Нахождение максимальной длины гипотенузы прямоугольного треугольника
+    // средней площади и минимального периметра для непрямоугольных треугольников 
+    double maxhyp = 0.0;
+    bool isr = false;
+    double msq = 0.0, perim = 9.99e19;
+    double nt = 0.0;
+    for (int i = 0; i < n; i++)
+    {
+        Triangle t = tdata[i];
+        if (t.IsRightAngled())
+        {
+            double hyp = t.HypotenuseLength();
+            if (hyp > maxhyp) maxhyp = hyp;
+            isr = true;
+        }
+        else
+        {
+            double p = t.Perimeter();
+            if (p < perim) perim = p;
+            msq += t.Square();
+            nt += 1.0;
+        }
+    }
+    if (isr)
+    {
+        std::cout << "Максимальная длина гипотенузы прямоугольных треугольников: " << maxhyp << std::endl;
+    }
+    else
+    {
+        std::cout << "Нет прямоугольных треугольников\r\n";
+    }
+    
+    std::cout << "Минимальный периметр непрямоугольных треугольников: " << perim << std::endl;
+    std::cout << "Средняя площадь непрямоугольных треугольников: " << msq/nt << std::endl;
+
+    tdata.~vector();
+}
+
 // задача №16
 void RunTask16(int nst)
 {
@@ -426,7 +471,6 @@ int main(int argc, char* argv[])
         GetFullPathInWD(argv[0], "Doubles.bin", path);
         RunTask11(path);
         break;
-
     case 12:
         GetFullPathInWD(argv[0], "MatrixT.txt", path);
         RunTask12(path);
@@ -434,6 +478,10 @@ int main(int argc, char* argv[])
     case 13:
         GetFullPathInWD(argv[0], "Complex.txt", path);
         RunTask13(path);
+        break;
+    case 14:
+        GetFullPathInWD(argv[0], "Triangles.txt", path);
+        RunTask14(path);
         break;
     case 16:
         RunTask16(5);

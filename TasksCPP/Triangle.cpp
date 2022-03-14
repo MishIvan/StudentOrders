@@ -12,7 +12,7 @@ double SideLenth(const Point2D& A, const Point2D& B)
 	return sqrt((A.x - B.x) * (A.x - B.x) + (A.y - B.y) * (A.y - B.y));
 }
 /// <summary>
-/// Вычисление скалярного произведения векторов BA и CA
+/// Вычисление скалярного произведения векторов AB и AC
 /// </summary>
 /// <param name="A">точка A</param>
 /// <param name="B">точка B</param>
@@ -41,6 +41,11 @@ Triangle::Triangle(Point2D& A, Point2D& B, Point2D& C)
 	this->A.x = A.x;
 	this->B.x = B.x;
 	this->C.x = C.x;
+
+	this->A.y = A.y;
+	this->B.y = B.y;
+	this->C.y = C.y;
+
 }
 /// <summary>
 /// Вычисление периметра треугольника
@@ -76,7 +81,7 @@ bool Triangle::IsSingular()
 /// <summary>
 /// Определение углов треугольника в градусах
 /// </summary>
-/// <param name="i"></param>
+/// <param name="i">1 - А, 2 - В, 3 - С</param>
 /// <returns></returns>
 double Triangle::Angle(int i)
 {
@@ -105,6 +110,35 @@ bool Triangle::IsRightAngled()
 	for (int i = 0; i < 3; i++)
 		if (abs(Angle(i) - 90.0) < EPS) return true;
 	return false;
+}
+
+/// <summary>
+/// Вычисление длины гипотенузы прямоугольного треугольника
+/// </summary>
+/// <returns></returns>
+double Triangle::HypotenuseLength()
+{
+	if (IsRightAngled())
+	{
+		// каой из углов прямой
+		for (int i = 1; i <= 3; i++)
+		{
+			if (abs(Angle(i) - 90.0) < EPS)
+			{
+				switch (i)
+				{
+				case 1: // А - прямой
+					return SideLenth(B, C);
+				case 2: // B - прямой
+					return SideLenth(A, C);
+				case 3: // C - прямой
+					return SideLenth(A, B);				
+				}
+			}
+		}
+
+	}
+	return 0.0;
 }
 
 
