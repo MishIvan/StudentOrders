@@ -525,10 +525,10 @@ int main(int argc, char* argv[])
         RunTask8(4);
         break;
     case 9:
-    case 17:
         RunTask9(argv[0]);
         break;
     case 10:
+    case 17:
         RunTask10(argv[0]);
         break;
     case 11:
