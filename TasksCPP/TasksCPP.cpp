@@ -1,17 +1,7 @@
 ﻿// TasksCPP.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //
 
-#include <iostream>
-#include "Tasks.h"
-#include "Integer.h"
-#include <vector>
-#include <string>
-#include <fstream>
 #include "TasksCPP.h"
-#include "Student.h"
-#include <Windows.h>
-#include "MTempl.cpp"
-#include "Complex.h"
 
 // задача №1
 double f1(double ang)
@@ -80,7 +70,7 @@ void RunTask3()
 
 }
 
-// задача №4
+// задача №4 - работа с числами: поиск простых и совершенных чисел
 void RunTask4()
 {
     std::cout << "Введите последовательность целых чисел:\r\n";
@@ -135,7 +125,7 @@ void RunTask5(int n)
     v1.~vector();
 }
 
-// задача №6
+// задача №6 - работа с векторами
 void RunTask6(int n)
 {
     std::vector<int> v1(n);
@@ -167,7 +157,7 @@ void RunTask6(int n)
     v1.~vector();
 }
 
-// задача №8
+// задача №8 - тругольник, задачаемый длинами сторон
 void RunTask8(int n)
 {
     InputOutputTriangle(n);
@@ -199,7 +189,7 @@ void RunTask9(char* fullExeFileName)
     students.~vector();
 }
 
-// задача №10
+// задача №10 - поиск двузначных целых чисел в строке и вывод таких строк
 void RunTask10(char *fullExeFileName)
 {
     char path[1024];
@@ -207,7 +197,7 @@ void RunTask10(char *fullExeFileName)
     Find2digitsNumbersInFile(path);
 }
 
-// Задача №11
+// Задача №11 - сумма последней группы отрицательных элементов, считывание из двоичного файла 
 void RunTask11(const char* fileName)
 {
     std::vector<double> vdata = { 1.0, 5.0, -12.0, -13.0, -17.0, 7.0, 8.0, -45.0, -78.0, 12.0, 15.0, -17.0, - 13.0, -28.0, 45.0, 48.0 };
@@ -218,7 +208,7 @@ void RunTask11(const char* fileName)
     std::cout << "Сумма последней группы отрицательных элементов: " << sum << std::endl;
 }
 
-// задача №12
+// задача №12 - матрицы: использование шаблона функции
 void RunTask12(const char* fullFileName)
 {
     int rows, cols;
@@ -240,14 +230,14 @@ void RunTask12(const char* fullFileName)
 
         for (int i = 0; i < rows; i++)
             delete matrix[i];
-        delete matrix;
+        delete [] matrix;
 
     }
     inp.close();
 
 }
 
-// задача №13
+// задача №13 - демонстрация класса комплесных чисел
 void RunTask13(const char* fileName)
 {
     // Считать числа a,b,c,d из файла
@@ -293,7 +283,7 @@ void RunTask13(const char* fileName)
     inp.close();
 }
 
-// задача №14
+// задача №14 - треугольники, задачаемые тремя точками на плоскости
 void RunTask14(char* fileName)
 {
     std::vector<Triangle> tdata;
@@ -338,7 +328,81 @@ void RunTask14(char* fileName)
     tdata.~vector();
 }
 
-// задача №16
+// задача №15 - демонстрация стека
+void RunTask15()
+{
+    // демонстрация стека строк
+    std::cout << "*** Стек сток ***\r\n";
+    std::cout << "Введите строки, завершение ввода - пустая строка\r\n";
+    std::string s1;
+    Stack<std::string> ststr;
+    while (getline(std::cin, s1))
+    {
+        if (s1.empty()) break;
+        ststr.push(s1);
+    }
+    int n = ststr.size();
+    std::cout << "Исходное состояние стека\r\n";
+    const std::string* datas = ststr.getdata();
+    for (int i = n - 1; i >= 0; i--)
+        std::cout << datas[i] << " ";
+    std::cout << std::endl;
+   
+    for (int i = 0; i < 2; i++)
+    {
+        s1 = ststr.pop();
+        if (!s1.empty())
+            std::cout << "Вытолкнули и стека: " << s1 << std::endl;
+    }
+
+    n = ststr.size();
+    if (n > 0)
+    {
+        std::cout << "Cостояние стека после выталкивания элементов\r\n";
+        datas = ststr.getdata();
+        for (int i = n - 1; i >= 0; i--)
+            std::cout << datas[i] << std::endl;
+    }
+    else
+        std::cout << "Cтек не содержит элементов\r\n";
+
+
+    std::cout << "\r\n*** Стек вещественных чисел ***\r\n";
+    std::cout << "Введите числа через пробел, завершение ввода - ENTER\r\n";
+    Stack<double> stdbl;
+    while (std::cin.get() != '\n')
+    {
+        double val;
+        std::cin >> val;
+        stdbl.push(val);
+    }
+    n = stdbl.size();
+    std::cout << "Исходное состояние стека\r\n";
+    const double* data = stdbl.getdata();
+    for (int i = n - 1; i >= 0; i--)
+        std::cout << data[i] << std::endl;
+   
+    for (int i = 0; i < 2; i++)
+    {
+        double* val = stdbl.pop();
+        if(val != nullptr)
+        std::cout << "Вытолкнули и стека: " << *val << std::endl;
+    }
+
+    n = stdbl.size();
+    if (n > 0)
+    {    
+        std::cout << "Cостояние стека после выталкивания элементов\r\n";
+        data = stdbl.getdata();
+        for (int i = n - 1; i >= 0; i--)
+            std::cout << data[i] << std::endl;
+    }
+    else
+        std::cout << "Cтек не содержит элементов\r\n";
+
+}
+
+// задача №16 - демонстрация класса STUDENT
 void RunTask16(int nst)
 {
     std::string name, group; 
@@ -482,6 +546,9 @@ int main(int argc, char* argv[])
     case 14:
         GetFullPathInWD(argv[0], "Triangles.txt", path);
         RunTask14(path);
+        break;
+    case 15:
+        RunTask15();
         break;
     case 16:
         RunTask16(5);

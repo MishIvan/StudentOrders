@@ -228,7 +228,7 @@ void ReadMatrix(const char* fileName)
 		// для локального массива убрать операторы с delete
 		for (int i = 0; i < MATRIX_ROWS; i++)
 			delete matrix[i];
-		delete matrix;
+		delete [] matrix;
 
 	}
 	inp.close();

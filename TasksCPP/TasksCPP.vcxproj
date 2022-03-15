@@ -142,6 +142,7 @@
     <ClCompile Include="Complex.cpp" />
     <ClCompile Include="Integer.cpp" />
     <ClCompile Include="MTempl.cpp" />
+    <ClCompile Include="Stack.cpp" />
     <ClCompile Include="Student.cpp" />
     <ClCompile Include="Tasks.cpp" />
     <ClCompile Include="TasksCPP.cpp" />
