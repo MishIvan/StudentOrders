@@ -4,6 +4,7 @@
 #include <iostream>
 #include <math.h>
 #include <fstream>
+#include <vector>
 
 void GetFullPathInWD(char* fullExePath, const char* dataFileName, char* fullFileName);
 void LinearSystemSolve(int n, double** A, double* b, double* &x, double& det, bool onlyDet);
@@ -11,12 +12,13 @@ void ReadData(const char* fullFileName, double** &A, double* &b, int& size, bool
 double errNorm(int n, double** A, double* b, double* x);
 void PrintMatrix(const char* header, int size, double** A);
 void PrintVector(const char* header, int size, double* x);
+double Minor(int n, double** A, int i, int j);
 
 int main(int argc, char* argv[])
 {
     setlocale(LC_ALL, "");
-    char path[1024];
-    double** A;
+    char path[1024]; // буфер пути файла данных
+    double** A; // задаваемая матрирца
     double* b;
     double* x;
     double norm, det;
@@ -33,13 +35,34 @@ int main(int argc, char* argv[])
         norm = errNorm(size, A, b, x);
         std::cout << "Норма ошибки " << norm << std::endl;
         delete x;
+        delete b;
     }
-    std::cout << "Детерминант матрицы А " << det << std::endl;
+    std::cout << "Детерминант матрицы А = " << det << std::endl;
+    int i, j;
+    int imax = -1, jmax = -1;
+    double meanval = 0.0, maxval = -1.7E+308, minor = 0.0;        
+    for (i = 0; i < size; i++)
+    {        
+        for (j = 0; j < size; j++)
+        {
+            minor = Minor(size, A, i, j);
+            
+            meanval += minor;
+            if (minor > maxval)
+            {
+                imax = i; jmax = j;
+                maxval = minor;
+            }
+        }
+    }
+    meanval /= (double)size * (double)size;
+
     for (int i = 0; i < size; i++)
         delete[] A[i];
     delete A;
-    delete b;
 
+    std::cout << "Среднее значение миноров матрицы A = " << meanval << std::endl;
+    std::cout << "Максимальное значение минора M(" << imax + 1 <<","<< jmax + 1 <<") = " << maxval << std::endl;
 }
 
 /// <summary>
@@ -165,11 +188,11 @@ void LinearSystemSolve(int n, double** A, double* b, double* &x, double& det, bo
 /// <summary>
 ///  Евклидова норма погрешности вычисления 
 /// </summary>
-/// <param name="n"></param>
-/// <param name="A"></param>
-/// <param name="b"></param>
-/// <param name="x"></param>
-/// <returns></returns>
+/// <param name="n">размерность</param>
+/// <param name="A">матрица системы линейных уравнений</param>
+/// <param name="b">вектор правой части системы линейных уравнений</param>
+/// <param name="x">вектор решения</param>
+/// <returns>евклидова норма погрешности вычислений</returns>
 double errNorm(int n, double** A, double *b, double* x)
 {
     double *verr = new double[n];
@@ -253,4 +276,65 @@ void PrintVector(const char* header, int size, double* x)
         std::cout << x[i] << " ";
     std::cout << std::endl;
 
+}
+/// <summary>
+/// Вычисление минора матрицы
+/// </summary>
+/// <param name="n">размерность матрицы</param>
+/// <param name="A">матрица</param>
+/// <param name="i">строка</param>
+/// <param name="j">столбец</param>
+/// <returns>значение минора</returns>
+double Minor(int n, double **A,  int i, int j)
+{
+    if (i < 0 || j < 0 || i > n - 1 || j > n - 1) return 0.0;
+    std::vector<std::vector<double>> vminor(n-1); // данные минора
+    int k = 0, m, counter = -1;
+    std::vector<double>str(n - 1);
+    bool fill = true;
+
+    // заполнение матрицы минора данными
+    while(k < n)
+    {
+        fill = false;
+        if (k != i)
+        {
+            str.clear();
+            vminor.push_back(str);
+            fill = true;
+            counter++;
+        }
+        m = 0;
+        while (m < n && fill && counter >= 0)
+        {
+            if (m != j)
+            {
+                vminor[counter].push_back(A[k][m]);
+            }
+            m++;
+        }
+        k++;
+    }
+
+    // получение матрицы минора
+    double** minor = new double* [n - 1];
+    for (k = 0; k < n - 1; k++)
+    {
+        minor[k] = new double[n - 1];
+        for (m = 0; m < n - 1; m++)
+        {
+            minor[k][m] = vminor[k][m];
+        }
+        
+    }
+
+    // вычисление минора по его матрице
+    double* b = nullptr, *x, det;
+    LinearSystemSolve(n - 1, minor, b, x, det, true);
+    
+    for (k = 0; k < n - 1; k++)
+        delete[] minor[k];
+    delete [] minor;
+
+    return det;
 }
