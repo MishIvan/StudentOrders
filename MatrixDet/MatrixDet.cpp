@@ -6,8 +6,8 @@
 #include <fstream>
 
 void GetFullPathInWD(char* fullExePath, const char* dataFileName, char* fullFileName);
-void LinearSystemSolve(int n, double** A, double* b, double* &x, double& det);
-void ReadData(const char* fullFileName, double** &A, double* &b, int& size);
+void LinearSystemSolve(int n, double** A, double* b, double* &x, double& det, bool onlyDet);
+void ReadData(const char* fullFileName, double** &A, double* &b, int& size, bool onlyDet);
 double errNorm(int n, double** A, double* b, double* x);
 void PrintMatrix(const char* header, int size, double** A);
 void PrintVector(const char* header, int size, double* x);
@@ -21,20 +21,24 @@ int main(int argc, char* argv[])
     double* x;
     double norm, det;
     int size = 0;
+    bool onlyDet = true;
     GetFullPathInWD(argv[0], "MatrixT1.txt", path);
-    ReadData(path, A, b, size);
+    ReadData(path, A, b, size, onlyDet);
     PrintMatrix("Матрица А", size, A);
-    PrintVector("Вектор b", size, b);
-    LinearSystemSolve(size, A, b, x, det);
-    PrintVector("Решение", size, x);
-    norm = errNorm(size, A, b, x);
-    std::cout << "Норма ошибки " << norm << std::endl;
+    LinearSystemSolve(size, A, b, x, det, onlyDet);
+    if (!onlyDet)
+    {
+        PrintVector("Вектор b", size, b);
+        PrintVector("Решение", size, x);
+        norm = errNorm(size, A, b, x);
+        std::cout << "Норма ошибки " << norm << std::endl;
+        delete x;
+    }
     std::cout << "Детерминант матрицы А " << det << std::endl;
     for (int i = 0; i < size; i++)
         delete[] A[i];
     delete A;
     delete b;
-    delete x;
 
 }
 
@@ -59,19 +63,24 @@ void GetFullPathInWD(char* fullExePath, const char* dataFileName, char* fullFile
     }
 }
 
-
-void LinearSystemSolve(int n, double** A, double* b, double* &x, double& det)
+/// <summary>
+/// Решение системы линейных уравнений с параллельным вычислением демерминанта матрицы
+/// </summary>
+/// <param name="n"></param>
+/// <param name="A"></param>
+/// <param name="b"></param>
+/// <param name="x"></param>
+/// <param name="det"></param>
+/// <param name="onlyDet">true - рассчитать только детернминант, false - решать систему и рассичтать детерминант</param>
+void LinearSystemSolve(int n, double** A, double* b, double* &x, double& det, bool onlyDet)
 {
     double **gamma = new double *[n];
     double **alpha = new double *[n];
-    double* beta = new double[n];
-    x = new double[n];
+    double* beta;
 
     // инициализируем нулём
     for(int i = 0; i < n ;i++)
     {
-        x[i] = 0.0;
-        beta[i] = 0.0;
         gamma[i] = new double[n];
         alpha[i] = new double[n];
         for (int j = 0; j < n; j++)
@@ -113,31 +122,38 @@ void LinearSystemSolve(int n, double** A, double* b, double* &x, double& det)
         }
         k++;
     }
-    PrintMatrix("Gamma", n, gamma);
-    PrintMatrix("Alpha", n, alpha);
-    beta[0] = b[0] / A[0][0];
-    for (int i = 1; i < n; i++)
+    if(!onlyDet)
     {
-        sum = 0.0;
-        for (int j = 0; j <= i - 1; j++)
-            sum += gamma[i][j] * beta[j];
-        beta[i] = (b[i] -  sum)/gamma[i][i];
-    }
+        beta = new double[n];
+        x = new double[n];
+        for (int i = 0; i < n; i++)
+        {
+            x[i] = 0.0;
+            beta[i] = 0.0;
+        }
+        beta[0] = b[0] / A[0][0];
+        for (int i = 1; i < n; i++)
+        {
+            sum = 0.0;
+            for (int j = 0; j <= i - 1; j++)
+                sum += gamma[i][j] * beta[j];
+            beta[i] = (b[i] -  sum)/gamma[i][i];
+        }
 
-    // решение системы уравнений    
-    x[n - 1] = beta[n - 1];    
-    for (int i = n - 2; i >= 0 ; i--)
-    {        
-        sum = 0.0;
-        for (int j = n-1; j > i; j--)
-            sum += alpha[i][j] * x[j];
-        x[i] = beta[i] - sum;
+        // решение системы уравнений    
+        x[n - 1] = beta[n - 1];    
+        for (int i = n - 2; i >= 0 ; i--)
+        {        
+            sum = 0.0;
+            for (int j = n-1; j > i; j--)
+                sum += alpha[i][j] * x[j];
+            x[i] = beta[i] - sum;
+        }
+        delete[] beta;
     }
-    PrintVector("Beta", n, beta);
     for (i = 0; i < n; i++)
         delete [] alpha[i];
-    delete [] alpha;
-    delete [] beta;
+    delete [] alpha;    
     det = 1.0;
     for (int i = 0; i < n; i++)
         det *= gamma[i][i];
@@ -181,7 +197,7 @@ double errNorm(int n, double** A, double *b, double* x)
 /// <param name="A">матрица</param>
 /// <param name="b">вектор</param>
 /// <param name="size">размерность</param>
-void ReadData(const char* fullFileName, double** &A, double* &b, int& size)
+void ReadData(const char* fullFileName, double** &A, double* &b, int& size, bool onlyDet)
 {
     std::fstream inp;
     inp.open(fullFileName, std::ios::in);
@@ -191,23 +207,19 @@ void ReadData(const char* fullFileName, double** &A, double* &b, int& size)
         inp >> size;
         A = new double *[size];
         b = new double[size];
-        for (int i = 0; i <= size; i++)
+        for (int i = 0; i < size; i++)
         {
             
-            if (i <= size - 1)
-            {
-                A[i] = new double[size];
-                for (int j = 0; j < size; j++)
-                    inp >> A[i][j];
-            }
-            else
-            {
-                for (int j = 0; j < size; j++)
-                    inp >> b[j];
-
-            }
+            A[i] = new double[size];
+            for (int j = 0; j < size; j++)
+                inp >> A[i][j];
         }
+        if(!onlyDet)
+        {
+            for (int j = 0; j < size; j++)
+                inp >> b[j];
 
+        }
     }
     inp.close();
 }
