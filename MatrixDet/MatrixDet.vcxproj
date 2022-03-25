@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{774062e3-c129-417e-ae63-d8d99bd460f6}</ProjectGuid>
-    <RootNamespace>TasksCPP</RootNamespace>
+    <ProjectGuid>{fa5392fb-f840-4a90-a1b1-a8d8a420cef6}</ProjectGuid>
+    <RootNamespace>MatrixDet</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -88,7 +88,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,22 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Complex.cpp" />
-    <ClCompile Include="Integer.cpp" />
-    <ClCompile Include="MTempl.cpp" />
-    <ClCompile Include="Stack.cpp" />
-    <ClCompile Include="Student.cpp" />
-    <ClCompile Include="Tasks.cpp" />
-    <ClCompile Include="TasksCPP.cpp" />
-    <ClCompile Include="Triangle.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Complex.h" />
-    <ClInclude Include="Integer.h" />
-    <ClInclude Include="Student.h" />
-    <ClInclude Include="Tasks.h" />
-    <ClInclude Include="TasksCPP.h" />
-    <ClInclude Include="Triangle.h" />
+    <ClCompile Include="MatrixDet.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
