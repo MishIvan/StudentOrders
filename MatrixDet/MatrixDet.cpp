@@ -8,7 +8,7 @@
 
 void GetFullPathInWD(char* fullExePath, const char* dataFileName, char* fullFileName);
 void LinearSystemSolve(int n, double** A, double* b, double* &x, double& det, bool onlyDet);
-void ReadData(const char* fullFileName, double** &A, double* &b, int& size, bool onlyDet);
+bool ReadData(const char* fullFileName, double** &A, double* &b, int& size, bool onlyDet);
 double errNorm(int n, double** A, double* b, double* x);
 void PrintMatrix(const char* header, int size, double** A);
 void PrintVector(const char* header, int size, double* x);
@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
     int size = 0;
     bool onlyDet = true;
     GetFullPathInWD(argv[0], "MatrixT1.txt", path);
-    ReadData(path, A, b, size, onlyDet);
+    if(!ReadData(path, A, b, size, onlyDet)) return -1;
     PrintMatrix("Матрица А", size, A);
     LinearSystemSolve(size, A, b, x, det, onlyDet);
     if (!onlyDet)
@@ -141,6 +141,10 @@ void LinearSystemSolve(int n, double** A, double* b, double* &x, double& det, bo
             {
                 sum += gamma[i][j] * alpha[j][k];
             } 
+            if (gamma[i][i] == 0.0)
+            {
+                det = 0.0; return;
+            }
             alpha[i][k] = (A[i][k] - sum)/gamma[i][i];
         }
         k++;
@@ -220,31 +224,48 @@ double errNorm(int n, double** A, double *b, double* x)
 /// <param name="A">матрица</param>
 /// <param name="b">вектор</param>
 /// <param name="size">размерность</param>
-void ReadData(const char* fullFileName, double** &A, double* &b, int& size, bool onlyDet)
+bool ReadData(const char* fullFileName, double** &A, double* &b, int& size, bool onlyDet)
 {
     std::fstream inp;
     inp.open(fullFileName, std::ios::in);
     // динамический массив
     if (inp.is_open())
     {
-        inp >> size;
-        A = new double *[size];
-        b = new double[size];
-        for (int i = 0; i < size; i++)
+        try
         {
-            
-            A[i] = new double[size];
-            for (int j = 0; j < size; j++)
-                inp >> A[i][j];
+            inp >> size;
+            A = new double* [size];
+            b = new double[size];
+            for (int i = 0; i < size; i++)
+            {
+
+                A[i] = new double[size];
+                for (int j = 0; j < size; j++)
+                    inp >> A[i][j];
+            }
+            if (!onlyDet)
+            {
+                for (int j = 0; j < size; j++)
+                    inp >> b[j];
+
+            }
         }
-        if(!onlyDet)
+        catch (...)
         {
-            for (int j = 0; j < size; j++)
-                inp >> b[j];
+            inp.close();
+            std::cout << "Неверный формат файла " << fullFileName;
+            return false;
 
         }
-    }
+        
     inp.close();
+    return true;
+    }            
+    else
+    {
+        std::cout << "Неверный формат файла " << fullFileName << " или файл не найден";
+        return false;
+    }
 }
 /// <summary>
 /// Вывод матрицы на консоль
