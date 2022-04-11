@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
     double* x;
     double norm, det;
     int size = 0;
-    bool onlyDet = true;
+    bool onlyDet = false;
     GetFullPathInWD(argv[0], "MatrixT1.txt", path);
     if(!ReadData(path, A, b, size, onlyDet)) return -1;
     PrintMatrix("Матрица А", size, A);
@@ -97,23 +97,21 @@ void GetFullPathInWD(char* fullExePath, const char* dataFileName, char* fullFile
 /// <param name="onlyDet">true - рассчитать только детернминант, false - решать систему и рассичтать детерминант</param>
 void LinearSystemSolve(int n, double** A, double* b, double* &x, double& det, bool onlyDet)
 {
-    double **gamma = new double *[n];
     double **alpha = new double *[n];
     double* beta;
 
     // инициализируем нулём
     for(int i = 0; i < n ;i++)
     {
-        gamma[i] = new double[n];
         alpha[i] = new double[n];
         for (int j = 0; j < n; j++)
         {
-            alpha[i][j] = 0.0; gamma[i][j] = 0.0;
+            alpha[i][j] = 0.0; 
         }
     }
 
     for (int i = 0; i < n; i++)
-        gamma[i][0] = A[i][0];
+        alpha[i][0] = A[i][0];
     for (int k = 1; k < n; k++)
         alpha[0][k] = A[0][k]/A[0][0];
     double sum = 0.0;
@@ -130,25 +128,29 @@ void LinearSystemSolve(int n, double** A, double* b, double* &x, double& det, bo
             sum = 0.0;
             for (int j = 0; j <= k - 1; j++)
             {
-                sum += gamma[i][j] * alpha[j][k];
+                sum += alpha[i][j] * alpha[j][k];
             }
-            gamma[i][k] = A[i][k] - sum;
+            alpha[i][k] = A[i][k] - sum;
         }
         else
         {
             sum = 0.0;
             for (int j = 0; j <= i - 1; j++)
             {
-                sum += gamma[i][j] * alpha[j][k];
+                sum += alpha[i][j] * alpha[j][k];
             } 
-            if (gamma[i][i] == 0.0)
+            if (alpha[i][i] == 0.0)
             {
+                for (i = 0; i < n; i++)
+                    delete[] alpha[i];
+                delete[] alpha;
                 det = 0.0; return;
             }
-            alpha[i][k] = (A[i][k] - sum)/gamma[i][i];
+            alpha[i][k] = (A[i][k] - sum) / alpha[i][i];
         }
         k++;
     }
+    
     if(!onlyDet)
     {
         beta = new double[n];
@@ -163,8 +165,8 @@ void LinearSystemSolve(int n, double** A, double* b, double* &x, double& det, bo
         {
             sum = 0.0;
             for (int j = 0; j <= i - 1; j++)
-                sum += gamma[i][j] * beta[j];
-            beta[i] = (b[i] -  sum)/gamma[i][i];
+                sum += alpha[i][j] * beta[j];
+            beta[i] = (b[i] - sum) / alpha[i][i];
         }
 
         // решение системы уравнений    
@@ -178,15 +180,12 @@ void LinearSystemSolve(int n, double** A, double* b, double* &x, double& det, bo
         }
         delete[] beta;
     }
-    for (i = 0; i < n; i++)
-        delete [] alpha[i];
-    delete [] alpha;    
     det = 1.0;
     for (int i = 0; i < n; i++)
-        det *= gamma[i][i];
+        det *= alpha[i][i];
     for (i = 0; i < n; i++)
-        delete[] gamma[i];
-    delete [] gamma;
+        delete[] alpha[i];
+    delete[] alpha;
 }
 
 /// <summary>
