@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
     double* x = nullptr; // возвращаемый вектор решения(при вычислении определителя задавать не нужно)
     double norm, det;
     int size = 0;
-    bool onlyDet = true;
+    bool onlyDet = false;
     GetFullPathInWD(argv[0], "MatrixT1.txt", path);
     if(!ReadData(path, A, b, size, onlyDet)) return -1;
     PrintMatrix("Матрица А", size, A);
@@ -96,21 +96,13 @@ void GetFullPathInWD(char* fullExePath, const char* dataFileName, char* fullFile
 void LinearSystemSolve(int n, double* A, double* b, double* &x, double& det, bool onlyDet)
 {
     double *alpha = new double [n*n];
-    double* beta;
-
-    // инициализируем нулём
-    for(int i = 0; i < n ;i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            alpha[i*n+j] = 0.0; 
-        }
-    }
-
+    
     for (int i = 0; i < n; i++)
-        alpha[i*n] = A[i*n];
-    for (int k = 1; k < n; k++)
-        alpha[k] = A[k]/A[0];
+    {
+        alpha[i * n] = A[i * n];
+        if(i > 0) alpha[i] = A[i] / A[0];
+    }
+        
     double sum = 0.0;
     int k = 1, i = 1;
     while (i < n)
@@ -148,13 +140,8 @@ void LinearSystemSolve(int n, double* A, double* b, double* &x, double& det, boo
     
     if(!onlyDet)
     {
-        beta = new double[n];
+        double* beta = new double[n];
         x = new double[n];
-        for (int i = 0; i < n; i++)
-        {
-            x[i] = 0.0;
-            beta[i] = 0.0;
-        }
         beta[0] = b[0] / A[0];
         for (int i = 1; i < n; i++)
         {
@@ -164,7 +151,7 @@ void LinearSystemSolve(int n, double* A, double* b, double* &x, double& det, boo
             beta[i] = (b[i] - sum) / alpha[i*n+i];
         }
 
-        // решение системы уравнений    
+        // решение системы уравнений с труегольной матрицей   
         x[n - 1] = beta[n - 1];    
         for (int i = n - 2; i >= 0 ; i--)
         {        
@@ -191,7 +178,7 @@ void LinearSystemSolve(int n, double* A, double* b, double* &x, double& det, boo
 /// <returns>евклидова норма погрешности вычислений</returns>
 double errNorm(int n, double* A, double *b, double* x)
 {
-    double *verr = new double[n];
+    double qnorm = 0.0;
     for (int i = 0; i < n; i++)
     {
         double sum = 0.0;
@@ -199,14 +186,8 @@ double errNorm(int n, double* A, double *b, double* x)
         {
             sum += A[i*n+j] * x[j];
         }
-        verr[i] = sum - b[i] ;
+        qnorm += (sum - b[i])* (sum - b[i]);
     }
-    double qnorm = 0.0;
-    for (int i = 0; i < n; i++)
-    {
-        qnorm += verr[i] * verr[i];
-    }
-    delete[] verr;
     return sqrt(qnorm);
 }
 /// <summary>
@@ -292,7 +273,7 @@ void PrintVector(const char* header, int size, double* x)
 /// Вычисление минора матрицы
 /// </summary>
 /// <param name="n">размерность матрицы</param>
-/// <param name="A">матрица</param>
+/// <param name="A">матрица минора</param>
 /// <param name="i">строка</param>
 /// <param name="j">столбец</param>
 /// <returns>значение минора</returns>
