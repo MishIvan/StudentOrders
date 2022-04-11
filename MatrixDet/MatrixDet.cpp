@@ -4,7 +4,6 @@
 #include <iostream>
 #include <math.h>
 #include <fstream>
-#include <vector>
 
 void GetFullPathInWD(char* fullExePath, const char* dataFileName, char* fullFileName);
 void LinearSystemSolve(int n, double* A, double* b, double* &x, double& det, bool onlyDet);
@@ -23,7 +22,7 @@ int main(int argc, char* argv[])
     double* x = nullptr; // возвращаемый вектор решения(при вычислении определителя задавать не нужно)
     double norm, det;
     int size = 0;
-    bool onlyDet = false;
+    bool onlyDet = true;
     GetFullPathInWD(argv[0], "MatrixT1.txt", path);
     if(!ReadData(path, A, b, size, onlyDet)) return -1;
     PrintMatrix("Матрица А", size, A);
@@ -280,47 +279,27 @@ void PrintVector(const char* header, int size, double* x)
 double Minor(int n, double *A,  int i, int j)
 {
     if (i < 0 || j < 0 || i > n - 1 || j > n - 1) return 0.0;
-    std::vector<std::vector<double>> vminor(n-1); // данные минора
     int k = 0, m, counter = -1;
-    std::vector<double>str(n - 1);
-    bool fill = true;
+    double* minor = new double[(n - 1) * (n - 1)];
 
     // заполнение матрицы минора данными
-    while(k < n)
+    for (int k = 0; k < n; k++)
     {
-        fill = false;
-        if (k != i)
+        for (int m = 0; m < n; m++)
         {
-            str.clear();
-            vminor.push_back(str);
-            fill = true;
-            counter++;
+            if (k < i && m < j)
+                minor[k * (n - 1) + m] = A[k * n + m];
+            else if(k < i && m > j)
+                minor[k * (n - 1) + m-1] = A[k * n + m];
+            else if( k > i && m < j)
+                minor[(k - 1) * (n - 1) + m] = A[k * n + m];
+            else if(k > i && m > j)
+                minor[(k -1)*(n-1) + m - 1] = A[k * n + m];
         }
-        m = 0;
-        while (m < n && fill && counter >= 0)
-        {
-            if (m != j)
-            {
-                vminor[counter].push_back(A[k*n+m]);
-            }
-            m++;
-        }
-        k++;
-    }
-
-    // получение матрицы минора
-    double* minor = new double [(n - 1)*(n-1)];
-    for (k = 0; k < n - 1; k++)
-    {
-        for (m = 0; m < n - 1; m++)
-        {
-            minor[k*(n-1)+m] = vminor[k][m];
-        }
-        
     }
 
     // вычисление минора по его матрице
-    double* b = nullptr, *x, det;
+    double* b = nullptr, *x = nullptr, det;
     LinearSystemSolve(n - 1, minor, b, x, det, true);    
     delete [] minor;
     return det;
