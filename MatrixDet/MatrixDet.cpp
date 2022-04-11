@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
     double* x;
     double norm, det;
     int size = 0;
-    bool onlyDet = false;
+    bool onlyDet = true;
     GetFullPathInWD(argv[0], "MatrixT1.txt", path);
     if(!ReadData(path, A, b, size, onlyDet)) return -1;
     PrintMatrix("Матрица А", size, A);
@@ -89,11 +89,11 @@ void GetFullPathInWD(char* fullExePath, const char* dataFileName, char* fullFile
 /// <summary>
 /// Решение системы линейных уравнений с параллельным вычислением демерминанта матрицы
 /// </summary>
-/// <param name="n"></param>
-/// <param name="A"></param>
-/// <param name="b"></param>
-/// <param name="x"></param>
-/// <param name="det"></param>
+/// <param name="n">размерность системы уравнений</param>
+/// <param name="A">матрица системы уравнений</param>
+/// <param name="b">вектор правой части системы уравнений</param>
+/// <param name="x">решение системы уравнений</param>
+/// <param name="det">определитель матрицы A</param>
 /// <param name="onlyDet">true - рассчитать только детернминант, false - решать систему и рассичтать детерминант</param>
 void LinearSystemSolve(int n, double** A, double* b, double* &x, double& det, bool onlyDet)
 {
@@ -270,8 +270,8 @@ bool ReadData(const char* fullFileName, double** &A, double* &b, int& size, bool
 /// Вывод матрицы на консоль
 /// </summary>
 /// <param name="header">Заголовок</param>
-/// <param name="size">равзмерность</param>
-/// <param name="A">матрица</param>
+/// <param name="size">размерность</param>
+/// <param name="A">матрица для вывода на консоль</param>
 void PrintMatrix(const char* header, int size, double** A)
 {
     std::cout << header << std::endl;
@@ -286,9 +286,9 @@ void PrintMatrix(const char* header, int size, double** A)
 /// <summary>
 /// Вывод на консоль вектора
 /// </summary>
-/// <param name="header"></param>
-/// <param name="size"></param>
-/// <param name="x"></param>
+/// <param name="header">Заголовок</param>
+/// <param name="size">размерность вектора</param>
+/// <param name="x">вектор для выыода на консоль</param>
 void PrintVector(const char* header, int size, double* x)
 {
     std::cout << header << std::endl;
