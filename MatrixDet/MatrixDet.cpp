@@ -7,20 +7,20 @@
 #include <vector>
 
 void GetFullPathInWD(char* fullExePath, const char* dataFileName, char* fullFileName);
-void LinearSystemSolve(int n, double** A, double* b, double* &x, double& det, bool onlyDet);
-bool ReadData(const char* fullFileName, double** &A, double* &b, int& size, bool onlyDet);
-double errNorm(int n, double** A, double* b, double* x);
-void PrintMatrix(const char* header, int size, double** A);
+void LinearSystemSolve(int n, double* A, double* b, double* &x, double& det, bool onlyDet);
+bool ReadData(const char* fullFileName, double* &A, double* &b, int& size, bool onlyDet);
+double errNorm(int n, double* A, double* b, double* x);
+void PrintMatrix(const char* header, int size, double* A);
 void PrintVector(const char* header, int size, double* x);
-double Minor(int n, double** A, int i, int j);
+double Minor(int n, double* A, int i, int j);
 
 int main(int argc, char* argv[])
 {
     setlocale(LC_ALL, "");
     char path[1024]; // буфер пути файла данных
-    double** A; // задаваемая матрирца
-    double* b;
-    double* x;
+    double* A; // задаваемая матрирца
+    double* b = nullptr; // вектор правой части (при вычислении определителя задавать не нужно)
+    double* x = nullptr; // возвращаемый вектор решения(при вычислении определителя задавать не нужно)
     double norm, det;
     int size = 0;
     bool onlyDet = true;
@@ -57,9 +57,7 @@ int main(int argc, char* argv[])
     }
     meanval /= (double)size * (double)size;
 
-    for (int i = 0; i < size; i++)
-        delete[] A[i];
-    delete A;
+    delete [] A;
 
     std::cout << "Среднее значение миноров матрицы A = " << meanval << std::endl;
     std::cout << "Максимальное значение минора M(" << imax + 1 <<","<< jmax + 1 <<") = " << maxval << std::endl;
@@ -95,25 +93,24 @@ void GetFullPathInWD(char* fullExePath, const char* dataFileName, char* fullFile
 /// <param name="x">решение системы уравнений</param>
 /// <param name="det">определитель матрицы A</param>
 /// <param name="onlyDet">true - рассчитать только детернминант, false - решать систему и рассичтать детерминант</param>
-void LinearSystemSolve(int n, double** A, double* b, double* &x, double& det, bool onlyDet)
+void LinearSystemSolve(int n, double* A, double* b, double* &x, double& det, bool onlyDet)
 {
-    double **alpha = new double *[n];
+    double *alpha = new double [n*n];
     double* beta;
 
     // инициализируем нулём
     for(int i = 0; i < n ;i++)
     {
-        alpha[i] = new double[n];
         for (int j = 0; j < n; j++)
         {
-            alpha[i][j] = 0.0; 
+            alpha[i*n+j] = 0.0; 
         }
     }
 
     for (int i = 0; i < n; i++)
-        alpha[i][0] = A[i][0];
+        alpha[i*n] = A[i*n];
     for (int k = 1; k < n; k++)
-        alpha[0][k] = A[0][k]/A[0][0];
+        alpha[k] = A[k]/A[0];
     double sum = 0.0;
     int k = 1, i = 1;
     while (i < n)
@@ -128,25 +125,23 @@ void LinearSystemSolve(int n, double** A, double* b, double* &x, double& det, bo
             sum = 0.0;
             for (int j = 0; j <= k - 1; j++)
             {
-                sum += alpha[i][j] * alpha[j][k];
+                sum += alpha[i*n+j] * alpha[j*n+k];
             }
-            alpha[i][k] = A[i][k] - sum;
+            alpha[i*n+k] = A[i*n+k] - sum;
         }
         else
         {
             sum = 0.0;
             for (int j = 0; j <= i - 1; j++)
             {
-                sum += alpha[i][j] * alpha[j][k];
+                sum += alpha[i*n+j] * alpha[j*n+k];
             } 
-            if (alpha[i][i] == 0.0)
+            if (alpha[i*n+i] == 0.0)
             {
-                for (i = 0; i < n; i++)
-                    delete[] alpha[i];
                 delete[] alpha;
                 det = 0.0; return;
             }
-            alpha[i][k] = (A[i][k] - sum) / alpha[i][i];
+            alpha[i*n+k] = (A[i*n+k] - sum) / alpha[i*n+i];
         }
         k++;
     }
@@ -160,13 +155,13 @@ void LinearSystemSolve(int n, double** A, double* b, double* &x, double& det, bo
             x[i] = 0.0;
             beta[i] = 0.0;
         }
-        beta[0] = b[0] / A[0][0];
+        beta[0] = b[0] / A[0];
         for (int i = 1; i < n; i++)
         {
             sum = 0.0;
             for (int j = 0; j <= i - 1; j++)
-                sum += alpha[i][j] * beta[j];
-            beta[i] = (b[i] - sum) / alpha[i][i];
+                sum += alpha[i*n+j] * beta[j];
+            beta[i] = (b[i] - sum) / alpha[i*n+i];
         }
 
         // решение системы уравнений    
@@ -175,16 +170,14 @@ void LinearSystemSolve(int n, double** A, double* b, double* &x, double& det, bo
         {        
             sum = 0.0;
             for (int j = n-1; j > i; j--)
-                sum += alpha[i][j] * x[j];
+                sum += alpha[i*n+j] * x[j];
             x[i] = beta[i] - sum;
         }
         delete[] beta;
     }
     det = 1.0;
     for (int i = 0; i < n; i++)
-        det *= alpha[i][i];
-    for (i = 0; i < n; i++)
-        delete[] alpha[i];
+        det *= alpha[i*n+i];
     delete[] alpha;
 }
 
@@ -196,7 +189,7 @@ void LinearSystemSolve(int n, double** A, double* b, double* &x, double& det, bo
 /// <param name="b">вектор правой части системы линейных уравнений</param>
 /// <param name="x">вектор решения</param>
 /// <returns>евклидова норма погрешности вычислений</returns>
-double errNorm(int n, double** A, double *b, double* x)
+double errNorm(int n, double* A, double *b, double* x)
 {
     double *verr = new double[n];
     for (int i = 0; i < n; i++)
@@ -204,7 +197,7 @@ double errNorm(int n, double** A, double *b, double* x)
         double sum = 0.0;
         for (int j = 0; j < n; j++)
         {
-            sum += A[i][j] * x[j];
+            sum += A[i*n+j] * x[j];
         }
         verr[i] = sum - b[i] ;
     }
@@ -223,7 +216,7 @@ double errNorm(int n, double** A, double *b, double* x)
 /// <param name="A">матрица</param>
 /// <param name="b">вектор</param>
 /// <param name="size">размерность</param>
-bool ReadData(const char* fullFileName, double** &A, double* &b, int& size, bool onlyDet)
+bool ReadData(const char* fullFileName, double* &A, double* &b, int& size, bool onlyDet)
 {
     std::fstream inp;
     inp.open(fullFileName, std::ios::in);
@@ -233,14 +226,12 @@ bool ReadData(const char* fullFileName, double** &A, double* &b, int& size, bool
         try
         {
             inp >> size;
-            A = new double* [size];
+            A = new double [size*size];
             b = new double[size];
             for (int i = 0; i < size; i++)
             {
-
-                A[i] = new double[size];
                 for (int j = 0; j < size; j++)
-                    inp >> A[i][j];
+                    inp >> A[i*size+j];
             }
             if (!onlyDet)
             {
@@ -272,13 +263,13 @@ bool ReadData(const char* fullFileName, double** &A, double* &b, int& size, bool
 /// <param name="header">Заголовок</param>
 /// <param name="size">размерность</param>
 /// <param name="A">матрица для вывода на консоль</param>
-void PrintMatrix(const char* header, int size, double** A)
+void PrintMatrix(const char* header, int size, double* A)
 {
     std::cout << header << std::endl;
     for (int i = 0; i < size; i++)
     {
         for (int j = 0; j < size; j++)
-            std::cout << A[i][j] << " ";
+            std::cout << A[i*size+j] << " ";
         std::cout << std::endl;
     }
 
@@ -305,7 +296,7 @@ void PrintVector(const char* header, int size, double* x)
 /// <param name="i">строка</param>
 /// <param name="j">столбец</param>
 /// <returns>значение минора</returns>
-double Minor(int n, double **A,  int i, int j)
+double Minor(int n, double *A,  int i, int j)
 {
     if (i < 0 || j < 0 || i > n - 1 || j > n - 1) return 0.0;
     std::vector<std::vector<double>> vminor(n-1); // данные минора
@@ -329,7 +320,7 @@ double Minor(int n, double **A,  int i, int j)
         {
             if (m != j)
             {
-                vminor[counter].push_back(A[k][m]);
+                vminor[counter].push_back(A[k*n+m]);
             }
             m++;
         }
@@ -337,24 +328,19 @@ double Minor(int n, double **A,  int i, int j)
     }
 
     // получение матрицы минора
-    double** minor = new double* [n - 1];
+    double* minor = new double [(n - 1)*(n-1)];
     for (k = 0; k < n - 1; k++)
     {
-        minor[k] = new double[n - 1];
         for (m = 0; m < n - 1; m++)
         {
-            minor[k][m] = vminor[k][m];
+            minor[k*(n-1)+m] = vminor[k][m];
         }
         
     }
 
     // вычисление минора по его матрице
     double* b = nullptr, *x, det;
-    LinearSystemSolve(n - 1, minor, b, x, det, true);
-    
-    for (k = 0; k < n - 1; k++)
-        delete[] minor[k];
+    LinearSystemSolve(n - 1, minor, b, x, det, true);    
     delete [] minor;
-
     return det;
 }
