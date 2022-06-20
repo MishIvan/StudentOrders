@@ -1,6 +1,7 @@
 #ifndef TIMESPAN_H
 #define TIMESPAN_H
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -24,6 +25,9 @@ public:
     friend bool operator == (TimeSpan one, TimeSpan two);
     friend TimeSpan operator -(TimeSpan one, TimeSpan two);
     friend TimeSpan operator +(TimeSpan one, TimeSpan two);
-};
 
+
+};
+ostream& operator<< (ostream &stream, const TimeSpan& ts);
+istream& operator>> (istream &is, TimeSpan & ts);
 #endif // TIMESPAN_H

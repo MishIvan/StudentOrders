@@ -127,9 +127,9 @@ void OutputParticipantsToConsole(vector<Participant> &group, int count = 0)
         cout << "-------------------------------------------------------" << endl;
         cout << "ФИО: " << elem.Name << endl;
         cout << "Возраст: " << elem.Age << endl;
-        cout << "Время старта: " << elem.TimeBegin.toString() << endl;
-        cout << "Время финиша: " << elem.TimeEnd.toString() << endl;
-        cout << "Время прохождения дистанции: " << (elem.TimeEnd - elem.TimeBegin).toString() << endl;
+        cout << "Время старта: " << elem.TimeBegin << endl;
+        cout << "Время финиша: " << elem.TimeEnd << endl;
+        cout << "Время прохождения дистанции: " << elem.TimeEnd - elem.TimeBegin << endl;
     }
 }
 // Функуия сравнения по времени для сортировки списка
@@ -152,18 +152,9 @@ bool ReadData(const char* fullFileName,
     {
         try
         {
-             TimeSpan tbegin[3];
-             string begin_time[3];
-             inp >> begin_time[0] >> begin_time[1] >> begin_time[2];
-              for(int i =0 ; i < 3; i++)
-              {
-                 if(!TimeSpan::Parse(begin_time[i], tbegin[i]))
-                 {
-                     cerr << "Ошибка задания времени: " << begin_time[i] << endl;
-                     inp.close();
-                     return false;
-                 }
-            }
+           TimeSpan tbegin[3];
+            string begin_time[3];
+            inp >> tbegin[0] >> tbegin[1] >> tbegin[2];
 
             int count;
             inp >> count;
@@ -182,7 +173,8 @@ bool ReadData(const char* fullFileName,
 
                 string s1;
                 int age = 0;
-                 inp >> age >> s1;
+                TimeSpan etime, btime;
+                 inp >> age >> etime;
                   if(age < 18 || age > 75)
                   {
                     cerr << "Возраст должен находиться в пределах от 18 до 75 лет." << endl;
@@ -190,7 +182,7 @@ bool ReadData(const char* fullFileName,
                     return false;
                   }
 
-                TimeSpan btime;
+
                 if(age >=18 && age <=30)
                     btime = tbegin[0];
                 else if (age >=31 && age <=55)
@@ -198,22 +190,12 @@ bool ReadData(const char* fullFileName,
                 else
                     btime = tbegin[2];
 
-                TimeSpan etime;
-                    if(TimeSpan::Parse(s1, etime))
-                    {
-                        if(etime <= btime)
-                        {
-                            cerr << "Ошибка: старт не может быть раньше финиша" << endl;
-                            inp.close();
-                            return false;
-                        }
-                    }
-                    else
-                    {
-                        cerr << "Ошибка задания времени: " << s1 << endl;
-                        inp.close();
-                        return false;
-                    }
+                  if(etime <= btime)
+                   {
+                       cerr << "Ошибка: старт не может быть раньше финиша" << endl;
+                       inp.close();
+                       return false;
+                   }
 
                 Participant person;
                 person.Name = fio;
@@ -282,18 +264,18 @@ void WriteData(const char *fullFileName, vector<Participant> &group, const char 
             outp << "-------------------------------------------------------" << endl;
             outp << "ФИО: " << elem.Name << endl;
             outp << "Возраст: " << elem.Age << endl;
-            outp << "Время старта: " << elem.TimeBegin.toString() << endl;
-            outp << "Время финиша: " << elem.TimeEnd.toString() << endl;
-            outp << "Время прохождения дистанции: " << (elem.TimeEnd - elem.TimeBegin).toString() << endl;
+            outp << "Время старта: " << elem.TimeBegin << endl;
+            outp << "Время финиша: " << elem.TimeEnd << endl;
+            outp << "Время прохождения дистанции: " << elem.TimeEnd - elem.TimeBegin << endl;
         }
 
         elem  = group[0];
         outp << endl << "!!! Чемпион возрастной группы !!!" << endl;
         outp << "ФИО: " << elem.Name << endl;
         outp << "Возраст: " << elem.Age << endl;
-        outp << "Время старта: " << elem.TimeBegin.toString() << endl;
-        outp << "Время финиша: " << elem.TimeEnd.toString() << endl;
-        outp << "Время прохождения дистанции: " << (elem.TimeEnd - elem.TimeBegin).toString() << endl;
+        outp << "Время старта: " << elem.TimeBegin << endl;
+        outp << "Время финиша: " << elem.TimeEnd << endl;
+        outp << "Время прохождения дистанции: " << elem.TimeEnd - elem.TimeBegin << endl;
 
         outp.close();
     }

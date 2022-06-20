@@ -1,5 +1,6 @@
 #include "timespan.h"
 #include <math.h>
+#include <regex>
 
 TimeSpan::TimeSpan()
 {
@@ -31,50 +32,28 @@ string TimeSpan::toString()
 
 bool TimeSpan::Parse(string strTime, TimeSpan &ts)
 {
-        char tpart[4];
-        int n = strTime.size();
-        if(n != 5 && n != 8)
-        { return false;}
-        if(strTime[2] != ':')
-         {return false;}
-        if(n == 8 && strTime[5] != ':')
-            return false;
-
-        // преобразовать время в  чася минуты и секунды
-        tpart[0] = strTime[0];
-        tpart[1] = strTime[1];
-        tpart[3] = '\0';
-        if(!isdigit(tpart[0]) || !isdigit(tpart[1]))
-            {return  false;}
-        int i = atoi(tpart);
-        if(i < 0 || i > 23 )
-            return false;
-        ts.m_hours = i;
-
-        tpart[0] = strTime[3];
-        tpart[1] = strTime[4];
-        tpart[3] = '\0';
-        if(!isdigit(tpart[0]) || !isdigit(tpart[1]))
-            return false;
-        i = atoi(tpart);
-        if( i < 0 || i > 59 )
-            return false;
-        ts.m_minutes = i;
-
-        if(strTime.size() == 8)
-        {
-            tpart[0] = strTime[6];
-            tpart[1] = strTime[7];
-            tpart[3] = '\0';
-            if(!isdigit(tpart[0]) || !isdigit(tpart[1]))
-                return false;
-            i = atoi(tpart);
-            if (i < 0 || i > 59 )
-                return false;
-            ts.m_seconds = i;
-        }
-        else
-            ts.m_seconds = 0;
+     regex rexp ("[0-9]+");
+     string s1 = strTime;
+     smatch m;
+     int val[3] = {0,0,0};
+     int j = 0;
+     while(regex_search(s1, m, rexp))
+     {
+         int n = m.size();
+         for(int i =0; i < n; i++)
+         {
+             try {
+                 val[j] = stoi(m[i]);
+             } catch (...) {
+                 return false;
+             }
+         }
+         j++;
+         s1 = m.suffix().str();
+     }
+     if(val[0] < 0 || val[0] > 23 || val[1] < 0 || val[1] > 59 || val[2] < 0 || val[2] > 59)
+         return false;
+     ts = TimeSpan(val[0], val[1], val[2]);
         return true;
 
 }
@@ -126,3 +105,17 @@ bool operator == (TimeSpan one, TimeSpan two)
       double secs =  one.Seconds() + two.Seconds();
       return TimeSpan(secs);
 }
+
+ ostream& operator<< (ostream &os, const  TimeSpan & ts)
+ {
+      os << ((TimeSpan)ts).toString();
+      return os;
+ }
+
+ istream& operator>> (istream &is,  TimeSpan & ts)
+ {
+      string s1;      
+      is >> s1;
+      TimeSpan::Parse(s1, ts);
+      return is;
+ }
