@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TasksCPP", "TasksCPP\TasksC
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MatrixDet", "MatrixDet\MatrixDet.vcxproj", "{FA5392FB-F840-4A90-A1B1-A8D8A420CEF6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Beehive", "Beehive\Beehive.vcxproj", "{432167B8-3504-41EC-90B7-5A674C6A7F20}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,16 @@ Global
 		{FA5392FB-F840-4A90-A1B1-A8D8A420CEF6}.Release|x64.Build.0 = Release|x64
 		{FA5392FB-F840-4A90-A1B1-A8D8A420CEF6}.Release|x86.ActiveCfg = Release|Win32
 		{FA5392FB-F840-4A90-A1B1-A8D8A420CEF6}.Release|x86.Build.0 = Release|Win32
+		{432167B8-3504-41EC-90B7-5A674C6A7F20}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{432167B8-3504-41EC-90B7-5A674C6A7F20}.Debug|x64.ActiveCfg = Debug|x64
+		{432167B8-3504-41EC-90B7-5A674C6A7F20}.Debug|x64.Build.0 = Debug|x64
+		{432167B8-3504-41EC-90B7-5A674C6A7F20}.Debug|x86.ActiveCfg = Debug|Win32
+		{432167B8-3504-41EC-90B7-5A674C6A7F20}.Debug|x86.Build.0 = Debug|Win32
+		{432167B8-3504-41EC-90B7-5A674C6A7F20}.Release|Any CPU.ActiveCfg = Release|Win32
+		{432167B8-3504-41EC-90B7-5A674C6A7F20}.Release|x64.ActiveCfg = Release|x64
+		{432167B8-3504-41EC-90B7-5A674C6A7F20}.Release|x64.Build.0 = Release|x64
+		{432167B8-3504-41EC-90B7-5A674C6A7F20}.Release|x86.ActiveCfg = Release|Win32
+		{432167B8-3504-41EC-90B7-5A674C6A7F20}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
