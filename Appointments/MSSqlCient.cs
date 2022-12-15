@@ -53,7 +53,7 @@ namespace Appointments
         {
             if (!isOpened) return -1;
             SqlCommand cmd = new SqlCommand(sqlText, conn);
-            int code = cmd.ExecuteNonQuery();
+            int code = cmd.ExecuteNonQuery(); 
             return code;
         }
         /// <summary>
@@ -74,6 +74,21 @@ namespace Appointments
             }
             rd.Close();
             return true;
+        }
+        /// <summary>
+        /// Получить идентификатор пользователя по его ФИО
+        /// </summary>
+        /// <param name="uName">ФИО Пользователя</param>
+        /// <returns></returns>
+        public int findUserID(String uName)
+        {
+            int id = 0;
+            if(isOpened)
+            {
+                SqlCommand cmd = new SqlCommand($"select top 1 u.ID from dbo.Users u where u.Name = '{uName}'", conn);
+                id = (int)cmd.ExecuteScalar();
+            }
+            return id;
         }
         /// <summary>
         /// Проверка, нет ли товара с таким наименованием

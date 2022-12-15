@@ -8,7 +8,6 @@ namespace Appointments
 {
     static class Program
     {
-        public static MSSqlCient m_sqlClient;
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
@@ -17,7 +16,6 @@ namespace Appointments
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            m_sqlClient = new MSSqlCient();
             Application.Run(new AutorizationForm());
         }
     }
