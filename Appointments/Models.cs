@@ -15,5 +15,14 @@ namespace Appointments
         public string rolename { get; set; }
         public string password { get; set; }
         public bool closed { get; set; }
+        public void Copy(User src)
+        {
+            id = src.id;
+            name = src.name;
+            roleid = src.roleid;
+            rolename = src.rolename;
+            closed = false;
+            password = string.Empty;
+        }
     }
 }

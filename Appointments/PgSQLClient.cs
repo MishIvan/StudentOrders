@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Npgsql;
-//using System.Data;
 using Dapper;
 
 namespace Appointments
@@ -31,7 +30,14 @@ namespace Appointments
                 m_errorText = ex.Message;
             }
         }
+        /// <summary>
+        /// Закрыть соединение
+        /// </summary>
         public void Close() { if (isOpened) m_connection.Close(); }
+        /// <summary>
+        /// Получить список пользователей для выбора текущего пользователя
+        /// </summary>
+        /// <returns>список пользователей для выбора текущего пользователя</returns>
         public List<User> getUsers()
         {
             string sqlText = "select u.id, u.name, u.roleid, r.name rolename, u.password  " +

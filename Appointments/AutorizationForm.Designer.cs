@@ -76,7 +76,8 @@ namespace Appointments
             // 
             // OKButton
             // 
-            this.OKButton.Location = new System.Drawing.Point(15, 137);
+            this.OKButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.OKButton.Location = new System.Drawing.Point(15, 144);
             this.OKButton.Name = "OKButton";
             this.OKButton.Size = new System.Drawing.Size(123, 33);
             this.OKButton.TabIndex = 4;
@@ -86,7 +87,8 @@ namespace Appointments
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(310, 137);
+            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cancelButton.Location = new System.Drawing.Point(310, 144);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(123, 33);
             this.cancelButton.TabIndex = 5;
@@ -98,7 +100,7 @@ namespace Appointments
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(449, 214);
+            this.ClientSize = new System.Drawing.Size(449, 189);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.passwordTextBox);
