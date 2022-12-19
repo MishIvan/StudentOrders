@@ -48,7 +48,10 @@ namespace Appointments
             else
             {
                 Program.m_currentUser.Copy(suser);
-                Close();
+                MainForm fmain = new MainForm();
+                fmain.Show(this);
+                this.Hide();
+
             }
 
         }

@@ -25,4 +25,18 @@ namespace Appointments
             password = string.Empty;
         }
     }
+    public class Vacation
+    {
+        public long id { get; set; }
+        public string vname { get; set; }
+        public DateTime plandate { get; set; }
+        public long appointmentid { get; set; }
+        public string aname { get; set; }
+        public long candidateid { get; set; }
+        public string cname { get; set; }
+        public long curatorid { get; set; }
+        public string curname { get; set; }
+        public string description { get; set; }
+
+    }
 }
