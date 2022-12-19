@@ -25,8 +25,7 @@ namespace Appointments {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=IVANPC\\SQLEXPRESS;Database=HeadHunter;Trusted_connection=True;Encrypt=Fals" +
-            "e;TrustServerCertificate=False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Host=localhost;Username=postgres;Password=123456;Database=headhunter")]
         public string ConnectionString {
             get {
                 return ((string)(this["ConnectionString"]));

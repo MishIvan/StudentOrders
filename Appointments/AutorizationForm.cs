@@ -12,7 +12,7 @@ namespace Appointments
 {
     public partial class AutorizationForm : Form
     {
-        private List<String> m_userNames;
+        private List<string> m_userNames;
         public AutorizationForm()
         {
             InitializeComponent();
@@ -30,7 +30,8 @@ namespace Appointments
 
         private void onLoad(object sender, EventArgs e)
         {
-            m_userNames = new List<String>();            
+            m_userNames = Program.m_pgConnection.getUsers()
+                .Select(u => u.name).ToList();            
             usersComboBox.DataSource = m_userNames;
         }
     }
