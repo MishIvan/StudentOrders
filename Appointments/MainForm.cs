@@ -12,24 +12,34 @@ namespace Appointments
 {
     public partial class MainForm : Form
     {
-        // роль текущего пользователя
-        bool m_isAdmin;
-        bool m_isManager;
-        bool m_isProjectManager;
+        // флаги роль текущего пользователя
+        // 0 бит - администратор
+        // 1 бит - директор по персоналу
+        // 2 бит - менеджер по кадрам
+        // 3 бит - руководитель проекта
+        private int m_userRole;
+        private long m_id; // текущий ИД вакансии
         public MainForm()
         {
             InitializeComponent();
+            m_userRole = 0;
         }
 
         private void onLoad(object sender, EventArgs e)
         {
             string rolename = Program.m_currentUser.rolename;
             // отображение доступных пунктов меню
-            m_isAdmin = rolename == "Администратор";
-            m_isProjectManager = rolename == "Руководитель проекта";
-            m_isManager = rolename == "Менеджер по кадрам";
+            if (rolename == "Администратор")
+                m_userRole |= 1;
+            else if (rolename == "Руководитель проекта")
+                m_userRole |= 8;
+            else if (rolename == "Менеджер по кадрам")
+                m_userRole |= 4;
+            else if (rolename == "Директор по персоналу")
+                m_userRole |= 2;
 
-            usersToolStripMenuItem.Visible = m_isAdmin;
+            usersToolStripMenuItem.Visible = (m_userRole & 1) > 0;
+            projectsToolStripMenuItem.Visible = (m_userRole & (1 | 8 | 2)) > 0;
         }
 
         private void onClose(object sender, FormClosedEventArgs e)
@@ -38,13 +48,20 @@ namespace Appointments
             Application.Exit();
         }
 
+        // если перемещаемся по вакансиям
         private void onVacationChanged(object sender, EventArgs e)
         {
             if(vacationsDataGridView.Rows.Count > 0)
             {
                 var row = vacationsDataGridView.CurrentRow;
-                long id = (long)row.Cells["ID"].Value;
+                long m_id = Convert.ToInt64(row.Cells["id"].Value);
+
             }
+        }
+        // работа с должностями
+        private void onSetAppointments(object sender, EventArgs e)
+        {
+            new AppointmenForm().ShowDialog();            
         }
     }
 }

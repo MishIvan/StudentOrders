@@ -50,6 +50,49 @@ namespace Appointments
             }
             return lusr;
         }
+        #region Appointments
+
+        /// <summary>
+        /// Получить список должностей
+        /// </summary>
+        /// <returns>список должностей</returns>
+        public List<Appointment> getAppointments()
+        {
+            string sqlText = "select a.id, a.name from public.appointments a";
+            List<Appointment> alst = null;
+            if (isOpened)
+            {
+                alst = m_connection.Query<Appointment>(sqlText).ToList();
+            }
+            return alst;
+        }
+
+        /// <summary>
+        /// Добавить должность
+        /// </summary>
+        /// <param name="name">Наименование должности</param>
+        /// <returns>число вставленных записей</returns>
+        public int addAppointment(string name)
+        {
+            if(isOpened)
+            {
+                string sqlText = $"insert into public.appointments(name) values('{name}')";
+                int rows = 0;
+                try
+                {
+                    rows = m_connection.Execute(sqlText);
+                }
+                catch(Exception ex)
+                {
+                    m_errorText = ex.Message;
+                }
+                return rows;
+            }
+            else
+                return -1;
+        }
+
+        #endregion
 
     }
 }

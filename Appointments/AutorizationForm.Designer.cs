@@ -98,8 +98,10 @@ namespace Appointments
             // 
             // AutorizationForm
             // 
+            this.AcceptButton = this.OKButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.cancelButton;
             this.ClientSize = new System.Drawing.Size(449, 189);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.OKButton);
@@ -107,6 +109,8 @@ namespace Appointments
             this.Controls.Add(this.label2);
             this.Controls.Add(this.usersComboBox);
             this.Controls.Add(this.label1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "AutorizationForm";
             this.Text = "Авторизация";
             this.Load += new System.EventHandler(this.onLoad);

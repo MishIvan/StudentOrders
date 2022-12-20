@@ -25,6 +25,11 @@ namespace Appointments
             password = string.Empty;
         }
     }
+    public class Appointment
+    {
+        public long id { get; set; }
+        public string name { get; set; }
+    }
     public class Vacation
     {
         public long id { get; set; }
@@ -32,11 +37,17 @@ namespace Appointments
         public DateTime plandate { get; set; }
         public long appointmentid { get; set; }
         public string aname { get; set; }
+        public string description { get; set; }
+    }
+    public class History
+    {
+        public long vacationid { get; set; }
+        public DateTime eventdate { get; set; }
+        public string ename { get; set; }
+        public long managerid { get; set; }
+        public string mname { get; set; }
         public long candidateid { get; set; }
         public string cname { get; set; }
-        public long curatorid { get; set; }
-        public string curname { get; set; }
-        public string description { get; set; }
 
     }
 }
