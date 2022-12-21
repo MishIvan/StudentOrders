@@ -14,9 +14,8 @@ namespace Appointments
     {
         // флаги роль текущего пользователя
         // 0 бит - администратор
-        // 1 бит - директор по персоналу
-        // 2 бит - менеджер по кадрам
-        // 3 бит - руководитель проекта
+        // 1 бит - менеджер по кадрам
+        // 2 бит - руководитель проекта
         private int m_userRole;
         private long m_id; // текущий ИД вакансии
         public MainForm()
@@ -33,14 +32,12 @@ namespace Appointments
             if (rolename == "Администратор")
                 m_userRole |= 1;
             else if (rolename == "Руководитель проекта")
-                m_userRole |= 8;
-            else if (rolename == "Менеджер по кадрам")
                 m_userRole |= 4;
-            else if (rolename == "Директор по персоналу")
+            else if (rolename == "Менеджер по подбору персонала")
                 m_userRole |= 2;
 
             usersToolStripMenuItem.Visible = (m_userRole & 1) > 0;
-            projectsToolStripMenuItem.Visible = (m_userRole & (1 | 8 | 2)) > 0;
+            projectsToolStripMenuItem.Visible = (m_userRole & (1 | 4)) > 0;
         }
 
         private void onClose(object sender, FormClosedEventArgs e)

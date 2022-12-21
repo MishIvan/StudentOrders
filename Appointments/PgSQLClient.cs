@@ -38,19 +38,17 @@ namespace Appointments
         /// Получить список пользователей для выбора текущего пользователя
         /// </summary>
         /// <returns>список пользователей для выбора текущего пользователя</returns>
-        #region Users
+        #region Users and roles
 
         public List<User> getUsers(long roleid = 0)
         {
             string sqlText = string.Empty;
             if(roleid == 0)
-                sqlText = "select u.id, u.name, u.roleid, r.name rolename, u.password, u.closed,  " +
-                            "case when u.closed then 'Закрытая' else 'Действующая' end sclosed " +
+                sqlText = "select u.id, u.name, u.roleid, r.name rolename, u.password, u.closed  " +
                             "from public.users u " +
                             "join public.roles r on r.id = u.roleid";
             else
                 sqlText = $"select u.id, u.name, u.roleid, r.name rolename, u.password, u.closed,  " +
-                            "case when u.closed then 'Закрытая' else 'Действующая' end sclosed " +
                             "from public.users u " +
                             "join public.roles r on r.id = u.roleid where u.roleid = {roleid}";
 
@@ -60,6 +58,21 @@ namespace Appointments
                 lusr = m_connection.Query<User>(sqlText).ToList();
             }
             return lusr;
+        }
+
+        /// <summary>
+        /// Заполнить список ролей
+        /// </summary>
+        /// <returns>список ролей</returns>
+        public List<Role> getRoles()
+        {
+            List<Role> roleList = null;
+            if(isOpened)
+            {
+                string sqlText = "select r.id, r.name from public.roles";
+                roleList = m_connection.Query<Role>(sqlText).ToList();
+            }
+            return roleList;
         }
 
         #endregion

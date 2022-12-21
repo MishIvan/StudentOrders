@@ -19,7 +19,6 @@ namespace Appointments
         public string rolename { get; set; }
         public string password { get; set; }
         public bool closed { get; set; }
-        public string sclosed { get; set; }
         public void Copy(User src)
         {
             id = src.id;
@@ -28,8 +27,26 @@ namespace Appointments
             rolename = src.rolename;
             closed = src.closed;
             password = string.Empty;
-            sclosed = closed ? "Закрытая" : "Действующая";
         }
+    }
+
+    [Table("roles")]
+    class Role
+    {
+        [Key]
+        public long id { get; set; }
+        public string name { get; set; }
+    }
+
+    public class UsersView
+    {
+        public long id { get; set; }
+        public string name { get; set; }
+        public long roleid { get; set; }
+        public string rolename { get; set; }
+        public string status { get; set; }
+        public bool closed { get; set; }
+
     }
     public class Candidate
     {
