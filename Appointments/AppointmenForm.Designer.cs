@@ -29,6 +29,7 @@ namespace Appointments
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppointmenForm));
             this.appointmentsDataGridView = new System.Windows.Forms.DataGridView();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,6 +55,7 @@ namespace Appointments
             this.appointmentsDataGridView.RowTemplate.Height = 24;
             this.appointmentsDataGridView.Size = new System.Drawing.Size(393, 234);
             this.appointmentsDataGridView.TabIndex = 0;
+            this.appointmentsDataGridView.SelectionChanged += new System.EventHandler(this.onRowChanged);
             // 
             // id
             // 
@@ -99,6 +101,7 @@ namespace Appointments
             this.deleteButton.TabIndex = 3;
             this.deleteButton.Text = "Удалить";
             this.deleteButton.UseVisualStyleBackColor = true;
+            this.deleteButton.Click += new System.EventHandler(this.onDeleteAppointment);
             // 
             // editButton
             // 
@@ -108,6 +111,7 @@ namespace Appointments
             this.editButton.TabIndex = 4;
             this.editButton.Text = "Править";
             this.editButton.UseVisualStyleBackColor = true;
+            this.editButton.Click += new System.EventHandler(this.onEditAppointment);
             // 
             // AppointmenForm
             // 
@@ -119,6 +123,7 @@ namespace Appointments
             this.Controls.Add(this.addButton);
             this.Controls.Add(this.nameTextBox);
             this.Controls.Add(this.appointmentsDataGridView);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AppointmenForm";

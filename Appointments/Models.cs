@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,23 +9,35 @@ using Dapper;
 
 namespace Appointments
 {
+    [Table("public.users")]
     public class User
     {
+        [Key]
         public long id { get; set; }
         public string name { get; set; }
         public long roleid { get; set; }
         public string rolename { get; set; }
         public string password { get; set; }
         public bool closed { get; set; }
+        public string sclosed { get; set; }
         public void Copy(User src)
         {
             id = src.id;
             name = src.name;
             roleid = src.roleid;
             rolename = src.rolename;
-            closed = false;
+            closed = src.closed;
             password = string.Empty;
+            sclosed = closed ? "Закрытая" : "Действующая";
         }
+    }
+    public class Candidate
+    {
+        public long id { get; set; }
+        public string name { get; set; }
+        public string phone { get; set; }
+        public string email { get; set; }
+
     }
     public class Appointment
     {
@@ -37,7 +51,11 @@ namespace Appointments
         public DateTime plandate { get; set; }
         public long appointmentid { get; set; }
         public string aname { get; set; }
+        public long projectid { get; set; }
+        public string pname { get; set; }
+        public string chname { get; set; }
         public string description { get; set; }
+        public double salary { get; set; }
     }
     public class History
     {

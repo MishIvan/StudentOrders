@@ -62,7 +62,9 @@ namespace Appointments
         /// <param name="e"></param>
         private void onLoad(object sender, EventArgs e)
         {
-            m_userList = Program.m_pgConnection.getUsers();
+            m_userList = Program.m_pgConnection.getUsers()
+                .Where(u => !u.closed)
+                .ToList();
             List<string> m_userNames = m_userList.Select(u => u.name).ToList();            
             usersComboBox.DataSource = m_userNames;
         }

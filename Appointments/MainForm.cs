@@ -23,6 +23,7 @@ namespace Appointments
         {
             InitializeComponent();
             m_userRole = 0;
+            m_id = 0;
         }
 
         private void onLoad(object sender, EventArgs e)
@@ -62,6 +63,16 @@ namespace Appointments
         private void onSetAppointments(object sender, EventArgs e)
         {
             new AppointmenForm().ShowDialog();            
+        }
+        // работа с проектами
+        private void onSetProjects(object sender, EventArgs e)
+        {
+
+        }
+        // работа со списком пользователей - могут только администраторы
+        private void onSetUsers(object sender, EventArgs e)
+        {
+
         }
     }
 }
