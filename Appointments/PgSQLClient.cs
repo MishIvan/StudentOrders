@@ -38,7 +38,7 @@ namespace Appointments
         /// Получить список пользователей для выбора текущего пользователя
         /// </summary>
         /// <returns>список пользователей для выбора текущего пользователя</returns>
-        #region Users and roles
+        #region Users and Roles
 
         public List<User> getUsers(long roleid = 0)
         {
@@ -59,7 +59,116 @@ namespace Appointments
             }
             return lusr;
         }
+        /// <summary>
+        /// Получить список пользователей для представления
+        /// </summary>
+        /// <returns></returns>
+        public List<UsersView> getUserForGrid()
+        {
+            string sqlText = "select u.id, u.name, u.roleid, u.rolename, u.status, u.closed  " +
+                            "from views.users u ";
+            List<UsersView> lusr = null;
+            if (isOpened)
+            {
+                lusr = m_connection.Query<UsersView>(sqlText).ToList();
+            }
+            return lusr;
 
+        }
+        /// <summary>
+        /// Возвращает параметры пользователя по его идентификатору
+        /// </summary>
+        /// <param name="id">идентификатор пользователя</param>
+        /// <returns>объект Пользователь или null, если пользователя с таким идентификаторорм не существует </returns>
+        public User getUserById(long id)
+        {
+            if(!isOpened) return null;
+            string sqlText = "select u.id, u.name, u.roleid, r.name rolename, u.password, u.closed  " +
+                "from public.users u join public.roles r on r.id = u.roleid " +
+                $"where u.id = {id}";
+            User usr = m_connection.QueryFirstOrDefault<User>(sqlText);
+            return usr;
+
+        }
+        /// <summary>
+        /// Добавить нового пользователя (это право дано только админу)
+        /// </summary>
+        /// <param name="userName">ФИО пользователя</param>
+        /// <param name="rid">идентификатор роли</param>
+        /// <param name="passw">пароль</param>
+        /// <param name="state">true - запись закрытая, false - запись открытая </param>
+        /// <returns>число вставленных записей</returns>
+        public int insertUser(string userName, long rid, string passw, bool state)
+        {
+            int rows = -1;
+            if(isOpened)
+            {
+                long id = m_connection.ExecuteScalar<long>("select coalesce(max(id),0)+1 cnt from public.users");
+                string sqlText = "insert into public.users(id,name, roleid, password, closed) " +
+                    "values(@uid, @qname, @qrid, @qpwd, @qclosed)";
+                try
+                {
+                    rows = m_connection.Execute(sqlText,
+                        new { uid = id, qname = userName, qrid = rid, qpwd =passw, qclosed = state  });
+                }
+                catch(Exception ex)
+                {
+                    m_errorText = ex.Message;
+                }
+            }
+            return rows;
+        }
+        /// <summary>
+        /// Изменить параметры пользователя
+        /// </summary>
+        /// <param name="id">идентификатор пользователя</param>
+        /// <param name="userName">ФИО пользователя</param>
+        /// <param name="rid">идентификатор роли пользователя</param>
+        /// <param name="passw">пароль</param>
+        /// <param name="state">true - запись закрытая, false - запись открытая</param>
+        /// <returns>число вставленных записей</returns>
+        public int updateUser(long id, string userName, long rid, string passw, bool state)
+        {
+            int rows = -1;
+            if (isOpened)
+            {
+                string sqlText = "update public.users set name = @qname, roleid = @qrid, " + 
+                    "password = @qpwd, closed = @qclosed where id = @qid";
+                try
+                {
+                    rows = m_connection.Execute(sqlText,
+                        new { qname = userName, qrid = rid, qpwd = passw, qclosed = state, qid = id });
+                }
+                catch (Exception ex)
+                {
+                    m_errorText = ex.Message;
+                }
+            }
+            return rows;
+        }
+        /// <summary>
+        /// Удалить пользователя по его идентификатору
+        /// </summary>
+        /// <param name="id">идентификатор пользователя</param>
+        /// <returns>число удалённых записей</returns>
+        public int deleteUser(long id)
+        {
+            int rows = -1;
+            if (isOpened)
+            {
+                string sqlText = $"delete from public.users where id = {id}";
+                try
+                {
+                    rows = m_connection.Execute(sqlText);
+                }
+                catch (Exception ex)
+                {
+                    m_errorText = ex.Message;
+                }
+            }
+            return rows;
+
+        }
         /// <summary>
         /// Заполнить список ролей
         /// </summary>
@@ -69,13 +178,14 @@ namespace Appointments
             List<Role> roleList = null;
             if(isOpened)
             {
-                string sqlText = "select r.id, r.name from public.roles";
+                string sqlText = "select r.id, r.name from public.roles r";
                 roleList = m_connection.Query<Role>(sqlText).ToList();
             }
             return roleList;
         }
 
         #endregion
+
         #region Appointments
 
         /// <summary>
@@ -192,6 +302,9 @@ namespace Appointments
                 return -1;
         }
 
+        #endregion
+
+        #region Candidate
         #endregion
 
     }

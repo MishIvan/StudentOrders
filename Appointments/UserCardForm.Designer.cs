@@ -38,7 +38,7 @@ namespace Appointments
             this.passTextBox = new System.Windows.Forms.TextBox();
             this.closedCheckBox = new System.Windows.Forms.CheckBox();
             this.OKButton = new System.Windows.Forms.Button();
-            this.CancelButton = new System.Windows.Forms.Button();
+            this.Cancel_Button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -112,25 +112,27 @@ namespace Appointments
             this.OKButton.TabIndex = 7;
             this.OKButton.Text = "ОК";
             this.OKButton.UseVisualStyleBackColor = true;
+            this.OKButton.Click += new System.EventHandler(this.OnOK);
             // 
-            // CancelButton
+            // Cancel_Button
             // 
-            this.CancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.CancelButton.Location = new System.Drawing.Point(385, 222);
-            this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(86, 31);
-            this.CancelButton.TabIndex = 8;
-            this.CancelButton.Text = "Отмена";
-            this.CancelButton.UseVisualStyleBackColor = true;
+            this.Cancel_Button.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.Cancel_Button.Location = new System.Drawing.Point(385, 222);
+            this.Cancel_Button.Name = "Cancel_Button";
+            this.Cancel_Button.Size = new System.Drawing.Size(86, 31);
+            this.Cancel_Button.TabIndex = 8;
+            this.Cancel_Button.Text = "Отмена";
+            this.Cancel_Button.UseVisualStyleBackColor = true;
+            this.Cancel_Button.Click += new System.EventHandler(this.onCancel);
             // 
             // UserCardForm
             // 
             this.AcceptButton = this.OKButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.CancelButton;
+            this.CancelButton = this.Cancel_Button;
             this.ClientSize = new System.Drawing.Size(488, 263);
-            this.Controls.Add(this.CancelButton);
+            this.Controls.Add(this.Cancel_Button);
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.closedCheckBox);
             this.Controls.Add(this.passTextBox);
@@ -160,6 +162,6 @@ namespace Appointments
         private System.Windows.Forms.TextBox passTextBox;
         private System.Windows.Forms.CheckBox closedCheckBox;
         private System.Windows.Forms.Button OKButton;
-        private System.Windows.Forms.Button CancelButton;
+        private System.Windows.Forms.Button Cancel_Button;
     }
 }

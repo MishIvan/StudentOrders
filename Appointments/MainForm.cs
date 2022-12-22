@@ -28,6 +28,7 @@ namespace Appointments
         private void onLoad(object sender, EventArgs e)
         {
             string rolename = Program.m_currentUser.rolename;
+            string name = Program.m_currentUser.name;
             // отображение доступных пунктов меню
             if (rolename == "Администратор")
                 m_userRole |= 1;
@@ -38,6 +39,7 @@ namespace Appointments
 
             usersToolStripMenuItem.Visible = (m_userRole & 1) > 0;
             projectsToolStripMenuItem.Visible = (m_userRole & (1 | 4)) > 0;
+            this.Text += $" - {name}"; 
         }
 
         private void onClose(object sender, FormClosedEventArgs e)
@@ -61,7 +63,7 @@ namespace Appointments
         {
             new AppointmenForm().ShowDialog();            
         }
-        // работа с проектами
+        // работа с проектами - полномочия у администратора и руководителей проектов
         private void onSetProjects(object sender, EventArgs e)
         {
 
@@ -69,7 +71,7 @@ namespace Appointments
         // работа со списком пользователей - могут только администраторы
         private void onSetUsers(object sender, EventArgs e)
         {
-
+            new UsersForm().ShowDialog();
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Appointments
     }
 
     [Table("roles")]
-    class Role
+    public class Role
     {
         [Key]
         public long id { get; set; }
@@ -48,6 +48,7 @@ namespace Appointments
         public bool closed { get; set; }
 
     }
+    [Table("public.candidates")]
     public class Candidate
     {
         public long id { get; set; }
