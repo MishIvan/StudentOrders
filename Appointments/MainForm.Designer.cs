@@ -29,8 +29,8 @@ namespace Appointments
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.vacationsDataGridView = new System.Windows.Forms.DataGridView();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -111,9 +111,9 @@ namespace Appointments
             // vname
             // 
             this.vname.DataPropertyName = "vname";
-            dataGridViewCellStyle7.Format = "G";
-            dataGridViewCellStyle7.NullValue = null;
-            this.vname.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Format = "G";
+            dataGridViewCellStyle1.NullValue = null;
+            this.vname.DefaultCellStyle = dataGridViewCellStyle1;
             this.vname.HeaderText = "Наименование";
             this.vname.MinimumWidth = 6;
             this.vname.Name = "vname";
@@ -221,8 +221,8 @@ namespace Appointments
             this.dataToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.appointmentsToolStripMenuItem,
             this.usersToolStripMenuItem,
-            this.projectsToolStripMenuItem,
-            this.candidatesToolStripMenuItem});
+            this.candidatesToolStripMenuItem,
+            this.projectsToolStripMenuItem});
             this.dataToolStripMenuItem.Name = "dataToolStripMenuItem";
             this.dataToolStripMenuItem.Size = new System.Drawing.Size(117, 24);
             this.dataToolStripMenuItem.Text = "Справочники";
@@ -253,6 +253,7 @@ namespace Appointments
             this.candidatesToolStripMenuItem.Name = "candidatesToolStripMenuItem";
             this.candidatesToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.candidatesToolStripMenuItem.Text = "Соискатели";
+            this.candidatesToolStripMenuItem.Click += new System.EventHandler(this.onSetCandidates);
             // 
             // decriptionsTextBox
             // 
@@ -295,9 +296,9 @@ namespace Appointments
             // eventdate
             // 
             this.eventdate.DataPropertyName = "eventdate";
-            dataGridViewCellStyle8.Format = "G";
-            dataGridViewCellStyle8.NullValue = null;
-            this.eventdate.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Format = "G";
+            dataGridViewCellStyle2.NullValue = null;
+            this.eventdate.DefaultCellStyle = dataGridViewCellStyle2;
             this.eventdate.HeaderText = "Дата";
             this.eventdate.MinimumWidth = 6;
             this.eventdate.Name = "eventdate";

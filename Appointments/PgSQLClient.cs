@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Npgsql;
 using Dapper;
+using Dapper.Contrib.Extensions;
 
 namespace Appointments
 {
@@ -305,6 +306,90 @@ namespace Appointments
         #endregion
 
         #region Candidate
+        /// <summary>
+        /// Выдать список всех кандидатов на вакансии
+        /// </summary>
+        /// <returns>список всех кандидатов на вакансии</returns>
+        List<Candidate> getCandidates()
+        {
+            if (!isOpened) return null;
+            string sqlText = "select id, name, phone, email from public.candidates";
+            List<Candidate> clist = m_connection.Query<Candidate>(sqlText).ToList();
+            return clist;
+        }
+        /// <summary>
+        /// Возврат объекта кандидата по его идентификатору
+        /// </summary>
+        /// <param name="id">идентификатор записи</param>
+        /// <returns></returns>
+        Candidate getCandidateById(long id)
+        {
+            return isOpened ? null : m_connection.Get<Candidate>(id);
+        }
+        /// <summary>
+        /// Установить параметры соискателя по его идентификатору
+        /// </summary>
+        /// <param name="cid">идентификатор соискателя</param>
+        /// <param name="cname">ФИО соискателя</param>
+        /// <param name="cphone">его телефон</param>
+        /// <param name="cemail">его email</param>
+        /// <returns>-1 БД не открыта, 0 - запись не обновлена, 1 - запись обновлена</returns>
+        int updateCandidate(long cid, string cname, string cphone, string cemail)
+        {
+            int rval = -1;
+            if(isOpened)
+            {
+                try 
+                {
+
+                    Candidate cnd = new Candidate
+                    {
+                        id = cid,
+                        name = cname,
+                        phone = cphone,
+                        email = cemail
+                    };
+                    bool res = m_connection.Update<Candidate>(cnd);
+                    rval = res ? 1 : 0;
+                }
+                catch(Exception ex)
+                {
+                    m_errorText = ex.Message;
+                }
+            }
+            return rval;
+        }
+        /// <summary>
+        /// Добавление соискателя в БД
+        /// </summary>
+        /// <param name="cname">ФИО </param>
+        /// <param name="cphone"></param>
+        /// <param name="cemail"></param>
+        /// <returns></returns>
+        long insertCandidate(string cname, string cphone, string cemail)
+        {
+            long rval = -1;
+            if (isOpened)
+            {
+                try
+                {
+                    long cid = m_connection.ExecuteScalar<long>("select coalesce(max(id),0) + 1 cnt from public.candidates");
+                    Candidate cnd = new Candidate
+                    {
+                        id = cid,
+                        name = cname,
+                        phone = cphone,
+                        email = cemail
+                    };
+                    rval = m_connection.Insert<Candidate>(cnd);
+                }
+                catch (Exception ex)
+                {
+                    m_errorText = ex.Message;
+                }
+            }
+            return rval;
+        }
         #endregion
 
     }

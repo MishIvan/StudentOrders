@@ -73,5 +73,10 @@ namespace Appointments
         {
             new UsersForm().ShowDialog();
         }
+
+        private void onSetCandidates(object sender, EventArgs e)
+        {
+
+        }
     }
 }

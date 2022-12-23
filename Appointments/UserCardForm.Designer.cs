@@ -145,7 +145,7 @@ namespace Appointments
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "UserCardForm";
-            this.Text = "Пользователь";
+            this.Text = "Карточка пользователя";
             this.Load += new System.EventHandler(this.onLoad);
             this.ResumeLayout(false);
             this.PerformLayout();
