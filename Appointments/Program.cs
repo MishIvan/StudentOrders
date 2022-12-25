@@ -19,6 +19,11 @@ namespace Appointments
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Program.m_pgConnection = new PgSQLClient();
+            if(!Program.m_pgConnection.isOpened)
+            {
+                MessageBox.Show("Соединение с базой данных не установлено.");
+                Application.Exit();
+            }
             Program.m_currentUser = new User();
             Application.Run(new AutorizationForm());
         }

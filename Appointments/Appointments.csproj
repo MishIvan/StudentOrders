@@ -232,6 +232,18 @@
     <Compile Include="AutorizationForm.Designer.cs">
       <DependentUpon>AutorizationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CandidateCardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CandidateCardForm.Designer.cs">
+      <DependentUpon>CandidateCardForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CandidatesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CandidatesForm.Designer.cs">
+      <DependentUpon>CandidatesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -259,6 +271,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AutorizationForm.resx">
       <DependentUpon>AutorizationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CandidateCardForm.resx">
+      <DependentUpon>CandidateCardForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CandidatesForm.resx">
+      <DependentUpon>CandidatesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

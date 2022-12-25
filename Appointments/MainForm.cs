@@ -73,10 +73,14 @@ namespace Appointments
         {
             new UsersForm().ShowDialog();
         }
-
+        /// <summary>
+        /// работа с соискателями
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void onSetCandidates(object sender, EventArgs e)
         {
-
+            new CandidatesForm().ShowDialog();
         }
     }
 }

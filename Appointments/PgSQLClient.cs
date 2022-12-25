@@ -310,7 +310,7 @@ namespace Appointments
         /// Выдать список всех кандидатов на вакансии
         /// </summary>
         /// <returns>список всех кандидатов на вакансии</returns>
-        List<Candidate> getCandidates()
+        public List<Candidate> getCandidates()
         {
             if (!isOpened) return null;
             string sqlText = "select id, name, phone, email from public.candidates";
@@ -322,19 +322,29 @@ namespace Appointments
         /// </summary>
         /// <param name="id">идентификатор записи</param>
         /// <returns></returns>
-        Candidate getCandidateById(long id)
+        public Candidate getCandidateById(long id)
         {
-            return isOpened ? null : m_connection.Get<Candidate>(id);
+            Candidate cnd = null;
+            if (isOpened)
+            {
+                try 
+                {
+                    string sqlText = $"select id, name, phone, email from public.candidates where id = {id}";
+                    cnd = m_connection.QueryFirstOrDefault<Candidate>(sqlText);
+                }
+                catch(Exception ex)
+                {
+                    m_errorText = ex.Message;
+                }
+            }
+            return cnd;
         }
         /// <summary>
         /// Установить параметры соискателя по его идентификатору
         /// </summary>
-        /// <param name="cid">идентификатор соискателя</param>
-        /// <param name="cname">ФИО соискателя</param>
-        /// <param name="cphone">его телефон</param>
-        /// <param name="cemail">его email</param>
+        /// <param name="cnd">объект записи кандидата</param>
         /// <returns>-1 БД не открыта, 0 - запись не обновлена, 1 - запись обновлена</returns>
-        int updateCandidate(long cid, string cname, string cphone, string cemail)
+        public int updateCandidate(Candidate cnd)
         {
             int rval = -1;
             if(isOpened)
@@ -342,13 +352,6 @@ namespace Appointments
                 try 
                 {
 
-                    Candidate cnd = new Candidate
-                    {
-                        id = cid,
-                        name = cname,
-                        phone = cphone,
-                        email = cemail
-                    };
                     bool res = m_connection.Update<Candidate>(cnd);
                     rval = res ? 1 : 0;
                 }
@@ -366,7 +369,7 @@ namespace Appointments
         /// <param name="cphone"></param>
         /// <param name="cemail"></param>
         /// <returns></returns>
-        long insertCandidate(string cname, string cphone, string cemail)
+        public long insertCandidate(string cname, string cphone, string cemail)
         {
             long rval = -1;
             if (isOpened)
@@ -374,14 +377,10 @@ namespace Appointments
                 try
                 {
                     long cid = m_connection.ExecuteScalar<long>("select coalesce(max(id),0) + 1 cnt from public.candidates");
-                    Candidate cnd = new Candidate
-                    {
-                        id = cid,
-                        name = cname,
-                        phone = cphone,
-                        email = cemail
-                    };
-                    rval = m_connection.Insert<Candidate>(cnd);
+                    string sqlText = "insert into public.candidates (id,name,phone,email) " +
+                        "values(@qid, @qname, @qphone, @qmail)";
+                    rval = m_connection.Execute(sqlText,
+                        new {qid = cid, qname = cname, qphone = cphone, qmail = cemail });
                 }
                 catch (Exception ex)
                 {
@@ -389,6 +388,29 @@ namespace Appointments
                 }
             }
             return rval;
+        }
+
+        /// <summary>
+        /// Удалить запись соискателя по её идентификатору
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>число удалённых записей (1 - удаление успешно, 0 - запись не найдена, -1 - ошибка</returns>
+        public int deleteCandidate(long id)
+        {
+            int rval = -1;
+            if (isOpened)
+            {
+                try
+                {
+                    rval = m_connection.Execute($"delete from public.candidates where id = {id}");
+                }
+                catch (Exception ex)
+                {
+                    m_errorText = ex.Message;
+                }
+            }
+            return rval;
+
         }
         #endregion
 
