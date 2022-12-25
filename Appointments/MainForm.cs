@@ -66,7 +66,7 @@ namespace Appointments
         // работа с проектами - полномочия у администратора и руководителей проектов
         private void onSetProjects(object sender, EventArgs e)
         {
-
+            new ProjectsForm().ShowDialog();
         }
         // работа со списком пользователей - могут только администраторы
         private void onSetUsers(object sender, EventArgs e)

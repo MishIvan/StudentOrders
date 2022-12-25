@@ -8,6 +8,12 @@ using Dapper.Contrib.Extensions;
 
 namespace Appointments
 {
+    public class UserBrief
+    {
+        public long id { get; set; }
+        public string name { get; set; }
+
+    }
     [Table("public.users")]
     public class User
     {
@@ -62,6 +68,14 @@ namespace Appointments
         public long id { get; set; }
         public string name { get; set; }
     }
+    public class Project
+    {
+        public long id { get; set; }
+        public string name { get; set; }
+        public long chiefid { get; set; }
+        public string chiefname { get; set; }
+
+    }
     public class Vacation
     {
         public long id { get; set; }
@@ -84,6 +98,5 @@ namespace Appointments
         public string mname { get; set; }
         public long candidateid { get; set; }
         public string cname { get; set; }
-
     }
 }

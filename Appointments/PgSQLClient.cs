@@ -35,23 +35,17 @@ namespace Appointments
         /// Закрыть соединение
         /// </summary>
         public void Close() { if (isOpened) m_connection.Close(); }
-        /// <summary>
-        /// Получить список пользователей для выбора текущего пользователя
-        /// </summary>
-        /// <returns>список пользователей для выбора текущего пользователя</returns>
         #region Users and Roles
-
-        public List<User> getUsers(long roleid = 0)
+        /// <summary>
+        /// Получить список всех пользователей 
+        /// </summary>
+        /// <returns>список пользователей или </returns>
+        public List<User> getUsers()
         {
             string sqlText = string.Empty;
-            if(roleid == 0)
-                sqlText = "select u.id, u.name, u.roleid, r.name rolename, u.password, u.closed  " +
-                            "from public.users u " +
-                            "join public.roles r on r.id = u.roleid";
-            else
-                sqlText = $"select u.id, u.name, u.roleid, r.name rolename, u.password, u.closed,  " +
-                            "from public.users u " +
-                            "join public.roles r on r.id = u.roleid where u.roleid = {roleid}";
+            sqlText = "select u.id, u.name, u.roleid, r.name rolename, u.password, u.closed  " +
+                        "from public.users u " +
+                        "join public.roles r on r.id = u.roleid where not u.closed";
 
             List<User> lusr = null;
             if(isOpened)
@@ -410,6 +404,147 @@ namespace Appointments
                 }
             }
             return rval;
+
+        }
+        #endregion
+
+        #region Projects
+        /// <summary>
+        /// Получить список всех руководителей проекта
+        /// </summary>
+        /// <returns>список всех руководителей проекта или null</returns>
+        public List<UserBrief> getProjectChiefs()
+        {
+            List<UserBrief> chiefs = null;
+            if(isOpened)
+            {
+                string sqlText = "select u.id, u.name from public.users u join public.roles r on r.id = u.roleid " +
+                    "where r.name = 'Руководитель проекта'";
+                chiefs = m_connection.Query<UserBrief>(sqlText).ToList();
+            }
+            return chiefs;
+        }
+        /// <summary>
+        /// Добавить запись о проекте
+        /// </summary>
+        /// <param name="name">наименование проекта</param>
+        /// <param name="chiefid">идентификатор его руководителя</param>
+        /// <returns></returns>
+        public int insertProject(string name, long chiefid)
+        {
+            int rval = -1;
+            if (isOpened)
+            {
+                try
+                {
+                    string sqlText = "insert into public.projects(name,chiefid) " +
+                        "values(@qname,@qid)";
+                    rval = m_connection.Execute(sqlText,
+                        new
+                        {
+                            qname = name,
+                            qid = chiefid
+                        });
+                }
+                catch (Exception ex)
+                {
+                    m_errorText = ex.Message;
+                }
+            }
+            return rval;
+        }
+        /// <summary>
+        /// Изменить параметры проекта по его мдентификатору
+        /// </summary>
+        /// <param name="id">идентификатор проекта</param>
+        /// <param name="name">наименование проекта</param>
+        /// <param name="chiefid">идентификатор пользователя с ролью руководителя проекта</param>
+        /// <returns>1 - если операция прошла успешно, 0 - проект с идентификатором id не найден, -1 - ошибка</returns>
+        public int updateProject(long id, string name, long chiefid)
+        {
+            int rval = -1;
+            if (isOpened)
+            {
+                try
+                {
+                    string sqlText = "update public.projects set name = @qname,chiefid =  @qid" +
+                        "where id = @pid";
+                    rval = m_connection.Execute(sqlText,
+                        new
+                        {
+                            qname = name,
+                            qid = chiefid,
+                            pid = id
+                        });
+                }
+                catch (Exception ex)
+                {
+                    m_errorText = ex.Message;
+                }
+            }
+            return rval;
+
+        }
+        /// <summary>
+        /// Удалить запись о проекте по её идентификатору
+        /// </summary>
+        /// <param name="id">идентификатор проекта</param>
+        /// <returns>1 - если операция прошла успешно, 0 - проект с идентификатором id не найден, -1 - ошибка</returns>
+        public int deleteProject(long id)
+        {
+            int rval = -1;
+            if (isOpened)
+            {
+                try
+                {
+                    string sqlText = $"delete from public.projects where id = {id}";
+                    rval = m_connection.Execute(sqlText);
+                }
+                catch (Exception ex)
+                {
+                    m_errorText = ex.Message;
+                }
+            }
+            return rval;
+
+        }
+        public Project getProjectById(long id)
+        {
+            Project prj = null;
+            if (isOpened)
+            {
+                try
+                {
+                    string sqlText = "select p.id, p.name, p.chiefid, ch.name chiefname "+
+                        "from public.projects p left join public.users ch on ch.id = p.chiefid "+
+                        $"where p.id = {id}";
+                    prj = m_connection.QueryFirstOrDefault<Project>(sqlText);
+                }
+                catch (Exception ex)
+                {
+                    m_errorText = ex.Message;
+                }
+            }
+            return prj;
+
+        }
+        public List <Project> getProjects()
+        {
+            List<Project> prjList = null;
+            if (isOpened)
+            {
+                try
+                {
+                    string sqlText = $"select p.id, p.name, p.chiefid, ch.name chiefname " +
+                        "from public.projects p left join public.users ch on ch.id = p.chiefid" ;
+                    prjList = m_connection.Query<Project>(sqlText).ToList();
+                }
+                catch (Exception ex)
+                {
+                    m_errorText = ex.Message;
+                }
+            }
+            return prjList; 
 
         }
         #endregion
