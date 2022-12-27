@@ -36,6 +36,7 @@ namespace Appointments
             this.passwordTextBox = new System.Windows.Forms.TextBox();
             this.OKButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
+            this.roleNameLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -55,6 +56,7 @@ namespace Appointments
             this.usersComboBox.Name = "usersComboBox";
             this.usersComboBox.Size = new System.Drawing.Size(300, 24);
             this.usersComboBox.TabIndex = 1;
+            this.usersComboBox.SelectedIndexChanged += new System.EventHandler(this.onUserChanged);
             // 
             // label2
             // 
@@ -78,7 +80,7 @@ namespace Appointments
             // OKButton
             // 
             this.OKButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.OKButton.Location = new System.Drawing.Point(15, 144);
+            this.OKButton.Location = new System.Drawing.Point(15, 167);
             this.OKButton.Name = "OKButton";
             this.OKButton.Size = new System.Drawing.Size(123, 33);
             this.OKButton.TabIndex = 4;
@@ -89,7 +91,7 @@ namespace Appointments
             // cancelButton
             // 
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(310, 144);
+            this.cancelButton.Location = new System.Drawing.Point(310, 167);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(123, 33);
             this.cancelButton.TabIndex = 5;
@@ -97,13 +99,24 @@ namespace Appointments
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.onCancelButtonClick);
             // 
+            // roleNameLabel
+            // 
+            this.roleNameLabel.AutoSize = true;
+            this.roleNameLabel.ForeColor = System.Drawing.Color.Red;
+            this.roleNameLabel.Location = new System.Drawing.Point(25, 123);
+            this.roleNameLabel.Name = "roleNameLabel";
+            this.roleNameLabel.Size = new System.Drawing.Size(20, 17);
+            this.roleNameLabel.TabIndex = 6;
+            this.roleNameLabel.Text = "...";
+            // 
             // AutorizationForm
             // 
             this.AcceptButton = this.OKButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(449, 189);
+            this.ClientSize = new System.Drawing.Size(449, 215);
+            this.Controls.Add(this.roleNameLabel);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.passwordTextBox);
@@ -129,6 +142,7 @@ namespace Appointments
         private System.Windows.Forms.TextBox passwordTextBox;
         private System.Windows.Forms.Button OKButton;
         private System.Windows.Forms.Button cancelButton;
+        private System.Windows.Forms.Label roleNameLabel;
     }
 }
 

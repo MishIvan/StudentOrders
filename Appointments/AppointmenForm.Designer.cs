@@ -95,7 +95,7 @@ namespace Appointments
             // 
             // deleteButton
             // 
-            this.deleteButton.Location = new System.Drawing.Point(424, 107);
+            this.deleteButton.Location = new System.Drawing.Point(424, 161);
             this.deleteButton.Name = "deleteButton";
             this.deleteButton.Size = new System.Drawing.Size(106, 33);
             this.deleteButton.TabIndex = 3;
@@ -105,7 +105,7 @@ namespace Appointments
             // 
             // editButton
             // 
-            this.editButton.Location = new System.Drawing.Point(424, 161);
+            this.editButton.Location = new System.Drawing.Point(424, 109);
             this.editButton.Name = "editButton";
             this.editButton.Size = new System.Drawing.Size(106, 33);
             this.editButton.TabIndex = 4;

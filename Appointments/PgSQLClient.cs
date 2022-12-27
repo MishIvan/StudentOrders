@@ -35,6 +35,12 @@ namespace Appointments
         /// Закрыть соединение
         /// </summary>
         public void Close() { if (isOpened) m_connection.Close(); }
+        public static long ConvertToUnixTime(DateTime datetime)
+        {
+            DateTime sTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+            return (long)(datetime - sTime).TotalSeconds;
+        }
         #region Users and Roles
         /// <summary>
         /// Получить список всех пользователей 
@@ -546,6 +552,116 @@ namespace Appointments
             }
             return prjList; 
 
+        }
+        #endregion
+
+        #region Vacations
+        /// <summary>
+        /// Получисть список всех вакансий
+        /// </summary>
+        /// <returns>список вакансий или null</returns>
+        public List <Vacation> getVacations()
+        {
+            List<Vacation> vlist = null;
+            if(isOpened)
+            {
+                string sqlText = "select v.id, v.plandate, v.vname, v.appointmentid, c.aname," +
+                    "v.projectid,v.pname, v.chname, v.descrioption, v.salary from view.vacations v";
+                vlist = m_connection.Query<Vacation>(sqlText).ToList();
+            }
+            return vlist;
+        }
+        /// <summary>
+        /// Получить вакансию по её идентификатору
+        /// </summary>
+        /// <param name="id">идентификатор выкансии</param>
+        /// <returns>объект вакансии или null</returns>
+        public Vacation getVacationById(long id)
+        {
+            Vacation vc = null;
+            if(isOpened)
+            {
+                string sqlText = "select v.id, v.plandate, v.vname, v.appointmentid, c.aname," +
+                    "v.projectid,v.pname, v.chname, v.description, v.salary from view.vacations v " +
+                    $"where v.id ={id}";
+                vc = m_connection.QueryFirstOrDefault<Vacation>(sqlText);
+            }
+            return vc;
+        }
+        /// <summary>
+        /// Изменить параметры вакансии
+        /// </summary>
+        /// <param name="vc">объект вакансии</param>
+        /// <returns>1 - запись обновлена, 0 - не удалось обновить запись, -1 - ошибка</returns>
+        public int updateVacation(Vacation vc)
+        {
+            int rval = -1;
+            if (isOpened)
+            {
+                try
+                { 
+                    string frmtDate = vc.plandate.ToString("yyyy-MM-dd HH:mm:ss");
+                    string sqlText = "update public.vacations set plandate = @qpdate, name = @qvname, appointmentid =@qaid, " +
+                        "projectid = @qpid,description = @qd, v.salary = @qs where id = @qid";
+                     rval = m_connection.Execute(sqlText, 
+                         new { qpdate = frmtDate,  qvname = vc.vname, 
+                             qaid = vc.appointmentid, qpid = vc.projectid, qd = vc.description, qs = vc.salary });
+                }
+                catch(Exception ex)
+                {
+                    m_errorText = ex.Message;
+                }
+            }
+            return rval;
+        }
+        /// <summary>
+        /// Добавление записи о вакансии
+        /// </summary>
+        /// <param name="vc">объект вакансии</param>
+        /// <returns>1 - запись обновлена, 0 - не удалось обновить запись, -1 - ошибка</returns>
+        public int insertVacation(Vacation vc)
+        {
+            int rval = -1;
+            if (isOpened)
+            {
+                try
+                {
+                    string frmtDate = vc.plandate.ToString("yyyy-MM-dd HH:mm:ss");
+                    long id = m_connection.ExecuteScalar<long>("select coalesce(max(id),0) + 1 id from public.vacations");
+                    string sqlText = "insert into public.vacations (id,plandate,name,appointmentid,projectid,description,salary) " +
+                        $"values({id},'{frmtDate}','{vc.vname}',{vc.appointmentid},{vc.projectid},'{vc.description}',{vc.salary})";
+                    rval = m_connection.Execute(sqlText);
+                }
+                catch (Exception ex)
+                {
+                    m_errorText = ex.Message;
+                }
+            }
+            return rval;
+
+        }
+        /// <summary>
+        /// Удалить вакансию и все связанные с ней события в транзакции
+        /// </summary>
+        /// <param name="id">идентификатор вакансии</param>
+        /// <returns>1 - транзакция успешно прошла, 0 - транзакция не прошла, -1 - ошибка выполения</returns>
+        public int deleteVacation(long id)
+        {
+            int rval = -1;
+            if(isOpened)
+            {
+                rval = 0;
+                using (var tran = m_connection.BeginTransaction())
+                {
+                    string sqlText = $"delete from public.history where vacationid = {id}";
+                    rval += m_connection.Execute(sqlText, transaction : tran );
+                    sqlText = $"delete from public.vacations where id = {id}";
+                    rval += m_connection.Execute(sqlText, transaction: tran);
+                    tran.Commit();                    
+                }
+
+            }
+            return rval;
         }
         #endregion
 

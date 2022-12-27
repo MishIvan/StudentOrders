@@ -68,5 +68,20 @@ namespace Appointments
             List<string> m_userNames = m_userList.Select(u => u.name).ToList();            
             usersComboBox.DataSource = m_userNames;
         }
+        /// <summary>
+        /// Выбор пользователя
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void onUserChanged(object sender, EventArgs e)
+        {
+            if(usersComboBox.Items.Count > 0)
+            {
+                string uname = usersComboBox.SelectedItem.ToString();
+                string rolename = m_userList.Where(u => u.name == uname)
+                    .Select(u => u.rolename).FirstOrDefault();
+                roleNameLabel.Text = rolename;
+            }
+        }
     }
 }

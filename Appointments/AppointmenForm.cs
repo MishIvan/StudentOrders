@@ -14,6 +14,7 @@ namespace Appointments
     {
         bool m_selectionMode;
         long m_id;
+        public long appointmentId { get {return m_id;} }
         public AppointmenForm(bool SelMode = false)
         {
             InitializeComponent();
@@ -25,16 +26,37 @@ namespace Appointments
         {
             List<Appointment> m_appointmentList = Program.m_pgConnection.getAppointments();
             appointmentsDataGridView.DataSource = m_appointmentList;
+            if(m_selectionMode)
+            {
+                addButton.Text = "Выбрать";
+                addButton.DialogResult = DialogResult.OK;
+                AcceptButton = addButton;
+
+                editButton.Text = "Отмена";
+                editButton.DialogResult = DialogResult.Cancel;
+                CancelButton = editButton;
+
+                nameTextBox.Visible = false;
+                deleteButton.Visible = false;
+            }
+
         }
 
         private void onAddAppointment(object sender, EventArgs e)
         {
-            string sadd = nameTextBox.Text;
-            if (!string.IsNullOrEmpty(sadd))
+            if (!m_selectionMode)
             {
-                Program.m_pgConnection.addAppointment(sadd);
-                List<Appointment> m_appointmentList = Program.m_pgConnection.getAppointments();
-                appointmentsDataGridView.DataSource = m_appointmentList;
+                string sadd = nameTextBox.Text;
+                if (!string.IsNullOrEmpty(sadd))
+                {
+                    Program.m_pgConnection.addAppointment(sadd);
+                    List<Appointment> m_appointmentList = Program.m_pgConnection.getAppointments();
+                    appointmentsDataGridView.DataSource = m_appointmentList;
+                }
+            }
+            else
+            {
+                Close();
             }
         }
 
@@ -60,18 +82,25 @@ namespace Appointments
         /// <param name="e"></param>
         private void onEditAppointment(object sender, EventArgs e)
         {
-            if(m_id > 0)
+            if (!m_selectionMode)
             {
-                string s1 = nameTextBox.Text;
-                if (!string.IsNullOrEmpty(s1))
+                if (m_id > 0)
                 {
-                    if(Program.m_pgConnection.changeAppointmentName(m_id, s1) > 0)
+                    string s1 = nameTextBox.Text;
+                    if (!string.IsNullOrEmpty(s1))
                     {
-                        List<Appointment> m_appointmentList = Program.m_pgConnection.getAppointments();
-                        appointmentsDataGridView.DataSource = m_appointmentList;
+                        if (Program.m_pgConnection.changeAppointmentName(m_id, s1) > 0)
+                        {
+                            List<Appointment> m_appointmentList = Program.m_pgConnection.getAppointments();
+                            appointmentsDataGridView.DataSource = m_appointmentList;
 
+                        }
                     }
                 }
+            }
+            else
+            {
+                Close();
             }
         }
         /// <summary>
