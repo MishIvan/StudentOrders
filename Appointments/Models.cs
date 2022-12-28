@@ -14,12 +14,8 @@ namespace Appointments
         public string name { get; set; }
 
     }
-    [Table("public.users")]
-    public class User
+    public class User : UserBrief
     {
-        [Key]
-        public long id { get; set; }
-        public string name { get; set; }
         public long roleid { get; set; }
         public string rolename { get; set; }
         public string password { get; set; }

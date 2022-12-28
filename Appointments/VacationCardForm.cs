@@ -71,7 +71,19 @@ namespace Appointments
         {
             if(m_id > 0)
             {
-                
+                Vacation vc = Program.m_pgConnection.getVacationById(m_id);
+                nameTextBox.Text = vc.vname;
+                planDateTimePicker.Value = vc.plandate;
+
+                m_appointmentid = vc.appointmentid;
+                appointmentTextBox.Text = vc.aname;
+
+                m_projectid = vc.projectid;
+                projectTextBox.Text = vc.pname;
+
+                salaryTextBox.Text = vc.salary.ToString();
+                descriptionTextBox.Text = vc.description;
+
             }
         }
 

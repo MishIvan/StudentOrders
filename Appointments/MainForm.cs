@@ -18,6 +18,7 @@ namespace Appointments
         // 2 бит - руководитель проекта
         private int m_userRole;
         private long m_vid; // текущий ИД вакансии
+        private string m_chiefName; // ФИО руководителя проекта 
         public MainForm()
         {
             InitializeComponent();
@@ -44,7 +45,7 @@ namespace Appointments
             addVacationsToolStripMenuItem.Visible = (m_userRole & (1 | 4)) > 0;
             editVacationToolStripMenuItem.Visible = (m_userRole & (1 | 4)) > 0;
             deleteVacationToolStripMenuItem.Visible = (m_userRole & (1 | 4)) > 0;
-            this.Text += $" - {name}";
+            this.Text += $" - {name} ({rolename})";
             var vlist = Program.m_pgConnection.getVacations();
             vacationsDataGridView.DataSource = vlist;
         }
@@ -62,7 +63,8 @@ namespace Appointments
             {
                 var row = vacationsDataGridView.CurrentRow;
                 m_vid = Convert.ToInt64(row.Cells[0].Value);
-
+                descriptionTextBox.Text = row.Cells[8].Value.ToString();
+                m_chiefName = row.Cells[7].Value.ToString();
             }
         }
         // работа с должностями
@@ -112,6 +114,18 @@ namespace Appointments
         private void editVacationToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+            // правка вакансий доступна администратору и руководителю, связанного с вакансией, проекта
+            if ( m_chiefName != Program.m_currentUser.name && (m_userRole & 1) == 0)
+            {
+                MessageBox.Show("Вы можете править вакансии, \nкоторые связаны с проектами,\n которыми вы руководите");
+                return;
+            }
+            VacationCardForm frm = new VacationCardForm(m_vid);
+            if(frm.ShowDialog() == DialogResult.OK)
+            {
+                var vlist = Program.m_pgConnection.getVacations();
+                vacationsDataGridView.DataSource = vlist;
+            }
         }
         /// <summary>
         /// Удалить вакансию
@@ -120,6 +134,24 @@ namespace Appointments
         /// <param name="e"></param>
         private void deleteVacationToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // удаление вакансий доступно администратору и руководителю проекта, связанного с вакансией
+            if (m_chiefName != Program.m_currentUser.name && (m_userRole & 1) == 0)
+            {
+                MessageBox.Show("Вы можете удалять вакансии, \nкоторые связаны с проектами,\n которыми вы руководите");
+                return;
+            }
+            DialogResult res = MessageBox.Show("Вы действительно хотите удалить вакансию?", 
+                "Внимание!", 
+                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if(res == DialogResult.Yes)
+            {
+                int recs = Program.m_pgConnection.deleteVacation(m_vid);
+                if(recs > 0)
+                {
+                    var vlist = Program.m_pgConnection.getVacations();
+                    vacationsDataGridView.DataSource = vlist;
+                }
+            }
 
         }
     }

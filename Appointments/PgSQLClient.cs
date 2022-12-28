@@ -565,8 +565,8 @@ namespace Appointments
             List<Vacation> vlist = null;
             if(isOpened)
             {
-                string sqlText = "select v.id, v.plandate, v.vname, v.appointmentid, c.aname," +
-                    "v.projectid,v.pname, v.chname, v.descrioption, v.salary from view.vacations v";
+                string sqlText = "select v.id, v.plandate, v.vname, v.appointmentid, v.aname," +
+                    "v.projectid,v.pname, v.chname, v.description, v.salary from views.vacations v";
                 vlist = m_connection.Query<Vacation>(sqlText).ToList();
             }
             return vlist;
@@ -581,8 +581,8 @@ namespace Appointments
             Vacation vc = null;
             if(isOpened)
             {
-                string sqlText = "select v.id, v.plandate, v.vname, v.appointmentid, c.aname," +
-                    "v.projectid,v.pname, v.chname, v.description, v.salary from view.vacations v " +
+                string sqlText = "select v.id, v.plandate, v.vname, v.appointmentid, v.aname," +
+                    "v.projectid,v.pname, v.chname, v.description, v.salary from views.vacations v " +
                     $"where v.id ={id}";
                 vc = m_connection.QueryFirstOrDefault<Vacation>(sqlText);
             }
@@ -601,11 +601,11 @@ namespace Appointments
                 try
                 { 
                     string frmtDate = vc.plandate.ToString("yyyy-MM-dd HH:mm:ss");
-                    string sqlText = "update public.vacations set plandate = @qpdate, name = @qvname, appointmentid =@qaid, " +
-                        "projectid = @qpid,description = @qd, v.salary = @qs where id = @qid";
+                    string sqlText = $"update public.vacations set plandate = '{frmtDate}', name = @qvname, appointmentid =@qaid, " +
+                        "projectid = @qpid,description = @qd, salary = @qs where id = @qid";
                      rval = m_connection.Execute(sqlText, 
-                         new { qpdate = frmtDate,  qvname = vc.vname, 
-                             qaid = vc.appointmentid, qpid = vc.projectid, qd = vc.description, qs = vc.salary });
+                         new {  qvname = vc.vname, qaid = vc.appointmentid, 
+                             qpid = vc.projectid, qd = vc.description, qs = vc.salary, qid = vc.id });
                 }
                 catch(Exception ex)
                 {
