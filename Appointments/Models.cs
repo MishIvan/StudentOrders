@@ -89,10 +89,12 @@ namespace Appointments
     {
         public long vacationid { get; set; }
         public DateTime eventdate { get; set; }
+        public long eventid { get; set; }
         public string ename { get; set; }
         public long managerid { get; set; }
         public string mname { get; set; }
         public long candidateid { get; set; }
         public string cname { get; set; }
+        public int nstr { get; set; }
     }
 }

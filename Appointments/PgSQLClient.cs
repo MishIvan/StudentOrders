@@ -35,12 +35,6 @@ namespace Appointments
         /// Закрыть соединение
         /// </summary>
         public void Close() { if (isOpened) m_connection.Close(); }
-        public static long ConvertToUnixTime(DateTime datetime)
-        {
-            DateTime sTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
-            return (long)(datetime - sTime).TotalSeconds;
-        }
         #region Users and Roles
         /// <summary>
         /// Получить список всех пользователей 
@@ -663,6 +657,86 @@ namespace Appointments
             }
             return rval;
         }
+        #endregion
+
+        #region History
+        /// <summary>
+        /// Получить события по вакансии
+        /// </summary>
+        /// <param name="vid">идетификатор вакансии</param>
+        /// <returns>список вакансий или null</returns>
+        public List <History> getEvents(long vid)
+        {
+            List<History> hlst = null;
+            if(isOpened)
+            {
+                string sqlText = "select h.vacationid , h.eventdate , h.eventid" + 
+                ", h.ename , h.managerid , h.mname"+
+                ", h.candidateid , h.cname , h.nstr "+ 
+                $"from views.history h where h.vacationid = {vid}";
+                hlst = m_connection.Query<History>(sqlText).ToList();
+            }
+            return hlst;
+        }
+        /// <summary>
+        /// Добавить запись о событии по параметрам объекта
+        /// </summary>
+        /// <param name="hst">объект события со значениями устанавливаемых параметров</param>
+        /// <returns>1 - запись добавлена, 0 - не удалось добавить запись, -1 - ошибка</returns>
+        public int addHisory(History hst)
+        {
+            int rval = -1;
+            if(isOpened)
+            {
+                string frmtDate = hst.eventdate.ToString("yyyy-MM-dd HH:mm:ss");
+                string sqlText = $"select coalesce(max(nstr),0) + 1 id from public.history where vacationid = {hst.vacationid}";
+                int istr = m_connection.ExecuteScalar<int>(sqlText);
+                sqlText = "insert into public.history(vacationid,eventdate,eventid,managerid,candidateid,nstr) " +
+                    $"values(@qvid,'{frmtDate}',@qeid, @qmid, @qcid,@istr)";
+                rval = m_connection.Execute(sqlText,
+                    new { qvid = hst.vacationid, qeid = hst.eventid, qmid = hst.managerid, qcid = hst.candidateid, nstr = istr }
+                    );
+            }
+            return rval;
+        }
+        /// <summary>
+        /// Изменить запись о событии
+        /// </summary>
+        /// <param name="hst">объект с изменёнными параметрми события</param>
+        /// <returns>1 - запись обновлена, 0 - не удалось обновить запись, -1 - ошибка</returns>
+        public int editHistory(History hst)
+        {
+            int rval = -1;
+            if (isOpened)
+            {
+                string frmtDate = hst.eventdate.ToString("yyyy-MM-dd HH:mm:ss");
+                string sqlText = $"update public.history set eventdate = '{frmtDate}',eventid = @qeid, "+
+                    "managerid = @qmid,candidateid = @qcid where nstr = @istr and vacationid = @qvid)";
+                rval = m_connection.Execute(sqlText,
+                    new { qvid = hst.vacationid, qeid = hst.eventid, qmid = hst.managerid, qcid = hst.candidateid, istr = hst.nstr }
+                    );
+            }
+            return rval;
+
+        }
+        /// <summary>
+        /// Удалить запись о событии в истории вакансии
+        /// </summary>
+        /// <param name="vid">идентификатор вакансии</param>
+        /// <param name="istr">ном. строки записи событий в истории</param>
+        /// <returns>1 - запись удалена, 0 - не удалось удалить запись, -1 - ошибка</returns>
+        public int deleteHistory(long vid, int istr)
+        {
+            int rval = -1;
+            if (isOpened)
+            {
+                string sqlText = $"delete from public.history where nstr = {vid} and vacationid = {istr})";
+                rval = m_connection.Execute(sqlText);
+            }
+            return rval;
+
+        }
+
         #endregion
 
     }

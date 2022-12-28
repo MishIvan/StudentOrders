@@ -65,6 +65,9 @@ namespace Appointments
                 m_vid = Convert.ToInt64(row.Cells[0].Value);
                 descriptionTextBox.Text = row.Cells[8].Value.ToString();
                 m_chiefName = row.Cells[7].Value.ToString();
+
+                var hlist = Program.m_pgConnection.getEvents(m_vid);
+                historyDataGridView.DataSource = hlist;
             }
         }
         // работа с должностями

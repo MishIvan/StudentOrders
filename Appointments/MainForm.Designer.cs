@@ -29,9 +29,9 @@ namespace Appointments
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.vacationsDataGridView = new System.Windows.Forms.DataGridView();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
@@ -52,13 +52,6 @@ namespace Appointments
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.historyDataGridView = new System.Windows.Forms.DataGridView();
-            this.eventdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.eventid = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.eventname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.managerid = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.candidateid = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cname = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label2 = new System.Windows.Forms.Label();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.plandate = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -69,6 +62,15 @@ namespace Appointments
             this.pname = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.chmane = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.desc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vacationid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.eventdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.eventid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.eventname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.managerid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.candidateid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nstr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.vacationsDataGridView)).BeginInit();
             this.mainMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.historyDataGridView)).BeginInit();
@@ -127,28 +129,28 @@ namespace Appointments
             // addVacationsToolStripMenuItem
             // 
             this.addVacationsToolStripMenuItem.Name = "addVacationsToolStripMenuItem";
-            this.addVacationsToolStripMenuItem.Size = new System.Drawing.Size(159, 26);
+            this.addVacationsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.addVacationsToolStripMenuItem.Text = "Добавить";
             this.addVacationsToolStripMenuItem.Click += new System.EventHandler(this.addVacationsToolStripMenuItem_Click);
             // 
             // editVacationToolStripMenuItem
             // 
             this.editVacationToolStripMenuItem.Name = "editVacationToolStripMenuItem";
-            this.editVacationToolStripMenuItem.Size = new System.Drawing.Size(159, 26);
+            this.editVacationToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.editVacationToolStripMenuItem.Text = "Править";
             this.editVacationToolStripMenuItem.Click += new System.EventHandler(this.editVacationToolStripMenuItem_Click);
             // 
             // deleteVacationToolStripMenuItem
             // 
             this.deleteVacationToolStripMenuItem.Name = "deleteVacationToolStripMenuItem";
-            this.deleteVacationToolStripMenuItem.Size = new System.Drawing.Size(159, 26);
+            this.deleteVacationToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.deleteVacationToolStripMenuItem.Text = "Удалить";
             this.deleteVacationToolStripMenuItem.Click += new System.EventHandler(this.deleteVacationToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(156, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(221, 6);
             // 
             // eventToolStripMenuItem
             // 
@@ -157,7 +159,7 @@ namespace Appointments
             this.deleteEventToolStripMenuItem,
             this.editEventToolStripMenuItem});
             this.eventToolStripMenuItem.Name = "eventToolStripMenuItem";
-            this.eventToolStripMenuItem.Size = new System.Drawing.Size(159, 26);
+            this.eventToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.eventToolStripMenuItem.Text = "Событие";
             // 
             // addEventToolStripMenuItem
@@ -240,90 +242,23 @@ namespace Appointments
             this.historyDataGridView.AllowUserToDeleteRows = false;
             this.historyDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.historyDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.vacationid,
             this.eventdate,
             this.eventid,
             this.eventname,
             this.managerid,
             this.mname,
             this.candidateid,
-            this.cname});
+            this.cname,
+            this.nstr});
             this.historyDataGridView.Location = new System.Drawing.Point(12, 467);
             this.historyDataGridView.Name = "historyDataGridView";
             this.historyDataGridView.ReadOnly = true;
             this.historyDataGridView.RowHeadersWidth = 51;
             this.historyDataGridView.RowTemplate.Height = 24;
             this.historyDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.historyDataGridView.Size = new System.Drawing.Size(708, 233);
+            this.historyDataGridView.Size = new System.Drawing.Size(860, 233);
             this.historyDataGridView.TabIndex = 13;
-            // 
-            // eventdate
-            // 
-            this.eventdate.DataPropertyName = "eventdate";
-            dataGridViewCellStyle3.Format = "G";
-            dataGridViewCellStyle3.NullValue = null;
-            this.eventdate.DefaultCellStyle = dataGridViewCellStyle3;
-            this.eventdate.HeaderText = "Дата";
-            this.eventdate.MinimumWidth = 6;
-            this.eventdate.Name = "eventdate";
-            this.eventdate.ReadOnly = true;
-            this.eventdate.ToolTipText = "Дата события";
-            this.eventdate.Width = 125;
-            // 
-            // eventid
-            // 
-            this.eventid.HeaderText = "ИД события";
-            this.eventid.MinimumWidth = 6;
-            this.eventid.Name = "eventid";
-            this.eventid.ReadOnly = true;
-            this.eventid.Visible = false;
-            this.eventid.Width = 125;
-            // 
-            // eventname
-            // 
-            this.eventname.DataPropertyName = "ename";
-            this.eventname.HeaderText = "Событие";
-            this.eventname.MinimumWidth = 6;
-            this.eventname.Name = "eventname";
-            this.eventname.ReadOnly = true;
-            this.eventname.ToolTipText = "Наименование события";
-            this.eventname.Width = 150;
-            // 
-            // managerid
-            // 
-            this.managerid.HeaderText = "ИД менеджера";
-            this.managerid.MinimumWidth = 6;
-            this.managerid.Name = "managerid";
-            this.managerid.ReadOnly = true;
-            this.managerid.Visible = false;
-            this.managerid.Width = 125;
-            // 
-            // mname
-            // 
-            this.mname.HeaderText = "Менеджер";
-            this.mname.MinimumWidth = 6;
-            this.mname.Name = "mname";
-            this.mname.ReadOnly = true;
-            this.mname.ToolTipText = "Менеджер по кадарам или руководитель проекта";
-            this.mname.Width = 150;
-            // 
-            // candidateid
-            // 
-            this.candidateid.HeaderText = "ИД кандидата";
-            this.candidateid.MinimumWidth = 6;
-            this.candidateid.Name = "candidateid";
-            this.candidateid.ReadOnly = true;
-            this.candidateid.Visible = false;
-            this.candidateid.Width = 125;
-            // 
-            // cname
-            // 
-            this.cname.DataPropertyName = "cname";
-            this.cname.HeaderText = "Соискатель";
-            this.cname.MinimumWidth = 6;
-            this.cname.Name = "cname";
-            this.cname.ReadOnly = true;
-            this.cname.ToolTipText = "Соискатель вакансии";
-            this.cname.Width = 150;
             // 
             // label2
             // 
@@ -430,6 +365,99 @@ namespace Appointments
             this.desc.Visible = false;
             this.desc.Width = 125;
             // 
+            // vacationid
+            // 
+            this.vacationid.DataPropertyName = "vacationid";
+            this.vacationid.HeaderText = "ИД вакансии";
+            this.vacationid.MinimumWidth = 6;
+            this.vacationid.Name = "vacationid";
+            this.vacationid.ReadOnly = true;
+            this.vacationid.Visible = false;
+            this.vacationid.Width = 125;
+            // 
+            // eventdate
+            // 
+            this.eventdate.DataPropertyName = "eventdate";
+            dataGridViewCellStyle3.Format = "g";
+            dataGridViewCellStyle3.NullValue = null;
+            this.eventdate.DefaultCellStyle = dataGridViewCellStyle3;
+            this.eventdate.HeaderText = "Дата";
+            this.eventdate.MinimumWidth = 6;
+            this.eventdate.Name = "eventdate";
+            this.eventdate.ReadOnly = true;
+            this.eventdate.ToolTipText = "Дата события";
+            this.eventdate.Width = 80;
+            // 
+            // eventid
+            // 
+            this.eventid.DataPropertyName = "eventid";
+            this.eventid.HeaderText = "ИД события";
+            this.eventid.MinimumWidth = 6;
+            this.eventid.Name = "eventid";
+            this.eventid.ReadOnly = true;
+            this.eventid.Visible = false;
+            this.eventid.Width = 125;
+            // 
+            // eventname
+            // 
+            this.eventname.DataPropertyName = "ename";
+            this.eventname.HeaderText = "Событие";
+            this.eventname.MinimumWidth = 6;
+            this.eventname.Name = "eventname";
+            this.eventname.ReadOnly = true;
+            this.eventname.ToolTipText = "Наименование события";
+            this.eventname.Width = 125;
+            // 
+            // managerid
+            // 
+            this.managerid.DataPropertyName = "managerid";
+            this.managerid.HeaderText = "ИД менеджера";
+            this.managerid.MinimumWidth = 6;
+            this.managerid.Name = "managerid";
+            this.managerid.ReadOnly = true;
+            this.managerid.Visible = false;
+            this.managerid.Width = 125;
+            // 
+            // mname
+            // 
+            this.mname.DataPropertyName = "mname";
+            this.mname.HeaderText = "Менеджер";
+            this.mname.MinimumWidth = 6;
+            this.mname.Name = "mname";
+            this.mname.ReadOnly = true;
+            this.mname.ToolTipText = "Менеджер по кадарам или руководитель проекта";
+            this.mname.Width = 300;
+            // 
+            // candidateid
+            // 
+            this.candidateid.DataPropertyName = "candidateid";
+            this.candidateid.HeaderText = "ИД соискателя";
+            this.candidateid.MinimumWidth = 6;
+            this.candidateid.Name = "candidateid";
+            this.candidateid.ReadOnly = true;
+            this.candidateid.Visible = false;
+            this.candidateid.Width = 125;
+            // 
+            // cname
+            // 
+            this.cname.DataPropertyName = "cname";
+            this.cname.HeaderText = "Соискатель";
+            this.cname.MinimumWidth = 6;
+            this.cname.Name = "cname";
+            this.cname.ReadOnly = true;
+            this.cname.ToolTipText = "Соискатель вакансии";
+            this.cname.Width = 300;
+            // 
+            // nstr
+            // 
+            this.nstr.DataPropertyName = "nstr";
+            this.nstr.HeaderText = "Ном. строки";
+            this.nstr.MinimumWidth = 6;
+            this.nstr.Name = "nstr";
+            this.nstr.ReadOnly = true;
+            this.nstr.Visible = false;
+            this.nstr.Width = 125;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -477,13 +505,6 @@ namespace Appointments
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripMenuItem candidatesToolStripMenuItem;
         private System.Windows.Forms.DataGridView historyDataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn eventdate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn eventid;
-        private System.Windows.Forms.DataGridViewTextBoxColumn eventname;
-        private System.Windows.Forms.DataGridViewTextBoxColumn managerid;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mname;
-        private System.Windows.Forms.DataGridViewTextBoxColumn candidateid;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cname;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn plandate;
@@ -494,5 +515,14 @@ namespace Appointments
         private System.Windows.Forms.DataGridViewTextBoxColumn pname;
         private System.Windows.Forms.DataGridViewTextBoxColumn chmane;
         private System.Windows.Forms.DataGridViewTextBoxColumn desc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn vacationid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn eventdate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn eventid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn eventname;
+        private System.Windows.Forms.DataGridViewTextBoxColumn managerid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mname;
+        private System.Windows.Forms.DataGridViewTextBoxColumn candidateid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cname;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nstr;
     }
 }
