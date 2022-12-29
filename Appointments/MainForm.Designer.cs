@@ -71,6 +71,8 @@ namespace Appointments
             this.candidateid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cname = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nstr = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.actionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.vacationsDataGridView)).BeginInit();
             this.mainMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.historyDataGridView)).BeginInit();
@@ -202,6 +204,7 @@ namespace Appointments
             // 
             this.mainMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.actionsToolStripMenuItem,
             this.vacationsToolStripMenuItem,
             this.dataToolStripMenuItem});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
@@ -462,6 +465,20 @@ namespace Appointments
             this.nstr.Visible = false;
             this.nstr.Width = 125;
             // 
+            // actionsToolStripMenuItem
+            // 
+            this.actionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.settingsToolStripMenuItem});
+            this.actionsToolStripMenuItem.Name = "actionsToolStripMenuItem";
+            this.actionsToolStripMenuItem.Size = new System.Drawing.Size(88, 24);
+            this.actionsToolStripMenuItem.Text = "Действия";
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.settingsToolStripMenuItem.Text = "Настройки";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -528,5 +545,7 @@ namespace Appointments
         private System.Windows.Forms.DataGridViewTextBoxColumn candidateid;
         private System.Windows.Forms.DataGridViewTextBoxColumn cname;
         private System.Windows.Forms.DataGridViewTextBoxColumn nstr;
+        private System.Windows.Forms.ToolStripMenuItem actionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
     }
 }

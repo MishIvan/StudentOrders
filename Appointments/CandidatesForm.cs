@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Appointments
 {
@@ -85,12 +86,41 @@ namespace Appointments
                 }                
             }
         }
-
+        /// <summary>
+        /// Загрузка резюме
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void resumeButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("В процессе разработки");
-        }
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = Environment.CurrentDirectory;
+                openFileDialog.Filter = "Документы Word (*.docx)|*.docx|Документы Word (*.doc)|*.doc|Файлы PDF (*.pdf)|*.pdf|" +
+                    "Все файлы (*.*)|*.*";
+                openFileDialog.FilterIndex = 0;
+                openFileDialog.RestoreDirectory = true;
 
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Get the path of specified file
+                    string filePath = openFileDialog.FileName;
+                    string ext = string.Empty;
+                    if (Path.HasExtension(filePath))
+                    {
+                        ext = Path.GetExtension(filePath).Substring(1);
+                    }
+                    byte[] fbytes = File.ReadAllBytes(filePath);
+                    if (candidatesDataGridView.Rows.Count > 0)
+                    {
+                        var row = candidatesDataGridView.CurrentRow;
+                        m_id = Convert.ToInt64(row.Cells[0].Value);
+                        Program.m_pgConnection.uploadResume(m_id, fbytes, ext);
+
+                    }
+                }
+            }
+        }
         private void onLoad(object sender, EventArgs e)
         {
             var lst = Program.m_pgConnection.getCandidates();

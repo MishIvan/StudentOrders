@@ -396,7 +396,14 @@ namespace Appointments
             {
                 try
                 {
-                    rval = m_connection.Execute($"delete from public.candidates where id = {id}");
+                    using (var tran = m_connection.BeginTransaction())
+                    {
+                        string sqlText = $"delete from public.resumes where candidateid = {id}";
+                        rval += m_connection.Execute(sqlText, transaction: tran);
+                        sqlText = $"delete from public.candidates where id = {id}";
+                        rval += m_connection.Execute(sqlText, transaction: tran);
+                        tran.Commit();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -768,6 +775,42 @@ namespace Appointments
 
         }
 
+        #endregion
+
+        #region Resume
+        /// <summary>
+        /// Загрузка резюме соискателя
+        /// </summary>
+        /// <param name="cid">идетификатор соискателя</param>
+        /// <param name="bcontent">содержимое</param>
+        /// <param name="ctype">тип содержимого файла</param>
+        /// <returns></returns>
+        public int uploadResume(long cid, byte[] bcontent, string ctype)
+        {
+            int rval = -1;
+            if (isOpened)
+            {
+                try
+                {
+                    int recs = m_connection.ExecuteScalar<int>($"select count(*) from public.resumes where candidateid = {cid}");
+                    string sqlText = string.Empty;
+                    if (recs > 0)
+                        sqlText = "update public.resumes set content = @qcnt, contenttype = @qtype " +
+                            "where candidateid = @qid";
+                    else
+                        sqlText = "insert into public.resumes(candidateid, content, contenttype) " +
+                            "values(@qid,@qcnt,@qtype)";
+                    rval = m_connection.Execute(sqlText,
+                        new { qid = cid, qcnt = bcontent, qtype = ctype });
+
+                }
+                catch (Exception ex)
+                {
+                    m_errorText = ex.Message;
+                }
+            }
+            return rval;
+        }
         #endregion
 
     }

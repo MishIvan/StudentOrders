@@ -102,5 +102,11 @@ namespace Appointments
         public long id { get; set; }
         public string name { get; set; }
     }
+    public class Resume 
+    {
+        public long candidateid { get; set; }
+        public byte [] content { get; set; }
+        public string contenttype { get; set; }
+    }
 
 }
