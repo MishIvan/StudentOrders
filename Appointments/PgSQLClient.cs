@@ -659,7 +659,17 @@ namespace Appointments
         }
         #endregion
 
-        #region History
+        #region History & Events
+        public List <Event> getEventsList()
+        {
+            List<Event> elst = null;
+            if(isOpened)
+            {
+                string sqlText = "select e.id, e.name from public.events e";
+                elst = m_connection.Query<Event>(sqlText).ToList();
+            }
+            return elst;
+        }
         /// <summary>
         /// Получить события по вакансии
         /// </summary>
@@ -683,19 +693,26 @@ namespace Appointments
         /// </summary>
         /// <param name="hst">объект события со значениями устанавливаемых параметров</param>
         /// <returns>1 - запись добавлена, 0 - не удалось добавить запись, -1 - ошибка</returns>
-        public int addHisory(History hst)
+        public int insertHisory(History hst)
         {
             int rval = -1;
             if(isOpened)
             {
-                string frmtDate = hst.eventdate.ToString("yyyy-MM-dd HH:mm:ss");
-                string sqlText = $"select coalesce(max(nstr),0) + 1 id from public.history where vacationid = {hst.vacationid}";
-                int istr = m_connection.ExecuteScalar<int>(sqlText);
-                sqlText = "insert into public.history(vacationid,eventdate,eventid,managerid,candidateid,nstr) " +
-                    $"values(@qvid,'{frmtDate}',@qeid, @qmid, @qcid,@istr)";
-                rval = m_connection.Execute(sqlText,
-                    new { qvid = hst.vacationid, qeid = hst.eventid, qmid = hst.managerid, qcid = hst.candidateid, nstr = istr }
-                    );
+                try
+                {
+                    string frmtDate = hst.eventdate.ToString("yyyy-MM-dd HH:mm:ss");
+                    string sqlText = $"select coalesce(max(nstr),0) + 1 id from public.history where vacationid = {hst.vacationid}";
+                    int istr = m_connection.ExecuteScalar<int>(sqlText);
+                    sqlText = "insert into public.history(vacationid,eventdate,eventid,managerid,candidateid,nstr) " +
+                        $"values(@qvid,'{frmtDate}',@qeid, @qmid, @qcid,@qistr)";
+                    rval = m_connection.Execute(sqlText,
+                        new { qvid = hst.vacationid, qeid = hst.eventid, qmid = hst.managerid, qcid = hst.candidateid, qistr = istr }
+                        );
+                }
+                catch(Exception ex)
+                {
+                    m_errorText = ex.Message;
+                }
             }
             return rval;
         }
@@ -704,17 +721,24 @@ namespace Appointments
         /// </summary>
         /// <param name="hst">объект с изменёнными параметрми события</param>
         /// <returns>1 - запись обновлена, 0 - не удалось обновить запись, -1 - ошибка</returns>
-        public int editHistory(History hst)
+        public int updateHistory(History hst)
         {
             int rval = -1;
             if (isOpened)
             {
-                string frmtDate = hst.eventdate.ToString("yyyy-MM-dd HH:mm:ss");
-                string sqlText = $"update public.history set eventdate = '{frmtDate}',eventid = @qeid, "+
-                    "managerid = @qmid,candidateid = @qcid where nstr = @istr and vacationid = @qvid)";
-                rval = m_connection.Execute(sqlText,
-                    new { qvid = hst.vacationid, qeid = hst.eventid, qmid = hst.managerid, qcid = hst.candidateid, istr = hst.nstr }
-                    );
+                try
+                {
+                    string frmtDate = hst.eventdate.ToString("yyyy-MM-dd HH:mm:ss");
+                    string sqlText = $"update public.history set eventdate = '{frmtDate}',eventid = @qeid, " +
+                        "managerid = @qmid,candidateid = @qcid where nstr = @istr and vacationid = @qvid";
+                    rval = m_connection.Execute(sqlText,
+                        new { qvid = hst.vacationid, qeid = hst.eventid, qmid = hst.managerid, qcid = hst.candidateid, istr = hst.nstr }
+                        );
+                }
+                catch(Exception ex)
+                {
+                    m_errorText = ex.Message;
+                }
             }
             return rval;
 
@@ -730,8 +754,15 @@ namespace Appointments
             int rval = -1;
             if (isOpened)
             {
-                string sqlText = $"delete from public.history where nstr = {vid} and vacationid = {istr})";
-                rval = m_connection.Execute(sqlText);
+                try
+                {
+                    string sqlText = $"delete from public.history where nstr = {vid} and vacationid = {istr}";
+                    rval = m_connection.Execute(sqlText);
+                }
+                catch(Exception ex)
+                {
+                    m_errorText = ex.Message;
+                }
             }
             return rval;
 

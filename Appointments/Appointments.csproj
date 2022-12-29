@@ -278,6 +278,12 @@
     <Compile Include="UsersForm.Designer.cs">
       <DependentUpon>UsersForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="HistoryCardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HistoryCardForm.Designer.cs">
+      <DependentUpon>HistoryCardForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="VacationCardForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -320,6 +326,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UsersForm.resx">
       <DependentUpon>UsersForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HistoryCardForm.resx">
+      <DependentUpon>HistoryCardForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VacationCardForm.resx">
       <DependentUpon>VacationCardForm.cs</DependentUpon>

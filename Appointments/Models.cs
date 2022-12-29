@@ -97,4 +97,10 @@ namespace Appointments
         public string cname { get; set; }
         public int nstr { get; set; }
     }
+    public class Event
+    {
+        public long id { get; set; }
+        public string name { get; set; }
+    }
+
 }

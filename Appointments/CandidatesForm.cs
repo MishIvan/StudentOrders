@@ -98,13 +98,17 @@ namespace Appointments
             if(m_choiceMode)
             {
                 addButton.Text = "Выбрать";
+                addButton.DialogResult = DialogResult.OK;
                 AcceptButton = addButton;
 
                 editButton.Text = "Отмена";
+                editButton.DialogResult = DialogResult.Cancel;
                 CancelButton = editButton;
 
                 deleteButton.Visible = false;
-                resumeButton.Visible = false;
+                resumeUploadButton.Visible = false;
+                resumeShowButton.Visible = false;
+                
             }
         }
     }

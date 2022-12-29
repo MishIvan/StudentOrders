@@ -18,12 +18,19 @@ namespace Appointments
         // 2 бит - руководитель проекта
         private int m_userRole;
         private long m_vid; // текущий ИД вакансии
+        private int m_istr; // номер строки в событиях 
         private string m_chiefName; // ФИО руководителя проекта 
+        private long m_candidateid;
+        private long m_managerid;
         public MainForm()
         {
             InitializeComponent();
             m_userRole = 0;
             m_vid = 0;
+            m_istr = 0;
+            m_candidateid = 0;
+            m_managerid = 0;
+            m_chiefName = string.Empty;
         }
 
         private void onLoad(object sender, EventArgs e)
@@ -156,6 +163,64 @@ namespace Appointments
                 }
             }
 
+        }
+        /// <summary>
+        /// Добавить событие
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void addEventToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HistoryCardForm frm = new HistoryCardForm(m_vid);
+            if(frm.ShowDialog() == DialogResult.OK)
+            {
+                var lst = Program.m_pgConnection.getEvents(m_vid);
+                historyDataGridView.DataSource = lst;
+            }
+        }
+
+        /// <summary>
+        /// Править параметры события
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void editEventToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HistoryCardForm frm = new HistoryCardForm(m_vid, m_istr, m_managerid);
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                var lst = Program.m_pgConnection.getEvents(m_vid);
+                historyDataGridView.DataSource = lst;
+            }
+        }
+        /// <summary>
+        /// Удалить событие
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void deleteEventToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(Program.m_pgConnection.deleteHistory(m_vid, m_istr) > 0)
+            {
+                var lst = Program.m_pgConnection.getEvents(m_vid);
+                historyDataGridView.DataSource = lst;
+            }
+            
+        }
+        /// <summary>
+        /// Перемещение по событиям вакансии 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void onHistorySelectionCahanged(object sender, EventArgs e)
+        {
+            if(historyDataGridView.Rows.Count > 0)
+            {
+                var row = historyDataGridView.CurrentRow;
+                m_istr = Convert.ToInt32(row.Cells[8].Value);
+                m_managerid = Convert.ToInt64(row.Cells[4].Value);
+                m_candidateid = Convert.ToInt64(row.Cells[6].Value);
+            }
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Appointments
         private void onLoad(object sender, EventArgs e)
         {
             var lst = Program.m_pgConnection.getUserForGrid();
-            usersDataGridView.DataSource = lst;
+            
             // перенастойка кнопок
             if (m_choiceMode) 
             {
@@ -38,8 +38,11 @@ namespace Appointments
                 this.CancelButton = editButton;
 
                 deleteButton.Visible = false;
-            }
+                usersDataGridView.DataSource = lst.Where(u => u.rolename != "Администратор" && !u.closed).ToList();
 
+            }
+            else
+                usersDataGridView.DataSource = lst;
         }
 
         private void onAdded(object sender, EventArgs e)

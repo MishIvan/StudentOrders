@@ -38,7 +38,8 @@ namespace Appointments
             this.addButton = new System.Windows.Forms.Button();
             this.editButton = new System.Windows.Forms.Button();
             this.deleteButton = new System.Windows.Forms.Button();
-            this.resumeButton = new System.Windows.Forms.Button();
+            this.resumeUploadButton = new System.Windows.Forms.Button();
+            this.resumeShowButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.candidatesDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,7 +59,7 @@ namespace Appointments
             this.candidatesDataGridView.RowHeadersWidth = 51;
             this.candidatesDataGridView.RowTemplate.Height = 24;
             this.candidatesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.candidatesDataGridView.Size = new System.Drawing.Size(610, 243);
+            this.candidatesDataGridView.Size = new System.Drawing.Size(621, 313);
             this.candidatesDataGridView.TabIndex = 0;
             // 
             // id
@@ -128,27 +129,39 @@ namespace Appointments
             this.deleteButton.UseVisualStyleBackColor = true;
             this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
             // 
-            // resumeButton
+            // resumeUploadButton
             // 
-            this.resumeButton.Location = new System.Drawing.Point(666, 210);
-            this.resumeButton.Name = "resumeButton";
-            this.resumeButton.Size = new System.Drawing.Size(124, 46);
-            this.resumeButton.TabIndex = 4;
-            this.resumeButton.Text = "Загрузить резюме";
-            this.resumeButton.UseVisualStyleBackColor = true;
-            this.resumeButton.Click += new System.EventHandler(this.resumeButton_Click);
+            this.resumeUploadButton.Location = new System.Drawing.Point(666, 210);
+            this.resumeUploadButton.Name = "resumeUploadButton";
+            this.resumeUploadButton.Size = new System.Drawing.Size(124, 46);
+            this.resumeUploadButton.TabIndex = 4;
+            this.resumeUploadButton.Text = "Загрузить резюме";
+            this.resumeUploadButton.UseVisualStyleBackColor = true;
+            this.resumeUploadButton.Click += new System.EventHandler(this.resumeButton_Click);
+            // 
+            // resumeShowButton
+            // 
+            this.resumeShowButton.Location = new System.Drawing.Point(666, 280);
+            this.resumeShowButton.Name = "resumeShowButton";
+            this.resumeShowButton.Size = new System.Drawing.Size(124, 46);
+            this.resumeShowButton.TabIndex = 5;
+            this.resumeShowButton.Text = "Показать резюме";
+            this.resumeShowButton.UseVisualStyleBackColor = true;
             // 
             // CandidatesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(818, 308);
-            this.Controls.Add(this.resumeButton);
+            this.ClientSize = new System.Drawing.Size(818, 349);
+            this.Controls.Add(this.resumeShowButton);
+            this.Controls.Add(this.resumeUploadButton);
             this.Controls.Add(this.deleteButton);
             this.Controls.Add(this.editButton);
             this.Controls.Add(this.addButton);
             this.Controls.Add(this.candidatesDataGridView);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "CandidatesForm";
             this.Text = "Соискатели вакансий";
             this.Load += new System.EventHandler(this.onLoad);
@@ -163,10 +176,11 @@ namespace Appointments
         private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.Button editButton;
         private System.Windows.Forms.Button deleteButton;
-        private System.Windows.Forms.Button resumeButton;
+        private System.Windows.Forms.Button resumeUploadButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn name;
         private System.Windows.Forms.DataGridViewTextBoxColumn phone;
         private System.Windows.Forms.DataGridViewTextBoxColumn email;
+        private System.Windows.Forms.Button resumeShowButton;
     }
 }
