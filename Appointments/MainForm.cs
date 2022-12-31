@@ -57,8 +57,26 @@ namespace Appointments
             vacationsDataGridView.DataSource = vlist;
         }
 
+        /// <summary>
+        /// Завершить работу приложения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void onClose(object sender, FormClosedEventArgs e)
         {
+            // очистить список временных файлов
+            while(Program.m_tmpFiles.Count > 0)
+            {
+                try
+                {
+                    System.IO.File.Delete(Program.m_tmpFiles[0]);
+                }
+                catch(Exception)
+                {
+
+                }
+                Program.m_tmpFiles.RemoveAt(0);
+            }
             Program.m_pgConnection.Close();
             Application.Exit();
         }
@@ -221,6 +239,15 @@ namespace Appointments
                 m_managerid = Convert.ToInt64(row.Cells[4].Value);
                 m_candidateid = Convert.ToInt64(row.Cells[6].Value);
             }
+        }
+        /// <summary>
+        /// Сменить парольтекущего пользователя
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pwdCahngeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

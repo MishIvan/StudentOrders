@@ -34,5 +34,29 @@ namespace Appointments {
                 this["ConnectionString"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Ivan\\AppData\\Local\\Kingsoft\\WPS Office\\11.2.0.11440\\office6\\wps.exe")]
+        public string docPath {
+            get {
+                return ((string)(this["docPath"]));
+            }
+            set {
+                this["docPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Ivan\\AppData\\Local\\Kingsoft\\WPS Office\\11.2.0.11440\\office6\\wpspdf.exe")]
+        public string pdfPath {
+            get {
+                return ((string)(this["pdfPath"]));
+            }
+            set {
+                this["pdfPath"] = value;
+            }
+        }
     }
 }

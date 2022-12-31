@@ -10,11 +10,21 @@ using System.Windows.Forms;
 
 namespace Appointments
 {
-    public partial class SettingsForm : Form
+    public partial class ChPwdForm : Form
     {
-        public SettingsForm()
+        public ChPwdForm()
         {
             InitializeComponent();
+        }
+
+        private void OKButton_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void RejectButton_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

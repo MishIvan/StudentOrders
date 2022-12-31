@@ -147,6 +147,7 @@ namespace Appointments
             this.resumeShowButton.TabIndex = 5;
             this.resumeShowButton.Text = "Показать резюме";
             this.resumeShowButton.UseVisualStyleBackColor = true;
+            this.resumeShowButton.Click += new System.EventHandler(this.resumeShowButton_Click);
             // 
             // CandidatesForm
             // 

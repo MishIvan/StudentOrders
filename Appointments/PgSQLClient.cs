@@ -784,7 +784,7 @@ namespace Appointments
         /// <param name="cid">идетификатор соискателя</param>
         /// <param name="bcontent">содержимое</param>
         /// <param name="ctype">тип содержимого файла</param>
-        /// <returns></returns>
+        /// <returns>1 - резюме успешно загружено, 0 - не удалось загрузить резюме, -1 - ошибка</returns>
         public int uploadResume(long cid, byte[] bcontent, string ctype)
         {
             int rval = -1;
@@ -810,6 +810,29 @@ namespace Appointments
                 }
             }
             return rval;
+        }
+        /// <summary>
+        /// Получить объект резюме (его содержимое и тип содержимого) 
+        /// </summary>
+        /// <param name="cid">идентификатор соискателя вакансии</param>
+        /// <returns>объект резюме или null</returns>
+        public Resume getResume(long cid)
+        {
+            Resume res = null;
+            if (isOpened)
+            {
+                try
+                {
+                    string sqlText = $"select r.candidateid, r.content, r.contenttype from public.resumes r where r.candidateid = {cid}";
+                    res = m_connection.QueryFirstOrDefault<Resume>(sqlText);  
+                }
+                catch (Exception ex)
+                {
+                    m_errorText = ex.Message;
+                }
+            }
+            return res;
+
         }
         #endregion
 

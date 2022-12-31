@@ -44,6 +44,8 @@ namespace Appointments
             this.chmane = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.desc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
+            this.actionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pwdCahngeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vacationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addVacationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editVacationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,8 +53,8 @@ namespace Appointments
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.eventToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addEventToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteEventToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editEventToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteEventToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.appointmentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,7 +63,6 @@ namespace Appointments
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.historyDataGridView = new System.Windows.Forms.DataGridView();
-            this.label2 = new System.Windows.Forms.Label();
             this.vacationid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.eventdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.eventid = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -71,8 +72,7 @@ namespace Appointments
             this.candidateid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cname = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nstr = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.actionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.vacationsDataGridView)).BeginInit();
             this.mainMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.historyDataGridView)).BeginInit();
@@ -213,6 +213,21 @@ namespace Appointments
             this.mainMenuStrip.TabIndex = 1;
             this.mainMenuStrip.Text = "mainMenuStrip";
             // 
+            // actionsToolStripMenuItem
+            // 
+            this.actionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pwdCahngeToolStripMenuItem});
+            this.actionsToolStripMenuItem.Name = "actionsToolStripMenuItem";
+            this.actionsToolStripMenuItem.Size = new System.Drawing.Size(88, 24);
+            this.actionsToolStripMenuItem.Text = "Действия";
+            // 
+            // pwdCahngeToolStripMenuItem
+            // 
+            this.pwdCahngeToolStripMenuItem.Name = "pwdCahngeToolStripMenuItem";
+            this.pwdCahngeToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.pwdCahngeToolStripMenuItem.Text = "Сменить пароль";
+            this.pwdCahngeToolStripMenuItem.Click += new System.EventHandler(this.pwdCahngeToolStripMenuItem_Click);
+            // 
             // vacationsToolStripMenuItem
             // 
             this.vacationsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -228,28 +243,28 @@ namespace Appointments
             // addVacationsToolStripMenuItem
             // 
             this.addVacationsToolStripMenuItem.Name = "addVacationsToolStripMenuItem";
-            this.addVacationsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.addVacationsToolStripMenuItem.Size = new System.Drawing.Size(159, 26);
             this.addVacationsToolStripMenuItem.Text = "Добавить";
             this.addVacationsToolStripMenuItem.Click += new System.EventHandler(this.addVacationsToolStripMenuItem_Click);
             // 
             // editVacationToolStripMenuItem
             // 
             this.editVacationToolStripMenuItem.Name = "editVacationToolStripMenuItem";
-            this.editVacationToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.editVacationToolStripMenuItem.Size = new System.Drawing.Size(159, 26);
             this.editVacationToolStripMenuItem.Text = "Править";
             this.editVacationToolStripMenuItem.Click += new System.EventHandler(this.editVacationToolStripMenuItem_Click);
             // 
             // deleteVacationToolStripMenuItem
             // 
             this.deleteVacationToolStripMenuItem.Name = "deleteVacationToolStripMenuItem";
-            this.deleteVacationToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.deleteVacationToolStripMenuItem.Size = new System.Drawing.Size(159, 26);
             this.deleteVacationToolStripMenuItem.Text = "Удалить";
             this.deleteVacationToolStripMenuItem.Click += new System.EventHandler(this.deleteVacationToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(221, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(156, 6);
             // 
             // eventToolStripMenuItem
             // 
@@ -258,29 +273,29 @@ namespace Appointments
             this.editEventToolStripMenuItem,
             this.deleteEventToolStripMenuItem});
             this.eventToolStripMenuItem.Name = "eventToolStripMenuItem";
-            this.eventToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.eventToolStripMenuItem.Size = new System.Drawing.Size(159, 26);
             this.eventToolStripMenuItem.Text = "Событие";
             // 
             // addEventToolStripMenuItem
             // 
             this.addEventToolStripMenuItem.Name = "addEventToolStripMenuItem";
-            this.addEventToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.addEventToolStripMenuItem.Size = new System.Drawing.Size(159, 26);
             this.addEventToolStripMenuItem.Text = "Добавить";
             this.addEventToolStripMenuItem.Click += new System.EventHandler(this.addEventToolStripMenuItem_Click);
-            // 
-            // deleteEventToolStripMenuItem
-            // 
-            this.deleteEventToolStripMenuItem.Name = "deleteEventToolStripMenuItem";
-            this.deleteEventToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.deleteEventToolStripMenuItem.Text = "Удалить";
-            this.deleteEventToolStripMenuItem.Click += new System.EventHandler(this.deleteEventToolStripMenuItem_Click);
             // 
             // editEventToolStripMenuItem
             // 
             this.editEventToolStripMenuItem.Name = "editEventToolStripMenuItem";
-            this.editEventToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.editEventToolStripMenuItem.Size = new System.Drawing.Size(159, 26);
             this.editEventToolStripMenuItem.Text = "Править";
             this.editEventToolStripMenuItem.Click += new System.EventHandler(this.editEventToolStripMenuItem_Click);
+            // 
+            // deleteEventToolStripMenuItem
+            // 
+            this.deleteEventToolStripMenuItem.Name = "deleteEventToolStripMenuItem";
+            this.deleteEventToolStripMenuItem.Size = new System.Drawing.Size(159, 26);
+            this.deleteEventToolStripMenuItem.Text = "Удалить";
+            this.deleteEventToolStripMenuItem.Click += new System.EventHandler(this.deleteEventToolStripMenuItem_Click);
             // 
             // dataToolStripMenuItem
             // 
@@ -362,15 +377,6 @@ namespace Appointments
             this.historyDataGridView.Size = new System.Drawing.Size(982, 233);
             this.historyDataGridView.TabIndex = 13;
             this.historyDataGridView.SelectionChanged += new System.EventHandler(this.onHistorySelectionCahanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 426);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(135, 17);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "События вакансии:";
             // 
             // vacationid
             // 
@@ -465,19 +471,14 @@ namespace Appointments
             this.nstr.Visible = false;
             this.nstr.Width = 125;
             // 
-            // actionsToolStripMenuItem
+            // label2
             // 
-            this.actionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.settingsToolStripMenuItem});
-            this.actionsToolStripMenuItem.Name = "actionsToolStripMenuItem";
-            this.actionsToolStripMenuItem.Size = new System.Drawing.Size(88, 24);
-            this.actionsToolStripMenuItem.Text = "Действия";
-            // 
-            // settingsToolStripMenuItem
-            // 
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.settingsToolStripMenuItem.Text = "Настройки";
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(9, 426);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(135, 17);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "События вакансии:";
             // 
             // MainForm
             // 
@@ -546,6 +547,6 @@ namespace Appointments
         private System.Windows.Forms.DataGridViewTextBoxColumn cname;
         private System.Windows.Forms.DataGridViewTextBoxColumn nstr;
         private System.Windows.Forms.ToolStripMenuItem actionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pwdCahngeToolStripMenuItem;
     }
 }

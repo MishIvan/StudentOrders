@@ -108,7 +108,7 @@ namespace Appointments
                     string ext = string.Empty;
                     if (Path.HasExtension(filePath))
                     {
-                        ext = Path.GetExtension(filePath).Substring(1);
+                        ext = Path.GetExtension(filePath).Substring(1).ToLower();
                     }
                     byte[] fbytes = File.ReadAllBytes(filePath);
                     if (candidatesDataGridView.Rows.Count > 0)
@@ -139,6 +139,46 @@ namespace Appointments
                 resumeUploadButton.Visible = false;
                 resumeShowButton.Visible = false;
                 
+            }
+        }
+        /// <summary>
+        /// Показать резюме
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void resumeShowButton_Click(object sender, EventArgs e)
+        {
+            string tmpPath = Path.GetTempPath();
+            DateTime now = DateTime.Now;
+            string fileName = "VAppointment_" + now.ToString("yyyyMMddHHmmss");
+            if (candidatesDataGridView.Rows.Count > 0)
+            {
+                var row = candidatesDataGridView.CurrentRow;
+                m_id = Convert.ToInt64(row.Cells[0].Value);
+                Resume res = Program.m_pgConnection.getResume(m_id);
+                if (res != null)
+                {
+                    string progname = string.Empty;
+                    if (res.contenttype == "doc" || res.contenttype == "docx" || res.contenttype == "rtf")
+                        progname = AppSettings.Default.docPath;
+                    else if (res.contenttype == "pdf")
+                        progname = AppSettings.Default.pdfPath;
+                    if(string.IsNullOrEmpty(progname))
+                    {
+                        MessageBox.Show("Не найдена программа, ассоциированаая с данным типом контента резюме");
+                        return;
+                    }
+                    else
+                    {
+                        fileName = tmpPath + fileName + "." + res.contenttype;
+                        File.WriteAllBytes(fileName, res.content);
+                        Program.m_tmpFiles.Add(fileName);
+                        System.Diagnostics.Process.Start(progname, fileName);
+                    }
+                }
+                else
+                    MessageBox.Show("Резюме текущего соискателя отсутствует");
+
             }
         }
     }

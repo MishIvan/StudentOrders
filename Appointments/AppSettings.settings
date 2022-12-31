@@ -5,5 +5,11 @@
     <Setting Name="ConnectionString" Type="System.String" Scope="User">
       <Value Profile="(Default)">Host=localhost;Username=postgres;Password=123456;Database=headhunter</Value>
     </Setting>
+    <Setting Name="docPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\Ivan\AppData\Local\Kingsoft\WPS Office\11.2.0.11440\office6\wps.exe</Value>
+    </Setting>
+    <Setting Name="pdfPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\Ivan\AppData\Local\Kingsoft\WPS Office\11.2.0.11440\office6\wpspdf.exe</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

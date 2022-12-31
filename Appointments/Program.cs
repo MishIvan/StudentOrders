@@ -13,6 +13,7 @@ namespace Appointments
         /// </summary>
         public static PgSQLClient m_pgConnection;
         public static User m_currentUser;
+        public static List<string> m_tmpFiles; // список временных файлов, которые по завершению следует удалить
         [STAThread]
         static void Main()
         {
@@ -24,6 +25,7 @@ namespace Appointments
                 MessageBox.Show("Соединение с базой данных не установлено.");
                 Application.Exit();
             }
+            Program.m_tmpFiles = new List<string>();
             Program.m_currentUser = new User();
             Application.Run(new AutorizationForm());
         }
