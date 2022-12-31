@@ -19,7 +19,17 @@ namespace Appointments
 
         private void OKButton_Click(object sender, EventArgs e)
         {
-            Close();
+            if(pwdTextBox.Text != confirmTextBox.Text)
+                MessageBox.Show("Пароль не подтверждён");
+            else
+            {
+                string newPwd = pwdTextBox.Text;
+                long id = Program.m_currentUser.id;
+                if (Program.m_pgConnection.updatePassword(id, newPwd) < 1)
+                    MessageBox.Show("Не удалось установить новый пароль");
+                else
+                    Close();
+            }
         }
 
         private void RejectButton_Click(object sender, EventArgs e)

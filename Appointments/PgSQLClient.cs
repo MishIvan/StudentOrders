@@ -178,6 +178,29 @@ namespace Appointments
             }
             return roleList;
         }
+        /// <summary>
+        /// Сменить пароль пользователя
+        /// </summary>
+        /// <param name="uid">идентифиатор пользователя</param>
+        /// <param name="pwd">новый пароль</param>
+        /// <returns>1 - пароль изменён,0 - не удалось измнить пароль, -1 -ошибка</returns>
+        public int updatePassword(long uid, string pwd)
+        {
+            int rval = -1;
+            if(isOpened)
+            {
+                try 
+                {
+                    string sqlText = $"update public.users set password = '{pwd}' where id = {uid}";
+                    rval = m_connection.Execute(sqlText);
+                }
+                catch(Exception ex)
+                {
+                    m_errorText = ex.Message;
+                }
+            }
+            return rval;
+        }
 
         #endregion
 

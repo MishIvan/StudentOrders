@@ -247,7 +247,9 @@ namespace Appointments
         /// <param name="e"></param>
         private void pwdCahngeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            ChPwdForm frm = new ChPwdForm();
+            if (frm.ShowDialog() == DialogResult.OK)
+                MessageBox.Show("Пароль успешно изменён");
         }
     }
 }
