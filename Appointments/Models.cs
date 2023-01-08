@@ -109,4 +109,15 @@ namespace Appointments
         public string contenttype { get; set; }
     }
 
+    public class VacationsPlan
+    {
+        public string vname { get; set; }
+        public DateTime plandate { get; set; }
+        public DateTime eventdate { get; set; }
+        public string aname { get; set; }
+        public string pname { get; set; }
+        public string chname { get; set; }
+        public string cname { get; set; }
+    }
+
 }

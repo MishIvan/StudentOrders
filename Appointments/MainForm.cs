@@ -251,5 +251,14 @@ namespace Appointments
             if (frm.ShowDialog() == DialogResult.OK)
                 MessageBox.Show("Пароль успешно изменён");
         }
+        /// <summary>
+        /// Показать выполнение кадрового плана
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void hhplanToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new VPlanForm().ShowDialog();
+        }
     }
 }

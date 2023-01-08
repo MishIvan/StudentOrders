@@ -859,5 +859,36 @@ namespace Appointments
         }
         #endregion
 
+        #region Reports
+        /// <summary>
+        /// Получение выборки плана занятия вакансий
+        /// </summary>
+        /// <param name="db">начальная дата выборки</param>
+        /// <param name="de">конечная дата выборки</param>
+        /// <returns>выборку из плана или null</returns>
+        public List<VacationsPlan> getPlanInfo(DateTime db, DateTime de)
+        {
+            List<VacationsPlan> vpl = null;
+            if(isOpened)
+            {
+                try 
+                {
+                    string fdb = db.ToString("yyyy-MM-dd HH:mm:ss");
+                    string fde = de.ToString("yyyy-MM-dd HH:mm:ss");
+                    string sqlText = "select v.vname, v.plandate, h.eventdate ,v.aname , v.pname , v.chname, h.cname " +
+                                    "from views.vacations v " +
+                                    "left join views.history h on h.vacationid = v.id and h.ename like '%закрытие%'" +
+                                    $"where v.plandate between '{fdb}' and '{fde}'";
+                    vpl = m_connection.Query<VacationsPlan>(sqlText).ToList();
+                }
+                catch(Exception ex)
+                {
+                    m_errorText = ex.Message;
+                }
+            }
+            return vpl;
+        }
+        #endregion
+
     }
 }

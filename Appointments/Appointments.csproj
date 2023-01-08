@@ -296,6 +296,12 @@
     <Compile Include="VacationCardForm.Designer.cs">
       <DependentUpon>VacationCardForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="VPlanForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VPlanForm.Designer.cs">
+      <DependentUpon>VPlanForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AppointmenForm.resx">
       <DependentUpon>AppointmenForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -341,6 +347,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VacationCardForm.resx">
       <DependentUpon>VacationCardForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VPlanForm.resx">
+      <DependentUpon>VPlanForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="AppSettings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -73,6 +73,9 @@ namespace Appointments
             this.cname = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nstr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label2 = new System.Windows.Forms.Label();
+            this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hhplanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.candidatesConversationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.vacationsDataGridView)).BeginInit();
             this.mainMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.historyDataGridView)).BeginInit();
@@ -206,7 +209,8 @@ namespace Appointments
             this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.actionsToolStripMenuItem,
             this.vacationsToolStripMenuItem,
-            this.dataToolStripMenuItem});
+            this.dataToolStripMenuItem,
+            this.reportsToolStripMenuItem});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
             this.mainMenuStrip.Size = new System.Drawing.Size(1029, 28);
@@ -224,7 +228,7 @@ namespace Appointments
             // pwdCahngeToolStripMenuItem
             // 
             this.pwdCahngeToolStripMenuItem.Name = "pwdCahngeToolStripMenuItem";
-            this.pwdCahngeToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.pwdCahngeToolStripMenuItem.Size = new System.Drawing.Size(207, 26);
             this.pwdCahngeToolStripMenuItem.Text = "Сменить пароль";
             this.pwdCahngeToolStripMenuItem.Click += new System.EventHandler(this.pwdCahngeToolStripMenuItem_Click);
             // 
@@ -480,6 +484,30 @@ namespace Appointments
             this.label2.TabIndex = 14;
             this.label2.Text = "События вакансии:";
             // 
+            // reportsToolStripMenuItem
+            // 
+            this.reportsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.hhplanToolStripMenuItem,
+            this.candidatesConversationToolStripMenuItem});
+            this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
+            this.reportsToolStripMenuItem.Size = new System.Drawing.Size(73, 24);
+            this.reportsToolStripMenuItem.Text = "Отчёты";
+            // 
+            // hhplanToolStripMenuItem
+            // 
+            this.hhplanToolStripMenuItem.Name = "hhplanToolStripMenuItem";
+            this.hhplanToolStripMenuItem.Size = new System.Drawing.Size(307, 26);
+            this.hhplanToolStripMenuItem.Text = "Кадровый план";
+            this.hhplanToolStripMenuItem.ToolTipText = "Выполнение плана по занятию вакансий";
+            this.hhplanToolStripMenuItem.Click += new System.EventHandler(this.hhplanToolStripMenuItem_Click);
+            // 
+            // candidatesConversationToolStripMenuItem
+            // 
+            this.candidatesConversationToolStripMenuItem.Name = "candidatesConversationToolStripMenuItem";
+            this.candidatesConversationToolStripMenuItem.Size = new System.Drawing.Size(307, 26);
+            this.candidatesConversationToolStripMenuItem.Text = "Собеседования с кандидатами";
+            this.candidatesConversationToolStripMenuItem.ToolTipText = "Этаты прохождения собеседования с кандидатами";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -548,5 +576,8 @@ namespace Appointments
         private System.Windows.Forms.DataGridViewTextBoxColumn nstr;
         private System.Windows.Forms.ToolStripMenuItem actionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pwdCahngeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reportsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem hhplanToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem candidatesConversationToolStripMenuItem;
     }
 }
