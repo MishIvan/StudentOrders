@@ -507,6 +507,7 @@ namespace Appointments
             this.candidatesConversationToolStripMenuItem.Size = new System.Drawing.Size(307, 26);
             this.candidatesConversationToolStripMenuItem.Text = "Собеседования с кандидатами";
             this.candidatesConversationToolStripMenuItem.ToolTipText = "Этаты прохождения собеседования с кандидатами";
+            this.candidatesConversationToolStripMenuItem.Click += new System.EventHandler(this.candidatesConversationToolStripMenuItem_Click);
             // 
             // MainForm
             // 

@@ -888,6 +888,33 @@ namespace Appointments
             }
             return vpl;
         }
+        /// <summary>
+        /// Получить этапы прохождения кандидатами
+        /// </summary>
+        /// <param name="db">начальная дата</param>
+        /// <param name="de">конечная дата</param>
+        /// <returns>список этапов или null</returns>
+        public List <EventsReport> getEventsForCandidates(DateTime db, DateTime de)
+        {
+            List<EventsReport> elst = null;
+            if (isOpened)
+            {
+                try
+                {
+                    string fdb = db.ToString("yyyy-MM-dd HH:mm:ss");
+                    string fde = de.ToString("yyyy-MM-dd HH:mm:ss");
+                    string sqlText = "select h.eventdate, h.cname, h.ename, v.vname , v.aname , v.pname , v.chname " +
+                                    "from views.history h join views.vacations v on v.id = h.vacationid " +
+                                    $"where h.eventdate between '{fdb}' and '{fde}'";
+                    elst = m_connection.Query<EventsReport>(sqlText).ToList();
+                }
+                catch (Exception ex)
+                {
+                    m_errorText = ex.Message;
+                }
+            }
+            return elst;
+        }
         #endregion
 
     }

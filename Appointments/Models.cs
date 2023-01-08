@@ -120,4 +120,15 @@ namespace Appointments
         public string cname { get; set; }
     }
 
+    public class EventsReport
+    {
+        public DateTime eventdate { get; set; }
+        public string cname { get; set; }
+        public string ename { get; set; }
+        public string vname { get; set; }
+        public string aname { get; set; }
+        public string pname { get; set; }
+        public string chname { get; set; }
+    }
+
 }

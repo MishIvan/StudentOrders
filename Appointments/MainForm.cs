@@ -260,5 +260,14 @@ namespace Appointments
         {
             new VPlanForm().ShowDialog();
         }
+        /// <summary>
+        /// Прохождение этапов кандидатами
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void candidatesConversationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new StageForm().ShowDialog();
+        }
     }
 }
