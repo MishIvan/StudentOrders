@@ -11,7 +11,7 @@ namespace AutoCollection
     /// <summary>
     /// Класс, реализующий взаимодействие и управление базой данных
     /// </summary>
-    class DBHelper : IDisposable
+    internal class DBHelper : IDisposable
     {
         private SqlConnection conn;
         private string _errorText;
@@ -62,15 +62,62 @@ namespace AutoCollection
             int code = cmd.ExecuteNonQuery();
             return code;
         }
+
+        #region autos
         /// <summary>
-        /// Добавление авто в коллекцию
+        /// Получение списка всей коллекции или части коллекции по фильтру
+        /// </summary>
+        /// <param name="filter">фильтр по наименованию</param>
+        /// <returns>Список коллекции из БД</returns>
+        public async void GetAutoList(List<Auto> lst, string filter = "")
+        {            
+            lst = null;
+            if (!isOpened) return;
+            string sqlText = "select id, name, kilometrage, price, relyear from autos";
+            if(!string.IsNullOrEmpty(filter) && !string.IsNullOrWhiteSpace(filter))
+            {
+                sqlText += $" where name like '%{filter}%'";
+            }
+            try 
+            {
+                var task = await conn.QueryAsync<Auto>(sqlText);
+                lst = task.ToList();
+            }
+            catch(Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+        }
+        /// <summary>
+        /// Получить объект модели из БД по идентификатору записи
+        /// </summary>
+        /// <param name="id">идентификатор записи в коллекции</param>
+        /// <returns>объект в случае успешного выполнения запроса или null</returns>
+        public Auto GetAutoByID(long id)
+        {
+            Auto car = null;
+            if (!isOpened) return car;
+            string sqlText = $"select id, name, kilometrage, price, relyear from autos where id = {id}";
+            try
+            {
+                car = conn.QueryFirstOrDefault<Auto>(sqlText);
+            }
+            catch(Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return car;
+
+        }
+        /// <summary>
+        /// Добавление записи об авто в коллекцию
         /// </summary>
         /// <param name="name">Наименование авто</param>
         /// <param name="kilom">пробег в км</param>
         /// <param name="price">цена в руб.</param>
         /// <param name="year">год выпуска</param>
         /// <returns>1 - если запись добавлена, -1 - если нет соединения, 0 - если произошла ошибка</returns> 
-        public int AddAuto(string name, double kilom, double price, double year)
+        public int AddAuto(string name, double kilom, double price, int year)
         {
             if (!isOpened) return -1;
             int nrec = 0;
@@ -85,8 +132,9 @@ namespace AutoCollection
             }
             return nrec;
         }
+
         /// <summary>
-        /// Правка данных по авто
+        /// Правка данных по авто в коллекции
         /// </summary>
         /// <param name="id">идентификатор авто для правки</param>
         /// <param name="name">Наименование</param>
@@ -94,11 +142,11 @@ namespace AutoCollection
         /// <param name="price">цена в руб.</param>
         /// <param name="year">год выпуска</param>
         /// <returns>1 - если запись изменена, -1 - если нет соединения, 0 - если произошла ошибка</returns>
-        public int UpdateAutoData(long id, string name, double kilom, double price, double year)
+        public int UpdateAutoData(long id, string name, double kilom, double price, int year)
         {
             if (!isOpened) return -1;
             int nrec = 0;
-            String sqlText = "update autos set name = @pname, kilometrage = @pkilometrage, price =  @pprice, relyear = @pyear  where id = @pid";
+            String sqlText = "update autos set name = @pname, kilometrage = @pkilometrage, price =  @pprice, relyear = @pyear where id = @pid";
             try
             {
                 nrec = conn.Execute(sqlText, new {pid = id, pname = name, pkilometrage = kilom, pprice = price, pyear = year });
@@ -110,5 +158,27 @@ namespace AutoCollection
             return nrec;
 
         }
+
+        /// <summary>
+        /// Удаление записи об авто из коллекции
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public int DeleteAuto(long id)
+        {
+            if (!isOpened) return -1;
+            int nrec = 0;
+            String sqlText = "delete from autos where id = @pid";
+            try
+            {
+                nrec = conn.Execute(sqlText, new { pid = id });
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return nrec;
+        }
+        #endregion
     }
 }

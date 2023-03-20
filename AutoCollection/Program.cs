@@ -18,7 +18,12 @@ namespace AutoCollection
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            m_helper = new DBHelper();
+            Program.m_helper = new DBHelper();
+            if (!Program.m_helper.isOpened)
+            {
+                MessageBox.Show("Соединение с базой данных не установлено.");
+                Application.Exit();
+            }
             Application.Run(new MainForm());
         }
     }

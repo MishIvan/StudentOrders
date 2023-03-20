@@ -16,5 +16,31 @@ namespace AutoCollection
         {
             InitializeComponent();
         }
+
+        /// <summary>
+        /// Первоначальная загрузка формы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            List<Auto> alst = null;
+            Program.m_helper.GetAutoList(alst);
+            autoDataGridView.DataSource = alst;
+        }
+        /// <summary>
+        /// Добавление записи об авто в коллекцию
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void addAutoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+        // При закрытии приложения закрыть соединение с БД
+        private void OnClose(object sender, FormClosedEventArgs e)
+        {
+            Program.m_helper.Dispose();
+        }
     }
 }

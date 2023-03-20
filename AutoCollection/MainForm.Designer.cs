@@ -32,46 +32,50 @@ namespace AutoCollection
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.autoDataGridView = new System.Windows.Forms.DataGridView();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.автоToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addAutoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editAutoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.delAutoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.действияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.историяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
+            this.filterTextBox = new System.Windows.Forms.TextBox();
             this.idauto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.autoname = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.relyear = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kilometrage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.price = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.applyButton = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.autoDataGridView)).BeginInit();
             this.mainMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // autoDataGridView
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.autoDataGridView.AllowUserToAddRows = false;
+            this.autoDataGridView.AllowUserToDeleteRows = false;
+            this.autoDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.autoDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idauto,
             this.autoname,
             this.relyear,
             this.kilometrage,
             this.price});
-            this.dataGridView1.Location = new System.Drawing.Point(12, 40);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(795, 299);
-            this.dataGridView1.TabIndex = 0;
+            this.autoDataGridView.Location = new System.Drawing.Point(12, 68);
+            this.autoDataGridView.Name = "autoDataGridView";
+            this.autoDataGridView.ReadOnly = true;
+            this.autoDataGridView.Size = new System.Drawing.Size(846, 299);
+            this.autoDataGridView.TabIndex = 0;
             // 
             // mainMenuStrip
             // 
             this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.автоToolStripMenuItem});
+            this.автоToolStripMenuItem,
+            this.историяToolStripMenuItem});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
-            this.mainMenuStrip.Size = new System.Drawing.Size(833, 24);
+            this.mainMenuStrip.Size = new System.Drawing.Size(884, 24);
             this.mainMenuStrip.TabIndex = 1;
             this.mainMenuStrip.Text = "menuStrip1";
             // 
@@ -80,35 +84,55 @@ namespace AutoCollection
             this.автоToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addAutoToolStripMenuItem,
             this.editAutoToolStripMenuItem,
-            this.delAutoToolStripMenuItem,
-            this.действияToolStripMenuItem});
+            this.delAutoToolStripMenuItem});
             this.автоToolStripMenuItem.Name = "автоToolStripMenuItem";
             this.автоToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
             this.автоToolStripMenuItem.Text = "Авто";
+            this.автоToolStripMenuItem.ToolTipText = "Действия над авто в коллекции";
             // 
             // addAutoToolStripMenuItem
             // 
             this.addAutoToolStripMenuItem.Name = "addAutoToolStripMenuItem";
             this.addAutoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.addAutoToolStripMenuItem.Text = "Добавить";
+            this.addAutoToolStripMenuItem.ToolTipText = "Добавить запись об авто в коллекцию";
+            this.addAutoToolStripMenuItem.Click += new System.EventHandler(this.addAutoToolStripMenuItem_Click);
             // 
             // editAutoToolStripMenuItem
             // 
             this.editAutoToolStripMenuItem.Name = "editAutoToolStripMenuItem";
             this.editAutoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.editAutoToolStripMenuItem.Text = "Править";
+            this.editAutoToolStripMenuItem.ToolTipText = "ПРавить параметры выбранной записи об авто";
             // 
             // delAutoToolStripMenuItem
             // 
             this.delAutoToolStripMenuItem.Name = "delAutoToolStripMenuItem";
             this.delAutoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.delAutoToolStripMenuItem.Text = "Удалить";
+            this.delAutoToolStripMenuItem.ToolTipText = "Удалить запись об авто";
             // 
-            // действияToolStripMenuItem
+            // историяToolStripMenuItem
             // 
-            this.действияToolStripMenuItem.Name = "действияToolStripMenuItem";
-            this.действияToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.действияToolStripMenuItem.Text = "Действия";
+            this.историяToolStripMenuItem.Name = "историяToolStripMenuItem";
+            this.историяToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+            this.историяToolStripMenuItem.Text = "История";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(170, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Фильтр по наименованию авто:";
+            // 
+            // filterTextBox
+            // 
+            this.filterTextBox.Location = new System.Drawing.Point(190, 28);
+            this.filterTextBox.Name = "filterTextBox";
+            this.filterTextBox.Size = new System.Drawing.Size(401, 20);
+            this.filterTextBox.TabIndex = 3;
             // 
             // idauto
             // 
@@ -127,7 +151,7 @@ namespace AutoCollection
             this.autoname.Name = "autoname";
             this.autoname.ReadOnly = true;
             this.autoname.ToolTipText = "Наименование авто";
-            this.autoname.Width = 300;
+            this.autoname.Width = 400;
             // 
             // relyear
             // 
@@ -147,6 +171,7 @@ namespace AutoCollection
             this.kilometrage.Name = "kilometrage";
             this.kilometrage.ReadOnly = true;
             this.kilometrage.ToolTipText = "Километраж пробега авто";
+            this.kilometrage.Width = 150;
             // 
             // price
             // 
@@ -158,19 +183,35 @@ namespace AutoCollection
             this.price.Name = "price";
             this.price.ReadOnly = true;
             this.price.ToolTipText = "Стоимость авто";
+            this.price.Width = 150;
+            // 
+            // applyButton
+            // 
+            this.applyButton.Location = new System.Drawing.Point(597, 27);
+            this.applyButton.Name = "applyButton";
+            this.applyButton.Size = new System.Drawing.Size(75, 23);
+            this.applyButton.TabIndex = 4;
+            this.applyButton.Text = "Применить";
+            this.applyButton.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(833, 410);
-            this.Controls.Add(this.dataGridView1);
+            this.ClientSize = new System.Drawing.Size(884, 392);
+            this.Controls.Add(this.applyButton);
+            this.Controls.Add(this.filterTextBox);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.autoDataGridView);
             this.Controls.Add(this.mainMenuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mainMenuStrip;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Коллекция автомобилей";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnClose);
+            this.Load += new System.EventHandler(this.MainForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.autoDataGridView)).EndInit();
             this.mainMenuStrip.ResumeLayout(false);
             this.mainMenuStrip.PerformLayout();
             this.ResumeLayout(false);
@@ -180,18 +221,21 @@ namespace AutoCollection
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idauto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn autoname;
-        private System.Windows.Forms.DataGridViewTextBoxColumn relyear;
-        private System.Windows.Forms.DataGridViewTextBoxColumn kilometrage;
-        private System.Windows.Forms.DataGridViewTextBoxColumn price;
+        private System.Windows.Forms.DataGridView autoDataGridView;
         private System.Windows.Forms.MenuStrip mainMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem автоToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addAutoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editAutoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem delAutoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem действияToolStripMenuItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idauto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn autoname;
+        private System.Windows.Forms.DataGridViewTextBoxColumn relyear;
+        private System.Windows.Forms.DataGridViewTextBoxColumn kilometrage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn price;
+        private System.Windows.Forms.ToolStripMenuItem историяToolStripMenuItem;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox filterTextBox;
+        private System.Windows.Forms.Button applyButton;
     }
 }
 
