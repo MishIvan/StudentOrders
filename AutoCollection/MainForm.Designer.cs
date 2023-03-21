@@ -29,6 +29,7 @@ namespace AutoCollection
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -49,6 +50,7 @@ namespace AutoCollection
             this.relyear = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kilometrage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.price = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.carsToolTip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.autoDataGridView)).BeginInit();
             this.mainMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -115,6 +117,7 @@ namespace AutoCollection
             this.delAutoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.delAutoToolStripMenuItem.Text = "Удалить";
             this.delAutoToolStripMenuItem.ToolTipText = "Удалить запись об авто";
+            this.delAutoToolStripMenuItem.Click += new System.EventHandler(this.delAutoToolStripMenuItem_Click);
             // 
             // историяToolStripMenuItem
             // 
@@ -137,6 +140,8 @@ namespace AutoCollection
             this.filterTextBox.Name = "filterTextBox";
             this.filterTextBox.Size = new System.Drawing.Size(401, 20);
             this.filterTextBox.TabIndex = 3;
+            this.carsToolTip.SetToolTip(this.filterTextBox, "Строка фильтра для отображения выборки из коллекции");
+            this.filterTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.filterTextBox_KeyPress);
             // 
             // applyButton
             // 
@@ -145,7 +150,9 @@ namespace AutoCollection
             this.applyButton.Size = new System.Drawing.Size(75, 23);
             this.applyButton.TabIndex = 4;
             this.applyButton.Text = "Применить";
+            this.carsToolTip.SetToolTip(this.applyButton, "Применить фильтр для выборки из коллекции");
             this.applyButton.UseVisualStyleBackColor = true;
+            this.applyButton.Click += new System.EventHandler(this.OnSetFilter);
             // 
             // idauto
             // 
@@ -209,6 +216,12 @@ namespace AutoCollection
             this.price.ReadOnly = true;
             this.price.ToolTipText = "Стоимость авто";
             // 
+            // carsToolTip
+            // 
+            this.carsToolTip.AutoPopDelay = 5000;
+            this.carsToolTip.InitialDelay = 100;
+            this.carsToolTip.ReshowDelay = 100;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -252,6 +265,7 @@ namespace AutoCollection
         private System.Windows.Forms.DataGridViewTextBoxColumn relyear;
         private System.Windows.Forms.DataGridViewTextBoxColumn kilometrage;
         private System.Windows.Forms.DataGridViewTextBoxColumn price;
+        private System.Windows.Forms.ToolTip carsToolTip;
     }
 }
 

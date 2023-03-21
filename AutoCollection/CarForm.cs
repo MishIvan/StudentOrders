@@ -46,7 +46,7 @@ namespace AutoCollection
         /// Добавление записи (внесение исправлений в параметры записи)
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="e"></param>;
         private void OnOKClick(object sender, EventArgs e)
         {
             string name = nameTextBox.Text;
@@ -58,12 +58,12 @@ namespace AutoCollection
                 return;
             }
             string num = govnumTextBox.Text;
-            if (string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name))
-            {
-                MessageBox.Show("Требуется задать гос. номер авто");
-                this.DialogResult = DialogResult.Cancel;
-                return;
-            }
+            //if (string.IsNullOrEmpty(num) || string.IsNullOrWhiteSpace(num))
+            //{
+            //    MessageBox.Show("Требуется задать гос. номер авто");
+            //    this.DialogResult = DialogResult.Cancel;
+            //    return;
+            //}
             double km = 0.0;
             try
             {

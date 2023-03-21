@@ -29,6 +29,7 @@ namespace AutoCollection
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CarForm));
             this.label1 = new System.Windows.Forms.Label();
             this.nameTextBox = new System.Windows.Forms.TextBox();
@@ -42,6 +43,7 @@ namespace AutoCollection
             this.RejectButton = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.govnumTextBox = new System.Windows.Forms.TextBox();
+            this.carToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // label1
@@ -59,6 +61,7 @@ namespace AutoCollection
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(520, 20);
             this.nameTextBox.TabIndex = 1;
+            this.carToolTip.SetToolTip(this.nameTextBox, "Полное наименование и марка авто");
             // 
             // label2
             // 
@@ -76,6 +79,7 @@ namespace AutoCollection
             this.yearTextBox.Name = "yearTextBox";
             this.yearTextBox.Size = new System.Drawing.Size(100, 20);
             this.yearTextBox.TabIndex = 3;
+            this.carToolTip.SetToolTip(this.yearTextBox, "Год выпуска");
             this.yearTextBox.ValidatingType = typeof(int);
             // 
             // label3
@@ -93,6 +97,7 @@ namespace AutoCollection
             this.kmTextBox.Name = "kmTextBox";
             this.kmTextBox.Size = new System.Drawing.Size(131, 20);
             this.kmTextBox.TabIndex = 5;
+            this.carToolTip.SetToolTip(this.kmTextBox, "Пробег в км.");
             // 
             // label4
             // 
@@ -109,6 +114,7 @@ namespace AutoCollection
             this.priceTextBox.Name = "priceTextBox";
             this.priceTextBox.Size = new System.Drawing.Size(131, 20);
             this.priceTextBox.TabIndex = 7;
+            this.carToolTip.SetToolTip(this.priceTextBox, "Цена в руб.");
             // 
             // OKButton
             // 
@@ -146,6 +152,13 @@ namespace AutoCollection
             this.govnumTextBox.Name = "govnumTextBox";
             this.govnumTextBox.Size = new System.Drawing.Size(114, 20);
             this.govnumTextBox.TabIndex = 11;
+            this.carToolTip.SetToolTip(this.govnumTextBox, "Гос. номер, зарегистрированны в автоинспекции");
+            // 
+            // carToolTip
+            // 
+            this.carToolTip.AutoPopDelay = 5000;
+            this.carToolTip.InitialDelay = 100;
+            this.carToolTip.ReshowDelay = 100;
             // 
             // CarForm
             // 
@@ -190,5 +203,6 @@ namespace AutoCollection
         private System.Windows.Forms.Button RejectButton;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox govnumTextBox;
+        private System.Windows.Forms.ToolTip carToolTip;
     }
 }
