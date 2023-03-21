@@ -68,14 +68,17 @@ namespace AutoCollection
         /// Получение списка всей коллекции или части коллекции по фильтру
         /// </summary>
         /// <param name="filter">фильтр по наименованию</param>
+        /// /// <param name="closed">true - показать </param>
+
         /// <returns>Список коллекции из БД</returns>
-        public async Task<List<Auto>> GetAutoList(string filter = "")
+        public async Task<List<Auto>> GetAutoList(string filter = "", bool closed = false)
         {            
             if (!isOpened) return null;
-            string sqlText = "select id, name, kilometrage, price, relyear, govnum from autos";
+            int flag = closed ? 1 : 0;
+            string sqlText = $"select id, name, kilometrage, price, relyear, govnum from autos where closed = {flag}";
             if(!string.IsNullOrEmpty(filter) && !string.IsNullOrWhiteSpace(filter))
             {
-                sqlText += $" where name like '%{filter}%'";
+                sqlText += $" and name like '%{filter}%'";
             }
             try
             {
@@ -121,7 +124,7 @@ namespace AutoCollection
         {
             if (!isOpened) return -1;
             int nrec = 0;
-            String sqlText = "insert into autos (name, kilometrage, price, relyear, govnum) values (@pname, @pkilometrage, @pprice, @pyear, @pnum)";
+            String sqlText = "insert into autos (name, kilometrage, price, relyear, govnum, closed) values (@pname, @pkilometrage, @pprice, @pyear, @pnum, 0)";
             try
             {
                 nrec = conn.Execute(sqlText, new { pname = name, pkilometrage = kilom, pprice = price, pyear = year, pnum = govn });
@@ -169,13 +172,21 @@ namespace AutoCollection
             if (!isOpened) return -1;
             int nrec = 0;
             String sqlText = "delete from autos where id = @pid";
-            try
-            {
-                nrec = conn.Execute(sqlText, new { pid = id });
-            }
-            catch (Exception ex)
-            {
-                _errorText = ex.Message;
+            var cond = new { pid = id };
+            using (var tran = conn.BeginTransaction())
+            { 
+                try
+                {                   
+                    nrec = conn.Execute("delete from history where idauto = @pid", cond, transaction: tran);
+                    nrec = conn.Execute(sqlText, cond, transaction: tran);
+                    tran.Commit();
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+                    _errorText = ex.Message;
+                }
+
             }
             return nrec;
         }

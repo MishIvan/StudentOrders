@@ -35,5 +35,50 @@ namespace AutoCollection
         /// Гос. номер авто
         /// </summary>
         public string govnum { get; set; }
+        public bool closed { get; set; }
+    }
+    /// <summary>
+    /// Модель записи о действии над ато
+    /// </summary>
+    internal class Actions
+    {
+        /// <summary>
+        /// Идентификатор авто, ссылка на запись в коллекции
+        /// </summary>
+        public long idauto { get; set; }
+        /// <summary>
+        /// Ном. документа (доверенность, продажа, ремонт)
+        /// </summary>
+        public string nomdoc { get; set; }
+        /// <summary>
+        /// Дата начала (доверенность, ремонт)
+        /// </summary>
+        public DateTime bdate { get; set; }
+        /// <summary>
+        /// Дата окончания (доверенность, ремонт)
+        /// </summary>
+        public DateTime edate { get; set; }
+        /// <summary>
+        /// Комментарии
+        /// </summary>
+        public string comments { get; set; }
+        /// <summary>
+        /// Содержимое документа
+        /// </summary>
+        public Byte[] doc { get; set; }
+        /// <summary>
+        /// Идентификатор действия
+        /// 1 - выдача доверенности, 2 - отзыв доверенности, 3 - ремонт (прокачка) авто, 4 - продажа, 5 - дарение
+        /// </summary>
+        public int idevt { get; set; }
+        /// <summary>
+        /// Сумма (продажа, ремонт)
+        /// </summary>
+        public double summa { get; set; }
+        /// <summary>
+        /// Наименование действия, вычисляется по его идентификатору
+        /// </summary>
+        public string nameevt { get; set; }
+
     }
 }
