@@ -38,6 +38,7 @@ namespace AutoCollection
                     kmTextBox.Text = car.kilometrage.ToString();
                     priceTextBox.Text = car.price.ToString();
                     yearTextBox.Text = car.relyear.ToString();
+                    govnumTextBox.Text = car.govnum;
                 }
             }
         }
@@ -52,31 +53,70 @@ namespace AutoCollection
             
             if(string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name))
             {
-                MessageBox.Show("Наименование авто не должно быть пустым"); return;
+                MessageBox.Show("Наименование авто не должно быть пустым");
+                this.DialogResult = DialogResult.Cancel;
+                return;
+            }
+            string num = govnumTextBox.Text;
+            if (string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name))
+            {
+                MessageBox.Show("Требуется задать гос. номер авто");
+                this.DialogResult = DialogResult.Cancel;
+                return;
             }
             double km = 0.0;
             try
             {
                 km = Convert.ToDouble(kmTextBox.Text);
-            }
+            }            
             catch(Exception ex)
             {
-                MessageBox.Show($"Ошибка задания пробега: {ex.Message}"); return;
+                MessageBox.Show($"Ошибка задания пробега: {ex.Message}");
+                this.DialogResult = DialogResult.Cancel;
+                return;
             }
-
-;           if(m_id > 0)
+            double price = 0.0;
+            try 
             {
+                price = Convert.ToDouble(priceTextBox.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка задания цены: {ex.Message}");
+                this.DialogResult = DialogResult.Cancel;
+                return;
+            }
+            int year = 0;
+            try
+            {
+                year = Convert.ToInt32(yearTextBox.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Год задан неверно: {ex.Message}");
+                this.DialogResult = DialogResult.Cancel;
+                return;
+            }
 
+
+            if (m_id > 0)
+            {
+                if (Program.m_helper.UpdateAutoData(m_id, name, km, price, year, num) < 1)
+                {
+                    MessageBox.Show($"Ошибка: {Program.m_helper.errorText}");
+                    this.DialogResult = DialogResult.Cancel;
+
+                }
+            }
+            else
+            {
+                if(Program.m_helper.AddAuto(name, km, price, year, num) < 1)
+                {
+                    MessageBox.Show($"Ошибка: {Program.m_helper.errorText}");
+                    this.DialogResult = DialogResult.Cancel;
+                }
             }
         }
-        /// <summary>
-        /// Не добавлять (не править параметры) записи
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnCancelClick(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }

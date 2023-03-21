@@ -22,10 +22,10 @@ namespace AutoCollection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MainForm_Load(object sender, EventArgs e)
+        private async void MainForm_Load(object sender, EventArgs e)
         {
-            List<Auto> alst = null;
-            Program.m_helper.GetAutoList(alst);
+            var alst = 
+            await Program.m_helper.GetAutoList();
             autoDataGridView.DataSource = alst;
         }
         /// <summary>
@@ -33,14 +33,41 @@ namespace AutoCollection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void addAutoToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void addAutoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            CarForm frm = new CarForm();            
+            if(frm.ShowDialog() == DialogResult.OK)
+            {
+                var alst = 
+                await Program.m_helper.GetAutoList(filterTextBox.Text);
+                autoDataGridView.DataSource = alst;
+            }
         }
         // При закрытии приложения закрыть соединение с БД
         private void OnClose(object sender, FormClosedEventArgs e)
         {
             Program.m_helper.Dispose();
+        }
+        /// <summary>
+        /// Править параметры записи об авто
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void editAutoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var row = autoDataGridView.CurrentRow;
+            long id = Convert.ToInt64(row.Cells[0].Value);
+            if(id > 0)
+            {
+                CarForm frm = new CarForm(id);
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    var alst =
+                    await Program.m_helper.GetAutoList(filterTextBox.Text);
+                    autoDataGridView.DataSource = alst;
+                }
+
+            }
         }
     }
 }

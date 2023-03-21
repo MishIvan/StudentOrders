@@ -31,5 +31,9 @@ namespace AutoCollection
         /// Год выпуска, четырёхзначное число
         /// </summary>
         public int relyear { get; set; }
+        /// <summary>
+        /// Гос. номер авто
+        /// </summary>
+        public string govnum { get; set; }
     }
 }

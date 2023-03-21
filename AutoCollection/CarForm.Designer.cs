@@ -39,7 +39,9 @@ namespace AutoCollection
             this.label4 = new System.Windows.Forms.Label();
             this.priceTextBox = new System.Windows.Forms.TextBox();
             this.OKButton = new System.Windows.Forms.Button();
-            this.CancelButton = new System.Windows.Forms.Button();
+            this.RejectButton = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.govnumTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -61,7 +63,7 @@ namespace AutoCollection
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 60);
+            this.label2.Location = new System.Drawing.Point(13, 57);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(74, 13);
             this.label2.TabIndex = 2;
@@ -69,7 +71,7 @@ namespace AutoCollection
             // 
             // yearTextBox
             // 
-            this.yearTextBox.Location = new System.Drawing.Point(103, 56);
+            this.yearTextBox.Location = new System.Drawing.Point(103, 53);
             this.yearTextBox.Mask = "0000";
             this.yearTextBox.Name = "yearTextBox";
             this.yearTextBox.Size = new System.Drawing.Size(100, 20);
@@ -89,7 +91,7 @@ namespace AutoCollection
             // 
             this.kmTextBox.Location = new System.Drawing.Point(103, 99);
             this.kmTextBox.Name = "kmTextBox";
-            this.kmTextBox.Size = new System.Drawing.Size(215, 20);
+            this.kmTextBox.Size = new System.Drawing.Size(131, 20);
             this.kmTextBox.TabIndex = 5;
             // 
             // label4
@@ -105,7 +107,7 @@ namespace AutoCollection
             // 
             this.priceTextBox.Location = new System.Drawing.Point(103, 143);
             this.priceTextBox.Name = "priceTextBox";
-            this.priceTextBox.Size = new System.Drawing.Size(215, 20);
+            this.priceTextBox.Size = new System.Drawing.Size(131, 20);
             this.priceTextBox.TabIndex = 7;
             // 
             // OKButton
@@ -119,25 +121,41 @@ namespace AutoCollection
             this.OKButton.UseVisualStyleBackColor = true;
             this.OKButton.Click += new System.EventHandler(this.OnOKClick);
             // 
-            // CancelButton
+            // RejectButton
             // 
-            this.CancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.CancelButton.Location = new System.Drawing.Point(492, 189);
-            this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(131, 23);
-            this.CancelButton.TabIndex = 9;
-            this.CancelButton.Text = "Отмена";
-            this.CancelButton.UseVisualStyleBackColor = true;
-            this.CancelButton.Click += new System.EventHandler(this.OnCancelClick);
+            this.RejectButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.RejectButton.Location = new System.Drawing.Point(492, 189);
+            this.RejectButton.Name = "RejectButton";
+            this.RejectButton.Size = new System.Drawing.Size(131, 23);
+            this.RejectButton.TabIndex = 9;
+            this.RejectButton.Text = "Отмена";
+            this.RejectButton.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(239, 57);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(66, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Гос. номер:";
+            // 
+            // govnumTextBox
+            // 
+            this.govnumTextBox.Location = new System.Drawing.Point(312, 53);
+            this.govnumTextBox.Name = "govnumTextBox";
+            this.govnumTextBox.Size = new System.Drawing.Size(114, 20);
+            this.govnumTextBox.TabIndex = 11;
             // 
             // CarForm
             // 
             this.AcceptButton = this.OKButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.CancelButton;
             this.ClientSize = new System.Drawing.Size(645, 233);
-            this.Controls.Add(this.CancelButton);
+            this.Controls.Add(this.govnumTextBox);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.RejectButton);
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.priceTextBox);
             this.Controls.Add(this.label4);
@@ -169,6 +187,8 @@ namespace AutoCollection
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox priceTextBox;
         private System.Windows.Forms.Button OKButton;
-        private System.Windows.Forms.Button CancelButton;
+        private System.Windows.Forms.Button RejectButton;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox govnumTextBox;
     }
 }

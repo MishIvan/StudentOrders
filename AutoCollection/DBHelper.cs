@@ -69,24 +69,24 @@ namespace AutoCollection
         /// </summary>
         /// <param name="filter">фильтр по наименованию</param>
         /// <returns>Список коллекции из БД</returns>
-        public async void GetAutoList(List<Auto> lst, string filter = "")
+        public async Task<List<Auto>> GetAutoList(string filter = "")
         {            
-            lst = null;
-            if (!isOpened) return;
-            string sqlText = "select id, name, kilometrage, price, relyear from autos";
+            if (!isOpened) return null;
+            string sqlText = "select id, name, kilometrage, price, relyear, govnum from autos";
             if(!string.IsNullOrEmpty(filter) && !string.IsNullOrWhiteSpace(filter))
             {
                 sqlText += $" where name like '%{filter}%'";
             }
-            try 
+            try
             {
                 var task = await conn.QueryAsync<Auto>(sqlText);
-                lst = task.ToList();
+                return task.ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _errorText = ex.Message;
             }
+            return null;
         }
         /// <summary>
         /// Получить объект модели из БД по идентификатору записи
@@ -97,7 +97,7 @@ namespace AutoCollection
         {
             Auto car = null;
             if (!isOpened) return car;
-            string sqlText = $"select id, name, kilometrage, price, relyear from autos where id = {id}";
+            string sqlText = $"select id, name, kilometrage, price, relyear, govnum from autos where id = {id}";
             try
             {
                 car = conn.QueryFirstOrDefault<Auto>(sqlText);
@@ -117,14 +117,14 @@ namespace AutoCollection
         /// <param name="price">цена в руб.</param>
         /// <param name="year">год выпуска</param>
         /// <returns>1 - если запись добавлена, -1 - если нет соединения, 0 - если произошла ошибка</returns> 
-        public int AddAuto(string name, double kilom, double price, int year)
+        public int AddAuto(string name, double kilom, double price, int year, string govn)
         {
             if (!isOpened) return -1;
             int nrec = 0;
-            String sqlText = "insert into autos (name, kilometrage, price, relyear) values (@pname, @pkilometrage, @pprice, @pyear)";
+            String sqlText = "insert into autos (name, kilometrage, price, relyear, govnum) values (@pname, @pkilometrage, @pprice, @pyear, @pnum)";
             try
             {
-                nrec = conn.Execute(sqlText, new { pname = name, pkilometrage = kilom, pprice = price, pyear = year });
+                nrec = conn.Execute(sqlText, new { pname = name, pkilometrage = kilom, pprice = price, pyear = year, pnum = govn });
             }
             catch (Exception ex)
             {
@@ -142,14 +142,14 @@ namespace AutoCollection
         /// <param name="price">цена в руб.</param>
         /// <param name="year">год выпуска</param>
         /// <returns>1 - если запись изменена, -1 - если нет соединения, 0 - если произошла ошибка</returns>
-        public int UpdateAutoData(long id, string name, double kilom, double price, int year)
+        public int UpdateAutoData(long id, string name, double kilom, double price, int year, string govn)
         {
             if (!isOpened) return -1;
             int nrec = 0;
-            String sqlText = "update autos set name = @pname, kilometrage = @pkilometrage, price =  @pprice, relyear = @pyear where id = @pid";
+            String sqlText = "update autos set name = @pname, kilometrage = @pkilometrage, price =  @pprice, relyear = @pyear, govnum = @pnum where id = @pid";
             try
             {
-                nrec = conn.Execute(sqlText, new {pid = id, pname = name, pkilometrage = kilom, pprice = price, pyear = year });
+                nrec = conn.Execute(sqlText, new {pid = id, pname = name, pkilometrage = kilom, pprice = price, pyear = year, pnum = govn });
             }
             catch (Exception ex)
             {
