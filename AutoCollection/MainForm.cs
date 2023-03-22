@@ -12,9 +12,12 @@ namespace AutoCollection
 {
     public partial class MainForm : Form
     {
+        private bool m_showClosed;
         public MainForm()
         {
             InitializeComponent();
+            m_showClosed = false;
+
         }
 
         /// <summary>
@@ -39,7 +42,7 @@ namespace AutoCollection
             if(frm.ShowDialog() == DialogResult.OK)
             {
                 var alst = 
-                await Program.m_helper.GetAutoList(filterTextBox.Text);
+                await Program.m_helper.GetAutoList(filterTextBox.Text, m_showClosed);
                 autoDataGridView.DataSource = alst;
             }
         }
@@ -64,7 +67,7 @@ namespace AutoCollection
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
                     var alst =
-                    await Program.m_helper.GetAutoList(filterTextBox.Text);
+                    await Program.m_helper.GetAutoList(filterTextBox.Text, m_showClosed);
                     autoDataGridView.DataSource = alst;
                 }
 
@@ -78,7 +81,7 @@ namespace AutoCollection
         private async void OnSetFilter(object sender, EventArgs e)
         {
             var alst =
-            await Program.m_helper.GetAutoList(filterTextBox.Text);
+            await Program.m_helper.GetAutoList(filterTextBox.Text, m_showClosed);
             autoDataGridView.DataSource = alst;
 
         }
@@ -113,6 +116,26 @@ namespace AutoCollection
                     OnSetFilter(sender, e);
                 }
             }    
+        }
+        /// <summary>
+        /// Выдача доверенности на авто
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void giveproxyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var row = autoDataGridView.CurrentRow;
+            if (row == null) return;
+            long id = Convert.ToInt64(row.Cells[0].Value);
+            if (id > 0)
+            {
+                ActionForm frm = new ActionForm(id, 1);
+                if(frm.ShowDialog() == DialogResult.Abort)
+                {
+                    MessageBox.Show($"Ошибка: {Program.m_helper.errorText}");
+                }
+            }
+
         }
     }
 }

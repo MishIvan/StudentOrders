@@ -191,5 +191,91 @@ namespace AutoCollection
             return nrec;
         }
         #endregion
+        #region Actions
+        /// <summary>
+        /// Добавляет действие для выбранного автомобиля
+        /// </summary>
+        /// <param name="idauto">идентификатор в коллекции</param>
+        /// <param name="db">начальная дата</param>
+        /// <param name="de">конечная дата</param>
+        /// <param name="nomdoc">номер документа-основания для действия</param>
+        /// <param name="idevt">идентификатор действия: 1 - выдача доверености, 2 - отзыв доверенности, 3 - ремонт, 4 - продажа, 5 - дарение</param>
+        /// <param name="comments">дополнительная информация по действию</param>
+        /// <param name="summa">сумма (ремонта или продажи)</param>
+        /// <param name="summa">сумма (ремонта или продажи)</param>
+        /// <returns>1 - если добавление произошло успешно, иначе меньше 1</returns>
+        public int AddAction(long idauto, DateTime db, DateTime de, string nomdoc, int idevt, string comments = "", double summa = 0.0, byte[] dcont = null)
+        {
+            if (!isOpened) return -1;
+            int nrec = 0;
+            string sdb = db.ToString("yyyMMdd");
+            string sde = de.ToString("yyyMMdd");
+            string sqlText = "insert into actions (idauto, nomdoc, bdate, edate, comments, idevt, summa, doc) ";
+            sqlText += $"values(@pidauto, @pnumdoc,'{sdb}','{sde}',@pcomments, @pidevt, @psumma, @pdoc)";
+            try
+            {
+                byte[] doccont = dcont == null ? new byte[] { 0 } : dcont;
+                nrec = conn.Execute(sqlText,
+                    new { pidauto = idauto, pnumdoc = nomdoc, pidevt = idevt, pcomments = comments, psumma = summa, pdoc = doccont});
+            }
+            catch(Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return nrec;
+        }
+        /// <summary>
+        /// Удалить запись о действии
+        /// </summary>
+        /// <param name="idaction">идентификатор записи действия</param>
+        /// <param name="idauto">идентификатор записи авто, для которого совершено действие</param>
+        /// <returns></returns>
+        public int DeleteAction(long idaction, long idauto)
+        {
+            if (!isOpened) return -1;
+            int nrec = 0;
+            string sqlText = "delete from actions where id =@pid and idauto = @pida";
+            try
+            {
+                nrec = conn.Execute(sqlText, new { pid = idaction, pida = idauto });
+            }
+            catch(Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return nrec;
+        }
+        /// <summary>
+        /// Проверка совершаемого действия на правильность
+        /// </summary>
+        /// <param name="idauto"></param>
+        /// <param name="idaction"></param>
+        /// <param name="nomdoc"></param>
+        /// <param name="dt"></param>
+        /// <returns></returns>
+        public bool ValidateAction(long idauto, int idaction, string nomdoc, DateTime dt)
+        {
+            // болванка функции
+            bool res = true;
+            string sqlText;
+            string sdt = dt.ToString("yyyyMMdd");
+            switch(idaction)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+
+
+            }
+            return res;
+        }
+        #endregion between
     }
 }

@@ -35,10 +35,9 @@ namespace AutoCollection
         /// Гос. номер авто
         /// </summary>
         public string govnum { get; set; }
-        public bool closed { get; set; }
     }
     /// <summary>
-    /// Модель записи о действии над ато
+    /// Модель записи о действии над авто
     /// </summary>
     internal class Actions
     {
