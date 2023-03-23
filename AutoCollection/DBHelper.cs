@@ -212,15 +212,32 @@ namespace AutoCollection
             string sde = de.ToString("yyyMMdd");
             string sqlText = "insert into actions (idauto, nomdoc, bdate, edate, comments, idevt, summa, doc) ";
             sqlText += $"values(@pidauto, @pnumdoc,'{sdb}','{sde}',@pcomments, @pidevt, @psumma, @pdoc)";
-            try
+            using (var tran = conn.BeginTransaction())
             {
-                byte[] doccont = dcont == null ? new byte[] { 0 } : dcont;
-                nrec = conn.Execute(sqlText,
-                    new { pidauto = idauto, pnumdoc = nomdoc, pidevt = idevt, pcomments = comments, psumma = summa, pdoc = doccont});
-            }
-            catch(Exception ex)
-            {
-                _errorText = ex.Message;
+                try
+                {
+                    byte[] doccont = dcont == null ? new byte[] { 0 } : dcont;
+                    nrec = conn.Execute(sqlText,
+                        new { pidauto = idauto, pnumdoc = nomdoc, pidevt = idevt, pcomments = comments, psumma = summa, pdoc = doccont },
+                        transaction: tran);
+                    // при продаже или дарении закрываем запись об авто
+                    if (idevt == 5 || idevt == 5)
+                    {
+                        sqlText = $"update autos set closed = 1 where id = {idauto}";
+                        conn.Execute(sqlText, transaction: tran);
+                    }
+                    else if(idevt == 3)
+                    {
+                        sqlText = $"update autos set price = price + {summa} where id = {idauto}";
+                        conn.Execute(sqlText, transaction: tran);
+                    }
+                    tran.Commit();
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+                    _errorText = ex.Message;
+                }
             }
             return nrec;
         }
@@ -244,6 +261,26 @@ namespace AutoCollection
                 _errorText = ex.Message;
             }
             return nrec;
+        }
+        /// <summary>
+        /// Получить список событий по идентификатору авто
+        /// </summary>
+        /// <param name="idauto">идентификатор авто</param>
+        /// <returns>список событий при успешном выполнении запроса, иначе null</returns>
+        public List<Actions> GetActionsListForAuto(long idauto)
+        {
+            if (!isOpened) return null;
+            List<Actions> lst = null;
+            string sqlText = $"select id, idauto, nomdoc,bdate, edate, summa, nameevt, idevt, comments, doc from actions where idauto = {idauto} order by bdate";
+            try
+            {
+                lst = conn.Query<Actions>(sqlText).ToList();
+            }
+            catch(Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return lst;
         }
         /// <summary>
         /// Проверка совершаемого действия на правильность

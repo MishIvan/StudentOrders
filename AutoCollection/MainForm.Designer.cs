@@ -35,13 +35,20 @@ namespace AutoCollection
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.autoDataGridView = new System.Windows.Forms.DataGridView();
+            this.idauto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.govnum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.autoname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.relyear = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.kilometrage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.price = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.автоToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addAutoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editAutoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.delAutoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.историяДействийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showRecsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.actionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.giveproxyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.takeproxyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,13 +59,6 @@ namespace AutoCollection
             this.filterTextBox = new System.Windows.Forms.TextBox();
             this.applyButton = new System.Windows.Forms.Button();
             this.carsToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.showRecsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.idauto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.govnum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.autoname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.relyear = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.kilometrage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.price = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.autoDataGridView)).BeginInit();
             this.mainMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -80,152 +80,6 @@ namespace AutoCollection
             this.autoDataGridView.ReadOnly = true;
             this.autoDataGridView.Size = new System.Drawing.Size(778, 299);
             this.autoDataGridView.TabIndex = 0;
-            // 
-            // mainMenuStrip
-            // 
-            this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.автоToolStripMenuItem,
-            this.actionToolStripMenuItem});
-            this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
-            this.mainMenuStrip.Name = "mainMenuStrip";
-            this.mainMenuStrip.Size = new System.Drawing.Size(813, 24);
-            this.mainMenuStrip.TabIndex = 1;
-            this.mainMenuStrip.Text = "menuStrip1";
-            // 
-            // автоToolStripMenuItem
-            // 
-            this.автоToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addAutoToolStripMenuItem,
-            this.editAutoToolStripMenuItem,
-            this.delAutoToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.историяДействийToolStripMenuItem,
-            this.showRecsToolStripMenuItem});
-            this.автоToolStripMenuItem.Name = "автоToolStripMenuItem";
-            this.автоToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
-            this.автоToolStripMenuItem.Text = "Авто";
-            this.автоToolStripMenuItem.ToolTipText = "Действия над авто в коллекции";
-            // 
-            // addAutoToolStripMenuItem
-            // 
-            this.addAutoToolStripMenuItem.Name = "addAutoToolStripMenuItem";
-            this.addAutoToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.addAutoToolStripMenuItem.Text = "Добавить";
-            this.addAutoToolStripMenuItem.ToolTipText = "Добавить запись об авто в коллекцию";
-            this.addAutoToolStripMenuItem.Click += new System.EventHandler(this.addAutoToolStripMenuItem_Click);
-            // 
-            // editAutoToolStripMenuItem
-            // 
-            this.editAutoToolStripMenuItem.Name = "editAutoToolStripMenuItem";
-            this.editAutoToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.editAutoToolStripMenuItem.Text = "Править";
-            this.editAutoToolStripMenuItem.ToolTipText = "ПРавить параметры выбранной записи об авто";
-            this.editAutoToolStripMenuItem.Click += new System.EventHandler(this.editAutoToolStripMenuItem_Click);
-            // 
-            // delAutoToolStripMenuItem
-            // 
-            this.delAutoToolStripMenuItem.Name = "delAutoToolStripMenuItem";
-            this.delAutoToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.delAutoToolStripMenuItem.Text = "Удалить";
-            this.delAutoToolStripMenuItem.ToolTipText = "Удалить запись об авто";
-            this.delAutoToolStripMenuItem.Click += new System.EventHandler(this.delAutoToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(218, 6);
-            // 
-            // историяДействийToolStripMenuItem
-            // 
-            this.историяДействийToolStripMenuItem.Name = "историяДействийToolStripMenuItem";
-            this.историяДействийToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.историяДействийToolStripMenuItem.Text = "История действий";
-            this.историяДействийToolStripMenuItem.ToolTipText = "История действий по выбранному авто";
-            // 
-            // actionToolStripMenuItem
-            // 
-            this.actionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.giveproxyToolStripMenuItem,
-            this.takeproxyToolStripMenuItem,
-            this.repairToolStripMenuItem,
-            this.sailToolStripMenuItem,
-            this.giftToolStripMenuItem});
-            this.actionToolStripMenuItem.Name = "actionToolStripMenuItem";
-            this.actionToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
-            this.actionToolStripMenuItem.Text = "Действия";
-            this.actionToolStripMenuItem.ToolTipText = "Действия над авто";
-            // 
-            // giveproxyToolStripMenuItem
-            // 
-            this.giveproxyToolStripMenuItem.Name = "giveproxyToolStripMenuItem";
-            this.giveproxyToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.giveproxyToolStripMenuItem.Text = "Выдать доверенность";
-            this.giveproxyToolStripMenuItem.Click += new System.EventHandler(this.giveproxyToolStripMenuItem_Click);
-            // 
-            // takeproxyToolStripMenuItem
-            // 
-            this.takeproxyToolStripMenuItem.Name = "takeproxyToolStripMenuItem";
-            this.takeproxyToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.takeproxyToolStripMenuItem.Text = "Отозвать доверенность";
-            // 
-            // repairToolStripMenuItem
-            // 
-            this.repairToolStripMenuItem.Name = "repairToolStripMenuItem";
-            this.repairToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.repairToolStripMenuItem.Text = "Ремонт";
-            // 
-            // sailToolStripMenuItem
-            // 
-            this.sailToolStripMenuItem.Name = "sailToolStripMenuItem";
-            this.sailToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.sailToolStripMenuItem.Text = "Продажа";
-            // 
-            // giftToolStripMenuItem
-            // 
-            this.giftToolStripMenuItem.Name = "giftToolStripMenuItem";
-            this.giftToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.giftToolStripMenuItem.Text = "Дарение";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(170, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Фильтр по наименованию авто:";
-            // 
-            // filterTextBox
-            // 
-            this.filterTextBox.Location = new System.Drawing.Point(190, 28);
-            this.filterTextBox.Name = "filterTextBox";
-            this.filterTextBox.Size = new System.Drawing.Size(401, 20);
-            this.filterTextBox.TabIndex = 3;
-            this.carsToolTip.SetToolTip(this.filterTextBox, "Строка фильтра для отображения выборки из коллекции");
-            this.filterTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.filterTextBox_KeyPress);
-            // 
-            // applyButton
-            // 
-            this.applyButton.Location = new System.Drawing.Point(597, 27);
-            this.applyButton.Name = "applyButton";
-            this.applyButton.Size = new System.Drawing.Size(75, 23);
-            this.applyButton.TabIndex = 4;
-            this.applyButton.Text = "Применить";
-            this.carsToolTip.SetToolTip(this.applyButton, "Применить фильтр для выборки из коллекции");
-            this.applyButton.UseVisualStyleBackColor = true;
-            this.applyButton.Click += new System.EventHandler(this.OnSetFilter);
-            // 
-            // carsToolTip
-            // 
-            this.carsToolTip.AutoPopDelay = 5000;
-            this.carsToolTip.InitialDelay = 100;
-            this.carsToolTip.ReshowDelay = 100;
-            // 
-            // showRecsToolStripMenuItem
-            // 
-            this.showRecsToolStripMenuItem.Name = "showRecsToolStripMenuItem";
-            this.showRecsToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.showRecsToolStripMenuItem.Text = "Показать закрытые записи";
             // 
             // idauto
             // 
@@ -289,6 +143,158 @@ namespace AutoCollection
             this.price.ReadOnly = true;
             this.price.ToolTipText = "Стоимость авто";
             // 
+            // mainMenuStrip
+            // 
+            this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.автоToolStripMenuItem,
+            this.actionToolStripMenuItem});
+            this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
+            this.mainMenuStrip.Name = "mainMenuStrip";
+            this.mainMenuStrip.Size = new System.Drawing.Size(813, 24);
+            this.mainMenuStrip.TabIndex = 1;
+            this.mainMenuStrip.Text = "menuStrip1";
+            // 
+            // автоToolStripMenuItem
+            // 
+            this.автоToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addAutoToolStripMenuItem,
+            this.editAutoToolStripMenuItem,
+            this.delAutoToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.showActionsToolStripMenuItem,
+            this.showRecsToolStripMenuItem});
+            this.автоToolStripMenuItem.Name = "автоToolStripMenuItem";
+            this.автоToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
+            this.автоToolStripMenuItem.Text = "Авто";
+            this.автоToolStripMenuItem.ToolTipText = "Действия над авто в коллекции";
+            // 
+            // addAutoToolStripMenuItem
+            // 
+            this.addAutoToolStripMenuItem.Name = "addAutoToolStripMenuItem";
+            this.addAutoToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.addAutoToolStripMenuItem.Text = "Добавить";
+            this.addAutoToolStripMenuItem.ToolTipText = "Добавить запись об авто в коллекцию";
+            this.addAutoToolStripMenuItem.Click += new System.EventHandler(this.addAutoToolStripMenuItem_Click);
+            // 
+            // editAutoToolStripMenuItem
+            // 
+            this.editAutoToolStripMenuItem.Name = "editAutoToolStripMenuItem";
+            this.editAutoToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.editAutoToolStripMenuItem.Text = "Править";
+            this.editAutoToolStripMenuItem.ToolTipText = "ПРавить параметры выбранной записи об авто";
+            this.editAutoToolStripMenuItem.Click += new System.EventHandler(this.editAutoToolStripMenuItem_Click);
+            // 
+            // delAutoToolStripMenuItem
+            // 
+            this.delAutoToolStripMenuItem.Name = "delAutoToolStripMenuItem";
+            this.delAutoToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.delAutoToolStripMenuItem.Text = "Удалить";
+            this.delAutoToolStripMenuItem.ToolTipText = "Удалить запись об авто";
+            this.delAutoToolStripMenuItem.Click += new System.EventHandler(this.delAutoToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(218, 6);
+            // 
+            // showActionsToolStripMenuItem
+            // 
+            this.showActionsToolStripMenuItem.Name = "showActionsToolStripMenuItem";
+            this.showActionsToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.showActionsToolStripMenuItem.Text = "История действий";
+            this.showActionsToolStripMenuItem.ToolTipText = "История действий по выбранному авто";
+            this.showActionsToolStripMenuItem.Click += new System.EventHandler(this.showActionsToolStripMenuItem_Click);
+            // 
+            // showRecsToolStripMenuItem
+            // 
+            this.showRecsToolStripMenuItem.Name = "showRecsToolStripMenuItem";
+            this.showRecsToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.showRecsToolStripMenuItem.Text = "Показать закрытые записи";
+            this.showRecsToolStripMenuItem.Click += new System.EventHandler(this.showRecsToolStripMenuItem_Click);
+            // 
+            // actionToolStripMenuItem
+            // 
+            this.actionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.giveproxyToolStripMenuItem,
+            this.takeproxyToolStripMenuItem,
+            this.repairToolStripMenuItem,
+            this.sailToolStripMenuItem,
+            this.giftToolStripMenuItem});
+            this.actionToolStripMenuItem.Name = "actionToolStripMenuItem";
+            this.actionToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
+            this.actionToolStripMenuItem.Text = "Действия";
+            this.actionToolStripMenuItem.ToolTipText = "Действия над авто";
+            // 
+            // giveproxyToolStripMenuItem
+            // 
+            this.giveproxyToolStripMenuItem.Name = "giveproxyToolStripMenuItem";
+            this.giveproxyToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.giveproxyToolStripMenuItem.Text = "Выдать доверенность";
+            this.giveproxyToolStripMenuItem.Click += new System.EventHandler(this.giveproxyToolStripMenuItem_Click);
+            // 
+            // takeproxyToolStripMenuItem
+            // 
+            this.takeproxyToolStripMenuItem.Name = "takeproxyToolStripMenuItem";
+            this.takeproxyToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.takeproxyToolStripMenuItem.Text = "Отозвать доверенность";
+            this.takeproxyToolStripMenuItem.Click += new System.EventHandler(this.takeproxyToolStripMenuItem_Click);
+            // 
+            // repairToolStripMenuItem
+            // 
+            this.repairToolStripMenuItem.Name = "repairToolStripMenuItem";
+            this.repairToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.repairToolStripMenuItem.Text = "Ремонт";
+            this.repairToolStripMenuItem.Click += new System.EventHandler(this.repairToolStripMenuItem_Click);
+            // 
+            // sailToolStripMenuItem
+            // 
+            this.sailToolStripMenuItem.Name = "sailToolStripMenuItem";
+            this.sailToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.sailToolStripMenuItem.Text = "Продажа";
+            this.sailToolStripMenuItem.Click += new System.EventHandler(this.sailToolStripMenuItem_Click);
+            // 
+            // giftToolStripMenuItem
+            // 
+            this.giftToolStripMenuItem.Name = "giftToolStripMenuItem";
+            this.giftToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.giftToolStripMenuItem.Text = "Дарение";
+            this.giftToolStripMenuItem.Click += new System.EventHandler(this.giftToolStripMenuItem_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(170, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Фильтр по наименованию авто:";
+            // 
+            // filterTextBox
+            // 
+            this.filterTextBox.Location = new System.Drawing.Point(190, 28);
+            this.filterTextBox.Name = "filterTextBox";
+            this.filterTextBox.Size = new System.Drawing.Size(401, 20);
+            this.filterTextBox.TabIndex = 3;
+            this.carsToolTip.SetToolTip(this.filterTextBox, "Строка фильтра для отображения выборки из коллекции");
+            this.filterTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.filterTextBox_KeyPress);
+            // 
+            // applyButton
+            // 
+            this.applyButton.Location = new System.Drawing.Point(597, 27);
+            this.applyButton.Name = "applyButton";
+            this.applyButton.Size = new System.Drawing.Size(75, 23);
+            this.applyButton.TabIndex = 4;
+            this.applyButton.Text = "Применить";
+            this.carsToolTip.SetToolTip(this.applyButton, "Применить фильтр для выборки из коллекции");
+            this.applyButton.UseVisualStyleBackColor = true;
+            this.applyButton.Click += new System.EventHandler(this.OnSetFilter);
+            // 
+            // carsToolTip
+            // 
+            this.carsToolTip.AutoPopDelay = 5000;
+            this.carsToolTip.InitialDelay = 100;
+            this.carsToolTip.ReshowDelay = 100;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -328,7 +334,7 @@ namespace AutoCollection
         private System.Windows.Forms.Button applyButton;
         private System.Windows.Forms.ToolTip carsToolTip;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem историяДействийToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showActionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem giveproxyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem takeproxyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem repairToolStripMenuItem;

@@ -42,6 +42,10 @@ namespace AutoCollection
     internal class Actions
     {
         /// <summary>
+        /// идентификатор действия
+        /// </summary>
+        public long id { get; set; }
+        /// <summary>
         /// Идентификатор авто, ссылка на запись в коллекции
         /// </summary>
         public long idauto { get; set; }
@@ -58,7 +62,7 @@ namespace AutoCollection
         /// </summary>
         public DateTime edate { get; set; }
         /// <summary>
-        /// Комментарии
+        /// Комментарии, описание подробностей действия
         /// </summary>
         public string comments { get; set; }
         /// <summary>
@@ -71,7 +75,7 @@ namespace AutoCollection
         /// </summary>
         public int idevt { get; set; }
         /// <summary>
-        /// Сумма (продажа, ремонт)
+        /// Сумма (продажа, ремонт), для других действий - значение по умолчанию 0
         /// </summary>
         public double summa { get; set; }
         /// <summary>

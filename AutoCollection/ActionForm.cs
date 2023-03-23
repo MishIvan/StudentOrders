@@ -116,5 +116,35 @@ namespace AutoCollection
                 frm.ShowDialog();
             }
         }
+        /// <summary>
+        /// Добавление действия для авто
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnOK(object sender, EventArgs e)
+        {
+            DateTime db = beginDateTimePicker.Value;
+            DateTime de = m_idaction > 1 ? db : endDateTimePicker.Value;
+
+            string nomd = nomTextBox.Text;
+            string comments = commentsTextBox.Text;
+            double summa = 0.0;
+            if(m_idaction == 3 || m_idaction == 4)
+            {
+                try
+                {
+                    summa = Convert.ToDouble(sumTextBox.Text);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("Ошибка задания суммы");
+                    DialogResult = DialogResult.Cancel;
+                    return;
+                }
+            }
+
+            if (Program.m_helper.AddAction(m_idauto, db, de, nomd, m_idaction, comments, summa, m_docContent) < 1)
+                DialogResult = DialogResult.Abort;
+        }
     }
 }

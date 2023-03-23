@@ -144,6 +144,7 @@ namespace AutoCollection
             this.OKbutton.TabIndex = 10;
             this.OKbutton.Text = "OK";
             this.OKbutton.UseVisualStyleBackColor = true;
+            this.OKbutton.Click += new System.EventHandler(this.OnOK);
             // 
             // RejectButton
             // 

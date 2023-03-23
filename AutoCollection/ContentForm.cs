@@ -31,7 +31,7 @@ namespace AutoCollection
         private void OnLoad(object sender, EventArgs e)
         {
             string tempPath = System.IO.Path.GetTempPath();
-            m_fileName = tempPath + "docContent " + DateTime.Now.ToString("_yyyyMMdd_hh_mm_ss") + ".png";
+            m_fileName = tempPath + "docContent " + DateTime.Now.ToString("_yyyyMMdd_hh_mm_ss_fff") + ".png";
             System.IO.File.WriteAllBytes(m_fileName, m_content);
             m_img = Image.FromFile(m_fileName);
             contentPictureBox.Image = m_img;

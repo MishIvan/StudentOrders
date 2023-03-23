@@ -205,6 +205,12 @@
     <Compile Include="ActionForm.Designer.cs">
       <DependentUpon>ActionForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ActionViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ActionViewForm.Designer.cs">
+      <DependentUpon>ActionViewForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="AppSettings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -234,6 +240,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ActionForm.resx">
       <DependentUpon>ActionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActionViewForm.resx">
+      <DependentUpon>ActionViewForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CarForm.resx">
       <DependentUpon>CarForm.cs</DependentUpon>

@@ -27,7 +27,7 @@ namespace AutoCollection
         /// <param name="e"></param>
         private async void MainForm_Load(object sender, EventArgs e)
         {
-            var alst = 
+            var alst =
             await Program.m_helper.GetAutoList();
             autoDataGridView.DataSource = alst;
         }
@@ -38,10 +38,10 @@ namespace AutoCollection
         /// <param name="e"></param>
         private async void addAutoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CarForm frm = new CarForm();            
-            if(frm.ShowDialog() == DialogResult.OK)
+            CarForm frm = new CarForm();
+            if (frm.ShowDialog() == DialogResult.OK)
             {
-                var alst = 
+                var alst =
                 await Program.m_helper.GetAutoList(filterTextBox.Text, m_showClosed);
                 autoDataGridView.DataSource = alst;
             }
@@ -61,7 +61,7 @@ namespace AutoCollection
             var row = autoDataGridView.CurrentRow;
             if (row == null) return;
             long id = Convert.ToInt64(row.Cells[0].Value);
-            if(id > 0)
+            if (id > 0)
             {
                 CarForm frm = new CarForm(id);
                 if (frm.ShowDialog() == DialogResult.OK)
@@ -107,7 +107,7 @@ namespace AutoCollection
             long id = Convert.ToInt64(row.Cells[0].Value);
             if (id > 0)
             {
-                if(Program.m_helper.DeleteAuto(id) < 1)
+                if (Program.m_helper.DeleteAuto(id) < 1)
                 {
                     MessageBox.Show($"Ошибка: {Program.m_helper.errorText}");
                 }
@@ -115,7 +115,7 @@ namespace AutoCollection
                 {
                     OnSetFilter(sender, e);
                 }
-            }    
+            }
         }
         /// <summary>
         /// Выдача доверенности на авто
@@ -130,11 +130,151 @@ namespace AutoCollection
             if (id > 0)
             {
                 ActionForm frm = new ActionForm(id, 1);
-                if(frm.ShowDialog() == DialogResult.Abort)
+                if (frm.ShowDialog() == DialogResult.Abort)
                 {
                     MessageBox.Show($"Ошибка: {Program.m_helper.errorText}");
                 }
             }
+
+        }
+        /// <summary>
+        /// Показать все действия для выбранного авто
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void showActionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var row = autoDataGridView.CurrentRow;
+            if (row == null) return;
+            long id = Convert.ToInt64(row.Cells[0].Value);
+            if (id > 0)
+            {
+                ActionViewForm frm = new ActionViewForm(id, m_showClosed);
+                frm.ShowDialog();
+            }
+        }
+        /// <summary>
+        /// Отзыв доверенности на авто
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void takeproxyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var row = autoDataGridView.CurrentRow;
+            if (row == null) return;
+            long id = Convert.ToInt64(row.Cells[0].Value);
+            if (id > 0)
+            {
+                ActionForm frm = new ActionForm(id, 2);
+                if (frm.ShowDialog() == DialogResult.Abort)
+                {
+                    MessageBox.Show($"Ошибка: {Program.m_helper.errorText}");
+                }
+            }
+
+        }
+        /// <summary>
+        /// Ремонт авто
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void repairToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var row = autoDataGridView.CurrentRow;
+            if (row == null) return;
+            long id = Convert.ToInt64(row.Cells[0].Value);
+            if (id > 0)
+            {
+                ActionForm frm = new ActionForm(id, 3);
+                DialogResult res = frm.ShowDialog();
+                if (res == DialogResult.Abort)
+                {
+                    MessageBox.Show($"Ошибка: {Program.m_helper.errorText}");
+                }
+                else if (res == DialogResult.OK)
+                {
+                    var alst =
+                    await Program.m_helper.GetAutoList(filterTextBox.Text);
+                    autoDataGridView.DataSource = alst;
+
+                }
+            }
+
+        }
+        /// <summary>
+        /// Продажа ато
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void sailToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var row = autoDataGridView.CurrentRow;
+            if (row == null) return;
+            long id = Convert.ToInt64(row.Cells[0].Value);
+            if (id > 0)
+            {
+                ActionForm frm = new ActionForm(id, 4);
+                DialogResult res = frm.ShowDialog();
+                if (res == DialogResult.Abort)
+                {
+                    MessageBox.Show($"Ошибка: {Program.m_helper.errorText}");
+                }
+                else if(res == DialogResult.OK)
+                {
+                    var alst =
+                    await Program.m_helper.GetAutoList(filterTextBox.Text);
+                    autoDataGridView.DataSource = alst;
+
+                }
+
+            }
+
+        }
+        /// <summary>
+        /// Дарение авто
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void giftToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var row = autoDataGridView.CurrentRow;
+            if (row == null) return;
+            long id = Convert.ToInt64(row.Cells[0].Value);
+            if (id > 0)
+            {
+                ActionForm frm = new ActionForm(id, 5);
+                DialogResult res = frm.ShowDialog();
+                if (res == DialogResult.Abort)
+                {
+                    MessageBox.Show($"Ошибка: {Program.m_helper.errorText}");
+                }
+                else if (res == DialogResult.OK)
+                {
+                    var alst =
+                    await Program.m_helper.GetAutoList(filterTextBox.Text);
+                    autoDataGridView.DataSource = alst;
+
+                }
+            }
+
+        }
+        /// <summary>
+        /// Показ закрытых записей
+        /// Запись закрывается при продаже или дарении авто
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void showRecsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionToolStripMenuItem.Visible = m_showClosed;
+            addAutoToolStripMenuItem.Visible = m_showClosed;
+            editAutoToolStripMenuItem.Visible = m_showClosed;
+            delAutoToolStripMenuItem.Visible = m_showClosed;
+            showRecsToolStripMenuItem.Text = !m_showClosed ? "Показать действующие записи" : "Показать скрытые записи";
+            m_showClosed = !m_showClosed;
+            var alst =
+            await Program.m_helper.GetAutoList(filterTextBox.Text, m_showClosed);
+            autoDataGridView.DataSource = alst;
 
         }
     }
