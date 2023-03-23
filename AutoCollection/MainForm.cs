@@ -49,7 +49,7 @@ namespace AutoCollection
         // При закрытии приложения закрыть соединение с БД
         private void OnClose(object sender, FormClosedEventArgs e)
         {
-            Program.m_helper.Dispose();
+            Program.m_helper.Dispose(); // закрыть соединение с БД
         }
         /// <summary>
         /// Править параметры записи об авто

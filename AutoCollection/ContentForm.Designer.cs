@@ -40,6 +40,7 @@ namespace AutoCollection
             this.contentPictureBox.Location = new System.Drawing.Point(0, 0);
             this.contentPictureBox.Name = "contentPictureBox";
             this.contentPictureBox.Size = new System.Drawing.Size(768, 567);
+            this.contentPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.contentPictureBox.TabIndex = 0;
             this.contentPictureBox.TabStop = false;
             this.contentPictureBox.Click += new System.EventHandler(this.OnLoad);
@@ -55,6 +56,8 @@ namespace AutoCollection
             this.Name = "ContentForm";
             this.Text = "Скан документа";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnClose);
+            this.Load += new System.EventHandler(this.OnLoad);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnKeyPress);
             ((System.ComponentModel.ISupportInitialize)(this.contentPictureBox)).EndInit();
             this.ResumeLayout(false);
 

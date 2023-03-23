@@ -25,6 +25,7 @@ namespace AutoCollection
                 Application.Exit();
             }
             Application.Run(new MainForm());
+
         }
     }
 }

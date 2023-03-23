@@ -16,6 +16,7 @@ namespace AutoCollection
     public partial class ContentForm : Form
     {
         private byte[] m_content;
+        private Image m_img;
         private string m_fileName;
         public ContentForm(byte [] content)
         {
@@ -32,12 +33,23 @@ namespace AutoCollection
             string tempPath = System.IO.Path.GetTempPath();
             m_fileName = tempPath + "docContent " + DateTime.Now.ToString("_yyyyMMdd_hh_mm_ss") + ".png";
             System.IO.File.WriteAllBytes(m_fileName, m_content);
-            contentPictureBox.Image = Image.FromFile(m_fileName);
-
+            m_img = Image.FromFile(m_fileName);
+            contentPictureBox.Image = m_img;
         }
-        // При закрытии формы удалить временный файл
+        /// <summary>
+        /// закрывать просмотр по ESC
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnKeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 27)
+                Close();
+        }
+
         private void OnClose(object sender, FormClosedEventArgs e)
         {
+            m_img.Dispose();
             System.IO.File.Delete(m_fileName);
         }
     }

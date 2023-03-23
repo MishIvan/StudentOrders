@@ -72,12 +72,12 @@ namespace AutoCollection
 
         }
         /// <summary>
-        /// Загрузка скана документа
+        /// Загрузка скана документа и получение массива бйтов контента
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnLoadDocument(object sender, EventArgs e)
-        {
+        {            
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.InitialDirectory = Environment.CurrentDirectory;
@@ -87,14 +87,18 @@ namespace AutoCollection
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    //Get the path of specified file
+                    // полный путь имени файла
                     string filePath = openFileDialog.FileName;
-                    string ext = string.Empty;
-                    if (Path.HasExtension(filePath))
+                    try
                     {
-                        ext = Path.GetExtension(filePath).Substring(1).ToLower();
+                        m_docContent = File.ReadAllBytes(filePath);
+                        MessageBox.Show("Контент документа успешно загружен");
                     }
-                    byte[] m_docContent = File.ReadAllBytes(filePath);
+                    catch(Exception ex)
+                    {
+                        m_docContent = null;
+                        MessageBox.Show($"Ошибка: {ex.Message}"); 
+                    }
                 }
             }
 
@@ -106,6 +110,11 @@ namespace AutoCollection
         /// <param name="e"></param>
         private void OnShowDocument(object sender, EventArgs e)
         {
+            if(m_docContent != null)
+            {
+                ContentForm frm = new ContentForm(m_docContent);
+                frm.ShowDialog();
+            }
         }
     }
 }
