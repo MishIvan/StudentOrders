@@ -48,6 +48,7 @@ namespace AutoCollection
             this.docGroupBox = new System.Windows.Forms.GroupBox();
             this.actionToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.autoNameLabel = new System.Windows.Forms.Label();
+            this.choiceProxyButton = new System.Windows.Forms.Button();
             this.docGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,6 +69,7 @@ namespace AutoCollection
             this.beginDateTimePicker.Name = "beginDateTimePicker";
             this.beginDateTimePicker.Size = new System.Drawing.Size(106, 20);
             this.beginDateTimePicker.TabIndex = 1;
+            this.actionToolTip.SetToolTip(this.beginDateTimePicker, "Дата начала действия доверенности или дата действия");
             // 
             // endDateLabel
             // 
@@ -85,6 +87,7 @@ namespace AutoCollection
             this.endDateTimePicker.Name = "endDateTimePicker";
             this.endDateTimePicker.Size = new System.Drawing.Size(106, 20);
             this.endDateTimePicker.TabIndex = 3;
+            this.actionToolTip.SetToolTip(this.endDateTimePicker, "Дата окончания действия доверенности");
             // 
             // label3
             // 
@@ -101,6 +104,7 @@ namespace AutoCollection
             this.nomTextBox.Name = "nomTextBox";
             this.nomTextBox.Size = new System.Drawing.Size(130, 20);
             this.nomTextBox.TabIndex = 5;
+            this.actionToolTip.SetToolTip(this.nomTextBox, "Номер документа-основания. Заполнение обязательно");
             // 
             // label4
             // 
@@ -118,6 +122,7 @@ namespace AutoCollection
             this.commentsTextBox.Name = "commentsTextBox";
             this.commentsTextBox.Size = new System.Drawing.Size(356, 77);
             this.commentsTextBox.TabIndex = 7;
+            this.actionToolTip.SetToolTip(this.commentsTextBox, "Дополнительные детали действия");
             // 
             // sumLabel
             // 
@@ -134,6 +139,7 @@ namespace AutoCollection
             this.sumTextBox.Name = "sumTextBox";
             this.sumTextBox.Size = new System.Drawing.Size(100, 20);
             this.sumTextBox.TabIndex = 9;
+            this.actionToolTip.SetToolTip(this.sumTextBox, "Сумма, на которую произведён ремонт или сумма продажи");
             // 
             // OKbutton
             // 
@@ -163,6 +169,7 @@ namespace AutoCollection
             this.loadButton.Size = new System.Drawing.Size(75, 23);
             this.loadButton.TabIndex = 12;
             this.loadButton.Text = "Загрузить";
+            this.actionToolTip.SetToolTip(this.loadButton, "Загрузить скан документа-основания");
             this.loadButton.UseVisualStyleBackColor = true;
             this.loadButton.Click += new System.EventHandler(this.OnLoadDocument);
             // 
@@ -173,6 +180,7 @@ namespace AutoCollection
             this.showButton.Size = new System.Drawing.Size(75, 23);
             this.showButton.TabIndex = 13;
             this.showButton.Text = "Показать";
+            this.actionToolTip.SetToolTip(this.showButton, "Показать скан документа-основания");
             this.showButton.UseVisualStyleBackColor = true;
             this.showButton.Click += new System.EventHandler(this.OnShowDocument);
             // 
@@ -204,11 +212,23 @@ namespace AutoCollection
             this.autoNameLabel.TabIndex = 15;
             this.autoNameLabel.Text = "Наим. авто";
             // 
+            // choiceProxyButton
+            // 
+            this.choiceProxyButton.Location = new System.Drawing.Point(281, 101);
+            this.choiceProxyButton.Name = "choiceProxyButton";
+            this.choiceProxyButton.Size = new System.Drawing.Size(136, 20);
+            this.choiceProxyButton.TabIndex = 16;
+            this.choiceProxyButton.Text = "Номер доверенности";
+            this.actionToolTip.SetToolTip(this.choiceProxyButton, "Получить номер доверенности, которую следует отозвать");
+            this.choiceProxyButton.UseVisualStyleBackColor = true;
+            this.choiceProxyButton.Click += new System.EventHandler(this.OnChoiceProxyNumber);
+            // 
             // ActionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(628, 381);
+            this.Controls.Add(this.choiceProxyButton);
             this.Controls.Add(this.autoNameLabel);
             this.Controls.Add(this.docGroupBox);
             this.Controls.Add(this.RejectButton);
@@ -254,5 +274,6 @@ namespace AutoCollection
         private System.Windows.Forms.GroupBox docGroupBox;
         private System.Windows.Forms.ToolTip actionToolTip;
         private System.Windows.Forms.Label autoNameLabel;
+        private System.Windows.Forms.Button choiceProxyButton;
     }
 }

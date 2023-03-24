@@ -70,6 +70,12 @@ namespace AutoCollection
                 sumTextBox.Visible = false;
             }
 
+            // скрыть кнопку выбора немеров действующих неотозванных доверенностей
+            if(m_idaction != 2)
+            {
+                choiceProxyButton.Visible = false;
+            }
+
         }
         /// <summary>
         /// Загрузка скана документа и получение массива бйтов контента
@@ -127,6 +133,13 @@ namespace AutoCollection
             DateTime de = m_idaction > 1 ? db : endDateTimePicker.Value;
 
             string nomd = nomTextBox.Text;
+            if (string.IsNullOrEmpty(nomd) || string.IsNullOrWhiteSpace(nomd))
+            {
+                MessageBox.Show("Необходимо задать номер документа-основания");
+                DialogResult = DialogResult.Cancel;
+                return;
+            }
+
             string comments = commentsTextBox.Text;
             double summa = 0.0;
             if(m_idaction == 3 || m_idaction == 4)
@@ -135,16 +148,74 @@ namespace AutoCollection
                 {
                     summa = Convert.ToDouble(sumTextBox.Text);
                 }
-                catch(Exception ex)
+                catch(Exception)
                 {
                     MessageBox.Show("Ошибка задания суммы");
                     DialogResult = DialogResult.Cancel;
                     return;
                 }
+
+                string nom = GetNumberActualProxy();
+                if (!string.IsNullOrEmpty(nom))
+                {
+                    MessageBox.Show($"Существует действующая неотозванная доверенность номер {nom}.\nСледует отозвать доверенность.");
+                    DialogResult = DialogResult.Cancel;
+                    return;
+                }
+
+            }
+            else if(m_idaction == 1)
+            {
+                string nom = GetNumberActualProxy();
+                if (!string.IsNullOrEmpty(nom))
+                {
+                    MessageBox.Show($"Существует действующая неотозванная доверенность номер {nom}.\nСледует отозвать доверенность.");
+                    DialogResult = DialogResult.Cancel;
+                    return;
+                }
+
+            }
+            else if(m_idaction == 5)
+            {
+                string nom = GetNumberActualProxy();
+                if (!string.IsNullOrEmpty(nom))
+                {
+                    MessageBox.Show($"Существует действующая неотозванная доверенность номер {nom}.\nСледует отозвать доверенность.");
+                    DialogResult = DialogResult.Cancel;
+                    return;
+                }
+
             }
 
             if (Program.m_helper.AddAction(m_idauto, db, de, nomd, m_idaction, comments, summa, m_docContent) < 1)
                 DialogResult = DialogResult.Abort;
+        }
+
+        /// <summary>
+        /// Задать номер неотозванной действующей доверенности в поле ввода номера при отзыве доверенности
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnChoiceProxyNumber(object sender, EventArgs e)
+        {
+            string nom = GetNumberActualProxy();
+            if (string.IsNullOrEmpty(nom))
+            {
+                MessageBox.Show("Нет неотозванных доверенностей");
+            }
+            else
+                nomTextBox.Text = nom;
+
+        }
+        /// <summary>
+        /// Получить номер неотозванной действующей доверенности
+        /// </summary>
+        /// <returns></returns>
+        private string GetNumberActualProxy()
+        {
+            DateTime dt = beginDateTimePicker.Value;
+            return Program.m_helper.GetNotTakenProxy(m_idauto, dt);
+
         }
     }
 }

@@ -84,4 +84,22 @@ namespace AutoCollection
         public string nameevt { get; set; }
 
     }
+    /// <summary>
+    /// Доверенности
+    /// </summary>
+    internal class Proxy
+    {
+        /// <summary>
+        /// идентификатор выдачи доверенности
+        /// </summary>
+        public long idproxy { get; set; }
+        /// <summary>
+        /// идентификатор отзыва доверенности
+        /// </summary>
+        public long idtake { get; set; }
+        /// <summary>
+        /// Ном. документа (доверенность, продажа, ремонт)
+        /// </summary>
+        public string nomdoc { get; set; }
+    }
 }

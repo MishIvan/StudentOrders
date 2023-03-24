@@ -79,7 +79,9 @@ namespace AutoCollection
             if(!string.IsNullOrEmpty(filter) && !string.IsNullOrWhiteSpace(filter))
             {
                 sqlText += $" and name like '%{filter}%'";
+                
             }
+            sqlText += " order by name";
             try
             {
                 var task = await conn.QueryAsync<Auto>(sqlText);
@@ -283,36 +285,30 @@ namespace AutoCollection
             return lst;
         }
         /// <summary>
-        /// Проверка совершаемого действия на правильность
+        ///  Получение номера неотозванной действующей доверенности
         /// </summary>
-        /// <param name="idauto"></param>
-        /// <param name="idaction"></param>
-        /// <param name="nomdoc"></param>
-        /// <param name="dt"></param>
+        /// <param name="idauto">идентификатор авто</param>
+        /// <param name="dt">актуальная дата</param>
         /// <returns></returns>
-        public bool ValidateAction(long idauto, int idaction, string nomdoc, DateTime dt)
+        public string GetNotTakenProxy(long idauto,DateTime dt)
         {
-            // болванка функции
-            bool res = true;
-            string sqlText;
+            string npoxy = string.Empty;
+            if (!isOpened) return npoxy;
+            string sqlText = AppSettings.Default.NotTakenProxy;
             string sdt = dt.ToString("yyyyMMdd");
-            switch(idaction)
+            try
             {
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    break;
-
-
+                npoxy = conn.Query<Proxy>(sqlText, new { pidauto = idauto, pdt = sdt })
+                    .Where(p => p.idtake == 0)
+                    .Select(p => p.nomdoc)
+                    .FirstOrDefault();
             }
-            return res;
+            catch(Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return npoxy;
         }
-        #endregion between
+        #endregion
     }
 }

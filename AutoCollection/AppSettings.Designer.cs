@@ -35,5 +35,23 @@ namespace AutoCollection {
                 this["ConnectionString"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"select nomdoc, idproxy, idtake
+from (
+	select t1.nomdoc, t1.id idproxy, isnull(t2.id,0) idtake 
+	from actions t1 
+	left join actions t2 on t2.idevt = 2 and t2.nomdoc = t1.nomdoc and t1.idauto = t2.idauto
+	where t1.idauto = @pidauto and @pdt between t1.bdate and t1.edate and t1.idevt = 1
+) tabp")]
+        public string NotTakenProxy {
+            get {
+                return ((string)(this["NotTakenProxy"]));
+            }
+            set {
+                this["NotTakenProxy"] = value;
+            }
+        }
     }
 }
