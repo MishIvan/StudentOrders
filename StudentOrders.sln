@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appointments", "Appointment
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoCollection", "AutoCollection\AutoCollection.csproj", "{1DDF873A-0B9F-48A5-AF83-79E24E43B1E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CallAccounting", "CallAccounting\CallAccounting.csproj", "{77EE9FD9-FF7F-4976-AFC9-CB3A4DD74292}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,18 @@ Global
 		{1DDF873A-0B9F-48A5-AF83-79E24E43B1E0}.Release|x64.Build.0 = Release|Any CPU
 		{1DDF873A-0B9F-48A5-AF83-79E24E43B1E0}.Release|x86.ActiveCfg = Release|Any CPU
 		{1DDF873A-0B9F-48A5-AF83-79E24E43B1E0}.Release|x86.Build.0 = Release|Any CPU
+		{77EE9FD9-FF7F-4976-AFC9-CB3A4DD74292}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77EE9FD9-FF7F-4976-AFC9-CB3A4DD74292}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77EE9FD9-FF7F-4976-AFC9-CB3A4DD74292}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{77EE9FD9-FF7F-4976-AFC9-CB3A4DD74292}.Debug|x64.Build.0 = Debug|Any CPU
+		{77EE9FD9-FF7F-4976-AFC9-CB3A4DD74292}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{77EE9FD9-FF7F-4976-AFC9-CB3A4DD74292}.Debug|x86.Build.0 = Debug|Any CPU
+		{77EE9FD9-FF7F-4976-AFC9-CB3A4DD74292}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77EE9FD9-FF7F-4976-AFC9-CB3A4DD74292}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77EE9FD9-FF7F-4976-AFC9-CB3A4DD74292}.Release|x64.ActiveCfg = Release|Any CPU
+		{77EE9FD9-FF7F-4976-AFC9-CB3A4DD74292}.Release|x64.Build.0 = Release|Any CPU
+		{77EE9FD9-FF7F-4976-AFC9-CB3A4DD74292}.Release|x86.ActiveCfg = Release|Any CPU
+		{77EE9FD9-FF7F-4976-AFC9-CB3A4DD74292}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
