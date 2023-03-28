@@ -77,6 +77,24 @@ namespace CallAccounting
             }
             return lst;
         }
+        /// <summary>
+        /// Получение списка сотрудников с привязанными к ним телефоеами
+        /// </summary>
+        /// <returns>список, если запрос удачно выполнен, иначе null</returns>
+        public async Task<List<UsersPhones>> GetUsersPhones()            
+        {
+            string sqlText = "select workerid, workername, iddept, deptname, deptlocation, idphone, phonenumber, charge, binddate, recstatus from phonesview";
+            try
+            {
+                var task = await conn.QueryAsync<UsersPhones>(sqlText);
+                return task.ToList();
+            }
+            catch(Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return null;
+        }
 
     }
 }

@@ -40,15 +40,15 @@ namespace CallAccounting
             this.addCallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editCallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.delCallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.действияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bindPhoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.справочникиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.phonesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deptsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.действияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bindPhoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.closeUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.idworker = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.username = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idphone = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -58,6 +58,7 @@ namespace CallAccounting
             this.iddept = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.location = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deliverydate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.recstatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.phonesDataGridView)).BeginInit();
             this.mainMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -93,11 +94,12 @@ namespace CallAccounting
             this.department,
             this.iddept,
             this.location,
-            this.deliverydate});
+            this.deliverydate,
+            this.recstatus});
             this.phonesDataGridView.Location = new System.Drawing.Point(16, 70);
             this.phonesDataGridView.Name = "phonesDataGridView";
             this.phonesDataGridView.ReadOnly = true;
-            this.phonesDataGridView.Size = new System.Drawing.Size(867, 368);
+            this.phonesDataGridView.Size = new System.Drawing.Size(970, 436);
             this.phonesDataGridView.TabIndex = 2;
             // 
             // mainMenuStrip
@@ -109,7 +111,7 @@ namespace CallAccounting
             this.reportsToolStripMenuItem});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
-            this.mainMenuStrip.Size = new System.Drawing.Size(916, 24);
+            this.mainMenuStrip.Size = new System.Drawing.Size(998, 24);
             this.mainMenuStrip.TabIndex = 3;
             this.mainMenuStrip.Text = "menuStrip1";
             // 
@@ -140,6 +142,27 @@ namespace CallAccounting
             this.delCallToolStripMenuItem.Name = "delCallToolStripMenuItem";
             this.delCallToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.delCallToolStripMenuItem.Text = "Удалить";
+            // 
+            // действияToolStripMenuItem
+            // 
+            this.действияToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bindPhoneToolStripMenuItem,
+            this.closeUserToolStripMenuItem});
+            this.действияToolStripMenuItem.Name = "действияToolStripMenuItem";
+            this.действияToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
+            this.действияToolStripMenuItem.Text = "Действия";
+            // 
+            // bindPhoneToolStripMenuItem
+            // 
+            this.bindPhoneToolStripMenuItem.Name = "bindPhoneToolStripMenuItem";
+            this.bindPhoneToolStripMenuItem.Size = new System.Drawing.Size(309, 22);
+            this.bindPhoneToolStripMenuItem.Text = "Присвоение номера телефона сотруднику";
+            // 
+            // closeUserToolStripMenuItem
+            // 
+            this.closeUserToolStripMenuItem.Name = "closeUserToolStripMenuItem";
+            this.closeUserToolStripMenuItem.Size = new System.Drawing.Size(309, 22);
+            this.closeUserToolStripMenuItem.Text = "Закрыть запись сотрудника";
             // 
             // справочникиToolStripMenuItem
             // 
@@ -175,30 +198,9 @@ namespace CallAccounting
             this.reportsToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.reportsToolStripMenuItem.Text = "Отчёты";
             // 
-            // действияToolStripMenuItem
-            // 
-            this.действияToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bindPhoneToolStripMenuItem,
-            this.closeUserToolStripMenuItem});
-            this.действияToolStripMenuItem.Name = "действияToolStripMenuItem";
-            this.действияToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
-            this.действияToolStripMenuItem.Text = "Действия";
-            // 
-            // bindPhoneToolStripMenuItem
-            // 
-            this.bindPhoneToolStripMenuItem.Name = "bindPhoneToolStripMenuItem";
-            this.bindPhoneToolStripMenuItem.Size = new System.Drawing.Size(309, 22);
-            this.bindPhoneToolStripMenuItem.Text = "Присвоение номера телефона сотруднику";
-            // 
-            // closeUserToolStripMenuItem
-            // 
-            this.closeUserToolStripMenuItem.Name = "closeUserToolStripMenuItem";
-            this.closeUserToolStripMenuItem.Size = new System.Drawing.Size(309, 22);
-            this.closeUserToolStripMenuItem.Text = "Закрыть запись сотрудника";
-            // 
             // idworker
             // 
-            this.idworker.DataPropertyName = "idworker";
+            this.idworker.DataPropertyName = "workerid";
             this.idworker.HeaderText = "ИД сотрудника";
             this.idworker.Name = "idworker";
             this.idworker.ReadOnly = true;
@@ -273,19 +275,30 @@ namespace CallAccounting
             this.deliverydate.ReadOnly = true;
             this.deliverydate.ToolTipText = "Дата присвоения номера сотруднику";
             // 
+            // recstatus
+            // 
+            this.recstatus.DataPropertyName = "recstatus";
+            this.recstatus.HeaderText = "Статус";
+            this.recstatus.Name = "recstatus";
+            this.recstatus.ReadOnly = true;
+            this.recstatus.ToolTipText = "Статус записи действующая или закрытая";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(916, 450);
+            this.ClientSize = new System.Drawing.Size(998, 518);
             this.Controls.Add(this.phonesDataGridView);
             this.Controls.Add(this.filterUserTextBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.mainMenuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mainMenuStrip;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Учёт телефонных звонков";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnClosed);
+            this.Load += new System.EventHandler(this.OnLoad);
             ((System.ComponentModel.ISupportInitialize)(this.phonesDataGridView)).EndInit();
             this.mainMenuStrip.ResumeLayout(false);
             this.mainMenuStrip.PerformLayout();
@@ -322,6 +335,7 @@ namespace CallAccounting
         private System.Windows.Forms.DataGridViewTextBoxColumn iddept;
         private System.Windows.Forms.DataGridViewTextBoxColumn location;
         private System.Windows.Forms.DataGridViewTextBoxColumn deliverydate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn recstatus;
     }
 }
 

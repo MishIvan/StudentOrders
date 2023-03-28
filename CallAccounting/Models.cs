@@ -24,4 +24,20 @@ namespace CallAccounting
         public string location { get; set; }
 
     }
+
+    public class UsersPhones
+    {
+        public long workerid { get; set; }
+        public string workername { get; set; }
+        public long iddept { get; set; }
+        public string deptname { get; set; }
+        public string deptlocation { get; set; }
+        public long idphone { get; set; }
+        public string phonenumber { get; set; }
+        public float charge { get; set; }
+        public DateTime binddate { get; set; }
+        public string recstatus { get; set; }
+
+
+    }
 }

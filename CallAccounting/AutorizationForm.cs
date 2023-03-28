@@ -50,7 +50,14 @@ namespace CallAccounting
                     if(pwdTextBox.Text == pwd)
                     {
                         m_exit = true;
-                        m_tryCount = 3;
+                        m_tryCount = 3;                        
+                        Hide();
+                        Program.m_currentUser.id = wrk.id;
+                        Program.m_currentUser.name = wrk.name;
+                        Program.m_currentUser.iddept = wrk.iddept;
+                        Program.m_currentUser.closed = wrk.closed;
+                        Program.m_currentUser.admin = wrk.admin;
+
                         new MainForm().Show();
                         return;
                     }
@@ -58,6 +65,10 @@ namespace CallAccounting
                     {
                         MessageBox.Show("Неверно введён пароль");
                         m_exit = ++m_tryCount < 3;
+                        if(m_tryCount >= 3)
+                        {
+                            OnReject(sender, e);
+                        }
                     }
                     
                 }

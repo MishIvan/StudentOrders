@@ -24,6 +24,7 @@ namespace CallAccounting
                 MessageBox.Show("Неудачная попытка соединения с базой данных");
                 Application.Exit();
             }
+            m_currentUser = new Worker();
             Application.Run(new AutorizationForm());
         }
     }
