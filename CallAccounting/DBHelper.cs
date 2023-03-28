@@ -11,10 +11,10 @@ namespace CallAccounting
     /// <summary>
     /// Класс, в котором реализована работа с БД
     /// </summary>
-    internal class DBHelper : IDisposable
+    internal class BaseDBHelper : IDisposable
     {
-        private SqlConnection conn;
-        private string _errorText;
+        protected SqlConnection conn;
+        protected string _errorText;
         /// <summary>
         ///  открыта ли БД
         /// </summary>
@@ -27,7 +27,7 @@ namespace CallAccounting
         /// <summary>
         /// установление соединения с БД непосредственно в конструкторе
         /// </summary>
-        public DBHelper()
+        public BaseDBHelper()
         {
             _errorText = "";
             String connectionString = AppSettings.Default.ConnectionString;
@@ -50,6 +50,33 @@ namespace CallAccounting
             if (isOpened) conn.Close();
         }
 
+
+    }
+
+    internal class DBHelper : BaseDBHelper
+    {
+        public DBHelper() : base()
+        {
+        }
+
+        /// <summary>
+        /// Получить список сотрудников
+        /// </summary>
+        /// <returns>список сотрудников, если запрос успешно выполнен или null, если нет</returns>
+        public List<Worker> GetWorkersList()
+        {
+            List<Worker> lst = null;
+            try
+            {
+                string sqlText = "select id, name, iddept, admin, closed, passw from workers";
+                lst = conn.Query<Worker>(sqlText).ToList();
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return lst;
+        }
 
     }
 }

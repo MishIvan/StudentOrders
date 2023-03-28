@@ -12,6 +12,7 @@ namespace CallAccounting
         /// Главная точка входа для приложения.
         /// </summary>
         public static DBHelper m_helper;
+        public static Worker m_currentUser;
         [STAThread]
         static void Main()
         {
@@ -23,7 +24,7 @@ namespace CallAccounting
                 MessageBox.Show("Неудачная попытка соединения с базой данных");
                 Application.Exit();
             }
-            Application.Run(new MainForm());
+            Application.Run(new AutorizationForm());
         }
     }
 }

@@ -38,11 +38,17 @@ namespace CallAccounting
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.callsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addCallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mainToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.editCallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.delCallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.справочникиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.phonesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deptsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mainToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.действияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bindPhoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.idworker = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.username = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idphone = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,9 +58,6 @@ namespace CallAccounting
             this.iddept = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.location = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deliverydate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.editCallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.delCallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.phonesDataGridView)).BeginInit();
             this.mainMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -101,6 +104,7 @@ namespace CallAccounting
             // 
             this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.callsToolStripMenuItem,
+            this.действияToolStripMenuItem,
             this.справочникиToolStripMenuItem,
             this.reportsToolStripMenuItem});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
@@ -122,8 +126,20 @@ namespace CallAccounting
             // addCallToolStripMenuItem
             // 
             this.addCallToolStripMenuItem.Name = "addCallToolStripMenuItem";
-            this.addCallToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addCallToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.addCallToolStripMenuItem.Text = "Добавить";
+            // 
+            // editCallToolStripMenuItem
+            // 
+            this.editCallToolStripMenuItem.Name = "editCallToolStripMenuItem";
+            this.editCallToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.editCallToolStripMenuItem.Text = "Править";
+            // 
+            // delCallToolStripMenuItem
+            // 
+            this.delCallToolStripMenuItem.Name = "delCallToolStripMenuItem";
+            this.delCallToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.delCallToolStripMenuItem.Text = "Удалить";
             // 
             // справочникиToolStripMenuItem
             // 
@@ -153,6 +169,33 @@ namespace CallAccounting
             this.deptsToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.deptsToolStripMenuItem.Text = "Отделы";
             // 
+            // reportsToolStripMenuItem
+            // 
+            this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
+            this.reportsToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
+            this.reportsToolStripMenuItem.Text = "Отчёты";
+            // 
+            // действияToolStripMenuItem
+            // 
+            this.действияToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bindPhoneToolStripMenuItem,
+            this.closeUserToolStripMenuItem});
+            this.действияToolStripMenuItem.Name = "действияToolStripMenuItem";
+            this.действияToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
+            this.действияToolStripMenuItem.Text = "Действия";
+            // 
+            // bindPhoneToolStripMenuItem
+            // 
+            this.bindPhoneToolStripMenuItem.Name = "bindPhoneToolStripMenuItem";
+            this.bindPhoneToolStripMenuItem.Size = new System.Drawing.Size(309, 22);
+            this.bindPhoneToolStripMenuItem.Text = "Присвоение номера телефона сотруднику";
+            // 
+            // closeUserToolStripMenuItem
+            // 
+            this.closeUserToolStripMenuItem.Name = "closeUserToolStripMenuItem";
+            this.closeUserToolStripMenuItem.Size = new System.Drawing.Size(309, 22);
+            this.closeUserToolStripMenuItem.Text = "Закрыть запись сотрудника";
+            // 
             // idworker
             // 
             this.idworker.DataPropertyName = "idworker";
@@ -163,7 +206,7 @@ namespace CallAccounting
             // 
             // username
             // 
-            this.username.DataPropertyName = "username";
+            this.username.DataPropertyName = "workername";
             this.username.HeaderText = "ФИО";
             this.username.Name = "username";
             this.username.ReadOnly = true;
@@ -172,6 +215,7 @@ namespace CallAccounting
             // 
             // idphone
             // 
+            this.idphone.DataPropertyName = "idphone";
             this.idphone.HeaderText = "ИД телефона";
             this.idphone.Name = "idphone";
             this.idphone.ReadOnly = true;
@@ -179,7 +223,7 @@ namespace CallAccounting
             // 
             // phone
             // 
-            this.phone.DataPropertyName = "phone";
+            this.phone.DataPropertyName = "phonenumber";
             this.phone.HeaderText = "Ном. телефона";
             this.phone.Name = "phone";
             this.phone.ReadOnly = true;
@@ -204,6 +248,7 @@ namespace CallAccounting
             // 
             // iddept
             // 
+            this.iddept.DataPropertyName = "iddept";
             this.iddept.HeaderText = "ИД отдела";
             this.iddept.Name = "iddept";
             this.iddept.ReadOnly = true;
@@ -219,7 +264,7 @@ namespace CallAccounting
             // 
             // deliverydate
             // 
-            this.deliverydate.DataPropertyName = "deliverydate";
+            this.deliverydate.DataPropertyName = "binddate";
             dataGridViewCellStyle1.Format = "d";
             dataGridViewCellStyle1.NullValue = null;
             this.deliverydate.DefaultCellStyle = dataGridViewCellStyle1;
@@ -227,24 +272,6 @@ namespace CallAccounting
             this.deliverydate.Name = "deliverydate";
             this.deliverydate.ReadOnly = true;
             this.deliverydate.ToolTipText = "Дата присвоения номера сотруднику";
-            // 
-            // editCallToolStripMenuItem
-            // 
-            this.editCallToolStripMenuItem.Name = "editCallToolStripMenuItem";
-            this.editCallToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.editCallToolStripMenuItem.Text = "Править";
-            // 
-            // delCallToolStripMenuItem
-            // 
-            this.delCallToolStripMenuItem.Name = "delCallToolStripMenuItem";
-            this.delCallToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.delCallToolStripMenuItem.Text = "Удалить";
-            // 
-            // reportsToolStripMenuItem
-            // 
-            this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
-            this.reportsToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
-            this.reportsToolStripMenuItem.Text = "Отчёты";
             // 
             // MainForm
             // 
@@ -280,6 +307,12 @@ namespace CallAccounting
         private System.Windows.Forms.ToolStripMenuItem usersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem phonesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deptsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editCallToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem delCallToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reportsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem действияToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bindPhoneToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closeUserToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn idworker;
         private System.Windows.Forms.DataGridViewTextBoxColumn username;
         private System.Windows.Forms.DataGridViewTextBoxColumn idphone;
@@ -289,9 +322,6 @@ namespace CallAccounting
         private System.Windows.Forms.DataGridViewTextBoxColumn iddept;
         private System.Windows.Forms.DataGridViewTextBoxColumn location;
         private System.Windows.Forms.DataGridViewTextBoxColumn deliverydate;
-        private System.Windows.Forms.ToolStripMenuItem editCallToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem delCallToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem reportsToolStripMenuItem;
     }
 }
 
