@@ -78,6 +78,46 @@ namespace CallAccounting
             return lst;
         }
         /// <summary>
+        /// Установка пароля пользователя, зашифрованного в base64
+        /// </summary>
+        /// <param name="iduser">идентификатор пользователя, работника</param>
+        /// <param name="passw">строка с незашифрованным паролем</param>
+        /// <returns>1 - успешное выполнение запроса, 0 - ошибка выполения запроса</returns>
+        public int UpdateWorker(long iduser, string name, long deptid, bool admin, bool closed, string passw = "123456")
+        {
+            int nrec = 0;
+            string sqlText = "update workers set name = @pname, iddept = @piddept, admin = @padmin. closed = @pclosed, passw = @pwd where id = @pid";
+            try
+            {
+                string b64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(passw));
+                byte [] bt = Encoding.UTF8.GetBytes(b64);
+                nrec = conn.Execute(sqlText, new {pname = name, padmin = admin, pcolsed = closed, piddept = deptid, pwd = bt, pid = iduser });
+            }
+            catch(Exception ex)
+            { 
+                _errorText = ex.Message;
+            }
+            return nrec;
+        }
+        /// <summary>
+        /// Получить список подразделений
+        /// </summary>
+        /// <returns>список, если запрос удачно выполнен, иначе null</returns>
+        public async Task<List<Department>> GetDepartmentsList()
+        {
+            string sqlText = "select id, name, location from depertments";
+            try
+            {
+                var task = await conn.QueryAsync<Department>(sqlText);
+                return task.ToList();
+            }
+            catch(Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return null;
+        }
+        /// <summary>
         /// Получение списка сотрудников с привязанными к ним телефоеами
         /// </summary>
         /// <returns>список, если запрос удачно выполнен, иначе null</returns>

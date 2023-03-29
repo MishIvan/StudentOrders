@@ -25,6 +25,21 @@ namespace CallAccounting
 
     }
 
+    public class Phone
+    {
+        public long id { get; set; }
+        public string number { get; set; }
+        public double charge { get; set; }
+    }
+
+    public class PhoneCall
+    {
+        public long id { get; set; }
+        public bool input { get; set; }
+        public long idphone { get; set; }
+        public double calltime { get; set; }
+
+    }
     public class UsersPhones
     {
         public long workerid { get; set; }
