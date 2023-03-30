@@ -23,9 +23,9 @@ namespace CallAccounting
             m_exit = false;
         }
 
-        private void OnLoad(object sender, EventArgs e)
+        private async void OnLoad(object sender, EventArgs e)
         {
-            m_wrkList = Program.m_helper.GetWorkersList();
+            m_wrkList = await Program.m_helper.GetWorkersList();
             if (m_wrkList != null)
             {
                 List<string> lst = m_wrkList

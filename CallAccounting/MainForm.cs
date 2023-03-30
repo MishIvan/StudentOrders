@@ -36,8 +36,89 @@ namespace CallAccounting
         private async void OnLoad(object sender, EventArgs e)
         {
             m_dataList = await Program.m_helper.GetUsersPhones();
-            phonesDataGridView.DataSource = m_dataList;
+            if (Program.m_currentUser.admin)
+                phonesDataGridView.DataSource = m_dataList.Where(w => w.recstatus != "Закрытая").ToList();
+            else
+                phonesDataGridView.DataSource = m_dataList.Where(w => w.recstatus != "Закрытая" && w.workername == Program.m_currentUser.name).ToList();
             Text += $" ({Program.m_currentUser.name})";
+        }
+        /// <summary>
+        /// Скрыть или показать закрытые записи
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnShowClosedRecords(object sender, EventArgs e)
+        {
+            bool showClosed = showClosedCheckBox.Checked;
+            string filter = filterUserTextBox.Text;
+            List<UsersPhones> lst = null;
+            if (showClosed)
+                lst = !(string.IsNullOrEmpty(filter) || string.IsNullOrWhiteSpace(filter)) ?
+                    m_dataList.Where(w => w.workername.Contains(filter)).ToList()
+                    : m_dataList;
+            else
+            {
+                lst = !(string.IsNullOrEmpty(filter) || string.IsNullOrWhiteSpace(filter)) ?
+                    m_dataList.Where(w => w.recstatus != "Закрытая" && w.workername.Contains(filter)).ToList()
+                    : m_dataList.Where(w => w.recstatus != "Закрытая").ToList();
+            }
+            phonesDataGridView.DataSource = Program.m_currentUser.admin ? lst : lst.Where(w=> w.workername == Program.m_currentUser.name);
+
+        }
+        /// <summary>
+        /// Применить фильтр по пользователям
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void filterUserTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+                OnShowClosedRecords(sender, e);
+        }
+        /// <summary>
+        /// Управление справочниками
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void referenceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new ReferencesForm().ShowDialog();
+        }
+        /// <summary>
+        /// Добавить вызов для выбранного телефона
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void addCallContextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+        /// <summary>
+        /// Удалить вызов для выбранного телефона
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void delCallContextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+        /// <summary>
+        /// Править параметры вызова для выбранного телефона
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void editCallContextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+        /// <summary>
+        /// Выдать список вызовов для выбранного сотрудника
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void callListContextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
