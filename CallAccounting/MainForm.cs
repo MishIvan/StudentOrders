@@ -36,11 +36,20 @@ namespace CallAccounting
         private async void OnLoad(object sender, EventArgs e)
         {
             m_dataList = await Program.m_helper.GetUsersPhones();
-            if (Program.m_currentUser.admin)
+            bool isAdmin = Program.m_currentUser.admin;
+            if (isAdmin)
                 phonesDataGridView.DataSource = m_dataList.Where(w => w.recstatus != "Закрытая").ToList();
             else
                 phonesDataGridView.DataSource = m_dataList.Where(w => w.recstatus != "Закрытая" && w.workername == Program.m_currentUser.name).ToList();
             Text += $" ({Program.m_currentUser.name})";
+            Icon = Properties.Resources.Phone32;
+            
+            refToolStripMenuItem.Visible = isAdmin;
+            bindPhoneToolStripMenuItem.Visible = isAdmin;
+            withdrawPhoneToolStripMenuItem.Visible = isAdmin;
+            closeWorkerToolStripMenuItem.Visible = isAdmin;
+            reportsToolStripMenuItem.Visible = isAdmin;
+
         }
         /// <summary>
         /// Скрыть или показать закрытые записи
@@ -82,7 +91,7 @@ namespace CallAccounting
         /// <param name="e"></param>
         private void referenceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new ReferencesForm().ShowDialog();
+            new PhonesForm().ShowDialog();
         }
         /// <summary>
         /// Добавить вызов для выбранного телефона
@@ -119,6 +128,72 @@ namespace CallAccounting
         private void callListContextToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+        /// <summary>
+        /// Управление справочником сотрудников
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void workersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            WorkerForm frm = new WorkerForm();
+            frm.ShowDialog();
+
+            if (frm.changed)
+            {
+                m_dataList = await Program.m_helper.GetUsersPhones();
+                bool isAdmin = Program.m_currentUser.admin;
+                if (isAdmin)
+                    phonesDataGridView.DataSource = !showClosedCheckBox.Checked ? m_dataList.Where(w => w.recstatus != "Закрытая").ToList() :
+                        m_dataList;
+                else
+                    phonesDataGridView.DataSource = !showClosedCheckBox.Checked ? m_dataList.Where(w => w.recstatus != "Закрытая" && w.workername == Program.m_currentUser.name).ToList() :
+                        m_dataList.Where(w => w.workername == Program.m_currentUser.name).ToList();
+            }
+        }
+        /// <summary>
+        /// Управление справочником отделов
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void deptsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DepartmentsForm frm = new DepartmentsForm();
+            frm.ShowDialog();
+
+            if (frm.changed)
+            {
+                m_dataList = await Program.m_helper.GetUsersPhones();
+                bool isAdmin = Program.m_currentUser.admin;
+                if (isAdmin)
+                    phonesDataGridView.DataSource = !showClosedCheckBox.Checked ? m_dataList.Where(w => w.recstatus != "Закрытая").ToList() :
+                        m_dataList;
+                else
+                    phonesDataGridView.DataSource = !showClosedCheckBox.Checked ? m_dataList.Where(w => w.recstatus != "Закрытая" && w.workername == Program.m_currentUser.name).ToList() :
+                        m_dataList.Where(w => w.workername == Program.m_currentUser.name).ToList();
+            }
+        }
+        /// <summary>
+        /// Управление справочником 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void phonesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PhonesForm frm = new PhonesForm();
+            frm.ShowDialog();
+
+            if (frm.changed)
+            {
+                m_dataList = await Program.m_helper.GetUsersPhones();
+                bool isAdmin = Program.m_currentUser.admin;
+                if (isAdmin)
+                    phonesDataGridView.DataSource = !showClosedCheckBox.Checked ? m_dataList.Where(w => w.recstatus != "Закрытая").ToList() :
+                        m_dataList;
+                else
+                    phonesDataGridView.DataSource = !showClosedCheckBox.Checked ? m_dataList.Where(w => w.recstatus != "Закрытая" && w.workername == Program.m_currentUser.name).ToList() :
+                        m_dataList.Where(w => w.workername == Program.m_currentUser.name).ToList();
+            }
         }
     }
 }

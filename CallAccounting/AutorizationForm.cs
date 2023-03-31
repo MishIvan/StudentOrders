@@ -26,14 +26,8 @@ namespace CallAccounting
         private async void OnLoad(object sender, EventArgs e)
         {
             m_wrkList = await Program.m_helper.GetWorkersList();
-            if (m_wrkList != null)
-            {
-                List<string> lst = m_wrkList
-                    .Where(w => !w.closed)
-                    .Select(w => w.name)
-                    .ToList();
-                userComboBox.DataSource = lst;
-            }
+            userComboBox.DataSource = m_wrkList.Where(w=> !w.closed).ToList();
+            Icon = Properties.Resources.Phone32;
         }
 
         private void OnOK(object sender, EventArgs e)
@@ -41,10 +35,26 @@ namespace CallAccounting
             int idx = userComboBox.SelectedIndex;
             if (idx >=0)
             {
-                string user = userComboBox.Items[idx].ToString();
-                Worker wrk = m_wrkList.FirstOrDefault(w => w.name == user);
-                if(wrk != null)
+                Worker wrk = userComboBox.Items[idx] as Worker;
+                if (wrk != null)
                 {
+                    // пароль не установлен
+                    if(wrk.passw[0] == 0)
+                    {
+                        m_exit = true;
+                        m_tryCount = 3;
+                        Hide();
+                        Program.m_currentUser.id = wrk.id;
+                        Program.m_currentUser.name = wrk.name;
+                        Program.m_currentUser.iddept = wrk.iddept;
+                        Program.m_currentUser.closed = wrk.closed;
+                        Program.m_currentUser.admin = wrk.admin;
+
+                        new MainForm().Show();
+                        return;
+                    }
+
+                    // получить пароль и сравнить с введённым
                     byte [] bytes = Convert.FromBase64String(Encoding.UTF8.GetString(wrk.passw));
                     string pwd = Encoding.UTF8.GetString(bytes);
                     if(pwdTextBox.Text == pwd)

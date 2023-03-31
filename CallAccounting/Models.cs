@@ -14,6 +14,10 @@ namespace CallAccounting
         public bool admin { get; set; }
         public bool closed { get; set; }
         public byte [] passw { get; set; }
+        public override string ToString()
+        {
+            return name;
+        }
 
     }
 
@@ -22,6 +26,10 @@ namespace CallAccounting
         public long id { get; set; }
         public string name { get; set; }
         public string location { get; set; }
+        public override string ToString()
+        {
+            return name;
+        }
 
     }
 
@@ -30,6 +38,10 @@ namespace CallAccounting
         public long id { get; set; }
         public string number { get; set; }
         public double charge { get; set; }
+        public override string ToString()
+        {
+            return number;
+        }
     }
 
     public class PhoneCall

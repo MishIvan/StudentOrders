@@ -67,7 +67,7 @@ namespace CallAccounting
         {
             try
             {
-                string sqlText = "select id, name, iddept, admin, closed, passw from workers";
+                string sqlText = "select distinct id, name, iddept, admin, closed, passw from workers";
                 var task = await conn.QueryAsync<Worker>(sqlText);
                 return task.ToList();
             }
@@ -89,10 +89,10 @@ namespace CallAccounting
         public int UpdateWorker(long iduser, string name, long deptid, bool admin = false, bool closed = false)
         {
             int nrec = 0;
-            string sqlText = "update workers set name = @pname, iddept = @piddept, admin = @padmin. closed = @pclosed where id = @pid";
+            string sqlText = "update workers set name = @pname, iddept = @piddept, admin = @padmin, closed = @pclosed where id = @pid";
             try
             {
-                nrec = conn.Execute(sqlText, new {pname = name, padmin = admin, pcolsed = closed, piddept = deptid, pid = iduser });
+                nrec = conn.Execute(sqlText, new {pname = name, padmin = admin, pclosed = closed, piddept = deptid, pid = iduser });
             }
             catch(Exception ex)
             { 
@@ -153,7 +153,7 @@ namespace CallAccounting
         /// <returns>список, если запрос удачно выполнен, иначе null</returns>
         public async Task<List<Department>> GetDepartmentsList()
         {
-            string sqlText = "select id, name, location from depertments";
+            string sqlText = "select id, name, location from departments";
             try
             {
                 var task = await conn.QueryAsync<Department>(sqlText);
@@ -174,7 +174,7 @@ namespace CallAccounting
         public int AddDepartment(string deptname, string deptlocation)
         {
             int nrec = 0;
-            string sqlText = "insert into dapartments (name, location) values(@pname, @ploc)";
+            string sqlText = "insert into departments (name, location) values(@pname, @ploc)";
             try
             {
                 nrec = conn.Execute(sqlText, new { pname = deptname, ploc = deptlocation });
@@ -195,7 +195,7 @@ namespace CallAccounting
         public int UpdateDepartment(long iddept, string deptname, string deptlocation)
         {
             int nrec = 0;
-            string sqlText = "update dapartments set name = @pname, location = @ploc where id = @pid";
+            string sqlText = "update departments set name = @pname, location = @ploc where id = @pid";
             try
             {
                 nrec = conn.Execute(sqlText, new { pid = iddept, pname = deptname, ploc = deptlocation });
@@ -203,6 +203,25 @@ namespace CallAccounting
             catch (Exception ex)
             {
                 _errorText = ex.Message;                
+            }
+            return nrec;
+        }
+        /// <summary>
+        /// Удалить запись об отделе. Если в отделе есть сотрудники, то будет выдано исключение
+        /// </summary>
+        /// <param name="iddept">идентификатор отдела</param>
+        /// <returns>1 - если запрос успешно выполнен, 0 - иначе</returns>
+        public int DeleteDepartment(long iddept)
+        {
+            int nrec = 0;
+            string sqlText = $"delete from departments where id = {iddept}";
+            try
+            {
+                nrec = conn.Execute(sqlText);
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
             }
             return nrec;
         }

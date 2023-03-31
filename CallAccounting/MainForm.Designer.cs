@@ -31,7 +31,6 @@ namespace CallAccounting
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.label1 = new System.Windows.Forms.Label();
             this.filterUserTextBox = new System.Windows.Forms.TextBox();
             this.phonesDataGridView = new System.Windows.Forms.DataGridView();
@@ -45,31 +44,36 @@ namespace CallAccounting
             this.location = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deliverydate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.recstatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mainContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addCallContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.delCallContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editCallContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.callListContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.callsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addCallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editCallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.delCallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.действияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.referenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bindPhoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.changePasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mainToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.showClosedCheckBox = new System.Windows.Forms.CheckBox();
-            this.payPeriodToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.paySumMoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mainContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.addCallContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.delCallContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editCallContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.callsListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.callListContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.действияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bindPhoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.withdrawPhoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changePasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeWorkerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.refToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.workersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deptsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.phonesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.payWorkersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mainToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.showClosedCheckBox = new System.Windows.Forms.CheckBox();
+            this.payDepartmentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.phonesDataGridView)).BeginInit();
-            this.mainMenuStrip.SuspendLayout();
             this.mainContextMenuStrip.SuspendLayout();
+            this.mainMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -111,6 +115,7 @@ namespace CallAccounting
             this.phonesDataGridView.MultiSelect = false;
             this.phonesDataGridView.Name = "phonesDataGridView";
             this.phonesDataGridView.ReadOnly = true;
+            this.phonesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.phonesDataGridView.Size = new System.Drawing.Size(970, 436);
             this.phonesDataGridView.TabIndex = 2;
             // 
@@ -199,118 +204,6 @@ namespace CallAccounting
             this.recstatus.ReadOnly = true;
             this.recstatus.ToolTipText = "Статус записи действующая или закрытая";
             // 
-            // mainMenuStrip
-            // 
-            this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.callsToolStripMenuItem,
-            this.действияToolStripMenuItem,
-            this.reportsToolStripMenuItem});
-            this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
-            this.mainMenuStrip.Name = "mainMenuStrip";
-            this.mainMenuStrip.Size = new System.Drawing.Size(998, 24);
-            this.mainMenuStrip.TabIndex = 3;
-            this.mainMenuStrip.Text = "menuStrip1";
-            // 
-            // callsToolStripMenuItem
-            // 
-            this.callsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addCallToolStripMenuItem,
-            this.editCallToolStripMenuItem,
-            this.delCallToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.callsListToolStripMenuItem});
-            this.callsToolStripMenuItem.Name = "callsToolStripMenuItem";
-            this.callsToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
-            this.callsToolStripMenuItem.Text = "Вызовы";
-            // 
-            // addCallToolStripMenuItem
-            // 
-            this.addCallToolStripMenuItem.Name = "addCallToolStripMenuItem";
-            this.addCallToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.addCallToolStripMenuItem.Text = "Добавить";
-            this.addCallToolStripMenuItem.ToolTipText = "Добавить вызов";
-            this.addCallToolStripMenuItem.Click += new System.EventHandler(this.addCallContextToolStripMenuItem_Click);
-            // 
-            // editCallToolStripMenuItem
-            // 
-            this.editCallToolStripMenuItem.Name = "editCallToolStripMenuItem";
-            this.editCallToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.editCallToolStripMenuItem.Text = "Править";
-            this.editCallToolStripMenuItem.ToolTipText = "Править параметры вызова";
-            this.editCallToolStripMenuItem.Click += new System.EventHandler(this.editCallContextToolStripMenuItem_Click);
-            // 
-            // delCallToolStripMenuItem
-            // 
-            this.delCallToolStripMenuItem.Name = "delCallToolStripMenuItem";
-            this.delCallToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.delCallToolStripMenuItem.Text = "Удалить";
-            this.delCallToolStripMenuItem.ToolTipText = "Удалить вызов";
-            this.delCallToolStripMenuItem.Click += new System.EventHandler(this.editCallContextToolStripMenuItem_Click);
-            // 
-            // действияToolStripMenuItem
-            // 
-            this.действияToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.referenceToolStripMenuItem,
-            this.bindPhoneToolStripMenuItem,
-            this.changePasswordToolStripMenuItem});
-            this.действияToolStripMenuItem.Name = "действияToolStripMenuItem";
-            this.действияToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
-            this.действияToolStripMenuItem.Text = "Действия";
-            // 
-            // referenceToolStripMenuItem
-            // 
-            this.referenceToolStripMenuItem.Name = "referenceToolStripMenuItem";
-            this.referenceToolStripMenuItem.Size = new System.Drawing.Size(309, 22);
-            this.referenceToolStripMenuItem.Text = "Управление справочниками";
-            this.referenceToolStripMenuItem.ToolTipText = "Добавление, правка и удаление записей справочников";
-            this.referenceToolStripMenuItem.Click += new System.EventHandler(this.referenceToolStripMenuItem_Click);
-            // 
-            // bindPhoneToolStripMenuItem
-            // 
-            this.bindPhoneToolStripMenuItem.Name = "bindPhoneToolStripMenuItem";
-            this.bindPhoneToolStripMenuItem.Size = new System.Drawing.Size(309, 22);
-            this.bindPhoneToolStripMenuItem.Text = "Присвоение номера телефона сотруднику";
-            // 
-            // changePasswordToolStripMenuItem
-            // 
-            this.changePasswordToolStripMenuItem.Name = "changePasswordToolStripMenuItem";
-            this.changePasswordToolStripMenuItem.Size = new System.Drawing.Size(309, 22);
-            this.changePasswordToolStripMenuItem.Text = "Изменить пароль";
-            this.changePasswordToolStripMenuItem.ToolTipText = "Изменить свой пароль. Новый пароль будетдействовать при следующем входе в систему" +
-    ".";
-            // 
-            // reportsToolStripMenuItem
-            // 
-            this.reportsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.payPeriodToolStripMenuItem,
-            this.paySumMoreToolStripMenuItem});
-            this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
-            this.reportsToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
-            this.reportsToolStripMenuItem.Text = "Отчёты";
-            // 
-            // showClosedCheckBox
-            // 
-            this.showClosedCheckBox.AutoSize = true;
-            this.showClosedCheckBox.Location = new System.Drawing.Point(824, 36);
-            this.showClosedCheckBox.Name = "showClosedCheckBox";
-            this.showClosedCheckBox.Size = new System.Drawing.Size(162, 17);
-            this.showClosedCheckBox.TabIndex = 4;
-            this.showClosedCheckBox.Text = "Показать скрытые записи";
-            this.showClosedCheckBox.UseVisualStyleBackColor = true;
-            this.showClosedCheckBox.Click += new System.EventHandler(this.OnShowClosedRecords);
-            // 
-            // payPeriodToolStripMenuItem
-            // 
-            this.payPeriodToolStripMenuItem.Name = "payPeriodToolStripMenuItem";
-            this.payPeriodToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
-            this.payPeriodToolStripMenuItem.Text = "Оплата за заданный период";
-            // 
-            // paySumMoreToolStripMenuItem
-            // 
-            this.paySumMoreToolStripMenuItem.Name = "paySumMoreToolStripMenuItem";
-            this.paySumMoreToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
-            this.paySumMoreToolStripMenuItem.Text = "Оплата больше заданной суммы";
-            // 
             // mainContextMenuStrip
             // 
             this.mainContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -343,18 +236,6 @@ namespace CallAccounting
             this.editCallContextToolStripMenuItem.Text = "Править вызов";
             this.editCallContextToolStripMenuItem.Click += new System.EventHandler(this.editCallContextToolStripMenuItem_Click);
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
-            // 
-            // callsListToolStripMenuItem
-            // 
-            this.callsListToolStripMenuItem.Name = "callsListToolStripMenuItem";
-            this.callsListToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.callsListToolStripMenuItem.Text = "Список вызовов";
-            this.callsListToolStripMenuItem.Click += new System.EventHandler(this.callListContextToolStripMenuItem_Click);
-            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -367,6 +248,175 @@ namespace CallAccounting
             this.callListContextToolStripMenuItem.Text = "Список вызовов";
             this.callListContextToolStripMenuItem.Click += new System.EventHandler(this.callListContextToolStripMenuItem_Click);
             // 
+            // mainMenuStrip
+            // 
+            this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.callsToolStripMenuItem,
+            this.действияToolStripMenuItem,
+            this.refToolStripMenuItem,
+            this.reportsToolStripMenuItem});
+            this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
+            this.mainMenuStrip.Name = "mainMenuStrip";
+            this.mainMenuStrip.Size = new System.Drawing.Size(998, 24);
+            this.mainMenuStrip.TabIndex = 3;
+            this.mainMenuStrip.Text = "menuStrip1";
+            // 
+            // callsToolStripMenuItem
+            // 
+            this.callsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addCallToolStripMenuItem,
+            this.editCallToolStripMenuItem,
+            this.delCallToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.callsListToolStripMenuItem});
+            this.callsToolStripMenuItem.Name = "callsToolStripMenuItem";
+            this.callsToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
+            this.callsToolStripMenuItem.Text = "Вызовы";
+            // 
+            // addCallToolStripMenuItem
+            // 
+            this.addCallToolStripMenuItem.Name = "addCallToolStripMenuItem";
+            this.addCallToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.addCallToolStripMenuItem.Text = "Добавить";
+            this.addCallToolStripMenuItem.ToolTipText = "Добавить вызов";
+            this.addCallToolStripMenuItem.Click += new System.EventHandler(this.addCallContextToolStripMenuItem_Click);
+            // 
+            // editCallToolStripMenuItem
+            // 
+            this.editCallToolStripMenuItem.Name = "editCallToolStripMenuItem";
+            this.editCallToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.editCallToolStripMenuItem.Text = "Править";
+            this.editCallToolStripMenuItem.ToolTipText = "Править параметры вызова";
+            this.editCallToolStripMenuItem.Click += new System.EventHandler(this.editCallContextToolStripMenuItem_Click);
+            // 
+            // delCallToolStripMenuItem
+            // 
+            this.delCallToolStripMenuItem.Name = "delCallToolStripMenuItem";
+            this.delCallToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.delCallToolStripMenuItem.Text = "Удалить";
+            this.delCallToolStripMenuItem.ToolTipText = "Удалить вызов";
+            this.delCallToolStripMenuItem.Click += new System.EventHandler(this.editCallContextToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(161, 6);
+            // 
+            // callsListToolStripMenuItem
+            // 
+            this.callsListToolStripMenuItem.Name = "callsListToolStripMenuItem";
+            this.callsListToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.callsListToolStripMenuItem.Text = "Список вызовов";
+            this.callsListToolStripMenuItem.Click += new System.EventHandler(this.callListContextToolStripMenuItem_Click);
+            // 
+            // действияToolStripMenuItem
+            // 
+            this.действияToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bindPhoneToolStripMenuItem,
+            this.withdrawPhoneToolStripMenuItem,
+            this.changePasswordToolStripMenuItem,
+            this.closeWorkerToolStripMenuItem});
+            this.действияToolStripMenuItem.Name = "действияToolStripMenuItem";
+            this.действияToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
+            this.действияToolStripMenuItem.Text = "Действия";
+            // 
+            // bindPhoneToolStripMenuItem
+            // 
+            this.bindPhoneToolStripMenuItem.Name = "bindPhoneToolStripMenuItem";
+            this.bindPhoneToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.bindPhoneToolStripMenuItem.Text = "Присвоить номер";
+            this.bindPhoneToolStripMenuItem.ToolTipText = "Вручить номер телефона сотруднику";
+            // 
+            // withdrawPhoneToolStripMenuItem
+            // 
+            this.withdrawPhoneToolStripMenuItem.Name = "withdrawPhoneToolStripMenuItem";
+            this.withdrawPhoneToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.withdrawPhoneToolStripMenuItem.Text = "Изъять номер";
+            this.withdrawPhoneToolStripMenuItem.ToolTipText = "Изъять номер телефона у сотрудника";
+            // 
+            // changePasswordToolStripMenuItem
+            // 
+            this.changePasswordToolStripMenuItem.Name = "changePasswordToolStripMenuItem";
+            this.changePasswordToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.changePasswordToolStripMenuItem.Text = "Изменить пароль";
+            this.changePasswordToolStripMenuItem.ToolTipText = "Изменить свой пароль. Новый пароль будетдействовать при следующем входе в систему" +
+    ".";
+            // 
+            // closeWorkerToolStripMenuItem
+            // 
+            this.closeWorkerToolStripMenuItem.Name = "closeWorkerToolStripMenuItem";
+            this.closeWorkerToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.closeWorkerToolStripMenuItem.Text = "Закрыть запись сотрудника";
+            this.closeWorkerToolStripMenuItem.ToolTipText = "Закрыть выбранную запись сотрудника";
+            // 
+            // refToolStripMenuItem
+            // 
+            this.refToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.workersToolStripMenuItem,
+            this.deptsToolStripMenuItem,
+            this.phonesToolStripMenuItem});
+            this.refToolStripMenuItem.Name = "refToolStripMenuItem";
+            this.refToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
+            this.refToolStripMenuItem.Text = "Справочники";
+            this.refToolStripMenuItem.ToolTipText = "Управление справочниками";
+            // 
+            // workersToolStripMenuItem
+            // 
+            this.workersToolStripMenuItem.Name = "workersToolStripMenuItem";
+            this.workersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.workersToolStripMenuItem.Text = "Сотрудники";
+            this.workersToolStripMenuItem.ToolTipText = "Сотрудники";
+            this.workersToolStripMenuItem.Click += new System.EventHandler(this.workersToolStripMenuItem_Click);
+            // 
+            // deptsToolStripMenuItem
+            // 
+            this.deptsToolStripMenuItem.Name = "deptsToolStripMenuItem";
+            this.deptsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deptsToolStripMenuItem.Text = "Отделы";
+            this.deptsToolStripMenuItem.ToolTipText = "Отделы";
+            this.deptsToolStripMenuItem.Click += new System.EventHandler(this.deptsToolStripMenuItem_Click);
+            // 
+            // phonesToolStripMenuItem
+            // 
+            this.phonesToolStripMenuItem.Name = "phonesToolStripMenuItem";
+            this.phonesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.phonesToolStripMenuItem.Text = "Телефоны";
+            this.phonesToolStripMenuItem.ToolTipText = "Телефонные номера";
+            this.phonesToolStripMenuItem.Click += new System.EventHandler(this.phonesToolStripMenuItem_Click);
+            // 
+            // reportsToolStripMenuItem
+            // 
+            this.reportsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.payWorkersToolStripMenuItem,
+            this.payDepartmentsToolStripMenuItem});
+            this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
+            this.reportsToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
+            this.reportsToolStripMenuItem.Text = "Отчёты";
+            // 
+            // payWorkersToolStripMenuItem
+            // 
+            this.payWorkersToolStripMenuItem.Name = "payWorkersToolStripMenuItem";
+            this.payWorkersToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.payWorkersToolStripMenuItem.Text = "Оплата по сотрудникам";
+            this.payWorkersToolStripMenuItem.ToolTipText = "Время и сумма раговоров в разрезе сотрудников за период";
+            // 
+            // showClosedCheckBox
+            // 
+            this.showClosedCheckBox.AutoSize = true;
+            this.showClosedCheckBox.Location = new System.Drawing.Point(818, 36);
+            this.showClosedCheckBox.Name = "showClosedCheckBox";
+            this.showClosedCheckBox.Size = new System.Drawing.Size(168, 17);
+            this.showClosedCheckBox.TabIndex = 4;
+            this.showClosedCheckBox.Text = "Показать закрытые записи";
+            this.showClosedCheckBox.UseVisualStyleBackColor = true;
+            this.showClosedCheckBox.Click += new System.EventHandler(this.OnShowClosedRecords);
+            // 
+            // payDepartmentsToolStripMenuItem
+            // 
+            this.payDepartmentsToolStripMenuItem.Name = "payDepartmentsToolStripMenuItem";
+            this.payDepartmentsToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.payDepartmentsToolStripMenuItem.Text = "Оплата по отделам";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -377,7 +427,6 @@ namespace CallAccounting
             this.Controls.Add(this.filterUserTextBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.mainMenuStrip);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mainMenuStrip;
             this.MaximizeBox = false;
             this.Name = "MainForm";
@@ -385,9 +434,9 @@ namespace CallAccounting
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnClosed);
             this.Load += new System.EventHandler(this.OnLoad);
             ((System.ComponentModel.ISupportInitialize)(this.phonesDataGridView)).EndInit();
+            this.mainContextMenuStrip.ResumeLayout(false);
             this.mainMenuStrip.ResumeLayout(false);
             this.mainMenuStrip.PerformLayout();
-            this.mainContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -417,11 +466,9 @@ namespace CallAccounting
         private System.Windows.Forms.DataGridViewTextBoxColumn location;
         private System.Windows.Forms.DataGridViewTextBoxColumn deliverydate;
         private System.Windows.Forms.DataGridViewTextBoxColumn recstatus;
-        private System.Windows.Forms.ToolStripMenuItem referenceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changePasswordToolStripMenuItem;
         private System.Windows.Forms.CheckBox showClosedCheckBox;
-        private System.Windows.Forms.ToolStripMenuItem payPeriodToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem paySumMoreToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem payWorkersToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip mainContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem addCallContextToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem delCallContextToolStripMenuItem;
@@ -430,6 +477,13 @@ namespace CallAccounting
         private System.Windows.Forms.ToolStripMenuItem callsListToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem callListContextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem refToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem workersToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deptsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem phonesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem withdrawPhoneToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closeWorkerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem payDepartmentsToolStripMenuItem;
     }
 }
 
