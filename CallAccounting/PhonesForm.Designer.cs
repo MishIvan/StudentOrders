@@ -44,7 +44,7 @@ namespace CallAccounting
             // 
             this.chargeTextBox.Location = new System.Drawing.Point(114, 62);
             this.chargeTextBox.Name = "chargeTextBox";
-            this.chargeTextBox.Size = new System.Drawing.Size(185, 20);
+            this.chargeTextBox.Size = new System.Drawing.Size(137, 20);
             this.chargeTextBox.TabIndex = 11;
             this.refToolTip.SetToolTip(this.chargeTextBox, "Местоположение отдела");
             // 
@@ -60,6 +60,7 @@ namespace CallAccounting
             // numberComboBox
             // 
             this.numberComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.numberComboBox.FormatString = "+7(000)000-00-00";
             this.numberComboBox.FormattingEnabled = true;
             this.numberComboBox.Location = new System.Drawing.Point(114, 13);
             this.numberComboBox.Name = "numberComboBox";

@@ -244,12 +244,78 @@ namespace CallAccounting
             return null;
         }
         /// <summary>
+        /// Добавить номер телефона
+        /// </summary>
+        /// <param name="phonenum">номер телефона</param>
+        /// <param name="charge">тариф в руб. в мин</param>
+        /// <returns>1 - если запрос успешно выполнен, 0 -иначе</returns>
+        public int AddPhone(string phonenum, double charge)
+        {
+            int nrec = 0;
+            string sqlText = "insert into phones (number, charge) values (@pname, @pcharge)";
+            try
+            {
+                nrec = conn.Execute(sqlText, new { pname = phonenum, pcharge = charge });
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+                
+            }
+            return nrec;
+        }
+        /// <summary>
+        /// Править номер телефона
+        /// </summary>
+        /// <param name="idphone">идентификатор телефона</param>
+        /// <param name="phonenum">номер телефона</param>
+        /// <param name="charge">тариф в руб. в мин</param>
+        /// <returns>1 - если запрос успешно выполнен, 0 -иначе</returns>
+        public int UpdatePhone(long idphone, string phonenum, double charge)
+        {
+            int nrec = 0;
+            string sqlText = "update phones set number @pnum, charge =  @pcharge where id = @pid";
+            try
+            {
+                nrec = conn.Execute(sqlText, new { pname = phonenum, pcharge = charge });
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+
+            }
+            return nrec;
+        }
+
+        /// <summary>
+        ///  Удалить номер телефона
+        /// </summary>
+        /// <param name="idphone">идентификатор телефона</param>
+        /// <param name="phonenum">номер телефона</param>
+        /// <param name="charge">тариф в руб. в мин</param>
+        /// <returns>1 - если запрос успешно выполнен, 0 -иначе</returns>
+        public int DeletePhone(long idphone)
+        {
+            int nrec = 0;
+            string sqlText = $"delete from phones where id = {idphone}";
+            try
+            {
+                nrec = conn.Execute(sqlText);
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+
+            }
+            return nrec;
+        }
+        /// <summary>
         /// Получение списка сотрудников с привязанными к ним телефоеами
         /// </summary>
         /// <returns>список, если запрос удачно выполнен, иначе null</returns>
         public async Task<List<UsersPhones>> GetUsersPhones()            
         {
-            string sqlText = "select workerid, workername, iddept, deptname, deptlocation, idphone, phonenumber, charge, binddate, recstatus from phonesview";
+            string sqlText = "select distinct workerid, workername, iddept, deptname, deptlocation, idphone, phonenumber, charge, binddate, recstatus from phonesview";
             try
             {
                 var task = await conn.QueryAsync<UsersPhones>(sqlText);

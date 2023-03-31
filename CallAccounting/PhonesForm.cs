@@ -25,14 +25,13 @@ namespace CallAccounting
             InitializeComponent();
             m_phoneList = null;
             m_changed = false;
+            Icon = Properties.Resources.Phone32;
         }
 
         private async void OnLoad(object sender, EventArgs e)
         {
-
             m_phoneList = await Program.m_helper.GetPhonesList();
-            numberComboBox.DataSource = m_phoneList;
-
+            numberComboBox.DataSource = m_phoneList;            
         }
         /// <summary>
         /// Нажата кнопка Добавить
@@ -41,7 +40,32 @@ namespace CallAccounting
         /// <param name="e"></param>
         private void OnAddRecord(object sender, EventArgs e)
         {
-           
+            string num = numberComboBox.Text;
+            Phone ph = m_phoneList.Where(p => p.number == num).FirstOrDefault();
+            if(ph != null)
+            {
+                MessageBox.Show($"Номер {ph.number} уже существует в базе данных");
+                return;
+            }
+
+            double charge = 0.0;
+            try
+            {
+                charge = Convert.ToDouble(chargeTextBox.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}");
+                return;
+            }
+            if(Program.m_helper.AddPhone(num, charge) < 1)
+            {
+                MessageBox.Show($"Ошибка: {Program.m_helper.errorText}");
+            }
+            else
+            {
+                OnLoad(sender, e);
+            }
         }
         /// <summary>
         /// Нажата кнопка Править
