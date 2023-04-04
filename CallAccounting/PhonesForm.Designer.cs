@@ -35,7 +35,6 @@ namespace CallAccounting
             this.numberComboBox = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.addButton = new System.Windows.Forms.Button();
-            this.editButton = new System.Windows.Forms.Button();
             this.deleteButton = new System.Windows.Forms.Button();
             this.refToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
@@ -90,20 +89,9 @@ namespace CallAccounting
             this.addButton.UseVisualStyleBackColor = true;
             this.addButton.Click += new System.EventHandler(this.OnAddRecord);
             // 
-            // editButton
-            // 
-            this.editButton.Location = new System.Drawing.Point(325, 63);
-            this.editButton.Name = "editButton";
-            this.editButton.Size = new System.Drawing.Size(113, 23);
-            this.editButton.TabIndex = 2;
-            this.editButton.Text = "Править";
-            this.refToolTip.SetToolTip(this.editButton, "Править значения полей записи");
-            this.editButton.UseVisualStyleBackColor = true;
-            this.editButton.Click += new System.EventHandler(this.OnEditRecord);
-            // 
             // deleteButton
             // 
-            this.deleteButton.Location = new System.Drawing.Point(325, 117);
+            this.deleteButton.Location = new System.Drawing.Point(325, 65);
             this.deleteButton.Name = "deleteButton";
             this.deleteButton.Size = new System.Drawing.Size(113, 23);
             this.deleteButton.TabIndex = 3;
@@ -122,11 +110,10 @@ namespace CallAccounting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(459, 159);
+            this.ClientSize = new System.Drawing.Size(459, 110);
             this.Controls.Add(this.chargeTextBox);
             this.Controls.Add(this.deleteButton);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.editButton);
             this.Controls.Add(this.numberComboBox);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.addButton);
@@ -142,7 +129,6 @@ namespace CallAccounting
 
         #endregion
         private System.Windows.Forms.Button addButton;
-        private System.Windows.Forms.Button editButton;
         private System.Windows.Forms.Button deleteButton;
         private System.Windows.Forms.ToolTip refToolTip;
         private System.Windows.Forms.TextBox chargeTextBox;

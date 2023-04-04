@@ -49,6 +49,7 @@ namespace CallAccounting
             withdrawPhoneToolStripMenuItem.Visible = isAdmin;
             closeWorkerToolStripMenuItem.Visible = isAdmin;
             reportsToolStripMenuItem.Visible = isAdmin;
+            showClosedCheckBox.Visible = isAdmin;
 
         }
         /// <summary>
@@ -194,6 +195,81 @@ namespace CallAccounting
                     phonesDataGridView.DataSource = !showClosedCheckBox.Checked ? m_dataList.Where(w => w.recstatus != "Закрытая" && w.workername == Program.m_currentUser.name).ToList() :
                         m_dataList.Where(w => w.workername == Program.m_currentUser.name).ToList();
             }
+        }
+        /// <summary>
+        /// Привязать номер к сотруднику
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void bindPhoneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var row = phonesDataGridView.CurrentRow;
+            if (row == null) return;
+            long idwrk = Convert.ToInt64(row.Cells[0].Value);
+            PhoneChoiceForm frm = new PhoneChoiceForm();
+            if(frm.ShowDialog() == DialogResult.OK)
+            {
+                if (frm.PhoneID < 1)
+                {
+                    MessageBox.Show("Не выбран номер телефона");
+                }
+                else
+                {
+                    if(Program.m_helper.PhoneLinked(frm.PhoneID) >= 1)
+                    {
+                        string phonenum = Program.m_helper.GetPhoneNumberByID(frm.PhoneID);
+                        MessageBox.Show($"Номер телефона {phonenum} уже присвоен сотруднику");
+                        return;
+                    }
+                    if (Program.m_helper.LinkPhone(idwrk, frm.PhoneID, frm.dateLink) < 1)
+                    {
+                        MessageBox.Show($"Ошибка: {Program.m_helper.errorText}");
+                    }
+                    else
+                    {
+                        m_dataList = await Program.m_helper.GetUsersPhones();
+                        bool isAdmin = Program.m_currentUser.admin;
+                        if (isAdmin)
+                            phonesDataGridView.DataSource = !showClosedCheckBox.Checked ? m_dataList.Where(w => w.recstatus != "Закрытая").ToList() :
+                                m_dataList;
+                        else
+                            phonesDataGridView.DataSource = !showClosedCheckBox.Checked ? m_dataList.Where(w => w.recstatus != "Закрытая" && w.workername == Program.m_currentUser.name).ToList() :
+                                m_dataList.Where(w => w.workername == Program.m_currentUser.name).ToList();
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// Отвязать номер от сотрудника
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void withdrawPhoneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var row = phonesDataGridView.CurrentRow;
+            if (row == null) return;
+            long idwrk = Convert.ToInt64(row.Cells[0].Value);
+            long idphone = Convert.ToInt64(row.Cells["idphone"].Value);
+            if (idphone < 1) return;
+                
+            if (Program.m_helper.UnlinkPhone(idwrk, idphone) < 1)
+            {
+                MessageBox.Show($"Ошибка: {Program.m_helper.errorText}");
+            }
+            else
+            {
+                m_dataList = await Program.m_helper.GetUsersPhones();
+                bool isAdmin = Program.m_currentUser.admin;
+                if (isAdmin)
+                    phonesDataGridView.DataSource = !showClosedCheckBox.Checked ? m_dataList.Where(w => w.recstatus != "Закрытая").ToList() :
+                        m_dataList;
+                else
+                    phonesDataGridView.DataSource = !showClosedCheckBox.Checked ? m_dataList.Where(w => w.recstatus != "Закрытая" && w.workername == Program.m_currentUser.name).ToList() :
+                        m_dataList.Where(w => w.workername == Program.m_currentUser.name).ToList();
+            }
+                
+            
+
         }
     }
 }

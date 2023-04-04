@@ -310,6 +310,89 @@ namespace CallAccounting
             return nrec;
         }
         /// <summary>
+        /// Получить номер телефона по его идентификатору
+        /// </summary>
+        /// <param name="phoneId">идентификатор телефона</param>
+        /// <returns>строку с номером телефона в случае успешного выполнения запроса, иначе - пустую строку</returns>
+        public string GetPhoneNumberByID(long phoneId)
+        {
+            string numb = string.Empty;
+            string sqlText = $"select number from phones where id ={phoneId}";
+            try
+            {
+                numb = conn.Query<string>(sqlText).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                numb = string.Empty;
+                _errorText = ex.Message;
+            }
+            return numb;
+        }
+        /// <summary>
+        /// Возвращает идентификатор работника, которому присвоен номер телефона
+        /// </summary>
+        /// <param name="numPhone">номер присоенного телефона</param>
+        /// <returns>-1 - ошибка выполнения запроса, 0 - номер не присоен работнику, иначе - идентификатор работника</returns>
+        public long PhoneLinked(long phoneId)
+        {
+            long idworker = -1;
+            string sqlText = $"select idworker from wrkphone join phones on phones.id = wrkphone.idphone where phones.id ={phoneId}";
+            try
+            {
+                idworker = conn.Query<long>(sqlText).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+
+            }
+            return idworker;
+        }
+
+        /// <summary>
+        /// Привязка немера телефона к сотруднику
+        /// </summary>
+        /// <param name="idworker">идентификатор сотрудника</param>
+        /// <param name="idphone">идентификатор телефона</param>
+        /// <param name="bindDate">дата привязки</param>
+        /// <returns>1 - если телефон был привязан, 0 - иначе</returns>
+        public int LinkPhone(long idworker, long idphone, DateTime bindDate)
+        {
+            int nrec = 0;
+            string sdt = bindDate.ToString("yyyyMMdd");
+            string sqlText = $"insert into wrkphone (idworker, idphone, binddate) values({idworker},{idphone},'{sdt}')";
+            try
+            {
+                nrec = conn.Execute(sqlText);
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return nrec;
+        }
+        /// <summary>
+        /// Отвязка немера телефона от сотрудника
+        /// </summary>
+        /// <param name="idworker">идентификатор сотрудника</param>
+        /// <param name="idphone">идентификатор телефона</param>
+        /// <returns>1 - если телефон был привязан, 0 - иначе</returns>
+        public int UnlinkPhone(long idworker, long idphone)
+        {
+            int nrec = 0;
+            string sqlText = $"delete from wrkphone where idworker = {idworker} and idphone = {idphone}";
+            try
+            {
+                nrec = conn.Execute(sqlText);
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return nrec;
+        }
+        /// <summary>
         /// Получение списка сотрудников с привязанными к ним телефоеами
         /// </summary>
         /// <returns>список, если запрос удачно выполнен, иначе null</returns>

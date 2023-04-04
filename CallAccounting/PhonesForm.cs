@@ -67,24 +67,22 @@ namespace CallAccounting
                 OnLoad(sender, e);
             }
         }
+        
         /// <summary>
-        /// Нажата кнопка Править
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnEditRecord(object sender, EventArgs e)
-        {
-            
-        }
-        /// <summary>
-        /// Нжата кнопка удалить
+        /// Нажата кнопка удалить
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnDeleteRecord(object sender, EventArgs e)
         {
-           
-
+            if(Program.m_helper.DeletePhone(m_PhoneID) < 1)
+            {
+                MessageBox.Show($"Ошибка: {Program.m_helper.errorText}");
+            }
+            else
+            {
+                OnLoad(sender, e);
+            }
         }
         /// <summary>
         /// Изменился номер телефона
