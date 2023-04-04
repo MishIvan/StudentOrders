@@ -30,7 +30,7 @@ namespace CallAccounting
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.filterUserTextBox = new System.Windows.Forms.TextBox();
             this.phonesDataGridView = new System.Windows.Forms.DataGridView();
@@ -46,14 +46,10 @@ namespace CallAccounting
             this.recstatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mainContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addCallContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editCallContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.callListContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.callsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addCallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.delCallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.callsListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.действияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bindPhoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,6 +65,7 @@ namespace CallAccounting
             this.payDepartmentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.showClosedCheckBox = new System.Windows.Forms.CheckBox();
+            this.изменитьПарольToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.phonesDataGridView)).BeginInit();
             this.mainContextMenuStrip.SuspendLayout();
             this.mainMenuStrip.SuspendLayout();
@@ -186,9 +183,9 @@ namespace CallAccounting
             // deliverydate
             // 
             this.deliverydate.DataPropertyName = "binddate";
-            dataGridViewCellStyle2.Format = "d";
-            dataGridViewCellStyle2.NullValue = null;
-            this.deliverydate.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.Format = "d";
+            dataGridViewCellStyle3.NullValue = null;
+            this.deliverydate.DefaultCellStyle = dataGridViewCellStyle3;
             this.deliverydate.HeaderText = "Дата вручения";
             this.deliverydate.Name = "deliverydate";
             this.deliverydate.ReadOnly = true;
@@ -206,11 +203,9 @@ namespace CallAccounting
             // 
             this.mainContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addCallContextToolStripMenuItem,
-            this.editCallContextToolStripMenuItem,
-            this.toolStripSeparator2,
             this.callListContextToolStripMenuItem});
             this.mainContextMenuStrip.Name = "mainContextMenuStrip";
-            this.mainContextMenuStrip.Size = new System.Drawing.Size(165, 76);
+            this.mainContextMenuStrip.Size = new System.Drawing.Size(165, 48);
             // 
             // addCallContextToolStripMenuItem
             // 
@@ -218,18 +213,6 @@ namespace CallAccounting
             this.addCallContextToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.addCallContextToolStripMenuItem.Text = "Добавить вызов";
             this.addCallContextToolStripMenuItem.Click += new System.EventHandler(this.addCallContextToolStripMenuItem_Click);
-            // 
-            // editCallContextToolStripMenuItem
-            // 
-            this.editCallContextToolStripMenuItem.Name = "editCallContextToolStripMenuItem";
-            this.editCallContextToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.editCallContextToolStripMenuItem.Text = "Править вызов";
-            this.editCallContextToolStripMenuItem.Click += new System.EventHandler(this.editCallContextToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(161, 6);
             // 
             // callListContextToolStripMenuItem
             // 
@@ -255,9 +238,8 @@ namespace CallAccounting
             // 
             this.callsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addCallToolStripMenuItem,
-            this.delCallToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.callsListToolStripMenuItem});
+            this.callsListToolStripMenuItem,
+            this.изменитьПарольToolStripMenuItem});
             this.callsToolStripMenuItem.Name = "callsToolStripMenuItem";
             this.callsToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
             this.callsToolStripMenuItem.Text = "Вызовы";
@@ -265,28 +247,15 @@ namespace CallAccounting
             // addCallToolStripMenuItem
             // 
             this.addCallToolStripMenuItem.Name = "addCallToolStripMenuItem";
-            this.addCallToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.addCallToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.addCallToolStripMenuItem.Text = "Добавить";
             this.addCallToolStripMenuItem.ToolTipText = "Добавить вызов";
             this.addCallToolStripMenuItem.Click += new System.EventHandler(this.addCallContextToolStripMenuItem_Click);
             // 
-            // delCallToolStripMenuItem
-            // 
-            this.delCallToolStripMenuItem.Name = "delCallToolStripMenuItem";
-            this.delCallToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.delCallToolStripMenuItem.Text = "Удалить";
-            this.delCallToolStripMenuItem.ToolTipText = "Удалить вызов";
-            this.delCallToolStripMenuItem.Click += new System.EventHandler(this.editCallContextToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(161, 6);
-            // 
             // callsListToolStripMenuItem
             // 
             this.callsListToolStripMenuItem.Name = "callsListToolStripMenuItem";
-            this.callsListToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.callsListToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.callsListToolStripMenuItem.Text = "Список вызовов";
             this.callsListToolStripMenuItem.Click += new System.EventHandler(this.callListContextToolStripMenuItem_Click);
             // 
@@ -324,6 +293,7 @@ namespace CallAccounting
             this.changePasswordToolStripMenuItem.Text = "Изменить пароль";
             this.changePasswordToolStripMenuItem.ToolTipText = "Изменить свой пароль. Новый пароль будетдействовать при следующем входе в систему" +
     ".";
+            this.changePasswordToolStripMenuItem.Click += new System.EventHandler(this.OnChangePassword);
             // 
             // closeWorkerToolStripMenuItem
             // 
@@ -346,7 +316,7 @@ namespace CallAccounting
             // workersToolStripMenuItem
             // 
             this.workersToolStripMenuItem.Name = "workersToolStripMenuItem";
-            this.workersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.workersToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.workersToolStripMenuItem.Text = "Сотрудники";
             this.workersToolStripMenuItem.ToolTipText = "Сотрудники";
             this.workersToolStripMenuItem.Click += new System.EventHandler(this.workersToolStripMenuItem_Click);
@@ -354,7 +324,7 @@ namespace CallAccounting
             // deptsToolStripMenuItem
             // 
             this.deptsToolStripMenuItem.Name = "deptsToolStripMenuItem";
-            this.deptsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deptsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.deptsToolStripMenuItem.Text = "Отделы";
             this.deptsToolStripMenuItem.ToolTipText = "Отделы";
             this.deptsToolStripMenuItem.Click += new System.EventHandler(this.deptsToolStripMenuItem_Click);
@@ -362,7 +332,7 @@ namespace CallAccounting
             // phonesToolStripMenuItem
             // 
             this.phonesToolStripMenuItem.Name = "phonesToolStripMenuItem";
-            this.phonesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.phonesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.phonesToolStripMenuItem.Text = "Телефоны";
             this.phonesToolStripMenuItem.ToolTipText = "Телефонные номера";
             this.phonesToolStripMenuItem.Click += new System.EventHandler(this.phonesToolStripMenuItem_Click);
@@ -400,6 +370,12 @@ namespace CallAccounting
             this.showClosedCheckBox.UseVisualStyleBackColor = true;
             this.showClosedCheckBox.Click += new System.EventHandler(this.OnShowClosedRecords);
             // 
+            // изменитьПарольToolStripMenuItem
+            // 
+            this.изменитьПарольToolStripMenuItem.Name = "изменитьПарольToolStripMenuItem";
+            this.изменитьПарольToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.изменитьПарольToolStripMenuItem.Text = "Изменить пароль";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -434,7 +410,6 @@ namespace CallAccounting
         private System.Windows.Forms.ToolStripMenuItem callsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addCallToolStripMenuItem;
         private System.Windows.Forms.ToolTip mainToolTip;
-        private System.Windows.Forms.ToolStripMenuItem delCallToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem действияToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bindPhoneToolStripMenuItem;
@@ -453,10 +428,7 @@ namespace CallAccounting
         private System.Windows.Forms.ToolStripMenuItem payWorkersToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip mainContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem addCallContextToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem editCallContextToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem callsListToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem callListContextToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem refToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem workersToolStripMenuItem;
@@ -465,6 +437,7 @@ namespace CallAccounting
         private System.Windows.Forms.ToolStripMenuItem withdrawPhoneToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeWorkerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem payDepartmentsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem изменитьПарольToolStripMenuItem;
     }
 }
 

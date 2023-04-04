@@ -101,7 +101,12 @@ namespace CallAccounting
         /// <param name="e"></param>
         private void addCallContextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            var row = phonesDataGridView.CurrentRow;
+            if (row == null) return;
+            long idwrk = Convert.ToInt64(row.Cells[0].Value);
+            long idphone = Convert.ToInt64(row.Cells["idphone"].Value);
+            if (idphone < 1) return;
+            new AddCallForm(idwrk, idphone).ShowDialog();
         }
         /// <summary>
         /// Удалить вызов для выбранного телефона
@@ -269,6 +274,15 @@ namespace CallAccounting
             }
                 
             
+
+        }
+        /// <summary>
+        /// Сменить свой пароль
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnChangePassword(object sender, EventArgs e)
+        {
 
         }
     }

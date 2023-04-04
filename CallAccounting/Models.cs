@@ -13,7 +13,7 @@ namespace CallAccounting
         public long iddept { get; set; }
         public bool admin { get; set; }
         public bool closed { get; set; }
-        public byte [] passw { get; set; }
+        public byte[] passw { get; set; }
         public override string ToString()
         {
             return name;
@@ -49,8 +49,19 @@ namespace CallAccounting
         public long id { get; set; }
         public bool input { get; set; }
         public long idphone { get; set; }
+        public string phoneNumber { get; set; }
         public double calltime { get; set; }
 
+    }
+    public class CallsView
+    {
+        public long idcall { get; set; }
+        public DateTime calldate { get; set; }
+        public string calltype { get; set; }
+        public string phoneNumber { get; set; }
+        public double calltime { get; set; }
+        public long idphone { get; set; }
+        public string phononenumber { get; set; }
     }
     public class UsersPhones
     {

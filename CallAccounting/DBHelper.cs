@@ -78,6 +78,26 @@ namespace CallAccounting
             return null;
         }
         /// <summary>
+        /// Выдать ФИО сотрудника по его идентификатору
+        /// </summary>
+        /// <param name="idwrk">идентификатор работника</param>
+        /// <returns>ФИО сотрудника в случае успешного выполнения запроса, иначе - пустая строка</returns>
+        public string GetWorkerNameByID(long idwrk)
+        {
+            string wrkname = string.Empty;
+            string sqlText = $"select name from workers where id = {idwrk}";
+            try
+            {
+                wrkname = conn.Query<string>(sqlText).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                wrkname = string.Empty;
+                _errorText = ex.Message;
+            }
+            return wrkname;
+        }
+        /// <summary>
         /// Изменить параметры пользователя-работника
         /// </summary>
         /// <param name="iduser">идентификатор работника</param>
@@ -410,6 +430,65 @@ namespace CallAccounting
             }
             return null;
         }
-
+        /// <summary>
+        /// Добавить телефонные вызов
+        /// </summary>
+        /// <param name="idphone">идентификатор телефона</param>
+        /// <param name="callTime">дата и время вызова</param>
+        /// <param name="input">входящий или исходящий вызов</param>
+        /// <param name="calltime">время разговора в мин</param>
+        /// <returns>1 - запрос удачно выполнен, 0 - иначе</returns>
+        public int AddCall(long idphone, DateTime callTime, bool input, double calltime)
+        {
+            int nrec = 0;
+            string sqlText = $"insert into calls (calldate, input, idphone, calltime) values (@pdate, @pinput, @pidphone, @ptime)";
+            try
+            {
+                nrec = conn.Execute(sqlText, new {pdate = callTime, pinput = input, pidphone = idphone, ptime =  calltime});
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return nrec;
+        }
+        /// <summary>
+        /// Удаление записи о звонке
+        /// </summary>
+        /// <param name="idcall">идентификатор звонка</param>
+        /// <returns>1 - запрос удачно выполнен, 0 - иначе</returns>
+        public int DeleteCall(long idcall)
+        {
+            int nrec = 0;
+            string sqlText = $"delete from calls where id = {idcall}";
+            try
+            {
+                nrec = conn.Execute(sqlText);
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return nrec;
+        }
+        /// <summary>
+        /// Выдать список вызовов для телефона сотрудника
+        /// </summary>
+        /// <param name="workerid">идентификато сотрудника</param>
+        /// <returns></returns>
+        public async Task<List<CallsView>> GetCallsByWorkerID(long workerid)
+        {
+            string sqlText = $"select distinct workerid, workername, iddept, deptname, deptlocation, idphone, phonenumber, charge, binddate, recstatus from phonesview where id ={workerid}";
+            try
+            {
+                var task = await conn.QueryAsync<CallsView>(sqlText);
+                return task.ToList();
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return null;
+        }
     }
 }
