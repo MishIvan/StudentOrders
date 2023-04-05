@@ -1,7 +1,14 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CallAccounting.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ReportCallsQuery" Type="System.String" Scope="User">
+      <Value Profile="(Default)">select workername, deptname, deptlocation, phonenumber
+,sum(calltime) sumtime, sum(calltime*calltime) allsum
+from phonesview
+where calldate between @pdbegin and @pdend and calltype = 'Исходящий'
+group by workername, deptname, deptlocation, phonenumber
+having sum(calltime*calltime) &gt; @psum</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

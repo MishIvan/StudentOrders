@@ -222,6 +222,12 @@
     <Compile Include="AutorizationForm.Designer.cs">
       <DependentUpon>AutorizationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CallListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CallListForm.Designer.cs">
+      <DependentUpon>CallListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="DBHelper.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -230,6 +236,12 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Models.cs" />
+    <Compile Include="PasswordChangeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PasswordChangeForm.Designer.cs">
+      <DependentUpon>PasswordChangeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PhoneChoiceForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -262,8 +274,14 @@
     <EmbeddedResource Include="AutorizationForm.resx">
       <DependentUpon>AutorizationForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CallListForm.resx">
+      <DependentUpon>CallListForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PasswordChangeForm.resx">
+      <DependentUpon>PasswordChangeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PhoneChoiceForm.resx">
       <DependentUpon>PhoneChoiceForm.cs</DependentUpon>
@@ -307,6 +325,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Phone64.ico" />
+    <None Include="Properties\pwd32.ico" />
+    <None Include="Properties\callslist32.ico" />
     <None Include="Properties\dept32.ico" />
     <None Include="Properties\worker32.ico" />
     <None Include="Properties\Phone32.ico" />

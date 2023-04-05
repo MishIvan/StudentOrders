@@ -55,13 +55,13 @@ namespace CallAccounting
     }
     public class CallsView
     {
+        public long idphone { get; set; }
+        public string phonenumber { get; set; }
         public long idcall { get; set; }
         public DateTime calldate { get; set; }
         public string calltype { get; set; }
-        public string phoneNumber { get; set; }
         public double calltime { get; set; }
-        public long idphone { get; set; }
-        public string phononenumber { get; set; }
+       
     }
     public class UsersPhones
     {

@@ -104,9 +104,12 @@ namespace CallAccounting
             var row = phonesDataGridView.CurrentRow;
             if (row == null) return;
             long idwrk = Convert.ToInt64(row.Cells[0].Value);
-            long idphone = Convert.ToInt64(row.Cells["idphone"].Value);
-            if (idphone < 1) return;
-            new AddCallForm(idwrk, idphone).ShowDialog();
+            if (!Program.m_helper.IsUserRecordClosed(idwrk))
+            {
+                long idphone = Convert.ToInt64(row.Cells["idphone"].Value);
+                if (idphone < 1) return;
+                new AddCallForm(idwrk, idphone).ShowDialog();
+            }
         }
         /// <summary>
         /// Удалить вызов для выбранного телефона
@@ -133,7 +136,11 @@ namespace CallAccounting
         /// <param name="e"></param>
         private void callListContextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            var row = phonesDataGridView.CurrentRow;
+            if (row == null) return;
+            long idwrk = Convert.ToInt64(row.Cells[0].Value);
+            CallListForm frm = new CallListForm(idwrk);
+            frm.ShowDialog();
         }
         /// <summary>
         /// Управление справочником сотрудников
@@ -283,7 +290,53 @@ namespace CallAccounting
         /// <param name="e"></param>
         private void OnChangePassword(object sender, EventArgs e)
         {
+            PasswordChangeForm frm = new PasswordChangeForm();
+            if(frm.ShowDialog() == DialogResult.OK)
+            {
+                var row = phonesDataGridView.CurrentRow;
+                if (row == null) return;
+                long idwrk = Convert.ToInt64(row.Cells[0].Value);
+                string pw = frm.password;
+                if(Program.m_helper.SetUserPassword(idwrk, pw) < 1)
+                {
+                    MessageBox.Show("Не удалось установить пароль.");
+                }
+            }
+        }
+        /// <summary>
+        /// Выдать отчётную форму
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void payWorkersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
 
+        }
+        /// <summary>
+        /// Закрыть запись сотрудника
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void closeWorkerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var row = phonesDataGridView.CurrentRow;
+            if (row == null) return;
+            long idwrk = Convert.ToInt64(row.Cells[0].Value);
+            if (Program.m_helper.CloseUserRecord(idwrk) < 1)
+            {
+                MessageBox.Show($"Ошибка: {Program.m_helper.errorText}");
+            }
+            else
+            {
+                m_dataList = await Program.m_helper.GetUsersPhones();
+                bool isAdmin = Program.m_currentUser.admin;
+                if (isAdmin)
+                    phonesDataGridView.DataSource = !showClosedCheckBox.Checked ? m_dataList.Where(w => w.recstatus != "Закрытая").ToList() :
+                        m_dataList;
+                else
+                    phonesDataGridView.DataSource = !showClosedCheckBox.Checked ? m_dataList.Where(w => w.recstatus != "Закрытая" && w.workername == Program.m_currentUser.name).ToList() :
+                        m_dataList.Where(w => w.workername == Program.m_currentUser.name).ToList();
+            }
         }
     }
 }

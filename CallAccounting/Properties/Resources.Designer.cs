@@ -63,6 +63,16 @@ namespace CallAccounting.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
         /// </summary>
+        internal static System.Drawing.Icon callslist32 {
+            get {
+                object obj = ResourceManager.GetObject("callslist32", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
+        /// </summary>
         internal static System.Drawing.Icon dept32 {
             get {
                 object obj = ResourceManager.GetObject("dept32", resourceCulture);
@@ -76,6 +86,16 @@ namespace CallAccounting.Properties {
         internal static System.Drawing.Icon Phone32 {
             get {
                 object obj = ResourceManager.GetObject("Phone32", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
+        /// </summary>
+        internal static System.Drawing.Icon pwd32 {
+            get {
+                object obj = ResourceManager.GetObject("pwd32", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }

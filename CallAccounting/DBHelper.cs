@@ -97,6 +97,7 @@ namespace CallAccounting
             }
             return wrkname;
         }
+        
         /// <summary>
         /// Изменить параметры пользователя-работника
         /// </summary>
@@ -166,6 +167,46 @@ namespace CallAccounting
                 _errorText = ex.Message;
             }
             return nrec;
+        }
+        /// <summary>
+        /// Зарыть запись пользователя
+        /// </summary>
+        /// <param name="iduser">идентификатор работника</param>
+        /// <returns>1 - успешное выполнение запроса, 0 - ошибка выполения запроса</returns>
+        public int CloseUserRecord(long iduser)
+        {
+            int nrec = 0;
+            string sqlText = "update workers set closed = 1 where id = @pid";
+            try
+            {
+                nrec = conn.Execute(sqlText, new { pid = iduser });
+            }
+            catch (Exception ex)
+            {
+
+                _errorText = ex.Message;
+            }
+            return nrec;
+        }
+        /// <summary>
+        /// Закрыта ли запись пользователя
+        /// </summary>
+        /// <param name="iduser">идентификатор пользователя</param>
+        /// <returns>true - закрыта, false - действующая</returns>
+        public bool IsUserRecordClosed(long iduser)
+        {
+            bool res = true;
+            _errorText = string.Empty;
+            string sqlText = "select closed from workers where id = @pid";
+            try
+            {
+                res = conn.Query<bool>(sqlText, new { pid = iduser }).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return res;
         }
         /// <summary>
         /// Получить список подразделений
@@ -475,10 +516,10 @@ namespace CallAccounting
         /// Выдать список вызовов для телефона сотрудника
         /// </summary>
         /// <param name="workerid">идентификато сотрудника</param>
-        /// <returns></returns>
+        /// <returns>Список вызовов в случае успешного выполнения запроса, иначе - null</returns>
         public async Task<List<CallsView>> GetCallsByWorkerID(long workerid)
         {
-            string sqlText = $"select distinct workerid, workername, iddept, deptname, deptlocation, idphone, phonenumber, charge, binddate, recstatus from phonesview where id ={workerid}";
+            string sqlText = $"select distinct idphone, phonenumber, idcall, calldate,calltype,calltime from phonesview where workerid ={workerid}";
             try
             {
                 var task = await conn.QueryAsync<CallsView>(sqlText);
