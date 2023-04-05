@@ -103,6 +103,16 @@ namespace CallAccounting.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
         /// </summary>
+        internal static System.Drawing.Icon table32 {
+            get {
+                object obj = ResourceManager.GetObject("table32", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
+        /// </summary>
         internal static System.Drawing.Icon worker32 {
             get {
                 object obj = ResourceManager.GetObject("worker32", resourceCulture);

@@ -256,6 +256,12 @@
     <Compile Include="DepartmentsForm.Designer.cs">
       <DependentUpon>DepartmentsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReportForm.Designer.cs">
+      <DependentUpon>ReportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="WorkerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -299,6 +305,9 @@
     <EmbeddedResource Include="DepartmentsForm.resx">
       <DependentUpon>DepartmentsForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ReportForm.resx">
+      <DependentUpon>ReportForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WorkerForm.resx">
       <DependentUpon>WorkerForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -325,6 +334,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Phone64.ico" />
+    <None Include="Properties\table32.ico" />
     <None Include="Properties\pwd32.ico" />
     <None Include="Properties\callslist32.ico" />
     <None Include="Properties\dept32.ico" />

@@ -310,7 +310,7 @@ namespace CallAccounting
         /// <param name="e"></param>
         private void payWorkersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            new ReportForm().ShowDialog();
         }
         /// <summary>
         /// Закрыть запись сотрудника

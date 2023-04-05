@@ -531,5 +531,25 @@ namespace CallAccounting
             }
             return null;
         }
+        /// <summary>
+        /// Выдать отчётную форму
+        /// </summary>
+        /// <param name="workerid">идентификато сотрудника</param>
+        /// <returns>Список вызовов в случае успешного выполнения запроса, иначе - null</returns>
+        public async Task<List<ReportPhone>> GetReportData(DateTime db, DateTime de, double sum = 0.0)
+        {
+            string sqlText = Properties.Settings.Default.ReportCallsQuery;
+            try
+            {
+                var task = await conn.QueryAsync<ReportPhone>(sqlText,
+                    new { pdbegin = db, pdend = de, psum = sum });
+                return task.ToList();
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return null;
+        }
     }
 }

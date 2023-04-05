@@ -63,6 +63,15 @@ namespace CallAccounting
         public double calltime { get; set; }
        
     }
+    public class ReportPhone
+    {
+        public string workername { get; set; }
+        public string deptname { get; set; }
+        public string deptlocation { get; set; }
+        public string phonenumber { get; set; }
+        public double sumtime { get; set; }
+        public double allsum { get; set; }
+    }
     public class UsersPhones
     {
         public long workerid { get; set; }
