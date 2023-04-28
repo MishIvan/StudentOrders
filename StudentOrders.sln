@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoCollection", "AutoColle
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CallAccounting", "CallAccounting\CallAccounting.csproj", "{77EE9FD9-FF7F-4976-AFC9-CB3A4DD74292}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoltJunction", "BoltJunction\BoltJunction.csproj", "{47205A73-30E3-44CC-9D63-E36C1C648904}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,18 @@ Global
 		{77EE9FD9-FF7F-4976-AFC9-CB3A4DD74292}.Release|x64.Build.0 = Release|Any CPU
 		{77EE9FD9-FF7F-4976-AFC9-CB3A4DD74292}.Release|x86.ActiveCfg = Release|Any CPU
 		{77EE9FD9-FF7F-4976-AFC9-CB3A4DD74292}.Release|x86.Build.0 = Release|Any CPU
+		{47205A73-30E3-44CC-9D63-E36C1C648904}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47205A73-30E3-44CC-9D63-E36C1C648904}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47205A73-30E3-44CC-9D63-E36C1C648904}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{47205A73-30E3-44CC-9D63-E36C1C648904}.Debug|x64.Build.0 = Debug|Any CPU
+		{47205A73-30E3-44CC-9D63-E36C1C648904}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{47205A73-30E3-44CC-9D63-E36C1C648904}.Debug|x86.Build.0 = Debug|Any CPU
+		{47205A73-30E3-44CC-9D63-E36C1C648904}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47205A73-30E3-44CC-9D63-E36C1C648904}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47205A73-30E3-44CC-9D63-E36C1C648904}.Release|x64.ActiveCfg = Release|Any CPU
+		{47205A73-30E3-44CC-9D63-E36C1C648904}.Release|x64.Build.0 = Release|Any CPU
+		{47205A73-30E3-44CC-9D63-E36C1C648904}.Release|x86.ActiveCfg = Release|Any CPU
+		{47205A73-30E3-44CC-9D63-E36C1C648904}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
