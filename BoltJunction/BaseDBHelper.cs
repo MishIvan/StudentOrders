@@ -59,7 +59,7 @@ namespace BoltJunction
         public async Task<List<Bolt>> GetBolts()
         {
             List<Bolt> lst = null;
-            string sqlText = "select id, name, l, k, b, d, S p from bolt";
+            string sqlText = "select id, name, l, k, b, d, S, e, p from bolt";
             try
             {
                 var task = await m_conn.QueryAsync<Bolt>(sqlText);
