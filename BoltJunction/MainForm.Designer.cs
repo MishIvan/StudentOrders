@@ -178,7 +178,7 @@ namespace BoltJunction
             this.flangeLengthTextBox.Name = "flangeLengthTextBox";
             this.flangeLengthTextBox.Size = new System.Drawing.Size(138, 20);
             this.flangeLengthTextBox.TabIndex = 10;
-            this.flangeLengthTextBox.TextChanged += new System.EventHandler(this.flangeHeightChanged);
+            this.flangeLengthTextBox.TextChanged += new System.EventHandler(this.flangeLenghtChanged);
             // 
             // label5
             // 
@@ -195,7 +195,7 @@ namespace BoltJunction
             this.flangeWidthtextBox.Name = "flangeWidthtextBox";
             this.flangeWidthtextBox.Size = new System.Drawing.Size(138, 20);
             this.flangeWidthtextBox.TabIndex = 12;
-            this.flangeWidthtextBox.TextChanged += new System.EventHandler(this.flangeHeightChanged);
+            this.flangeWidthtextBox.TextChanged += new System.EventHandler(this.flangeWidthChanged);
             // 
             // label6
             // 

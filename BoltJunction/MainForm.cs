@@ -149,7 +149,58 @@ namespace BoltJunction
             if(val+ val1 > (m_bolt.l - m_nut.m - m_washer.s - 3.0))
             {
                 MessageBox.Show("Толщина фланцев не соответствует размерам болтового соединения");
+                return;
             }
+
+            m_flangeHeight1 = val; m_flangeHeight2 = val1;
+        }
+        /// <summary>
+        /// Ширина фланца изменилась
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void flangeWidthChanged(object sender, EventArgs e)
+        {
+            double val = 0.0;
+            try
+            {
+                val = Convert.ToDouble(flangeWidthtextBox.Text);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Неверно задано значение ширины фланца");
+                return;
+            }
+            if(val < m_bolt.S)
+            {
+                MessageBox.Show("Ширина фланцев не соответствует размерам болтового соединения");
+                return;
+            }
+            m_flangeWidth = val;
+        }
+        /// <summary>
+        ///  Длина фланца изменилась
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void flangeLenghtChanged(object sender, EventArgs e)
+        {
+            double val = 0.0;
+            try
+            {
+                val = Convert.ToDouble(flangeWidthtextBox.Text);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Неверно задано значение длины фланца");
+                return;
+            }
+            if (val < m_bolt.e)
+            {
+                MessageBox.Show("Длина фланцев не соответствует размерам болтового соединения");
+                return;
+            }
+            m_flangeLength= val;
         }
     }
 }
