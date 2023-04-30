@@ -178,7 +178,7 @@ namespace BoltJunction
             this.flangeLengthTextBox.Name = "flangeLengthTextBox";
             this.flangeLengthTextBox.Size = new System.Drawing.Size(138, 20);
             this.flangeLengthTextBox.TabIndex = 10;
-            this.flangeLengthTextBox.TextChanged += new System.EventHandler(this.flangeLenghtChanged);
+            this.flangeLengthTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnFlangeKeyPress);
             // 
             // label5
             // 
@@ -195,7 +195,7 @@ namespace BoltJunction
             this.flangeWidthtextBox.Name = "flangeWidthtextBox";
             this.flangeWidthtextBox.Size = new System.Drawing.Size(138, 20);
             this.flangeWidthtextBox.TabIndex = 12;
-            this.flangeWidthtextBox.TextChanged += new System.EventHandler(this.flangeWidthChanged);
+            this.flangeWidthtextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnFlangeKeyPress);
             // 
             // label6
             // 
@@ -212,7 +212,7 @@ namespace BoltJunction
             this.firstFlangeHeightTextBox.Name = "firstFlangeHeightTextBox";
             this.firstFlangeHeightTextBox.Size = new System.Drawing.Size(133, 20);
             this.firstFlangeHeightTextBox.TabIndex = 14;
-            this.firstFlangeHeightTextBox.TextChanged += new System.EventHandler(this.flangeHeightChanged);
+            this.firstFlangeHeightTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnFlangeKeyPress);
             // 
             // secondFlangeHeightTextBox
             // 
@@ -258,7 +258,6 @@ namespace BoltJunction
             this.Text = "Расчёт болтового соединения";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnClosed);
             this.Load += new System.EventHandler(this.OnLoad);
-            this.TextChanged += new System.EventHandler(this.flangeHeightChanged);
             ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).EndInit();
             this.mainMenuStrip.ResumeLayout(false);
             this.mainMenuStrip.PerformLayout();

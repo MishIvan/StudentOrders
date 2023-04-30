@@ -68,13 +68,15 @@ namespace BoltJunction
             {
                 m_nut = nutComboBox.Items[i] as Nut;
                 if (m_nut == null) continue;
-                if (m_nut.d == m_bolt.d) break;
+                if (m_nut.d == m_bolt.d && m_bolt.p == m_nut.p) break;
             }
 
-            if(i < n)
+            if (i < n)
             {
                 nutComboBox.SelectedIndex = i;
             }
+            else
+                m_nut = null;
 
             n = washerComboBox.Items.Count;
             for (i = 0; i < n; i++)
@@ -88,7 +90,14 @@ namespace BoltJunction
             {
                 washerComboBox.SelectedIndex = i;
             }
-            if (m_nut == null || m_washer == null) return;
+            else
+                m_washer = null;
+            if (m_nut == null || m_washer == null)
+            {
+                MessageBox.Show("Не удалось подобрать крепёж к выбранному болту");
+                return;
+            }
+
             string text = $"Длина болта l (мм): {m_bolt.l + m_bolt.k}\r\n" +
                 $"Размер под ключ S (мм):{m_bolt.S}\r\n" +
                 $"Диаметр болта d (мм): {m_bolt.d}\r\n" +
@@ -116,91 +125,90 @@ namespace BoltJunction
         /// <param name="e"></param>
         private void calculateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            double[] flangePars = { m_flangeHeight1, m_flangeHeight2, m_flangeWidth, m_flangeLength };
+            CalcForm dlg = new CalcForm(flangePars, m_bolt, m_nut , m_washer);
+            dlg.ShowDialog();
         }
+        
         /// <summary>
-        /// ТОлщина фланца изменилась
+        ///  Проверять правильность задания рамеров фланцев по параметрам крепежа
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void flangeHeightChanged(object sender, EventArgs e)
+        private void OnFlangeKeyPress(object sender, KeyPressEventArgs e)
         {
-            double val = 0.0, val1 = 0.0;
-            try
+            if (e.KeyChar == (char)Keys.Enter)
             {
-                val = Convert.ToDouble(firstFlangeHeightTextBox.Text);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Неверно задано значение толщины первого фланца");
-                return;
-            }
+                double val = 0.0, val1 = 0.0;
+                if (sender as TextBox == flangeWidthtextBox)
+                {
+                    try
+                    {
+                        val = Convert.ToDouble(flangeWidthtextBox.Text);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Неверно задано значение ширины фланца");
+                        return;
+                    }
+                    if (val < m_bolt.S + 1.0)
+                    {
+                        MessageBox.Show("Ширина фланцев не соответствует размерам болтового соединения");
+                        return;
+                    }
+                    m_flangeWidth = val;
+                }
 
-            try
-            {
-                val1 = Convert.ToDouble(firstFlangeHeightTextBox.Text);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Неверно задано значение толщины второго фланца");
-                return;
-            }
+                else if(sender as TextBox == flangeLengthTextBox)
+                {
+                    try
+                    {
+                        val = Convert.ToDouble(flangeLengthTextBox.Text);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Неверно задано значение длины фланца");
+                        return;
+                    }
+                    if (val < m_bolt.e +1.0)
+                    {
+                        MessageBox.Show("Длина фланцев не соответствует размерам болтового соединения");
+                        return;
+                    }
+                    m_flangeLength = val;
+                }
 
-            if(val+ val1 > (m_bolt.l - m_nut.m - m_washer.s - 3.0))
-            {
-                MessageBox.Show("Толщина фланцев не соответствует размерам болтового соединения");
-                return;
-            }
+                else if(sender as TextBox == firstFlangeHeightTextBox || sender as TextBox == secondFlangeHeightTextBox)
+                {
+                    try
+                    {
+                        val = Convert.ToDouble(firstFlangeHeightTextBox.Text);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Неверно задано значение толщины первого фланца");
+                        return;
+                    }
 
-            m_flangeHeight1 = val; m_flangeHeight2 = val1;
-        }
-        /// <summary>
-        /// Ширина фланца изменилась
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void flangeWidthChanged(object sender, EventArgs e)
-        {
-            double val = 0.0;
-            try
-            {
-                val = Convert.ToDouble(flangeWidthtextBox.Text);
+                    try
+                    {
+                        val1 = Convert.ToDouble(firstFlangeHeightTextBox.Text);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Неверно задано значение толщины второго фланца");
+                        return;
+                    }
+
+                    if (val + val1 > (m_bolt.l - m_nut.m - m_washer.s - 3.0) || val + val1 < (m_bolt.l - m_nut.m - m_washer.s - 3.0 - 1.0))
+                    {
+                        MessageBox.Show("Толщина фланцев не соответствует размерам болтового соединения");
+                        return;
+                    }
+
+                    m_flangeHeight1 = val; m_flangeHeight2 = val1;
+                }
             }
-            catch (Exception)
-            {
-                MessageBox.Show("Неверно задано значение ширины фланца");
-                return;
-            }
-            if(val < m_bolt.S)
-            {
-                MessageBox.Show("Ширина фланцев не соответствует размерам болтового соединения");
-                return;
-            }
-            m_flangeWidth = val;
-        }
-        /// <summary>
-        ///  Длина фланца изменилась
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void flangeLenghtChanged(object sender, EventArgs e)
-        {
-            double val = 0.0;
-            try
-            {
-                val = Convert.ToDouble(flangeWidthtextBox.Text);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Неверно задано значение длины фланца");
-                return;
-            }
-            if (val < m_bolt.e)
-            {
-                MessageBox.Show("Длина фланцев не соответствует размерам болтового соединения");
-                return;
-            }
-            m_flangeLength= val;
         }
     }
 }

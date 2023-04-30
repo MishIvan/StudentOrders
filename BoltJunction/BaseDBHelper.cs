@@ -109,5 +109,24 @@ namespace BoltJunction
             }
             return lst;
         }
+        /// <summary>
+        /// Выдать список материалов
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Material>> GetMaterials()
+        {
+            List<Material> lst = null;
+            string sqlText = "select id, name, sigmt, sigmv from material order by name";
+            try
+            {
+                var task = await m_conn.QueryAsync<Material>(sqlText);
+                lst = task.ToList();
+            }
+            catch (Exception ex)
+            {
+                m_errorText = ex.Message;
+            }
+            return lst;
+        }
     }
 }

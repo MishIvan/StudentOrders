@@ -81,6 +81,16 @@ namespace BoltJunction.Properties {
         }
         
         /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BoltNutLoading {
+            get {
+                object obj = ResourceManager.GetObject("BoltNutLoading", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
         /// </summary>
         internal static System.Drawing.Icon calculate32 {

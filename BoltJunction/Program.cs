@@ -19,7 +19,7 @@ namespace BoltJunction
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            string fname = "boltnut.db";
+            string fname = "Properties\\boltnut.db";
             string documentsPath = System.Environment.GetCommandLineArgs()[0];
             string path = documentsPath.Replace("BoltJunction.exe", fname);
             m_helper = new DBHelper(path);
