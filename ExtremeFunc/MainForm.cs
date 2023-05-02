@@ -39,7 +39,7 @@ namespace FunExtremum
             return (float)Math.Sqrt((double)(vgrad[0] * vgrad[0]) + (double)(vgrad[1] * vgrad[1]));
         }
 
-        private void RunExec(object sender, EventArgs e)
+        private async void RunExec(object sender, EventArgs e)
         {
             if (Grad == null)
             {
@@ -60,38 +60,43 @@ namespace FunExtremum
                 return;
             }
             Find.Enabled = false;
-            Iterations.Text = "Дождитесь завершения итерации...";
+            Iterations.Text = " Итерационный процесс начат. Ждите...";
             int i = 0;
-            int n = 320000;
+            int n = 321999;
             float x0 = 1.0f;
             float y0 = 1.0f;
             float x = x0;
             float y = y0;
             float f = 0.0f;
             float f0 = f;
-            while (true)
+            await Task.Run(() =>
             {
-                float[] vgrad = Grad(x0, y0);
-                x = x0 - lambda * vgrad[0] * kmin;
-                y = y0 - lambda * vgrad[1] * kmin;
-                f = kmin * Func(x, y);
-                f0 = kmin * Func(x0, y0);
-                //if (kmin == 1.0 && f0 > f) lambda *= 0.5f;
-                i++;
-                x0 = x;
-                y0 = y;
-                float mg = ModGradient(x, y);
-                if (mg < eps || i > n) break;
-            }
+                
+                while (true)
+                {
+                    float[] vgrad = Grad(x0, y0);
+                    x = x0 - lambda * vgrad[0] * kmin;
+                    y = y0 - lambda * vgrad[1] * kmin;
+                    f = kmin * Func(x, y);
+                    f0 = kmin * Func(x0, y0);
+                    //if (kmin == 1.0 && f0 > f) lambda *= 0.5f;
+                    i++;
+                    x0 = x;
+                    y0 = y;
+                    float mg = ModGradient(x, y);
+                    if (mg < eps || i > n) break;
+                }
+            });
+
             if (i < n)
             {
                 ExtremumPoint.Text = String.Format("({0:F5};{1:F5})", x, y);
                 ExtremeValue.Text = String.Format("{0:F5}", kmin * f);
-                Iterations.Text = $"Итерацтонный процесс завершён. Число итераций {i}";
+                Iterations.Text = $"Итерационный процесс завершён. Число итераций {i}";
             }
             else
             {
-                Iterations.Text = $"Итерацтонный процесс не сходится";
+                Iterations.Text = $"Итерационный процесс не сходится";
                 ExtremumPoint.Text = String.Empty;
                 ExtremeValue.Text = String.Empty;
             }
