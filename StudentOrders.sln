@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoltJunction", "BoltJunctio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtremeFunc", "ExtremeFunc\ExtremeFunc.csproj", "{74BAF560-0AF6-4641-BCB1-E30145F0B834}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdAgency", "AdAgency\AdAgency.csproj", "{25C1A60A-E03D-4467-8B22-0C222905D02B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,18 @@ Global
 		{74BAF560-0AF6-4641-BCB1-E30145F0B834}.Release|x64.Build.0 = Release|Any CPU
 		{74BAF560-0AF6-4641-BCB1-E30145F0B834}.Release|x86.ActiveCfg = Release|Any CPU
 		{74BAF560-0AF6-4641-BCB1-E30145F0B834}.Release|x86.Build.0 = Release|Any CPU
+		{25C1A60A-E03D-4467-8B22-0C222905D02B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25C1A60A-E03D-4467-8B22-0C222905D02B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25C1A60A-E03D-4467-8B22-0C222905D02B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{25C1A60A-E03D-4467-8B22-0C222905D02B}.Debug|x64.Build.0 = Debug|Any CPU
+		{25C1A60A-E03D-4467-8B22-0C222905D02B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{25C1A60A-E03D-4467-8B22-0C222905D02B}.Debug|x86.Build.0 = Debug|Any CPU
+		{25C1A60A-E03D-4467-8B22-0C222905D02B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25C1A60A-E03D-4467-8B22-0C222905D02B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25C1A60A-E03D-4467-8B22-0C222905D02B}.Release|x64.ActiveCfg = Release|Any CPU
+		{25C1A60A-E03D-4467-8B22-0C222905D02B}.Release|x64.Build.0 = Release|Any CPU
+		{25C1A60A-E03D-4467-8B22-0C222905D02B}.Release|x86.ActiveCfg = Release|Any CPU
+		{25C1A60A-E03D-4467-8B22-0C222905D02B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
