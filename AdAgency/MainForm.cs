@@ -15,11 +15,78 @@ namespace AdAgency
         public MainForm()
         {
             InitializeComponent();
+            
         }
 
-        private void OnLoad(object sender, EventArgs e)
+        private async void OnLoad(object sender, EventArgs e)
         {
             Icon = Properties.Resources.office32;
+            List<OrderView> lst = await Program.m_helper.GetOrders();
+            orderDataGridView.DataSource = lst;
+        }
+        /// <summary>
+        ///  Завершить работу программы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+        /// <summary>
+        /// Закрыть соединение при закрытии главной формы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClose(object sender, FormClosedEventArgs e)
+        {
+            Program.m_helper.Dispose();
+        }
+        /// <summary>
+        /// Добавить заказ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void addOrderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+        /// <summary>
+        /// Изменить заказ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void editOrderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+        /// <summary>
+        /// Удалить заказ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void deleteOrderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+        /// <summary>
+        /// Изменить статус заказа
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void changeStatusToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+        /// <summary>
+        /// Управление справочником номенклатуры услуг
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void servicesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AdServiceForm frm = new AdServiceForm();
+            frm.ShowDialog();
         }
     }
 }

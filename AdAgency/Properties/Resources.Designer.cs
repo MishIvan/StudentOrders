@@ -61,6 +61,15 @@ namespace AdAgency.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Соединение с базой данных не удалось установить.
+        /// </summary>
+        internal static string CONNECTION_FAILED {
+            get {
+                return ResourceManager.GetString("CONNECTION_FAILED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
         /// </summary>
         internal static System.Drawing.Icon office32 {
