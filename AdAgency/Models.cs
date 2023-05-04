@@ -68,10 +68,11 @@ namespace AdAgency
     /// </summary>
     public class JuridicalPerson
     {
-        public int id { get; set; }
+        public long id { get; set; }
         public string pname { get; set; }
         public string inn { get; set; }
         public string kpp { get; set; }
+        public string address { get; set; }
         public override string ToString()
         {
             return pname;
@@ -83,7 +84,7 @@ namespace AdAgency
     /// </summary>
     public class PhisicalPerson
     {
-        public int id { get; set; }
+        public long id { get; set; }
         public string pname { get; set; }
         public string inn { get; set; }
         public string passport { get; set; }

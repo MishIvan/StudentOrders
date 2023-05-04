@@ -127,6 +127,18 @@
       <DependentUpon>AppSettings.settings</DependentUpon>
     </Compile>
     <Compile Include="BasePSqlClient.cs" />
+    <Compile Include="JuridicalPersonCardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="JuridicalPersonCardForm.Designer.cs">
+      <DependentUpon>JuridicalPersonCardForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="JuridicalPersonForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="JuridicalPersonForm.Designer.cs">
+      <DependentUpon>JuridicalPersonForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,6 +150,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AdServiceForm.resx">
       <DependentUpon>AdServiceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JuridicalPersonCardForm.resx">
+      <DependentUpon>JuridicalPersonCardForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JuridicalPersonForm.resx">
+      <DependentUpon>JuridicalPersonForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -172,6 +190,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\office32.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\company32.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" />

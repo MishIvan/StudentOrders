@@ -235,5 +235,85 @@ namespace AdAgency
             return nrec;
         }
         #endregion
+
+        #region Juridical_Person
+        /// <summary>
+        /// Возвращает список юридических лиц
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<JuridicalPerson>> GetPesons()
+        {
+            List<JuridicalPerson> lst = null;
+            string sqlText = "select id, pname, inn, kpp, address from public.juridicalperson order by pname";
+            try
+            {
+                var t = await m_connection.QueryAsync<JuridicalPerson>(sqlText);
+                lst = t.ToList();
+            }
+            catch (Exception ex)
+            {
+
+                m_errorText = ex.Message;
+            }
+            return lst;
+        }
+        /// <summary>
+        /// Получить объект по идентификатору из БД
+        /// </summary>
+        /// <param name="id">идентификатор юрлица</param>
+        /// <returns>в случае успешного выполнения запроса объект, иначе - null</returns>
+        public JuridicalPerson GetJuridicalPersonByID(long id)
+        {
+            JuridicalPerson jp = null;
+            string sqlText = $"select id, pname, inn, kpp, address from public.juridicalperson where id = {id}";
+            try
+            {
+                jp = m_connection.QueryFirstOrDefault<JuridicalPerson>(sqlText);
+            }
+            catch (Exception ex)
+            {
+                m_errorText = ex.Message;
+            }
+            return jp;
+        }
+        /// <summary>
+        /// Добавление юридического лица
+        /// </summary>
+        /// <param name="jpers"> объект с данными</param>
+        /// <returns>1 - запись добавлена, 0 - иначе</returns>
+        public int AddJuridicalPerson(JuridicalPerson jpers)
+        {
+            int nrec = 0;
+            string sqlText = $"insert into public.juridicalperson (pname, inn, kpp, address) values('{jpers.pname}', '{jpers.inn}', '{jpers.kpp}','{jpers.address}')";
+            try
+            {
+                nrec = m_connection.Execute(sqlText);
+            }
+            catch (Exception ex)
+            {
+                m_errorText = ex.Message;
+            }
+            return nrec;
+        }
+        /// <summary>
+        /// Изменение реквизитьв юридического лица
+        /// </summary>
+        /// <param name="jpers">объект с данными</param>
+        /// <returns>1 - изменения сделаны и внесены в БД, 0 - иначе</returns>
+        public int UpdateJuridicalPerson(JuridicalPerson jpers)
+        {
+            int nrec = 0;
+            string sqlText = $"update public.juridicalperson set pname = '{jpers.pname}', inn = '{jpers.inn}', kpp = '{jpers.kpp}', address = '{jpers.address}' where id = {jpers.id}";
+            try
+            {
+                nrec = m_connection.Execute(sqlText);
+            }
+            catch (Exception ex)
+            {
+                m_errorText = ex.Message;
+            }
+            return nrec;
+        }
+        #endregion
     }
 }

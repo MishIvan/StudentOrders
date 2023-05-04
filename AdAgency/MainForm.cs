@@ -88,5 +88,15 @@ namespace AdAgency
             AdServiceForm frm = new AdServiceForm();
             frm.ShowDialog();
         }
+        /// <summary>
+        /// Управление справочником юридических лиц
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void juridicalPersonsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            JuridicalPersonForm frm = new JuridicalPersonForm();
+            frm.ShowDialog();
+        }
     }
 }
