@@ -236,6 +236,23 @@ namespace AdAgency
         }
         #endregion
 
+        #region Phisical_Person
+        public PhisicalPerson GetPhisicalPersonByID(long id)
+        {
+            PhisicalPerson php = null;
+            string sqlText = $"select id, pname, passport from public.phisperson where id = {id}";
+            try
+            {
+                php = m_connection.QueryFirstOrDefault<PhisicalPerson>(sqlText);
+            }
+            catch (Exception ex)
+            {
+                m_errorText = ex.Message;
+            }
+            return php;
+        }
+        #endregion
+
         #region Juridical_Person
         /// <summary>
         /// Возвращает список юридических лиц
@@ -304,6 +321,174 @@ namespace AdAgency
         {
             int nrec = 0;
             string sqlText = $"update public.juridicalperson set pname = '{jpers.pname}', inn = '{jpers.inn}', kpp = '{jpers.kpp}', address = '{jpers.address}' where id = {jpers.id}";
+            try
+            {
+                nrec = m_connection.Execute(sqlText);
+            }
+            catch (Exception ex)
+            {
+                m_errorText = ex.Message;
+            }
+            return nrec;
+        }
+        #endregion
+
+        #region Contract
+        /// <summary>
+        /// Выдать список договоров
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<ContractView>> GetContracts()
+        {
+            List<ContractView> lst = null;
+            string sqlText = "select id, cnumber, cname, cdate, datefrom, dateto, pname from public.contractview order by cname";
+            try
+            {
+                var t = await m_connection.QueryAsync<ContractView>(sqlText);
+                lst = t.ToList();
+            }
+            catch (Exception ex)
+            {
+
+                m_errorText = ex.Message;
+            }
+            return lst;
+        }
+        /// <summary>
+        /// Получить объект по идентификатору
+        /// </summary>
+        /// <param name="ID">идентификатор договора</param>
+        /// <returns>объект, в случае успешно выполненного запроса, null - иначе</returns>
+        public Contract GetContractByID(long ID)
+        {
+            Contract contr = null;
+            string sqlText = $"select id,number, cdate, datefrom, dateto, idjuridical, idphis, comments, name, content from public.contract where id = {ID}";
+            try
+            {
+                contr = m_connection.QueryFirstOrDefault<Contract>(sqlText);
+            }
+            catch (Exception ex)
+            {
+                m_errorText = ex.Message;
+            }
+            return contr;
+        }
+        /// <summary>
+        /// Добавить договор
+        /// </summary>
+        /// <param name="contr">Объект с данными по договору</param>
+        /// <returns>1 - договор внесён в БД, 0 - иначе</returns>
+        public int AddContract(Contract contr)
+        {
+            int nrec = 0;
+            // формирование запроса
+            string sqlText = "insert into public.contract (number, cdate, datefrom, dateto, name, comments, content, contenttype ";
+            
+            if (contr.idjuridical.HasValue && contr.idjuridical.Value > 0)
+                sqlText += $",idjuridical ";
+            if (contr.idphis.HasValue && contr.idphis.Value > 0)
+                sqlText += $",idphis ";
+            string scdate = contr.сdate.ToString("yyyy-MM-dd hh:mm:ss");
+            string sdatefrom = contr.datefrom.ToString("yyyy-MM-dd hh:mm:ss");
+            string sdateto = contr.dateto.ToString("yyyy-MM-dd hh:mm:ss");
+
+            sqlText += $") values (@pnum, '{scdate}', '{sdatefrom}', '{sdateto}', @pname, @pcomments, @pcontent, @pcontenttype ";
+            if (contr.idjuridical.HasValue && contr.idjuridical.Value > 0)
+                sqlText += $",{contr.idjuridical} ";
+            if (contr.idphis.HasValue && contr.idphis.Value > 0)
+                sqlText += $", {contr.idphis} ";
+            sqlText += ")";
+            try
+            {
+                nrec = m_connection.Execute(sqlText, 
+                    new { pname = contr.name, pnum = contr.number, pcomments = contr.comments, pcontent = contr.content, pcontenttype = contr.contenttype } );
+            }
+            catch (Exception ex)
+            {
+                m_errorText = ex.Message;
+            }
+            return nrec;
+        }
+        /// <summary>
+        /// Изменить рекизиты договора
+        /// </summary>
+        /// <param name="contr">Объект с данными по договору</param>
+        /// <returns>1 - реквизиты договора изменены в БД, 0 - иначе</returns>
+        public int UpdateContract(Contract contr)
+        {
+            int nrec = 0;
+
+            // формирование запроса
+            string scdate = contr.сdate.ToString("yyyy-MM-dd hh:mm:ss");
+            string sdatefrom = contr.datefrom.ToString("yyyy-MM-dd hh:mm:ss");
+            string sdateto = contr.dateto.ToString("yyyy-MM-dd hh:mm:ss");
+
+            string sqlText = $"update public.contract set number = @pnum, cdate = '{scdate}', datefrom =  '{sdatefrom}', dateto = '{sdateto}', name = @pname, comments =   @pcomments ";
+
+            if (contr.idjuridical.HasValue && contr.idjuridical.Value > 0)
+                sqlText += $",idjuridical = {contr.idjuridical} ";
+            if (contr.idphis.HasValue && contr.idphis.Value > 0)
+                sqlText += $",idphis = {contr.idphis} ";
+            sqlText += " where id = @pid";
+            try
+            {
+                nrec = m_connection.Execute(sqlText, 
+                    new {pid = contr.id, pname = contr.name, pnum = contr.number, pcomments = contr.comments,  });
+            }
+            catch (Exception ex)
+            {
+                m_errorText = ex.Message;
+            }
+            return nrec;
+        }
+        /// <summary>
+        /// Загрузить текст договора
+        /// </summary>
+        /// <param name="ID">идентификатор договора</param>
+        /// <param name="content">текст договора в двоичном формате</param>
+        /// <returns>1 - если удалось внести текст в БД, 0 - иначе</returns>
+        public int UploadContractContent(long ID, Content dtext)
+        {
+            int nrec = 0;
+            string sqlText = "update public.contract set content = @pcontent, contenttype = @pcontenttype where id = @pid";
+            try
+            {
+                nrec = m_connection.Execute(sqlText, new {pid = ID, pcontent = dtext.content, pcontenttype = dtext.contenttype });
+            }
+            catch (Exception ex)
+            {
+                m_errorText = ex.Message;
+            }
+            return nrec;
+        }
+        /// <summary>
+        /// Скачать текст договора 
+        /// </summary>
+        /// <param name="ID">идентификатор договора</param>
+        /// <returns> массив байтов с содержимым договора, null - иначе</returns>
+        public Content DownloadContractContent(long ID)
+        {
+            Content cnt = null;
+            string sqlText = $"select content, contenttype from public.contract where id = {ID}";
+            try
+            {
+                cnt = m_connection.QueryFirstOrDefault<Content>(sqlText);
+            }
+            catch (Exception ex)
+            {
+                m_errorText = ex.Message;
+            }
+            return cnt;
+        }
+        /// <summary>
+        /// Удалить договор
+        /// </summary>
+        /// <param name="ID">идентификатор договора</param>
+        /// <returns>1 - если договор удалён, 0 - иначе</returns>
+        public int DeleteContract(long ID)
+        {
+            int nrec = 0;
+            string sqlText = $"delete from public.contract where id = {ID}";
             try
             {
                 nrec = m_connection.Execute(sqlText);

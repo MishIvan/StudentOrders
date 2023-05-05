@@ -13,15 +13,31 @@ namespace AdAgency
     public partial class JuridicalPersonForm : Form
     {
         private List<JuridicalPerson> m_pdata;
-        public JuridicalPersonForm()
+        private bool m_choiceMode; // Режим выбора или управления
+        private long m_id;
+        public long personID {get {return m_id;} }
+        public JuridicalPersonForm(bool choiceMode = false)
         {
             InitializeComponent();
             m_pdata = null;
+            m_choiceMode = choiceMode;
+            m_id = 0;
         }
 
         private async void OnLoad(object sender, EventArgs e)
         {
             Icon = Properties.Resources.company32;
+            if(m_choiceMode)
+            {
+                addButton.DialogResult = DialogResult.OK;
+                addButton.Text = "OK";
+
+                editButton.DialogResult = DialogResult.Cancel;
+                editButton.Text = "Отмена";
+
+                AcceptButton = addButton;
+                CancelButton = editButton;
+            }
             m_pdata = await Program.m_helper.GetPesons();
             jpDataGridView.DataSource = m_pdata;
 
@@ -69,11 +85,23 @@ namespace AdAgency
         /// <param name="e"></param>
         private async void addButton_Click(object sender, EventArgs e)
         {
-            JuridicalPersonCardForm frm = new JuridicalPersonCardForm(0);
-            if (frm.ShowDialog() == DialogResult.OK)
+            if (!m_choiceMode)
             {
-                m_pdata = await Program.m_helper.GetPesons();
-                ApplyFilter();
+                JuridicalPersonCardForm frm = new JuridicalPersonCardForm(0);
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    m_pdata = await Program.m_helper.GetPesons();
+                    ApplyFilter();
+
+                }
+            }
+            else 
+            {
+                var row = jpDataGridView.CurrentRow;
+                if(row != null)
+                {
+                    m_id = Convert.ToInt64(row.Cells[0].Value);
+                }
             }
         }
         /// <summary>

@@ -103,6 +103,7 @@ namespace AdAgency
             this.jpDataGridView.Location = new System.Drawing.Point(16, 52);
             this.jpDataGridView.Name = "jpDataGridView";
             this.jpDataGridView.ReadOnly = true;
+            this.jpDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.jpDataGridView.Size = new System.Drawing.Size(747, 440);
             this.jpDataGridView.TabIndex = 4;
             // 

@@ -127,6 +127,18 @@
       <DependentUpon>AppSettings.settings</DependentUpon>
     </Compile>
     <Compile Include="BasePSqlClient.cs" />
+    <Compile Include="ContractCardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ContractCardForm.Designer.cs">
+      <DependentUpon>ContractCardForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ContractForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ContractForm.Designer.cs">
+      <DependentUpon>ContractForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="JuridicalPersonCardForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -150,6 +162,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AdServiceForm.resx">
       <DependentUpon>AdServiceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ContractCardForm.resx">
+      <DependentUpon>ContractCardForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ContractForm.resx">
+      <DependentUpon>ContractForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="JuridicalPersonCardForm.resx">
       <DependentUpon>JuridicalPersonCardForm.cs</DependentUpon>
@@ -193,6 +211,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\company32.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\contract32.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\check32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\upload32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\download32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" />

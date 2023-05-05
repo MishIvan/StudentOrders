@@ -17,11 +17,32 @@ namespace AdAgency
         public DateTime сdate { get; set; }
         public DateTime datefrom { get; set; }
         public DateTime dateto { get; set; }
-        public double summa { get; set; }
         public long? idjuridical { get; set; }
-        public long? idphish { get; set; }
+        public long? idphis { get; set; }
         public string comments { get; set; }
         public byte[] content { get; set; }
+        public string contenttype { get; set; }
+    }
+
+    /// <summary>
+    /// Вид для отображения договора
+    /// </summary>
+    public class ContractView
+    {
+        public long id { get; set; }
+        public string cnumber { get; set; }
+        public string cname { get; set; }
+        public DateTime datefrom { get; set; }
+        public DateTime dateto { get; set; }
+        public string pname { get; set; }
+    }
+    /// <summary>
+    /// Текст договора
+    /// </summary>
+    public class Content
+    {
+        public byte[] content { get; set; }
+        public string contenttype { get; set; }
     }
     /// <summary>
     /// Заголовочная часть заказа

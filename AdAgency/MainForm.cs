@@ -41,6 +41,14 @@ namespace AdAgency
         private void OnClose(object sender, FormClosedEventArgs e)
         {
             Program.m_helper.Dispose();
+            foreach(string fname in Program.m_tmpFiles)
+            {
+                try
+                {
+                    System.IO.File.Delete(fname);
+                }
+                catch (Exception) { }
+            }
         }
         /// <summary>
         /// Добавить заказ
@@ -96,6 +104,16 @@ namespace AdAgency
         private void juridicalPersonsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             JuridicalPersonForm frm = new JuridicalPersonForm();
+            frm.ShowDialog();
+        }
+        /// <summary>
+        /// Управление справочником договоров
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void contractsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ContractForm frm = new ContractForm();
             frm.ShowDialog();
         }
     }
