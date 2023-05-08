@@ -35,7 +35,7 @@ namespace AdAgency
                 if(m_contract != null)
                 {
                     numberTextBox.Text = m_contract.number;
-                    cdateTimePicker.Value = m_contract.сdate;
+                    cdateTimePicker.Value = m_contract.cdate;
                     nameTextBox.Text = m_contract.name;
                     datefromTimePicker.Value = m_contract.datefrom;
                     datetoTimePicker.Value = m_contract.dateto;
@@ -176,7 +176,7 @@ namespace AdAgency
 
             m_contract.name = nameTextBox.Text;
             m_contract.number = numberTextBox.Text;
-            m_contract.сdate = cdateTimePicker.Value;
+            m_contract.cdate = cdateTimePicker.Value;
             m_contract.datefrom = datefromTimePicker.Value;
             m_contract.dateto = datetoTimePicker.Value;
             m_contract.comments = commentsTextBox.Text;

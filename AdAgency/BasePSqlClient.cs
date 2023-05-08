@@ -234,6 +234,27 @@ namespace AdAgency
             }
             return nrec;
         }
+        /// <summary>
+        /// Получить таблицу услуг по заказу
+        /// </summary>
+        /// <param name="onum">номер заказа</param>
+        /// <returns></returns>
+        public async Task<List<OrderTable>> GetOrderTable(string onum)
+        {
+            List<OrderTable> lst = null;
+            string sqlText = $"select ot.numstr, ot.number, ot.idadservice, ot.count, ot.price form public.ordertable where ot.number ='{onum}' ot order by ot.numstr";
+            try
+            {
+                var t = await m_connection.QueryAsync<OrderTable>(sqlText);
+                lst = t.ToList();
+            }
+            catch (Exception ex)
+            {
+
+                m_errorText = ex.Message;
+            }
+            return lst;
+        }
         #endregion
 
         #region Phisical_Person
@@ -362,7 +383,8 @@ namespace AdAgency
         public Contract GetContractByID(long ID)
         {
             Contract contr = null;
-            string sqlText = $"select id,number, cdate, datefrom, dateto, idjuridical, idphis, comments, name, content from public.contract where id = {ID}";
+            //string sqlText = $"select id,number, cdate, datefrom, dateto, idjuridical, idphis, comments, name, content,contenttype from public.contract where id = {ID}";
+            string sqlText = $"select c.* from public.contract c where id = {ID}";
             try
             {
                 contr = m_connection.QueryFirstOrDefault<Contract>(sqlText);
@@ -388,7 +410,7 @@ namespace AdAgency
                 sqlText += $",idjuridical ";
             if (contr.idphis.HasValue && contr.idphis.Value > 0)
                 sqlText += $",idphis ";
-            string scdate = contr.сdate.ToString("yyyy-MM-dd hh:mm:ss");
+            string scdate = contr.cdate.ToString("yyyy-MM-dd hh:mm:ss");
             string sdatefrom = contr.datefrom.ToString("yyyy-MM-dd hh:mm:ss");
             string sdateto = contr.dateto.ToString("yyyy-MM-dd hh:mm:ss");
 
@@ -419,7 +441,7 @@ namespace AdAgency
             int nrec = 0;
 
             // формирование запроса
-            string scdate = contr.сdate.ToString("yyyy-MM-dd hh:mm:ss");
+            string scdate = contr.cdate.ToString("yyyy-MM-dd hh:mm:ss");
             string sdatefrom = contr.datefrom.ToString("yyyy-MM-dd hh:mm:ss");
             string sdateto = contr.dateto.ToString("yyyy-MM-dd hh:mm:ss");
 

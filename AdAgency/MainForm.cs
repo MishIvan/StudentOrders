@@ -55,9 +55,14 @@ namespace AdAgency
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void addOrderToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void addOrderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            OrderCardForm frm = new OrderCardForm();
+            if(frm.ShowDialog() == DialogResult.OK)
+            {
+                List<OrderView> lst = await Program.m_helper.GetOrders();
+                orderDataGridView.DataSource = lst;
+            }
         }
         /// <summary>
         /// Изменить заказ

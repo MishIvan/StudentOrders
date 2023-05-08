@@ -151,13 +151,14 @@ namespace AdAgency
             // 
             // cnumber
             // 
+            this.cnumber.DataPropertyName = "cnumber";
             this.cnumber.HeaderText = "Номер";
             this.cnumber.Name = "cnumber";
             this.cnumber.ReadOnly = true;
             // 
             // cdate
             // 
-            this.cdate.DataPropertyName = "cnumber";
+            this.cdate.DataPropertyName = "cdate";
             dataGridViewCellStyle1.Format = "d";
             dataGridViewCellStyle1.NullValue = null;
             this.cdate.DefaultCellStyle = dataGridViewCellStyle1;

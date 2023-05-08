@@ -13,13 +13,13 @@ namespace AdAgency
     {
         public long id { get; set; }
         public string number { get; set; }
-        public string name { get; set; }
-        public DateTime сdate { get; set; }
+        public DateTime cdate { get; set; }
         public DateTime datefrom { get; set; }
         public DateTime dateto { get; set; }
         public long? idjuridical { get; set; }
         public long? idphis { get; set; }
         public string comments { get; set; }
+        public string name { get; set; }
         public byte[] content { get; set; }
         public string contenttype { get; set; }
     }
@@ -31,6 +31,7 @@ namespace AdAgency
     {
         public long id { get; set; }
         public string cnumber { get; set; }
+        public DateTime cdate { get; set; }
         public string cname { get; set; }
         public DateTime datefrom { get; set; }
         public DateTime dateto { get; set; }
@@ -57,6 +58,16 @@ namespace AdAgency
         public long? idjuridical { get; set; }
         public long? idphis { get; set; }
         public long? idcontract { get; set; }
+    }
+    public class OrderTable
+    {
+        public string number { get; set; }
+        public long idadservice { get; set; }
+        public double count { get; set; }
+        public double price { get; set; }
+        public int numstr { get; set; }
+
+
     }
     public class OrderView
     {       
