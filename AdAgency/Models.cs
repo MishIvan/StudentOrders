@@ -63,6 +63,7 @@ namespace AdAgency
     {
         public string number { get; set; }
         public long idadservice { get; set; }
+        public string service_name { get; set; }
         public double count { get; set; }
         public double price { get; set; }
         public int numstr { get; set; }

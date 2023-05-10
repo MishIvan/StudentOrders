@@ -52,9 +52,12 @@ namespace AdAgency
             this.label6 = new System.Windows.Forms.Label();
             this.acceptButton = new System.Windows.Forms.Button();
             this.rejectButton = new System.Windows.Forms.Button();
+            this.addRecordButton = new System.Windows.Forms.Button();
+            this.deleteRecordButton = new System.Windows.Forms.Button();
+            this.editRecordButton = new System.Windows.Forms.Button();
             this.numstr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idadservice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.service_name = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.service_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.count = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.price = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox2.SuspendLayout();
@@ -230,6 +233,8 @@ namespace AdAgency
             // 
             // orderTableDataGridView
             // 
+            this.orderTableDataGridView.AllowUserToAddRows = false;
+            this.orderTableDataGridView.AllowUserToDeleteRows = false;
             this.orderTableDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.orderTableDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.numstr,
@@ -237,13 +242,12 @@ namespace AdAgency
             this.service_name,
             this.count,
             this.price});
-            this.orderTableDataGridView.Location = new System.Drawing.Point(16, 314);
+            this.orderTableDataGridView.Location = new System.Drawing.Point(16, 327);
             this.orderTableDataGridView.MultiSelect = false;
             this.orderTableDataGridView.Name = "orderTableDataGridView";
+            this.orderTableDataGridView.ReadOnly = true;
             this.orderTableDataGridView.Size = new System.Drawing.Size(607, 268);
             this.orderTableDataGridView.TabIndex = 23;
-            this.orderTableDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnChangedCellValueInTable);
-            this.orderTableDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.OnAddTableRow);
             // 
             // label6
             // 
@@ -257,28 +261,63 @@ namespace AdAgency
             // acceptButton
             // 
             this.acceptButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.acceptButton.Location = new System.Drawing.Point(16, 612);
+            this.acceptButton.Location = new System.Drawing.Point(16, 613);
             this.acceptButton.Name = "acceptButton";
             this.acceptButton.Size = new System.Drawing.Size(94, 27);
             this.acceptButton.TabIndex = 25;
             this.acceptButton.Text = "OK";
             this.acceptButton.UseVisualStyleBackColor = true;
+            this.acceptButton.Click += new System.EventHandler(this.acceptButton_Click);
             // 
             // rejectButton
             // 
             this.rejectButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.rejectButton.Location = new System.Drawing.Point(529, 612);
+            this.rejectButton.Location = new System.Drawing.Point(529, 613);
             this.rejectButton.Name = "rejectButton";
             this.rejectButton.Size = new System.Drawing.Size(94, 27);
             this.rejectButton.TabIndex = 26;
             this.rejectButton.Text = "Отмена";
             this.rejectButton.UseVisualStyleBackColor = true;
             // 
+            // addRecordButton
+            // 
+            this.addRecordButton.Image = global::AdAgency.Properties.Resources.icons8_plus_32;
+            this.addRecordButton.Location = new System.Drawing.Point(91, 279);
+            this.addRecordButton.Name = "addRecordButton";
+            this.addRecordButton.Size = new System.Drawing.Size(39, 39);
+            this.addRecordButton.TabIndex = 27;
+            this.orderToolTip.SetToolTip(this.addRecordButton, "Добавить услугу");
+            this.addRecordButton.UseVisualStyleBackColor = true;
+            this.addRecordButton.Click += new System.EventHandler(this.addRecordButton_Click);
+            // 
+            // deleteRecordButton
+            // 
+            this.deleteRecordButton.Image = global::AdAgency.Properties.Resources.icons8_minus_32;
+            this.deleteRecordButton.Location = new System.Drawing.Point(143, 279);
+            this.deleteRecordButton.Name = "deleteRecordButton";
+            this.deleteRecordButton.Size = new System.Drawing.Size(39, 39);
+            this.deleteRecordButton.TabIndex = 28;
+            this.orderToolTip.SetToolTip(this.deleteRecordButton, "Добавить услугу");
+            this.deleteRecordButton.UseVisualStyleBackColor = true;
+            this.deleteRecordButton.Click += new System.EventHandler(this.deleteRecordButton_Click);
+            // 
+            // editRecordButton
+            // 
+            this.editRecordButton.Image = global::AdAgency.Properties.Resources.check32;
+            this.editRecordButton.Location = new System.Drawing.Point(199, 279);
+            this.editRecordButton.Name = "editRecordButton";
+            this.editRecordButton.Size = new System.Drawing.Size(39, 39);
+            this.editRecordButton.TabIndex = 29;
+            this.orderToolTip.SetToolTip(this.editRecordButton, "Добавить услугу");
+            this.editRecordButton.UseVisualStyleBackColor = true;
+            this.editRecordButton.Click += new System.EventHandler(this.editRecordButton_Click);
+            // 
             // numstr
             // 
             this.numstr.DataPropertyName = "numstr";
             this.numstr.HeaderText = "№";
             this.numstr.Name = "numstr";
+            this.numstr.ReadOnly = true;
             this.numstr.Width = 50;
             // 
             // idadservice
@@ -286,6 +325,7 @@ namespace AdAgency
             this.idadservice.DataPropertyName = "idadservice";
             this.idadservice.HeaderText = "ИД услуги";
             this.idadservice.Name = "idadservice";
+            this.idadservice.ReadOnly = true;
             this.idadservice.Visible = false;
             this.idadservice.Width = 50;
             // 
@@ -294,8 +334,8 @@ namespace AdAgency
             this.service_name.DataPropertyName = "service_name";
             this.service_name.HeaderText = "Наименование";
             this.service_name.Name = "service_name";
+            this.service_name.ReadOnly = true;
             this.service_name.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.service_name.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.service_name.Width = 300;
             // 
             // count
@@ -303,18 +343,23 @@ namespace AdAgency
             this.count.DataPropertyName = "count";
             this.count.HeaderText = "Кол-во";
             this.count.Name = "count";
+            this.count.ReadOnly = true;
             // 
             // price
             // 
             this.price.DataPropertyName = "price";
             this.price.HeaderText = "Цена";
             this.price.Name = "price";
+            this.price.ReadOnly = true;
             // 
             // OrderCardForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(657, 651);
+            this.ClientSize = new System.Drawing.Size(646, 653);
+            this.Controls.Add(this.editRecordButton);
+            this.Controls.Add(this.deleteRecordButton);
+            this.Controls.Add(this.addRecordButton);
             this.Controls.Add(this.rejectButton);
             this.Controls.Add(this.acceptButton);
             this.Controls.Add(this.label6);
@@ -372,9 +417,12 @@ namespace AdAgency
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button acceptButton;
         private System.Windows.Forms.Button rejectButton;
+        private System.Windows.Forms.Button addRecordButton;
+        private System.Windows.Forms.Button deleteRecordButton;
+        private System.Windows.Forms.Button editRecordButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn numstr;
         private System.Windows.Forms.DataGridViewTextBoxColumn idadservice;
-        private System.Windows.Forms.DataGridViewComboBoxColumn service_name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn service_name;
         private System.Windows.Forms.DataGridViewTextBoxColumn count;
         private System.Windows.Forms.DataGridViewTextBoxColumn price;
     }

@@ -31,33 +31,11 @@ namespace AdAgency
             {
                 List<OrderTable> lst = await Program.m_helper.GetOrderTable(m_number);
                 orderTableDataGridView.DataSource = lst;
-                // заполнить значениями наименование
-                foreach(DataGridViewRow row in orderTableDataGridView.Rows)
-                {
-                    DataGridViewComboBoxCell cell = row.Cells[2] as DataGridViewComboBoxCell;
-                    if(cell != null)
-                    {
-                        cell.DataSource = m_adsrvlist;
-                        AdService svc = m_adsrvlist.Where(s => s.id == Convert.ToInt64(row.Cells[1].Value)).FirstOrDefault();
-                        if(svc != null)
-                        {
-                            cell.Value = svc;
-                        }
-                    }
-                }
+               
             }
             else
             {
-                foreach (DataGridViewRow row in orderTableDataGridView.Rows)
-                {
-                    DataGridViewComboBoxCell cell = row.Cells[2] as DataGridViewComboBoxCell;
-                    if (cell != null)
-                    {
-                        cell.DataSource = m_adsrvlist;
-                        row.Cells[0].Value = orderTableDataGridView.Rows.Count;
-                        cell.Value = cell.Items[0];
-                    }
-                }
+                
             }
             
             
@@ -75,48 +53,38 @@ namespace AdAgency
 
 
         }
+        
         /// <summary>
-        /// Изменение содержимого ячейки с наименованием услуг надо установить
+        /// Добавить услугу
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnChangedCellValueInTable(object sender, DataGridViewCellEventArgs e)
+        private void addRecordButton_Click(object sender, EventArgs e)
         {
-            if (e.RowIndex < 0) return;
-            var row = orderTableDataGridView.Rows[e.RowIndex];
-            if(e.ColumnIndex == 2)
-            {
-                DataGridViewComboBoxCell cell = row.Cells[e.ColumnIndex] as DataGridViewComboBoxCell;
-                if(cell != null)
-                {
-                    AdService srv = cell.Value as AdService;
-                    if(srv != null)
-                    {
-                        row.Cells[1].Value = srv.id;
-                    }
-                }
-            }    
+
         }
         /// <summary>
-        /// Добавлена строка в таблицу услуг заказа
+        /// Удалить запись об услуге
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnAddTableRow(object sender, DataGridViewRowsAddedEventArgs e)
+        private void deleteRecordButton_Click(object sender, EventArgs e)
         {
-            int idx = e.RowIndex;
-            if (idx < 0) return;
-            var row = orderTableDataGridView.Rows[idx];
-            if(row != null)
-            {
-                DataGridViewComboBoxCell cell = row.Cells[2] as DataGridViewComboBoxCell;
-                if(cell != null)
-                {
-                    cell.DataSource = m_adsrvlist;
-                    row.Cells[0].Value = orderTableDataGridView.Rows.Count;
-                    if(cell != null) cell.Value = cell.Items[0];
-                }
-            }
+
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void editRecordButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void acceptButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
