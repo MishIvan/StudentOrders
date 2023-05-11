@@ -69,8 +69,23 @@ namespace AdAgency
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void editOrderToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void editOrderToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var row = orderDataGridView.CurrentRow;
+            if (row == null) return;
+            string ordernum = row.Cells["order_number"].Value.ToString();
+            int idstatus = Convert.ToInt32(row.Cells["idstatus"].Value);
+            if (idstatus != 1)
+            {
+                MessageBox.Show("Допускается изменение параметров заказа только на стадии создания");
+                return;
+            }
+                OrderCardForm frm = new OrderCardForm(ordernum);
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                List<OrderView> lst = await Program.m_helper.GetOrders();
+                orderDataGridView.DataSource = lst;
+            }
 
         }
         /// <summary>
@@ -78,9 +93,27 @@ namespace AdAgency
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void deleteOrderToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void deleteOrderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            var row = orderDataGridView.CurrentRow;
+            if (row == null) return;
+            string ordernum = row.Cells["order_number"].Value.ToString();
+            int idstatus = Convert.ToInt32(row.Cells["idstatus"].Value);
+            if(idstatus == 2)
+            {
+                MessageBox.Show("Недопустимо удаление заказа, находящегося в работе");
+                return;
+            }
+            int result = Program.m_helper.DeleteOrder(ordernum);
+            if (result > 0)
+            {
+                List<OrderView> lst = await Program.m_helper.GetOrders();
+                orderDataGridView.DataSource = lst;
+            }
+            else
+            {
+                Program.ErrorMessageDB();
+            }
         }
         /// <summary>
         /// Изменить статус заказа
@@ -89,7 +122,9 @@ namespace AdAgency
         /// <param name="e"></param>
         private void changeStatusToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            var row = orderDataGridView.CurrentRow;
+            if (row == null) return;
+            string ordernum = row.Cells["order_number"].Value.ToString();
         }
         /// <summary>
         /// Управление справочником номенклатуры услуг

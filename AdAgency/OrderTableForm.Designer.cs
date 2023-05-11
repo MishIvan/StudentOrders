@@ -50,6 +50,7 @@ namespace AdAgency
             // 
             // serviceComboBox
             // 
+            this.serviceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.serviceComboBox.FormattingEnabled = true;
             this.serviceComboBox.Location = new System.Drawing.Point(66, 13);
             this.serviceComboBox.Name = "serviceComboBox";
@@ -90,6 +91,7 @@ namespace AdAgency
             // 
             // acceptButton
             // 
+            this.acceptButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.acceptButton.Location = new System.Drawing.Point(19, 111);
             this.acceptButton.Name = "acceptButton";
             this.acceptButton.Size = new System.Drawing.Size(93, 23);
@@ -100,6 +102,7 @@ namespace AdAgency
             // 
             // rejectButton
             // 
+            this.rejectButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.rejectButton.Location = new System.Drawing.Point(341, 111);
             this.rejectButton.Name = "rejectButton";
             this.rejectButton.Size = new System.Drawing.Size(93, 23);

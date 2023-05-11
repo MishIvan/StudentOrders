@@ -139,6 +139,26 @@ namespace AdAgency
             return lst;
         }
         /// <summary>
+        /// Получить данные заказа по его номеру
+        /// </summary>
+        /// <param name="ordernum">номер заказа</param>
+        /// <returns>объект с данными по закзазу в случае успешного выполнения запроса, null - иначе</returns>
+        public Order GetOrderData(string ordernum)
+        {
+            Order ord = null;
+            string sqlText = $"select ord.number, ord.odate, ord.deadline,ord.summa, ord.status, ord.idjuridical, ord.idphis, ord.idcontract form public.\"order\" ord order by number";
+            try
+            {
+                ord = m_connection.QueryFirstOrDefault<Order>(sqlText);
+            }
+            catch (Exception ex)
+            {
+
+                m_errorText = ex.Message;
+            }
+            return ord;
+        }
+        /// <summary>
         /// Добавить заказ
         /// </summary>
         /// <param name="ord">объект "Заказ"</param>
@@ -176,10 +196,10 @@ namespace AdAgency
                 using (var tran = m_connection.BeginTransaction())
                 {
                     nrec = m_connection.Execute(sqlText, transaction: tran);
-                    sqlText = "insert into public.ordertable_temp (number, numstr,idadservice, count price) " +
-                $"select number, numstr,idadservice, count price from public.ordertable_temp where number = {ord.number}";
+                    sqlText = "insert into public.ordertable (number, numstr,idadservice, count, price) " +
+                $"select number, numstr,idadservice, count price from public.ordertable_temp where number = '{ord.number}'";
                     m_connection.Execute(sqlText, transaction: tran);                    
-                    sqlText = $"delete from public.ordertable_temp where number = {ord.number}";
+                    sqlText = $"delete from public.ordertable_temp where number = '{ord.number}'";
                     nrec = m_connection.Execute(sqlText, transaction: tran);
                     tran.Commit();
                 }
@@ -199,6 +219,63 @@ namespace AdAgency
         {
             int nrec = 0;
             string sqlText = $"delete from public.\"order\" where number = '{ord_num}'";
+            try
+            {
+                nrec = m_connection.Execute(sqlText);
+            }
+            catch (Exception ex)
+            {
+                m_errorText = ex.Message;
+            }
+            return nrec;
+        }
+        /// <summary>
+        /// Изменить статус заказа
+        /// </summary>
+        /// <param name="ord_num">номер закзаз</param>
+        /// <param name="stat">новый статус заказа</param>
+        /// <returns></returns>
+        public int ChangeOrderStatus(string ord_num, int stat)
+        {
+            int nrec = 0;
+            string sqlText = $"update public.\"order\" set status = {stat} where number = '{ord_num}'";
+            try
+            {
+                nrec = m_connection.Execute(sqlText);
+            }
+            catch (Exception ex)
+            {
+                m_errorText = ex.Message;
+            }
+            return nrec;
+        }
+        /// <summary>
+        /// Очистить таблицу услуг по заказу
+        /// </summary>
+        /// <returns>1 - таблица очищена, 0 - иначе</returns>
+        private int ClearOrderTable(string ordernum, NpgsqlTransaction tran)
+        {
+            int nrec = 0;
+            string sqlText = $"delete from public.ordertable where number = '{ordernum}'";
+            try
+            {
+                nrec = m_connection.Execute(sqlText, transaction: tran);
+            }
+            catch (Exception ex)
+            {
+                m_errorText = ex.Message;
+            }
+            return nrec;
+        }
+        /// <summary>
+        /// Число записей в таблице списка услуг по заказу
+        /// </summary>
+        /// <param name="ordernum">номер заказа</param>
+        /// <returns>число записей</returns>
+        public int OrderTableRecodsCount(string ordernum)
+        {
+            int nrec = 0;
+            string sqlText = $"select count(*) from public.ordertable where number = '{ordernum}'";
             try
             {
                 nrec = m_connection.Execute(sqlText);
@@ -235,7 +312,17 @@ namespace AdAgency
 
             try
             {
-                nrec = m_connection.Execute(sqlText);
+                using (var tran = m_connection.BeginTransaction())
+                {
+                    nrec = m_connection.Execute(sqlText);
+                    nrec = ClearOrderTable(ord.number, tran);
+                    sqlText = "insert into public.ordertable (number, numstr,idadservice, count price) " +
+                $"select number, numstr,idadservice, count price from public.ordertable_temp where number = {ord.number}";
+                    m_connection.Execute(sqlText, transaction: tran);
+                    sqlText = $"delete from public.ordertable_temp where number = {ord.number}";
+                    nrec = m_connection.Execute(sqlText, transaction: tran);
+                    tran.Commit();
+                }
             }
             catch (Exception ex)
             {
@@ -248,14 +335,36 @@ namespace AdAgency
         /// </summary>
         /// <param name="onum">номер заказа</param>
         /// <returns></returns>
-        public async Task<List<OrderTable>> GetOrderTable(string onum)
+        public async Task<List<OrderTable>> GetTempOrderTable(string onum)
         {
             List<OrderTable> lst = null;
-            string sqlText = $"select ot.numstr, ot.number, ot.idadservice, (select s.name from public.adservice s where s.id = ot.idadservice) service_name, ot.count, ot.price form public.ordertable where ot.number ='{onum}' ot order by ot.numstr";
+            string sqlText = "select ot.numstr, ot.number, ot.idadservice, (select s.sname from public.adservice s where s.id = ot.idadservice) service_name,"+
+                $" ot.count, ot.price from public.ordertable_temp ot where ot.number ='{onum}' order by ot.numstr";
             try
             {
-                var t = await m_connection.QueryAsync<OrderTable>(sqlText);
-                lst = t.ToList();
+                int tab_rec = OrderTableRecodsCount(onum);
+                if (tab_rec > 0)
+                {
+                    using (var tran = m_connection.BeginTransaction())
+                    {
+                        int nrec = await FillTempOrderTable(onum, tran);
+                        if (nrec < 1)
+                            tran.Rollback();
+                        else
+                        {
+                            var t = await m_connection.QueryAsync<OrderTable>(sqlText, transaction: tran);
+                            tran.Commit();
+                            lst = t.ToList();
+                        }
+                    }
+                }
+
+                else
+                {
+                    var t = await m_connection.QueryAsync<OrderTable>(sqlText);
+                    lst = t.ToList();
+                }
+                
             }
             catch (Exception ex)
             {
@@ -269,24 +378,15 @@ namespace AdAgency
         /// </summary>
         /// <param name="tabl">объект с данными</param>
         /// <returns>1 -  запись успешно добавлена, 0 - иначе</returns>
-        public int AddOrderTableRecord(OrderTable tabl)
+        public int AddTempOrderTableRecord(OrderTable tabl)
         {
-            int nrec = 0; 
+            int nrec = 0;
+            tabl.numstr = m_connection.QueryFirstOrDefault<int>($"select public.next_num_order_table('{tabl.number}')");
+
+            string sqlText = "insert into public.ordertable_temp (number, numstr,idadservice, count, price) values(@pnumber, @pnumstr, @pidadservice, @pcount, @pprice)";
             try
             {
-                tabl.numstr = m_connection.QueryFirstOrDefault<int>($"select public.next_num_order_table('{tabl.number}')");
-            }
-            catch (Exception ex)
-            {
-
-                m_errorText = ex.Message;
-                return nrec;
-            }
-
-            string sqlText = "insert into public.ordertable_temp (number, numstr,idadservice, count price) values(@pnumber, @pnumstr, @pidadservice, @pcount, @pprice)";
-            try
-            {
-                m_connection.Execute(sqlText, new { pnumber = tabl.number, pnumstr = tabl.numstr, pidadservice = tabl.idadservice, count = tabl.count, pprice = tabl.price  });
+                nrec = m_connection.Execute(sqlText, new { pnumber = tabl.number, pnumstr = tabl.numstr, pidadservice = tabl.idadservice, pcount = tabl.count, pprice = tabl.price  });
             }
             catch (Exception ex)
             {
@@ -300,14 +400,14 @@ namespace AdAgency
         /// </summary>
         /// <param name="tabl">объект с данными</param>
         /// <returns>1 -  запись успешно изменена, 0 - иначе</returns>
-        public int UpdateOrderTableRecord(OrderTable tabl)
+        public int UpdateTempOrderTableRecord(OrderTable tabl)
         {
             int nrec = 0;
            
-            string sqlText = "update public.ordertable_temp set idadservice = @pidadservice, count = @pcount, price = @pprice where  number = @pnumber and numstr = @pnumstr";
+            string sqlText = "update public.ordertable_temp set idadservice = @pidadservice, count = @pcount, price = @pprice where number = @pnumber and numstr = @pnumstr";
             try
             {
-                m_connection.Execute(sqlText, new { pnumber = tabl.number, pnumstr = tabl.numstr, pidadservice = tabl.idadservice, });
+                nrec = m_connection.Execute(sqlText, new { pnumber = tabl.number, pnumstr = tabl.numstr, pidadservice = tabl.idadservice, pcount = tabl.count, pprice = tabl.price });
             }
             catch (Exception ex)
             {
@@ -322,14 +422,14 @@ namespace AdAgency
         /// <param name="ordernum"></param>
         /// <param name="nstr"></param>
         /// <returns></returns>
-        public int DeleteOrderTableRecord(string ordernum, int nstr)
+        public int DeleteTempOrderTableRecord(string ordernum, int nstr)
         {
             int nrec = 0;
 
-            string sqlText = $"delete public.ordertable_temp where number = '{ordernum}' and numstr = {nstr}";
+            string sqlText = $"delete from public.ordertable_temp where number = '{ordernum}' and numstr = {nstr}";
             try
             {
-                m_connection.Execute(sqlText);
+                nrec = m_connection.Execute(sqlText);
             }
             catch (Exception ex)
             {
@@ -339,18 +439,37 @@ namespace AdAgency
             return nrec;
         }
         /// <summary>
+        /// Рассчитать сумму заказа
+        /// </summary>
+        /// <param name="ordernum"></param>
+        /// <returns></returns>
+        public async Task<double> CalculateOrderSum(string ordernum)
+        {
+            double sum = -1.0;
+            try
+            {
+                sum = await m_connection.QueryFirstOrDefaultAsync<double>($"select calc_order_sum('{ordernum}')");
+            }
+            catch (Exception ex)
+            {
+
+                m_errorText = ex.Message;
+            }
+            return sum;
+        }
+        /// <summary>
         /// Заполнить таблицу услуг по временной таблице
         /// </summary>
         /// <returns>чило добавленных записей, иначе 0</returns>
-        public int FillTempOrderTable(string ordernum, NpgsqlTransaction tran)
+        public async Task<int> FillTempOrderTable(string ordernum, NpgsqlTransaction tran)
         {
             int nrec = 0;
 
             string sqlText = "insert into public.ordertable_temp (number, numstr,idadservice, count price) " + 
-                $"select number, numstr,idadservice, count price from public.ordertable where number = {ordernum}";
+                $"select number, numstr,idadservice, count, price from public.ordertable where number = '{ordernum}'";
             try
             {
-                m_connection.Execute(sqlText,);
+                nrec = await m_connection.ExecuteAsync(sqlText,transaction: tran);
             }
             catch (Exception ex)
             {
@@ -368,10 +487,10 @@ namespace AdAgency
         {
             int nrec = 0;
 
-            string sqlText = $"select number, numstr,idadservice, count price from public.ordertable_temp where number = {ordernum}";
+            string sqlText = $"delete from public.ordertable_temp where number = '{ordernum}'";
             try
             {
-                m_connection.Execute(sqlText);
+                nrec = m_connection.Execute(sqlText);
             }
             catch (Exception ex)
             {
@@ -379,6 +498,28 @@ namespace AdAgency
                 m_errorText = ex.Message;
             }
             return nrec;
+        }
+        /// <summary>
+        /// Получить запись из времееной таблицы услуг по заказу
+        /// </summary>
+        /// <param name="ordernum">номер заказа</param>
+        /// <param name="">номер строки в списке услуг</param>
+        /// <returns></returns>
+        public OrderTable GetTempOrderTableRecord(string ordernum, int numstr)
+        {
+            OrderTable trec = null;
+
+            string sqlText = $"select number, idadservice, count, price, numstr from public.ordertable_temp where number = @pnum and numstr = @pnstr";
+            try
+            {
+                trec = m_connection.QueryFirstOrDefault<OrderTable> (sqlText, new { pnum = ordernum, pnstr = numstr});
+            }
+            catch (Exception ex)
+            {
+
+                m_errorText = ex.Message;
+            }
+            return trec;
         }
         #endregion
 

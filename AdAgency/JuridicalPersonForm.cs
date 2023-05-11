@@ -111,6 +111,7 @@ namespace AdAgency
         /// <param name="e"></param>
         private async void editButton_Click(object sender, EventArgs e)
         {
+            if (m_choiceMode) return;
             var row = jpDataGridView.CurrentRow;
             if (row == null) return;
             long id = Convert.ToInt64(row.Cells[0].Value);

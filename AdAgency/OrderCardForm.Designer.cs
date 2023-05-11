@@ -34,7 +34,7 @@ namespace AdAgency
             this.numberTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.orderDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.deadlineDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
             this.choiceClientButton = new System.Windows.Forms.Button();
             this.clientNameTextBox = new System.Windows.Forms.TextBox();
@@ -43,23 +43,24 @@ namespace AdAgency
             this.orderToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.contractButon = new System.Windows.Forms.Button();
             this.contractTextBox = new System.Windows.Forms.TextBox();
+            this.addRecordButton = new System.Windows.Forms.Button();
+            this.deleteRecordButton = new System.Windows.Forms.Button();
+            this.editRecordButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.summaTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.statusComboBox = new System.Windows.Forms.ComboBox();
             this.orderTableDataGridView = new System.Windows.Forms.DataGridView();
-            this.label6 = new System.Windows.Forms.Label();
-            this.acceptButton = new System.Windows.Forms.Button();
-            this.rejectButton = new System.Windows.Forms.Button();
-            this.addRecordButton = new System.Windows.Forms.Button();
-            this.deleteRecordButton = new System.Windows.Forms.Button();
-            this.editRecordButton = new System.Windows.Forms.Button();
+            this.number = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.numstr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idadservice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.service_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.count = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.price = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label6 = new System.Windows.Forms.Label();
+            this.acceptButton = new System.Windows.Forms.Button();
+            this.rejectButton = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orderTableDataGridView)).BeginInit();
             this.SuspendLayout();
@@ -99,14 +100,15 @@ namespace AdAgency
             this.orderDateTimePicker.TabIndex = 3;
             this.orderToolTip.SetToolTip(this.orderDateTimePicker, "Дата заказа");
             // 
-            // dateTimePicker1
+            // deadlineDateTimePicker
             // 
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker1.Location = new System.Drawing.Point(64, 55);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(102, 20);
-            this.dateTimePicker1.TabIndex = 5;
-            this.orderToolTip.SetToolTip(this.dateTimePicker1, "Срок выполнения заказа");
+            this.deadlineDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.deadlineDateTimePicker.Location = new System.Drawing.Point(64, 55);
+            this.deadlineDateTimePicker.Name = "deadlineDateTimePicker";
+            this.deadlineDateTimePicker.Size = new System.Drawing.Size(102, 20);
+            this.deadlineDateTimePicker.TabIndex = 5;
+            this.orderToolTip.SetToolTip(this.deadlineDateTimePicker, "Срок выполнения заказа");
+            this.deadlineDateTimePicker.Value = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
             // 
             // label3
             // 
@@ -127,6 +129,7 @@ namespace AdAgency
             this.choiceClientButton.TabIndex = 14;
             this.orderToolTip.SetToolTip(this.choiceClientButton, "Выбрать контрагента");
             this.choiceClientButton.UseVisualStyleBackColor = true;
+            this.choiceClientButton.Click += new System.EventHandler(this.choiceClientButton_Click);
             // 
             // clientNameTextBox
             // 
@@ -156,6 +159,7 @@ namespace AdAgency
             this.clientTypeCheckBox.Text = "Физическое лицо";
             this.orderToolTip.SetToolTip(this.clientTypeCheckBox, "Контрагент физическое или юридическое лицо");
             this.clientTypeCheckBox.UseVisualStyleBackColor = true;
+            this.clientTypeCheckBox.CheckedChanged += new System.EventHandler(this.OnClientTypeChanged);
             // 
             // contractButon
             // 
@@ -176,6 +180,39 @@ namespace AdAgency
             this.contractTextBox.Size = new System.Drawing.Size(413, 20);
             this.contractTextBox.TabIndex = 16;
             this.orderToolTip.SetToolTip(this.contractTextBox, "Наименование договора");
+            // 
+            // addRecordButton
+            // 
+            this.addRecordButton.Image = global::AdAgency.Properties.Resources.icons8_plus_32;
+            this.addRecordButton.Location = new System.Drawing.Point(91, 279);
+            this.addRecordButton.Name = "addRecordButton";
+            this.addRecordButton.Size = new System.Drawing.Size(39, 39);
+            this.addRecordButton.TabIndex = 27;
+            this.orderToolTip.SetToolTip(this.addRecordButton, "Добавить услугу");
+            this.addRecordButton.UseVisualStyleBackColor = true;
+            this.addRecordButton.Click += new System.EventHandler(this.addRecordButton_Click);
+            // 
+            // deleteRecordButton
+            // 
+            this.deleteRecordButton.Image = global::AdAgency.Properties.Resources.icons8_minus_32;
+            this.deleteRecordButton.Location = new System.Drawing.Point(143, 279);
+            this.deleteRecordButton.Name = "deleteRecordButton";
+            this.deleteRecordButton.Size = new System.Drawing.Size(39, 39);
+            this.deleteRecordButton.TabIndex = 28;
+            this.orderToolTip.SetToolTip(this.deleteRecordButton, "Удалить услугу");
+            this.deleteRecordButton.UseVisualStyleBackColor = true;
+            this.deleteRecordButton.Click += new System.EventHandler(this.deleteRecordButton_Click);
+            // 
+            // editRecordButton
+            // 
+            this.editRecordButton.Image = global::AdAgency.Properties.Resources.check32;
+            this.editRecordButton.Location = new System.Drawing.Point(199, 279);
+            this.editRecordButton.Name = "editRecordButton";
+            this.editRecordButton.Size = new System.Drawing.Size(39, 39);
+            this.editRecordButton.TabIndex = 29;
+            this.orderToolTip.SetToolTip(this.editRecordButton, "Изменить данные услуги");
+            this.editRecordButton.UseVisualStyleBackColor = true;
+            this.editRecordButton.Click += new System.EventHandler(this.editRecordButton_Click);
             // 
             // groupBox1
             // 
@@ -237,6 +274,7 @@ namespace AdAgency
             this.orderTableDataGridView.AllowUserToDeleteRows = false;
             this.orderTableDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.orderTableDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.number,
             this.numstr,
             this.idadservice,
             this.service_name,
@@ -246,71 +284,17 @@ namespace AdAgency
             this.orderTableDataGridView.MultiSelect = false;
             this.orderTableDataGridView.Name = "orderTableDataGridView";
             this.orderTableDataGridView.ReadOnly = true;
+            this.orderTableDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.orderTableDataGridView.Size = new System.Drawing.Size(607, 268);
             this.orderTableDataGridView.TabIndex = 23;
             // 
-            // label6
+            // number
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(20, 289);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(43, 13);
-            this.label6.TabIndex = 24;
-            this.label6.Text = "Услуги";
-            // 
-            // acceptButton
-            // 
-            this.acceptButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.acceptButton.Location = new System.Drawing.Point(16, 613);
-            this.acceptButton.Name = "acceptButton";
-            this.acceptButton.Size = new System.Drawing.Size(94, 27);
-            this.acceptButton.TabIndex = 25;
-            this.acceptButton.Text = "OK";
-            this.acceptButton.UseVisualStyleBackColor = true;
-            this.acceptButton.Click += new System.EventHandler(this.acceptButton_Click);
-            // 
-            // rejectButton
-            // 
-            this.rejectButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.rejectButton.Location = new System.Drawing.Point(529, 613);
-            this.rejectButton.Name = "rejectButton";
-            this.rejectButton.Size = new System.Drawing.Size(94, 27);
-            this.rejectButton.TabIndex = 26;
-            this.rejectButton.Text = "Отмена";
-            this.rejectButton.UseVisualStyleBackColor = true;
-            // 
-            // addRecordButton
-            // 
-            this.addRecordButton.Image = global::AdAgency.Properties.Resources.icons8_plus_32;
-            this.addRecordButton.Location = new System.Drawing.Point(91, 279);
-            this.addRecordButton.Name = "addRecordButton";
-            this.addRecordButton.Size = new System.Drawing.Size(39, 39);
-            this.addRecordButton.TabIndex = 27;
-            this.orderToolTip.SetToolTip(this.addRecordButton, "Добавить услугу");
-            this.addRecordButton.UseVisualStyleBackColor = true;
-            this.addRecordButton.Click += new System.EventHandler(this.addRecordButton_Click);
-            // 
-            // deleteRecordButton
-            // 
-            this.deleteRecordButton.Image = global::AdAgency.Properties.Resources.icons8_minus_32;
-            this.deleteRecordButton.Location = new System.Drawing.Point(143, 279);
-            this.deleteRecordButton.Name = "deleteRecordButton";
-            this.deleteRecordButton.Size = new System.Drawing.Size(39, 39);
-            this.deleteRecordButton.TabIndex = 28;
-            this.orderToolTip.SetToolTip(this.deleteRecordButton, "Добавить услугу");
-            this.deleteRecordButton.UseVisualStyleBackColor = true;
-            this.deleteRecordButton.Click += new System.EventHandler(this.deleteRecordButton_Click);
-            // 
-            // editRecordButton
-            // 
-            this.editRecordButton.Image = global::AdAgency.Properties.Resources.check32;
-            this.editRecordButton.Location = new System.Drawing.Point(199, 279);
-            this.editRecordButton.Name = "editRecordButton";
-            this.editRecordButton.Size = new System.Drawing.Size(39, 39);
-            this.editRecordButton.TabIndex = 29;
-            this.orderToolTip.SetToolTip(this.editRecordButton, "Добавить услугу");
-            this.editRecordButton.UseVisualStyleBackColor = true;
-            this.editRecordButton.Click += new System.EventHandler(this.editRecordButton_Click);
+            this.number.DataPropertyName = "number";
+            this.number.HeaderText = "Ном. зак";
+            this.number.Name = "number";
+            this.number.ReadOnly = true;
+            this.number.Visible = false;
             // 
             // numstr
             // 
@@ -352,10 +336,43 @@ namespace AdAgency
             this.price.Name = "price";
             this.price.ReadOnly = true;
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(20, 289);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(43, 13);
+            this.label6.TabIndex = 24;
+            this.label6.Text = "Услуги";
+            // 
+            // acceptButton
+            // 
+            this.acceptButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.acceptButton.Location = new System.Drawing.Point(16, 613);
+            this.acceptButton.Name = "acceptButton";
+            this.acceptButton.Size = new System.Drawing.Size(94, 27);
+            this.acceptButton.TabIndex = 25;
+            this.acceptButton.Text = "OK";
+            this.acceptButton.UseVisualStyleBackColor = true;
+            this.acceptButton.Click += new System.EventHandler(this.acceptButton_Click);
+            // 
+            // rejectButton
+            // 
+            this.rejectButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.rejectButton.Location = new System.Drawing.Point(529, 613);
+            this.rejectButton.Name = "rejectButton";
+            this.rejectButton.Size = new System.Drawing.Size(94, 27);
+            this.rejectButton.TabIndex = 26;
+            this.rejectButton.Text = "Отмена";
+            this.rejectButton.UseVisualStyleBackColor = true;
+            this.rejectButton.Click += new System.EventHandler(this.rejectButton_Click);
+            // 
             // OrderCardForm
             // 
+            this.AcceptButton = this.acceptButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.rejectButton;
             this.ClientSize = new System.Drawing.Size(646, 653);
             this.Controls.Add(this.editRecordButton);
             this.Controls.Add(this.deleteRecordButton);
@@ -374,7 +391,7 @@ namespace AdAgency
             this.Controls.Add(this.choiceClientButton);
             this.Controls.Add(this.clientNameTextBox);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.deadlineDateTimePicker);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.orderDateTimePicker);
             this.Controls.Add(this.label2);
@@ -399,7 +416,7 @@ namespace AdAgency
         private System.Windows.Forms.TextBox numberTextBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker orderDateTimePicker;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker deadlineDateTimePicker;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button choiceClientButton;
         private System.Windows.Forms.TextBox clientNameTextBox;
@@ -420,6 +437,7 @@ namespace AdAgency
         private System.Windows.Forms.Button addRecordButton;
         private System.Windows.Forms.Button deleteRecordButton;
         private System.Windows.Forms.Button editRecordButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn number;
         private System.Windows.Forms.DataGridViewTextBoxColumn numstr;
         private System.Windows.Forms.DataGridViewTextBoxColumn idadservice;
         private System.Windows.Forms.DataGridViewTextBoxColumn service_name;

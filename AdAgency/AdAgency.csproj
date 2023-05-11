@@ -127,6 +127,12 @@
       <DependentUpon>AppSettings.settings</DependentUpon>
     </Compile>
     <Compile Include="BasePSqlClient.cs" />
+    <Compile Include="ChangeStatusForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangeStatusForm.Designer.cs">
+      <DependentUpon>ChangeStatusForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ContractCardForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -174,6 +180,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AdServiceForm.resx">
       <DependentUpon>AdServiceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangeStatusForm.resx">
+      <DependentUpon>ChangeStatusForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ContractCardForm.resx">
       <DependentUpon>ContractCardForm.cs</DependentUpon>
