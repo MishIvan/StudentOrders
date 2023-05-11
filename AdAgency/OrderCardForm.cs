@@ -29,7 +29,7 @@ namespace AdAgency
 
             if (!(string.IsNullOrEmpty(m_number) || string.IsNullOrWhiteSpace(m_number)))
             {
-                List<OrderTable> lst = await Program.m_helper.GetTempOrderTable(m_number);
+                List<OrderTable> lst = await Program.m_helper.GetTempOrderTable(m_number, true);
                 orderTableDataGridView.DataSource = lst;
                 numberTextBox.Enabled = false;
                 Order ord = Program.m_helper.GetOrderData(m_number);
@@ -58,12 +58,15 @@ namespace AdAgency
                     }
                     summaTextBox.Text = ord.summa.ToString();
                     statusComboBox.SelectedIndex = ord.status - 1;
-                }
-                Text = $"Изменение заказа №{m_number}";
-
+                    string s1 = ord.odate.ToString("dd.MM.yyyy");
+                    Text = $"Изменение заказа №{m_number} от {s1}";
+                }                
             }
             else
+            {
                 Text = "Новый заказ";
+                statusComboBox.SelectedIndex = 0;
+            }
         }
         /// <summary>
         /// Выбрать договор
@@ -207,8 +210,9 @@ namespace AdAgency
                 ord.idcontract = Convert.ToInt64(contractTextBox.Tag);
 
             ord.odate = orderDateTimePicker.Value;
-            ord.deadline = orderDateTimePicker.Value;
+            ord.deadline = deadlineDateTimePicker.Value;
             ord.status = statusComboBox.SelectedIndex + 1;
+            ord.summa = Convert.ToDouble(summaTextBox.Text);
 
             int result = 0;
             if (empty_num)

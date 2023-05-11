@@ -26,7 +26,7 @@ namespace AdAgency
         private async void OnLoad(object sender, EventArgs e)
         {
             Icon = Properties.Resources.contract32;
-            deleteButon.Visible = m_choice;
+            deleteButon.Visible = !m_choice;
             if(m_choice)
             {
                 addButton.Text = "ОК";
@@ -34,8 +34,6 @@ namespace AdAgency
 
                 editButton.Text = "Отмена";
                 editButton.DialogResult = DialogResult.Cancel;
-
-                deleteButon.Visible = true;
 
                 AcceptButton = addButton;
                 CancelButton = editButton;
@@ -63,6 +61,8 @@ namespace AdAgency
             else
                 lst = m_contracts;
 
+            contractDataGridView.DataSource = lst;
+
         }
         /// <summary>
         /// Добавить договор
@@ -86,7 +86,7 @@ namespace AdAgency
                 if(frm.ShowDialog() == DialogResult.OK)
                 {
                     m_contracts = await Program.m_helper.GetContracts();
-                    contractDataGridView.DataSource = m_contracts;
+                    //contractDataGridView.DataSource = m_contracts;
 
                     ApplyFilter();
                 }
@@ -109,7 +109,7 @@ namespace AdAgency
                     if (frm.ShowDialog() == DialogResult.OK)
                     {
                         m_contracts = await Program.m_helper.GetContracts();
-                        contractDataGridView.DataSource = m_contracts;
+                        //contractDataGridView.DataSource = m_contracts;
 
                         ApplyFilter();
                     }
@@ -135,7 +135,7 @@ namespace AdAgency
                 else
                 {
                     m_contracts = await Program.m_helper.GetContracts();
-                    contractDataGridView.DataSource = m_contracts;
+                    //contractDataGridView.DataSource = m_contracts;
 
                     ApplyFilter();
                 }

@@ -30,10 +30,17 @@ namespace AdAgency
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.contractDataGridView = new System.Windows.Forms.DataGridView();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cnumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.datefrom = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dateto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.nameFilterTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -42,13 +49,6 @@ namespace AdAgency
             this.addButton = new System.Windows.Forms.Button();
             this.editButton = new System.Windows.Forms.Button();
             this.deleteButon = new System.Windows.Forms.Button();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.datefrom = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dateto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.contractDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -72,6 +72,67 @@ namespace AdAgency
             this.contractDataGridView.Size = new System.Drawing.Size(994, 363);
             this.contractDataGridView.TabIndex = 0;
             this.contractToolTip.SetToolTip(this.contractDataGridView, "Журнал договоров");
+            // 
+            // id
+            // 
+            this.id.DataPropertyName = "id";
+            this.id.HeaderText = "ИД";
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.Visible = false;
+            // 
+            // cnumber
+            // 
+            this.cnumber.DataPropertyName = "cnumber";
+            this.cnumber.HeaderText = "Номер";
+            this.cnumber.Name = "cnumber";
+            this.cnumber.ReadOnly = true;
+            // 
+            // cdate
+            // 
+            this.cdate.DataPropertyName = "cdate";
+            dataGridViewCellStyle4.Format = "d";
+            dataGridViewCellStyle4.NullValue = null;
+            this.cdate.DefaultCellStyle = dataGridViewCellStyle4;
+            this.cdate.HeaderText = "Дата";
+            this.cdate.Name = "cdate";
+            this.cdate.ReadOnly = true;
+            // 
+            // cname
+            // 
+            this.cname.DataPropertyName = "cname";
+            this.cname.HeaderText = "Наименование";
+            this.cname.Name = "cname";
+            this.cname.ReadOnly = true;
+            this.cname.Width = 300;
+            // 
+            // pname
+            // 
+            this.pname.DataPropertyName = "pname";
+            this.pname.HeaderText = "Контрагент";
+            this.pname.Name = "pname";
+            this.pname.ReadOnly = true;
+            this.pname.Width = 250;
+            // 
+            // datefrom
+            // 
+            this.datefrom.DataPropertyName = "datefrom";
+            dataGridViewCellStyle5.Format = "d";
+            dataGridViewCellStyle5.NullValue = null;
+            this.datefrom.DefaultCellStyle = dataGridViewCellStyle5;
+            this.datefrom.HeaderText = "Действует с";
+            this.datefrom.Name = "datefrom";
+            this.datefrom.ReadOnly = true;
+            // 
+            // dateto
+            // 
+            this.dateto.DataPropertyName = "dateto";
+            dataGridViewCellStyle6.Format = "d";
+            dataGridViewCellStyle6.NullValue = null;
+            this.dateto.DefaultCellStyle = dataGridViewCellStyle6;
+            this.dateto.HeaderText = "Действует по";
+            this.dateto.Name = "dateto";
+            this.dateto.ReadOnly = true;
             // 
             // label1
             // 
@@ -107,6 +168,7 @@ namespace AdAgency
             this.clientFilterTextBox.Size = new System.Drawing.Size(260, 20);
             this.clientFilterTextBox.TabIndex = 4;
             this.contractToolTip.SetToolTip(this.clientFilterTextBox, "Фильтр договоров по контрагенту. Для применения нажать ENTER");
+            this.clientFilterTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnApplyFilter);
             // 
             // addButton
             // 
@@ -140,67 +202,6 @@ namespace AdAgency
             this.contractToolTip.SetToolTip(this.deleteButon, "Удалить договор");
             this.deleteButon.UseVisualStyleBackColor = true;
             this.deleteButon.Click += new System.EventHandler(this.deleteButon_Click);
-            // 
-            // id
-            // 
-            this.id.DataPropertyName = "id";
-            this.id.HeaderText = "ИД";
-            this.id.Name = "id";
-            this.id.ReadOnly = true;
-            this.id.Visible = false;
-            // 
-            // cnumber
-            // 
-            this.cnumber.DataPropertyName = "cnumber";
-            this.cnumber.HeaderText = "Номер";
-            this.cnumber.Name = "cnumber";
-            this.cnumber.ReadOnly = true;
-            // 
-            // cdate
-            // 
-            this.cdate.DataPropertyName = "cdate";
-            dataGridViewCellStyle1.Format = "d";
-            dataGridViewCellStyle1.NullValue = null;
-            this.cdate.DefaultCellStyle = dataGridViewCellStyle1;
-            this.cdate.HeaderText = "Дата";
-            this.cdate.Name = "cdate";
-            this.cdate.ReadOnly = true;
-            // 
-            // cname
-            // 
-            this.cname.DataPropertyName = "cname";
-            this.cname.HeaderText = "Наименование";
-            this.cname.Name = "cname";
-            this.cname.ReadOnly = true;
-            this.cname.Width = 300;
-            // 
-            // pname
-            // 
-            this.pname.DataPropertyName = "pname";
-            this.pname.HeaderText = "Контрагент";
-            this.pname.Name = "pname";
-            this.pname.ReadOnly = true;
-            this.pname.Width = 250;
-            // 
-            // datefrom
-            // 
-            this.datefrom.DataPropertyName = "datefrom";
-            dataGridViewCellStyle2.Format = "d";
-            dataGridViewCellStyle2.NullValue = null;
-            this.datefrom.DefaultCellStyle = dataGridViewCellStyle2;
-            this.datefrom.HeaderText = "Действует с";
-            this.datefrom.Name = "datefrom";
-            this.datefrom.ReadOnly = true;
-            // 
-            // dateto
-            // 
-            this.dateto.DataPropertyName = "dateto";
-            dataGridViewCellStyle3.Format = "d";
-            dataGridViewCellStyle3.NullValue = null;
-            this.dateto.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dateto.HeaderText = "Действует по";
-            this.dateto.Name = "dateto";
-            this.dateto.ReadOnly = true;
             // 
             // ContractForm
             // 

@@ -80,7 +80,7 @@ namespace AdAgency
                 MessageBox.Show("Допускается изменение параметров заказа только на стадии создания");
                 return;
             }
-                OrderCardForm frm = new OrderCardForm(ordernum);
+            OrderCardForm frm = new OrderCardForm(ordernum);
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 List<OrderView> lst = await Program.m_helper.GetOrders();

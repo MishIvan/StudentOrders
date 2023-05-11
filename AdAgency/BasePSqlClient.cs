@@ -121,11 +121,11 @@ namespace AdAgency
         /// <summary>
         /// Выдать список всех заказов
         /// </summary>
-        /// <returns></returns>
+        /// <returns>список заказов в случае успешного выполнения запроса, иначе - null</returns>
         public async Task<List<OrderView>> GetOrders()
         {
             List<OrderView> lst = null;
-            string sqlText = "select order_number, order_date, deadline,summa, idstatus, status, idjuridical, idphis, pname, idcontract, contract_name form public.orderview order by order_number";
+            string sqlText = "select order_number, order_date, deadline,summa, idstatus, status, idjuridical, idphis, pname, idcontract, contract_name from public.orderview order by order_number";
             try
             {
                 var t = await m_connection.QueryAsync<OrderView>(sqlText);
@@ -146,7 +146,7 @@ namespace AdAgency
         public Order GetOrderData(string ordernum)
         {
             Order ord = null;
-            string sqlText = $"select ord.number, ord.odate, ord.deadline,ord.summa, ord.status, ord.idjuridical, ord.idphis, ord.idcontract form public.\"order\" ord order by number";
+            string sqlText = $"select ord.number, ord.odate, ord.deadline,ord.summa, ord.status, ord.idjuridical, ord.idphis, ord.idcontract from public.\"order\" ord where ord.number = '{ordernum}'";
             try
             {
                 ord = m_connection.QueryFirstOrDefault<Order>(sqlText);
@@ -196,9 +196,11 @@ namespace AdAgency
                 using (var tran = m_connection.BeginTransaction())
                 {
                     nrec = m_connection.Execute(sqlText, transaction: tran);
+                    if (nrec < 1)
+                        tran.Rollback();
                     sqlText = "insert into public.ordertable (number, numstr,idadservice, count, price) " +
-                $"select number, numstr,idadservice, count price from public.ordertable_temp where number = '{ord.number}'";
-                    m_connection.Execute(sqlText, transaction: tran);                    
+                $"select number, numstr,idadservice, count, price from public.ordertable_temp where number = '{ord.number}'";
+                    nrec = m_connection.Execute(sqlText, transaction: tran); 
                     sqlText = $"delete from public.ordertable_temp where number = '{ord.number}'";
                     nrec = m_connection.Execute(sqlText, transaction: tran);
                     tran.Commit();
@@ -278,7 +280,7 @@ namespace AdAgency
             string sqlText = $"select count(*) from public.ordertable where number = '{ordernum}'";
             try
             {
-                nrec = m_connection.Execute(sqlText);
+                nrec = m_connection.QueryFirstOrDefault<int>(sqlText);
             }
             catch (Exception ex)
             {
@@ -315,11 +317,13 @@ namespace AdAgency
                 using (var tran = m_connection.BeginTransaction())
                 {
                     nrec = m_connection.Execute(sqlText);
+                    if (nrec < 1)
+                        tran.Rollback();
                     nrec = ClearOrderTable(ord.number, tran);
-                    sqlText = "insert into public.ordertable (number, numstr,idadservice, count price) " +
-                $"select number, numstr,idadservice, count price from public.ordertable_temp where number = {ord.number}";
-                    m_connection.Execute(sqlText, transaction: tran);
-                    sqlText = $"delete from public.ordertable_temp where number = {ord.number}";
+                    sqlText = "insert into public.ordertable (number, numstr,idadservice, count, price) " +
+                $"select number, numstr,idadservice, count, price from public.ordertable_temp where number = '{ord.number}'";
+                    nrec = m_connection.Execute(sqlText, transaction: tran);
+                    sqlText = $"delete from public.ordertable_temp where number = '{ord.number}'";
                     nrec = m_connection.Execute(sqlText, transaction: tran);
                     tran.Commit();
                 }
@@ -334,31 +338,40 @@ namespace AdAgency
         /// Получить таблицу услуг по заказу
         /// </summary>
         /// <param name="onum">номер заказа</param>
+        /// <param name="fillFromOriginal">true - заполнить временную таблицу из оригинальной и выдать записи временной таблицы, false - выдать только записи временной таблицы </param>
         /// <returns></returns>
-        public async Task<List<OrderTable>> GetTempOrderTable(string onum)
+        public async Task<List<OrderTable>> GetTempOrderTable(string onum, bool fillFromOriginal = false)
         {
             List<OrderTable> lst = null;
             string sqlText = "select ot.numstr, ot.number, ot.idadservice, (select s.sname from public.adservice s where s.id = ot.idadservice) service_name,"+
                 $" ot.count, ot.price from public.ordertable_temp ot where ot.number ='{onum}' order by ot.numstr";
             try
             {
-                int tab_rec = OrderTableRecodsCount(onum);
-                if (tab_rec > 0)
+                if (fillFromOriginal)
                 {
-                    using (var tran = m_connection.BeginTransaction())
+                    int tab_rec = OrderTableRecodsCount(onum);
+                    if (tab_rec > 0)
                     {
-                        int nrec = await FillTempOrderTable(onum, tran);
-                        if (nrec < 1)
-                            tran.Rollback();
-                        else
+                        using (var tran = m_connection.BeginTransaction())
                         {
-                            var t = await m_connection.QueryAsync<OrderTable>(sqlText, transaction: tran);
-                            tran.Commit();
-                            lst = t.ToList();
+                            int nrec = await FillTempOrderTable(onum, tran);
+                            if (nrec < 1)
+                                tran.Rollback();
+                            else
+                            {
+                                var t = await m_connection.QueryAsync<OrderTable>(sqlText, transaction: tran);
+                                tran.Commit();
+                                lst = t.ToList();
+                            }
                         }
                     }
-                }
 
+                    else
+                    {
+                        var t = await m_connection.QueryAsync<OrderTable>(sqlText);
+                        lst = t.ToList();
+                    }
+                }
                 else
                 {
                     var t = await m_connection.QueryAsync<OrderTable>(sqlText);
@@ -465,7 +478,7 @@ namespace AdAgency
         {
             int nrec = 0;
 
-            string sqlText = "insert into public.ordertable_temp (number, numstr,idadservice, count price) " + 
+            string sqlText = "insert into public.ordertable_temp (number, numstr,idadservice, count, price) " + 
                 $"select number, numstr,idadservice, count, price from public.ordertable where number = '{ordernum}'";
             try
             {
