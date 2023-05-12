@@ -10,7 +10,8 @@ namespace AdAgency
     {
         public static PSqlClient m_helper;
         public static List<string> m_tmpFiles; // список временных файлов, которые по завершению следует удалить
-        public static List<string> m_lockedOrders;
+        public static string m_username;
+        public static int m_userrole;
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
@@ -36,9 +37,8 @@ namespace AdAgency
             }
 
             m_tmpFiles = new List<string>();
-            m_lockedOrders = new List<string>();
             // System.Diagnostics.Process.Start(@"C:\Mish\Orders\2523322_files\13621597_1230427Пояснени.docx");
-            Application.Run(new MainForm());
+            Application.Run(new AutorizationForm());
         }
 
         public static void ErrorMessageDB()

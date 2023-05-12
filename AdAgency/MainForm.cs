@@ -23,6 +23,14 @@ namespace AdAgency
             Icon = Properties.Resources.office32;
             List<OrderView> lst = await Program.m_helper.GetOrders();
             orderDataGridView.DataSource = lst;
+
+            // Назначить доступ
+            juridicalPersonsToolStripMenuItem.Visible = Program.m_userrole == 1 || Program.m_userrole == 2;
+            phisicalPersonsToolStripMenuItem.Enabled = false;
+            contractsToolStripMenuItem.Visible = Program.m_userrole == 1 || Program.m_userrole == 2;
+            ordersToolStripMenuItem.Visible = Program.m_userrole == 1 || Program.m_userrole == 3;
+
+            orderContextMenuStrip.Enabled = Program.m_userrole == 1 || Program.m_userrole == 3;
         }
         /// <summary>
         ///  Завершить работу программы
@@ -49,6 +57,7 @@ namespace AdAgency
                 }
                 catch (Exception) { }
             }
+            Application.Exit();
         }
         /// <summary>
         /// Добавить заказ
@@ -120,11 +129,18 @@ namespace AdAgency
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void changeStatusToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void changeStatusToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var row = orderDataGridView.CurrentRow;
             if (row == null) return;
             string ordernum = row.Cells["order_number"].Value.ToString();
+            int idstatus = Convert.ToInt32(row.Cells["idstatus"].Value);
+            ChangeStatusForm frm = new ChangeStatusForm(ordernum, idstatus);
+            if(frm.ShowDialog() == DialogResult.OK)
+            {
+                List<OrderView> lst = await Program.m_helper.GetOrders();
+                orderDataGridView.DataSource = lst;
+            }
         }
         /// <summary>
         /// Управление справочником номенклатуры услуг

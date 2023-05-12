@@ -73,11 +73,14 @@ namespace AdAgency
             this.acceptButton.TabIndex = 27;
             this.acceptButton.Text = "OK";
             this.acceptButton.UseVisualStyleBackColor = true;
+            this.acceptButton.Click += new System.EventHandler(this.acceptButton_Click);
             // 
             // ChangeStatusForm
             // 
+            this.AcceptButton = this.acceptButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.rejectButton;
             this.ClientSize = new System.Drawing.Size(288, 105);
             this.Controls.Add(this.rejectButton);
             this.Controls.Add(this.acceptButton);

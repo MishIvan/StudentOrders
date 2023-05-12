@@ -801,5 +801,23 @@ namespace AdAgency
             return nrec;
         }
         #endregion
+
+        #region Users
+        public async Task<List<User>> GetUsers()
+        {
+            List<User> lst = null;
+            string sqlText = "select id, uname, role, passw from public.usertable";
+            try
+            {
+                var t = await m_connection.QueryAsync<User>(sqlText);
+                lst = t.ToList();
+            }
+            catch (Exception ex)
+            {
+                m_errorText = ex.Message;
+            }
+            return lst;
+        }
+        #endregion
     }
 }

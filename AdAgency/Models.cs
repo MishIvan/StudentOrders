@@ -126,4 +126,18 @@ namespace AdAgency
             return pname;
         }
     }
+    /// <summary>
+    /// Пользователь
+    /// </summary>
+    public class User
+    {
+        public int id { get; set; }
+        public string uname { get; set; }
+        public int role { get; set; }
+        public string passw { get; set; }
+        public override string ToString()
+        {
+            return uname;
+        }
+    }
 }
