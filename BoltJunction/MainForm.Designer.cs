@@ -31,11 +31,6 @@ namespace BoltJunction
         {
             this.mainPictureBox = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.boltComboBox = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.nutComboBox = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.washerComboBox = new System.Windows.Forms.ComboBox();
             this.junctionTextBox = new System.Windows.Forms.TextBox();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.actsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,6 +44,10 @@ namespace BoltJunction
             this.firstFlangeHeightTextBox = new System.Windows.Forms.TextBox();
             this.secondFlangeHeightTextBox = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.calcJunctionButton = new System.Windows.Forms.Button();
+            this.variantButton = new System.Windows.Forms.Button();
+            this.variantLabel = new System.Windows.Forms.Label();
+            this.diamComboBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).BeginInit();
             this.mainMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -69,64 +68,18 @@ namespace BoltJunction
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(16, 37);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(34, 13);
+            this.label1.Size = new System.Drawing.Size(88, 13);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Болт:";
-            // 
-            // boltComboBox
-            // 
-            this.boltComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.boltComboBox.FormattingEnabled = true;
-            this.boltComboBox.Location = new System.Drawing.Point(63, 33);
-            this.boltComboBox.Name = "boltComboBox";
-            this.boltComboBox.Size = new System.Drawing.Size(216, 21);
-            this.boltComboBox.TabIndex = 2;
-            this.boltComboBox.SelectedIndexChanged += new System.EventHandler(this.BoltSelectionCahnged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(16, 74);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(40, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Гайка:";
-            // 
-            // nutComboBox
-            // 
-            this.nutComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.nutComboBox.Enabled = false;
-            this.nutComboBox.FormattingEnabled = true;
-            this.nutComboBox.Location = new System.Drawing.Point(63, 70);
-            this.nutComboBox.Name = "nutComboBox";
-            this.nutComboBox.Size = new System.Drawing.Size(177, 21);
-            this.nutComboBox.TabIndex = 4;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(16, 113);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(43, 13);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Шайба:";
-            // 
-            // washerComboBox
-            // 
-            this.washerComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.washerComboBox.Enabled = false;
-            this.washerComboBox.FormattingEnabled = true;
-            this.washerComboBox.Location = new System.Drawing.Point(66, 109);
-            this.washerComboBox.Name = "washerComboBox";
-            this.washerComboBox.Size = new System.Drawing.Size(213, 21);
-            this.washerComboBox.TabIndex = 6;
+            this.label1.Text = "Диаметр болта:";
             // 
             // junctionTextBox
             // 
-            this.junctionTextBox.Location = new System.Drawing.Point(19, 297);
+            this.junctionTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.junctionTextBox.Location = new System.Drawing.Point(19, 223);
             this.junctionTextBox.Multiline = true;
             this.junctionTextBox.Name = "junctionTextBox";
             this.junctionTextBox.ReadOnly = true;
+            this.junctionTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.junctionTextBox.Size = new System.Drawing.Size(320, 181);
             this.junctionTextBox.TabIndex = 7;
             // 
@@ -152,21 +105,21 @@ namespace BoltJunction
             // calculateToolStripMenuItem
             // 
             this.calculateToolStripMenuItem.Name = "calculateToolStripMenuItem";
-            this.calculateToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.calculateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.calculateToolStripMenuItem.Text = "Рассчитать";
             this.calculateToolStripMenuItem.Click += new System.EventHandler(this.calculateToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Выход";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(16, 145);
+            this.label4.Location = new System.Drawing.Point(16, 63);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(118, 13);
             this.label4.TabIndex = 9;
@@ -174,16 +127,15 @@ namespace BoltJunction
             // 
             // flangeLengthTextBox
             // 
-            this.flangeLengthTextBox.Location = new System.Drawing.Point(152, 145);
+            this.flangeLengthTextBox.Location = new System.Drawing.Point(152, 63);
             this.flangeLengthTextBox.Name = "flangeLengthTextBox";
             this.flangeLengthTextBox.Size = new System.Drawing.Size(138, 20);
             this.flangeLengthTextBox.TabIndex = 10;
-            this.flangeLengthTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnFlangeKeyPress);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(19, 184);
+            this.label5.Location = new System.Drawing.Point(19, 102);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(126, 13);
             this.label5.TabIndex = 11;
@@ -191,16 +143,15 @@ namespace BoltJunction
             // 
             // flangeWidthtextBox
             // 
-            this.flangeWidthtextBox.Location = new System.Drawing.Point(152, 184);
+            this.flangeWidthtextBox.Location = new System.Drawing.Point(152, 102);
             this.flangeWidthtextBox.Name = "flangeWidthtextBox";
             this.flangeWidthtextBox.Size = new System.Drawing.Size(138, 20);
             this.flangeWidthtextBox.TabIndex = 12;
-            this.flangeWidthtextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnFlangeKeyPress);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(19, 229);
+            this.label6.Location = new System.Drawing.Point(19, 147);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(181, 13);
             this.label6.TabIndex = 13;
@@ -208,15 +159,14 @@ namespace BoltJunction
             // 
             // firstFlangeHeightTextBox
             // 
-            this.firstFlangeHeightTextBox.Location = new System.Drawing.Point(206, 226);
+            this.firstFlangeHeightTextBox.Location = new System.Drawing.Point(206, 144);
             this.firstFlangeHeightTextBox.Name = "firstFlangeHeightTextBox";
             this.firstFlangeHeightTextBox.Size = new System.Drawing.Size(133, 20);
             this.firstFlangeHeightTextBox.TabIndex = 14;
-            this.firstFlangeHeightTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnFlangeKeyPress);
             // 
             // secondFlangeHeightTextBox
             // 
-            this.secondFlangeHeightTextBox.Location = new System.Drawing.Point(206, 260);
+            this.secondFlangeHeightTextBox.Location = new System.Drawing.Point(206, 178);
             this.secondFlangeHeightTextBox.Name = "secondFlangeHeightTextBox";
             this.secondFlangeHeightTextBox.Size = new System.Drawing.Size(133, 20);
             this.secondFlangeHeightTextBox.TabIndex = 16;
@@ -224,17 +174,61 @@ namespace BoltJunction
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(19, 263);
+            this.label7.Location = new System.Drawing.Point(19, 181);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(171, 13);
             this.label7.TabIndex = 15;
             this.label7.Text = "Толщина второг фланца F2(мм):";
             // 
+            // calcJunctionButton
+            // 
+            this.calcJunctionButton.Location = new System.Drawing.Point(19, 513);
+            this.calcJunctionButton.Name = "calcJunctionButton";
+            this.calcJunctionButton.Size = new System.Drawing.Size(136, 23);
+            this.calcJunctionButton.TabIndex = 17;
+            this.calcJunctionButton.Text = "Подобрать крепёж";
+            this.calcJunctionButton.UseVisualStyleBackColor = true;
+            this.calcJunctionButton.Click += new System.EventHandler(this.calcJunctionButton_Click);
+            // 
+            // variantButton
+            // 
+            this.variantButton.Location = new System.Drawing.Point(819, 501);
+            this.variantButton.Name = "variantButton";
+            this.variantButton.Size = new System.Drawing.Size(187, 45);
+            this.variantButton.TabIndex = 18;
+            this.variantButton.Text = " № Варианта";
+            this.variantButton.UseVisualStyleBackColor = true;
+            this.variantButton.Click += new System.EventHandler(this.variantButton_Click);
+            // 
+            // variantLabel
+            // 
+            this.variantLabel.AutoSize = true;
+            this.variantLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.variantLabel.ForeColor = System.Drawing.Color.Red;
+            this.variantLabel.Location = new System.Drawing.Point(823, 511);
+            this.variantLabel.Name = "variantLabel";
+            this.variantLabel.Size = new System.Drawing.Size(135, 24);
+            this.variantLabel.TabIndex = 19;
+            this.variantLabel.Text = "Вариант № 13";
+            // 
+            // diamComboBox
+            // 
+            this.diamComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.diamComboBox.FormattingEnabled = true;
+            this.diamComboBox.Location = new System.Drawing.Point(152, 28);
+            this.diamComboBox.Name = "diamComboBox";
+            this.diamComboBox.Size = new System.Drawing.Size(121, 21);
+            this.diamComboBox.TabIndex = 20;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1019, 513);
+            this.ClientSize = new System.Drawing.Size(1019, 558);
+            this.Controls.Add(this.diamComboBox);
+            this.Controls.Add(this.variantLabel);
+            this.Controls.Add(this.variantButton);
+            this.Controls.Add(this.calcJunctionButton);
             this.Controls.Add(this.secondFlangeHeightTextBox);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.firstFlangeHeightTextBox);
@@ -244,11 +238,6 @@ namespace BoltJunction
             this.Controls.Add(this.flangeLengthTextBox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.junctionTextBox);
-            this.Controls.Add(this.washerComboBox);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.nutComboBox);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.boltComboBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.mainPictureBox);
             this.Controls.Add(this.mainMenuStrip);
@@ -270,11 +259,6 @@ namespace BoltJunction
 
         private System.Windows.Forms.PictureBox mainPictureBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox boltComboBox;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox nutComboBox;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox washerComboBox;
         private System.Windows.Forms.TextBox junctionTextBox;
         private System.Windows.Forms.MenuStrip mainMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem actsToolStripMenuItem;
@@ -288,5 +272,9 @@ namespace BoltJunction
         private System.Windows.Forms.TextBox firstFlangeHeightTextBox;
         private System.Windows.Forms.TextBox secondFlangeHeightTextBox;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button calcJunctionButton;
+        private System.Windows.Forms.Button variantButton;
+        private System.Windows.Forms.Label variantLabel;
+        private System.Windows.Forms.ComboBox diamComboBox;
     }
 }

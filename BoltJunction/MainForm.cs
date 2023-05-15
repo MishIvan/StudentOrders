@@ -20,6 +20,11 @@ namespace BoltJunction
         private Bolt m_bolt;
         private Washer m_washer;
         private Nut m_nut;
+
+        private List<Nut> m_nutList;
+        private List<Washer> m_washerList;
+        private List<Bolt> m_boltList;
+
         public MainForm()
         {
             InitializeComponent();
@@ -29,16 +34,18 @@ namespace BoltJunction
         {
             Icon = Properties.Resources.boltnut32;
            
-            List<Nut> nlst = await Program.m_helper.GetNuts();
-            nutComboBox.DataSource = nlst;
+            m_nutList = await Program.m_helper.GetNuts();
 
-            List<Washer> wlst = await Program.m_helper.GetWashers();
-            washerComboBox.DataSource = wlst;
+            m_washerList = await Program.m_helper.GetWashers();
 
-            List<Bolt> blst = await Program.m_helper.GetBolts();
-            boltComboBox.DataSource = blst;
-            if (boltComboBox.Items.Count > 0)
-                boltComboBox.SelectedIndex = 0;
+            m_boltList = await Program.m_helper.GetBolts();
+
+            List<double> lst = await Program.m_helper.GetBoltDiams();
+            diamComboBox.DataSource = lst;
+            diamComboBox.SelectedIndex = 0;
+            
+
+            variantLabel.Visible = false;
         }
 
         private void OnClosed(object sender, FormClosedEventArgs e)
@@ -49,73 +56,6 @@ namespace BoltJunction
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
-        }
-        /// <summary>
-        /// Подборка гайки и шайбы по диаметру болта
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BoltSelectionCahnged(object sender, EventArgs e)
-        {
-            int idx = boltComboBox.SelectedIndex;
-            if (idx < 0) return;
-            m_bolt = boltComboBox.Items[idx] as Bolt;
-            if (m_bolt == null) return;
-
-            int i = 0;
-            int n = nutComboBox.Items.Count;
-            for(i = 0; i < n; i++)
-            {
-                m_nut = nutComboBox.Items[i] as Nut;
-                if (m_nut == null) continue;
-                if (m_nut.d == m_bolt.d && m_bolt.p == m_nut.p) break;
-            }
-
-            if (i < n)
-            {
-                nutComboBox.SelectedIndex = i;
-            }
-            else
-                m_nut = null;
-
-            n = washerComboBox.Items.Count;
-            for (i = 0; i < n; i++)
-            {
-                m_washer = washerComboBox.Items[i] as Washer;
-                if (m_washer == null) continue;
-                if (m_washer.d == m_bolt.d) break;
-            }
-
-            if (i < n)
-            {
-                washerComboBox.SelectedIndex = i;
-            }
-            else
-                m_washer = null;
-            if (m_nut == null || m_washer == null)
-            {
-                MessageBox.Show("Не удалось подобрать крепёж к выбранному болту");
-                return;
-            }
-
-            string text = $"Длина болта l (мм): {m_bolt.l + m_bolt.k}\r\n" +
-                $"Размер под ключ S (мм):{m_bolt.S}\r\n" +
-                $"Диаметр болта d (мм): {m_bolt.d}\r\n" +
-                $"Диаметр окружности D (мм): {m_bolt.e}\r\n" +
-                $"Высота гайки m (мм): {m_nut.m}\r\n" +
-                $"Высота шайбы s (мм): {m_washer.s}";
-            junctionTextBox.Text = text;
-
-            m_flangeHeight1 = 0.5 * (m_bolt.l - m_nut.m - m_washer.s - 3.0);
-            m_flangeHeight2 = m_flangeHeight1;
-            m_flangeLength = m_bolt.e * 2.0;
-            m_flangeWidth = m_bolt.S * 2.0;
-
-            firstFlangeHeightTextBox.Text = $"{m_flangeHeight1}";
-            secondFlangeHeightTextBox.Text = $"{m_flangeHeight2}";
-            flangeLengthTextBox.Text = $"{m_flangeLength}";
-            flangeWidthtextBox.Text = $"{m_flangeWidth}";
-
         }
 
         /// <summary>
@@ -130,85 +70,111 @@ namespace BoltJunction
             dlg.ShowDialog();
         }
         
-        /// <summary>
-        ///  Проверять правильность задания рамеров фланцев по параметрам крепежа
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnFlangeKeyPress(object sender, KeyPressEventArgs e)
+        private void variantButton_Click(object sender, EventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
+            variantButton.Visible = false;
+            variantLabel.Visible = true;
+        }
+
+        private void calcJunctionButton_Click(object sender, EventArgs e)
+        {
+            try
             {
-                double val = 0.0, val1 = 0.0;
-                if (sender as TextBox == flangeWidthtextBox)
-                {
-                    try
-                    {
-                        val = Convert.ToDouble(flangeWidthtextBox.Text);
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Неверно задано значение ширины фланца");
-                        return;
-                    }
-                    if (val < m_bolt.S + 1.0)
-                    {
-                        MessageBox.Show("Ширина фланцев не соответствует размерам болтового соединения");
-                        return;
-                    }
-                    m_flangeWidth = val;
-                }
+                m_flangeHeight1 = Convert.ToDouble(firstFlangeHeightTextBox.Text);
 
-                else if(sender as TextBox == flangeLengthTextBox)
-                {
-                    try
-                    {
-                        val = Convert.ToDouble(flangeLengthTextBox.Text);
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Неверно задано значение длины фланца");
-                        return;
-                    }
-                    if (val < m_bolt.e +1.0)
-                    {
-                        MessageBox.Show("Длина фланцев не соответствует размерам болтового соединения");
-                        return;
-                    }
-                    m_flangeLength = val;
-                }
-
-                else if(sender as TextBox == firstFlangeHeightTextBox || sender as TextBox == secondFlangeHeightTextBox)
-                {
-                    try
-                    {
-                        val = Convert.ToDouble(firstFlangeHeightTextBox.Text);
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Неверно задано значение толщины первого фланца");
-                        return;
-                    }
-
-                    try
-                    {
-                        val1 = Convert.ToDouble(firstFlangeHeightTextBox.Text);
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Неверно задано значение толщины второго фланца");
-                        return;
-                    }
-
-                    if (val + val1 > (m_bolt.l - m_nut.m - m_washer.s - 3.0) || val + val1 < (m_bolt.l - m_nut.m - m_washer.s - 3.0 - 1.0))
-                    {
-                        MessageBox.Show("Толщина фланцев не соответствует размерам болтового соединения");
-                        return;
-                    }
-
-                    m_flangeHeight1 = val; m_flangeHeight2 = val1;
-                }
+            }   
+            catch(Exception)
+            {
+                MessageBox.Show("Неверное задана высота первого фланца");
             }
+
+            try
+            {
+                m_flangeHeight2 = Convert.ToDouble(secondFlangeHeightTextBox.Text);
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Неверное задана высота второго фланца");
+                return;
+            }
+
+            try
+            {
+                m_flangeLength = Convert.ToDouble(flangeLengthTextBox.Text);
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Неверное задана длина фланца");
+                return;
+            }
+            try
+            {
+                m_flangeWidth = Convert.ToDouble(flangeWidthtextBox.Text);
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Неверное задана ширина фланца");
+                return;
+            }
+            if (diamComboBox.SelectedIndex < 0) return;
+            double d = Convert.ToDouble(diamComboBox.SelectedItem);
+            if(m_flangeLength < d + 1.0 && m_flangeWidth < d + 1.0)
+            {
+                MessageBox.Show("Длина и (или) ширина фланцев не подходят по выбранному болту. Измените длину и (или) ширину фланцев");
+                return;
+            }
+            m_nut = m_nutList.Where(n => n.d == d).FirstOrDefault();
+            if(m_nut == null)
+            {
+                MessageBox.Show("Не найдена подходящая по диаметру гайка в БД");
+                return;
+            }
+            m_washer = m_washerList.Where(w => w.d == d).FirstOrDefault();
+            if (m_nut == null)
+            {
+                MessageBox.Show("Не найдена подходящая по диаметру шайба в БД");
+                return;
+            }
+            m_bolt = m_boltList.OrderBy(b=> b.l).Where(b => b.d == d && b.l > m_flangeHeight1 + m_flangeHeight2 + m_nut.m + m_washer.s + 3.0).FirstOrDefault();
+            if(m_bolt == null)
+            {
+                MessageBox.Show("Не найден болт подходящей длины в БД");
+                return;
+            }
+
+            // уточнение размеров фланца после выбора болта
+            if(m_flangeLength < m_nut.e + 10.0)
+            {
+                m_flangeLength = m_nut.e + 10.0;
+                flangeLengthTextBox.Text = $"{m_flangeLength}";
+            }
+            if(m_flangeWidth < m_nut.S + 10.0)
+            {
+                m_flangeWidth = m_nut.S + 10.0;
+                flangeWidthtextBox.Text = $"{m_flangeWidth}";
+            }
+            if(Math.Abs(m_bolt.l - (m_flangeHeight1 + m_flangeHeight2 + m_nut.m + m_washer.s + 3.0)) > 2.0)
+            {
+                m_flangeHeight1 = (m_bolt.l - (m_nut.m + m_washer.s + 3.0)) * 0.5;
+                m_flangeHeight2 = m_flangeHeight1;
+                firstFlangeHeightTextBox.Text = $"{m_flangeHeight1}";
+                secondFlangeHeightTextBox.Text = $"{m_flangeHeight2}";
+            }
+
+            string text = $"{m_bolt.name}\r\n\r\n" +
+                $"Длина болта l (мм): {m_bolt.l}\r\n" +
+                $"Размер под ключ S (мм):{m_bolt.S}\r\n" +
+                $"Диаметр болта d (мм): {m_bolt.d}\r\n" +
+                $"Диаметр окружности D (мм): {m_bolt.e}\r\n\r\n" +
+                $"{m_nut.name}\r\n" +
+                $"Высота гайки m (мм): {m_nut.m}\r\n\r\n" +
+                $"{m_washer.name}\r\n" +
+                $"Высота шайбы s (мм): {m_washer.s}";
+            junctionTextBox.Text = text;
+            
         }
     }
 }

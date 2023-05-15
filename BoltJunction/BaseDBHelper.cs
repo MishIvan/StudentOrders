@@ -128,5 +128,24 @@ namespace BoltJunction
             }
             return lst;
         }
+        /// <summary>
+        /// Заполнить список диаметров болтов
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<double>> GetBoltDiams()
+        {
+            List<double> lst = null;
+            string sqlText = "select distinct d from bolt order by d";
+            try
+            {
+                var task = await m_conn.QueryAsync<double>(sqlText);
+                lst = task.ToList();
+            }
+            catch (Exception ex)
+            {
+                m_errorText = ex.Message;
+            }
+            return lst;
+        }
     }
 }
