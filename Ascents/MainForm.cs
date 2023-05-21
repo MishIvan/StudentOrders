@@ -16,5 +16,23 @@ namespace Ascents
         {
             InitializeComponent();
         }
+        /// <summary>
+        /// ВЫход
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+        /// <summary>
+        ///  Пероначальная загрузка
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
