@@ -32,7 +32,17 @@ namespace Ascents
         /// <param name="e"></param>
         private void MainForm_Load(object sender, EventArgs e)
         {
-
+            Icon = Properties.Resources.mountain32;
+        }
+        /// <summary>
+        /// Управление списком вершин
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void peaksToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PeakForm frm = new PeakForm();
+            frm.ShowDialog();
         }
     }
 }

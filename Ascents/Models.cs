@@ -14,31 +14,61 @@ namespace Ascents
         public long id { get; set; }
         public string name { get; set; }
         public int rank { get; set; }
-        public string rank_name { get; set; }
+        public string rankname { get; set; }
         public DateTime birthdate { get; set; }
-        public DateTime? deathdate { get; set; }
+        public bool closed { get; set; }
+        public string comments { get; set; }
+        public string closedname { get; set; }
         public override string ToString()
         {
-            return name;
+            return name + ", " + rankname;
         }
     }
+    /// <summary>
+    /// Вершина
+    /// </summary>
     public class Peak
     {
         public long id { get; set; }
         public string name { get; set; }
         public double height { get; set; }
+        public int idmountains { get; set; }
+        public override string ToString()
+        {
+            return name;
+        }
+    }
+    /// <summary>
+    /// Горная система
+    /// </summary>
+    public class Mountains
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public override string ToString()
+        {
+            return name;
+        }
+    }
+    public class PeakMountain : Peak
+    {
         public string mountains { get; set; }
+        public override string ToString()
+        {
+            return $"{name} ({height}), {mountains}";
+        }
     }
     public class Ascent
     {
         public long idascent { get; set; }
         public long idpeak { get; set; }
         public long idgroup { get; set; }
-        public long idleader { get; set; }
-        public string leadername { get; set; }
+        public string groupname { get; set; }
         public string peakname { get; set; }
         public double height { get; set; }
+        public int idmountains { get; set; }
         public string mountains { get; set; }
+        DateTime ascdate { get; set; }
         public int status { get; set; }
         public string statusname { get; set; }
     }

@@ -25,8 +25,8 @@ namespace Ascents {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=DESKTOP-F9849QL\\\\SQLEXPRESS;Database=alpinist;Trusted_connection=True;Encr" +
-            "ypt=False;TrustServerCertificate=False;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=DESKTOP-F9849QL\\SQLEXPRESS;Database=alpinist;Trusted_connection=True;Encry" +
+            "pt=False;TrustServerCertificate=False;")]
         public string ConnectionString {
             get {
                 return ((string)(this["ConnectionString"]));

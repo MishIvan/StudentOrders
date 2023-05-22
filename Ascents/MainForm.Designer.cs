@@ -30,12 +30,12 @@ namespace Ascents
         private void InitializeComponent()
         {
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
+            this.actionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.referenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.альпинистыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.peaksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.actionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,6 +49,21 @@ namespace Ascents
             this.mainMenuStrip.Size = new System.Drawing.Size(800, 24);
             this.mainMenuStrip.TabIndex = 0;
             this.mainMenuStrip.Text = "menuStrip1";
+            // 
+            // actionsToolStripMenuItem
+            // 
+            this.actionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitToolStripMenuItem});
+            this.actionsToolStripMenuItem.Name = "actionsToolStripMenuItem";
+            this.actionsToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
+            this.actionsToolStripMenuItem.Text = "Действия";
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+            this.exitToolStripMenuItem.Text = "Выход";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // referenceToolStripMenuItem
             // 
@@ -71,27 +86,14 @@ namespace Ascents
             this.peaksToolStripMenuItem.Name = "peaksToolStripMenuItem";
             this.peaksToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.peaksToolStripMenuItem.Text = "Вершины";
+            this.peaksToolStripMenuItem.Click += new System.EventHandler(this.peaksToolStripMenuItem_Click);
             // 
             // groupsToolStripMenuItem
             // 
             this.groupsToolStripMenuItem.Name = "groupsToolStripMenuItem";
             this.groupsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.groupsToolStripMenuItem.Text = "Группы";
-            // 
-            // actionsToolStripMenuItem
-            // 
-            this.actionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.exitToolStripMenuItem});
-            this.actionsToolStripMenuItem.Name = "actionsToolStripMenuItem";
-            this.actionsToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
-            this.actionsToolStripMenuItem.Text = "Действия";
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.exitToolStripMenuItem.Text = "Выход";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.groupsToolStripMenuItem.ToolTipText = "Состав групп альпинистов для восхождения";
             // 
             // MainForm
             // 
