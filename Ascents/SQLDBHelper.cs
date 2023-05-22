@@ -165,5 +165,24 @@ namespace Ascents
             }
             return lst;
         }
+        /// <summary>
+        /// Получение объекта альпиниста по его идентификатору
+        /// </summary>
+        /// <param name="id">идентификатор</param>
+        /// <returns>объект, в случае успешного выполнения запроса, null - иначе</returns>
+        public Person GetPersonByID(long id)
+        {
+            Person prc = null;
+            string sqlText = $"select p.id, p.name, p.rank, (select r.name from dbo.ranks r where r.id = p.rank) rankname, p.birthdate, p.closed, p.comments, p.closedname from dbo.persons where p.id = {id}";
+            try
+            {
+                prc = conn.QueryFirstOrDefault<Person>(sqlText);
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return prc;
+        }
     }
 }

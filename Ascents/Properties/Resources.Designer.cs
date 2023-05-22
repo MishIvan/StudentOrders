@@ -69,5 +69,15 @@ namespace Ascents.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
+        /// </summary>
+        internal static System.Drawing.Icon person32 {
+            get {
+                object obj = ResourceManager.GetObject("person32", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }
