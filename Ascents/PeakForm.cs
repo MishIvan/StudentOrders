@@ -93,7 +93,7 @@ namespace Ascents
             else
             {
                 Peak pk = peakComboBox.SelectedItem as Peak;
-                if (peak != null)
+                if (pk != null)
                 {
                     m_peak = Program.m_helper.GetPeakMountainByID(pk.id);
                     if(m_peak == null)

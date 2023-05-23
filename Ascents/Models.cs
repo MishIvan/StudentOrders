@@ -9,10 +9,8 @@ namespace Ascents
     /// <summary>
     /// Альпинисты и их спортивный разряды
     /// </summary>
-    public class Person
+    public class Person : AbstractPerson
     {
-        public long id { get; set; }
-        public string name { get; set; }
         public int rank { get; set; }
         public string rankname { get; set; }
         public DateTime birthdate { get; set; }
@@ -23,6 +21,22 @@ namespace Ascents
         {
             return name + ", " + rankname;
         }
+    }
+    public class AbstractPerson
+    {
+        public long id { get; set; }
+        public string name { get; set; }
+        public override string ToString()
+        {
+            return name;
+        }
+    }
+    /// <summary>
+    /// Отображение группы альпинистов при введении информации о восхождении
+    /// </summary>
+    public class Group : AbstractPerson
+    {
+        public bool leader { get; set; }
     }
     /// <summary>
     /// Вершина
@@ -55,15 +69,13 @@ namespace Ascents
         public string mountains { get; set; }
         public override string ToString()
         {
-            return $"{name} ({height}), {mountains}";
+            return $"{name} ({height} м), {mountains}";
         }
     }
     public class Ascent
     {
         public long idascent { get; set; }
         public long idpeak { get; set; }
-        public long idgroup { get; set; }
-        public string groupname { get; set; }
         public string peakname { get; set; }
         public double height { get; set; }
         public int idmountains { get; set; }

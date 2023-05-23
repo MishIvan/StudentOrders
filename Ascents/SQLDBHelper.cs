@@ -97,7 +97,7 @@ namespace Ascents
         public PeakMountain GetPeakMountainByID(long id)
         {
             PeakMountain pm = null;
-            string sqlText = $"select p.id, p.name, p.idmountains, (select m.name from dbo.mountains m where m.id = p.idmountains) mountains from dbo.peaks p order where p.id = {id}";
+            string sqlText = $"select p.id, p.name, p.idmountains, (select m.name from dbo.mountains m where m.id = p.idmountains) mountains, p.height from dbo.peaks p where p.id = {id}";
             try
             {
                 pm = conn.QueryFirstOrDefault<PeakMountain>(sqlText);
@@ -147,13 +147,14 @@ namespace Ascents
             return nrec;
         }
         /// <summary>
-        /// Выдать спи сок альпинистов
+        /// Выдать список альпинистов
         /// </summary>
         /// <returns>список альпинистов, если запрос успешно выполнен, иначе - null</returns>
         public async Task<List<Person>> GetPersons()
         {
             List<Person> lst = null;
             string sqlText = "select p.id, p.name, p.rank, (select r.name from dbo.ranks r where r.id = p.rank) rankname, p.birthdate, p.closed, p.comments, p.closedname from dbo.persons p order by p.name";
+         
             try
             {
                 var t = await conn.QueryAsync<Person>(sqlText);
@@ -164,6 +165,27 @@ namespace Ascents
                 _errorText = ex.Message;
             }
             return lst;
+        }
+        /// <summary>
+        /// Выдать список альпинистов, запись о которых не закрыта
+        /// и у них не запланировано восхождение
+        /// </summary>
+        /// <returns>список альпинистов, если запрос успешно выполнен, иначе - null</returns>
+        public async Task<List<AbstractPerson>> GetFilteredPersons()
+        {
+            List<AbstractPerson> lst = null;
+            string sqlText = "select p.id, p.name +', '+ (select r.name from dbo.ranks r where r.id = p.rank) name from dbo.persons p " +
+                "where p.closed != 1 and p.id not in (select g.idperson from dbo.groups g join dbo.ascents a on g.idascent = a.id and a.status != 2) order by p.name";
+            try
+            {
+                var t = await conn.QueryAsync<AbstractPerson>(sqlText);
+                lst = t.ToList();
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return lst; 
         }
         /// <summary>
         /// Получение объекта альпиниста по его идентификатору
@@ -248,6 +270,45 @@ namespace Ascents
                 _errorText = ex.Message;
             }
             return nrec;
+        }
+        /// <summary>
+        /// Получить список восходжений
+        /// </summary>
+        /// <returns>заполненный список, в случае успешного выполнения запроса, иначе null</returns>
+        public async Task <List <Ascent>> GetAscents()
+        {
+            List<Ascent> lst = null;
+            string sqlText = "select a.idascent, a.idpeak, a.peakname, a.height, a.idmountains, a.mountains, a.ascdate, a.status, a.statusname from dbo.ascentview a order by a.peakname";
+            try
+            {
+                var t = await conn.QueryAsync<Ascent>(sqlText);
+                lst = t.ToList();
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return lst;
+        }
+        /// <summary>
+        ///  Выдать состав группы восхождения 
+        /// </summary>
+        /// <param name="idasc">идентификатор восхождения</param>
+        /// <returns>список группы восхождения в случае успешного выполнения запроса, иначе null</returns>
+        public async Task<List<Group>> GetAscentGroup(long idasc)
+        {
+            List<Group> lst = null;
+            string sqlText = $"select gw.idperson as id, gw.person + ', ' + gw.rankname as name, gw.leader from dbo.groupsview gw where gw.idascent = {idasc} ";
+            try
+            {
+                var t = await conn.QueryAsync<Group>(sqlText);
+                lst = t.ToList();
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return lst;
         }
     }
 }

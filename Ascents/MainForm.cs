@@ -12,6 +12,7 @@ namespace Ascents
 {
     public partial class MainForm : Form
     {
+        private List<Ascent> m_ascents;
         public MainForm()
         {
             InitializeComponent();
@@ -30,9 +31,19 @@ namespace Ascents
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MainForm_Load(object sender, EventArgs e)
+        private async void MainForm_Load(object sender, EventArgs e)
         {
             Icon = Properties.Resources.mountain32;
+            m_ascents = await Program.m_helper.GetAscents();
+            if(m_ascents != null) SetPeakFilter();
+        }
+        void SetPeakFilter()
+        {
+            string filter = peakFilterTextBox.Text.ToLower();
+            if (string.IsNullOrEmpty(filter) || string.IsNullOrWhiteSpace(filter))
+                ascentDataGridView.DataSource = m_ascents.Where(a => a.peakname.ToLower().Contains(filter)).ToList();
+            else
+                ascentDataGridView.DataSource = m_ascents;
         }
         /// <summary>
         /// Управление списком вершин
@@ -53,6 +64,42 @@ namespace Ascents
         {
             PersonsForm frm = new PersonsForm();
             frm.ShowDialog();
+        }
+
+        private void groupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ascentresultToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+        /// <summary>
+        /// Запланировать восхождение
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void planascentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AscentForm frm = new AscentForm();
+            if(frm.ShowDialog() == DialogResult.OK)
+            {
+                m_ascents = await Program.m_helper.GetAscents();
+                SetPeakFilter();
+            }
+        }
+        /// <summary>
+        /// Применить фильтр по наименованию вершины
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnApplyFilter(object sender, KeyPressEventArgs e)
+        {
+            if(e.KeyChar == (char)Keys.Enter)
+            {
+                SetPeakFilter();
+            }
         }
     }
 }
