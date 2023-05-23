@@ -32,16 +32,17 @@ namespace Ascents
             this.label1 = new System.Windows.Forms.Label();
             this.filterTextBox = new System.Windows.Forms.TextBox();
             this.personsDataGridView = new System.Windows.Forms.DataGridView();
+            this.addButton = new System.Windows.Forms.Button();
+            this.editButton = new System.Windows.Forms.Button();
+            this.closeRecButton = new System.Windows.Forms.Button();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.rank = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.rankname = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.birthdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.closed = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.closed = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.closedname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.addButton = new System.Windows.Forms.Button();
-            this.editButton = new System.Windows.Forms.Button();
-            this.closeRecButton = new System.Windows.Forms.Button();
+            this.comments = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.personsDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -60,6 +61,7 @@ namespace Ascents
             this.filterTextBox.Name = "filterTextBox";
             this.filterTextBox.Size = new System.Drawing.Size(256, 20);
             this.filterTextBox.TabIndex = 1;
+            this.filterTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnApplyFilter);
             // 
             // personsDataGridView
             // 
@@ -73,12 +75,45 @@ namespace Ascents
             this.rankname,
             this.birthdate,
             this.closed,
-            this.closedname});
+            this.closedname,
+            this.comments});
             this.personsDataGridView.Location = new System.Drawing.Point(16, 57);
             this.personsDataGridView.Name = "personsDataGridView";
             this.personsDataGridView.ReadOnly = true;
+            this.personsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.personsDataGridView.Size = new System.Drawing.Size(604, 332);
             this.personsDataGridView.TabIndex = 2;
+            this.personsDataGridView.SelectionChanged += new System.EventHandler(this.OnRowChanged);
+            // 
+            // addButton
+            // 
+            this.addButton.Location = new System.Drawing.Point(16, 409);
+            this.addButton.Name = "addButton";
+            this.addButton.Size = new System.Drawing.Size(108, 27);
+            this.addButton.TabIndex = 3;
+            this.addButton.Text = "Добавить";
+            this.addButton.UseVisualStyleBackColor = true;
+            this.addButton.Click += new System.EventHandler(this.addButton_Click);
+            // 
+            // editButton
+            // 
+            this.editButton.Location = new System.Drawing.Point(163, 409);
+            this.editButton.Name = "editButton";
+            this.editButton.Size = new System.Drawing.Size(108, 27);
+            this.editButton.TabIndex = 4;
+            this.editButton.Text = "Изменить";
+            this.editButton.UseVisualStyleBackColor = true;
+            this.editButton.Click += new System.EventHandler(this.editButton_Click);
+            // 
+            // closeRecButton
+            // 
+            this.closeRecButton.Location = new System.Drawing.Point(323, 409);
+            this.closeRecButton.Name = "closeRecButton";
+            this.closeRecButton.Size = new System.Drawing.Size(188, 27);
+            this.closeRecButton.TabIndex = 6;
+            this.closeRecButton.Text = "Закрыть запись";
+            this.closeRecButton.UseVisualStyleBackColor = true;
+            this.closeRecButton.Click += new System.EventHandler(this.closeRecButton_Click);
             // 
             // id
             // 
@@ -122,9 +157,13 @@ namespace Ascents
             // closed
             // 
             this.closed.DataPropertyName = "closed";
+            this.closed.FalseValue = "0";
             this.closed.HeaderText = "Пр. закр.";
             this.closed.Name = "closed";
             this.closed.ReadOnly = true;
+            this.closed.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.closed.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.closed.TrueValue = "1";
             this.closed.Visible = false;
             // 
             // closedname
@@ -134,32 +173,13 @@ namespace Ascents
             this.closedname.Name = "closedname";
             this.closedname.ReadOnly = true;
             // 
-            // addButton
+            // comments
             // 
-            this.addButton.Location = new System.Drawing.Point(16, 409);
-            this.addButton.Name = "addButton";
-            this.addButton.Size = new System.Drawing.Size(108, 27);
-            this.addButton.TabIndex = 3;
-            this.addButton.Text = "Добавить";
-            this.addButton.UseVisualStyleBackColor = true;
-            // 
-            // editButton
-            // 
-            this.editButton.Location = new System.Drawing.Point(163, 409);
-            this.editButton.Name = "editButton";
-            this.editButton.Size = new System.Drawing.Size(108, 27);
-            this.editButton.TabIndex = 4;
-            this.editButton.Text = "Изменить";
-            this.editButton.UseVisualStyleBackColor = true;
-            // 
-            // closeRecButton
-            // 
-            this.closeRecButton.Location = new System.Drawing.Point(323, 409);
-            this.closeRecButton.Name = "closeRecButton";
-            this.closeRecButton.Size = new System.Drawing.Size(108, 27);
-            this.closeRecButton.TabIndex = 6;
-            this.closeRecButton.Text = "Закрыть запись";
-            this.closeRecButton.UseVisualStyleBackColor = true;
+            this.comments.DataPropertyName = "comments";
+            this.comments.HeaderText = "Доп. сведения";
+            this.comments.Name = "comments";
+            this.comments.ReadOnly = true;
+            this.comments.Visible = false;
             // 
             // PersonsForm
             // 
@@ -188,15 +208,16 @@ namespace Ascents
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox filterTextBox;
         private System.Windows.Forms.DataGridView personsDataGridView;
+        private System.Windows.Forms.Button addButton;
+        private System.Windows.Forms.Button editButton;
+        private System.Windows.Forms.Button closeRecButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn name;
         private System.Windows.Forms.DataGridViewTextBoxColumn rank;
         private System.Windows.Forms.DataGridViewTextBoxColumn rankname;
         private System.Windows.Forms.DataGridViewTextBoxColumn birthdate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn closed;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn closed;
         private System.Windows.Forms.DataGridViewTextBoxColumn closedname;
-        private System.Windows.Forms.Button addButton;
-        private System.Windows.Forms.Button editButton;
-        private System.Windows.Forms.Button closeRecButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn comments;
     }
 }

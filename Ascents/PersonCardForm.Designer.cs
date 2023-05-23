@@ -79,13 +79,13 @@ namespace Ascents
             "Третий разряд"});
             this.rankComboBox.Location = new System.Drawing.Point(69, 60);
             this.rankComboBox.Name = "rankComboBox";
-            this.rankComboBox.Size = new System.Drawing.Size(221, 21);
+            this.rankComboBox.Size = new System.Drawing.Size(287, 21);
             this.rankComboBox.TabIndex = 3;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(315, 64);
+            this.label3.Location = new System.Drawing.Point(377, 64);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(89, 13);
             this.label3.TabIndex = 4;
@@ -94,10 +94,12 @@ namespace Ascents
             // birthdateTimePicker
             // 
             this.birthdateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.birthdateTimePicker.Location = new System.Drawing.Point(421, 60);
+            this.birthdateTimePicker.Location = new System.Drawing.Point(476, 60);
+            this.birthdateTimePicker.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
             this.birthdateTimePicker.Name = "birthdateTimePicker";
             this.birthdateTimePicker.Size = new System.Drawing.Size(96, 20);
             this.birthdateTimePicker.TabIndex = 5;
+            this.birthdateTimePicker.Value = new System.DateTime(1974, 1, 1, 10, 0, 0, 0);
             // 
             // label4
             // 
@@ -113,13 +115,13 @@ namespace Ascents
             this.addInfoTextBox.Location = new System.Drawing.Point(12, 162);
             this.addInfoTextBox.Multiline = true;
             this.addInfoTextBox.Name = "addInfoTextBox";
-            this.addInfoTextBox.Size = new System.Drawing.Size(499, 166);
+            this.addInfoTextBox.Size = new System.Drawing.Size(560, 116);
             this.addInfoTextBox.TabIndex = 7;
             // 
             // acceptButton
             // 
             this.acceptButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.acceptButton.Location = new System.Drawing.Point(15, 357);
+            this.acceptButton.Location = new System.Drawing.Point(15, 304);
             this.acceptButton.Name = "acceptButton";
             this.acceptButton.Size = new System.Drawing.Size(106, 30);
             this.acceptButton.TabIndex = 8;
@@ -130,7 +132,7 @@ namespace Ascents
             // rejectButton
             // 
             this.rejectButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.rejectButton.Location = new System.Drawing.Point(405, 357);
+            this.rejectButton.Location = new System.Drawing.Point(466, 304);
             this.rejectButton.Name = "rejectButton";
             this.rejectButton.Size = new System.Drawing.Size(106, 30);
             this.rejectButton.TabIndex = 9;
@@ -139,9 +141,11 @@ namespace Ascents
             // 
             // PersonCardForm
             // 
+            this.AcceptButton = this.acceptButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(542, 411);
+            this.CancelButton = this.rejectButton;
+            this.ClientSize = new System.Drawing.Size(591, 363);
             this.Controls.Add(this.rejectButton);
             this.Controls.Add(this.acceptButton);
             this.Controls.Add(this.addInfoTextBox);

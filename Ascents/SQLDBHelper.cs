@@ -173,7 +173,7 @@ namespace Ascents
         public Person GetPersonByID(long id)
         {
             Person prc = null;
-            string sqlText = $"select p.id, p.name, p.rank, (select r.name from dbo.ranks r where r.id = p.rank) rankname, p.birthdate, p.closed, p.comments, p.closedname from dbo.persons where p.id = {id}";
+            string sqlText = $"select p.id, p.name, p.rank, (select r.name from dbo.ranks r where r.id = p.rank) rankname, p.birthdate, p.closed, p.comments, p.closedname from dbo.persons p where p.id = {id}";
             try
             {
                 prc = conn.QueryFirstOrDefault<Person>(sqlText);
@@ -183,6 +183,71 @@ namespace Ascents
                 _errorText = ex.Message;
             }
             return prc;
+        }
+        /// <summary>
+        /// Добавить запись об альпинисте
+        /// </summary>
+        /// <param name="prc">объект с данными для добавления</param>
+        /// <returns>1 - добавление успешно, 0 - иначе</returns>
+        public int AddPerson(Person prc)
+        {
+            int nrec = 0;
+            string sdt = prc.birthdate.ToString("yyyyMMdd");
+            int ic = prc.closed ? 1 : 0;
+            string sqlText = $"insert into dbo.persons(name, rank, birthdate, closed, comments) values(@pname, @prank, '{sdt}', {ic}, @pcomments)";
+            try
+            {
+                nrec = conn.Execute(sqlText, 
+                    new { pname = prc.name, prank = prc.rank, pcomments = prc.comments });
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return nrec;
+        }
+        /// <summary>
+        /// Изменить запись об альпинисте
+        /// </summary>
+        /// <param name="prc">объект с данными для добавления</param>
+        /// <returns>1 - добавление успешно, 0 - иначе</returns>
+        public int UpdatePerson(Person prc)
+        {
+            int nrec = 0;
+            string sdt = prc.birthdate.ToString("yyyyMMdd");
+            int ic = prc.closed ? 1 : 0;
+            string sqlText = $"update dbo.persons set name = @pname, rank = @prank, birthdate = '{sdt}', closed = {ic}, comments = @pcomments where id = @pid";
+            try
+            {
+                nrec = conn.Execute(sqlText,
+                    new { pname = prc.name, prank = prc.rank, pcomments = prc.comments, pid = prc.id });
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return nrec;
+        }
+        /// <summary>
+        /// Закрыть (открыть) запись об альпинисте
+        /// </summary>
+        /// <param name="id">идентификатор записи</param>
+        /// <param name="closed">закрыть (1), открыть (0)</param>
+        /// <returns>1 - действие успешно, 0 - иначе</returns>
+        public int ClosePerson(long id, bool closed = true)
+        {
+            int nrec = 0;
+            int ic = closed ? 1 : 0;
+            string sqlText = $"update dbo.persons set closed = {ic} where id = {id}";
+            try
+            {
+                nrec = conn.Execute(sqlText);
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return nrec;
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Ascents
             this.actionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.referenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.альпинистыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.personsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.peaksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenuStrip.SuspendLayout();
@@ -68,18 +68,19 @@ namespace Ascents
             // referenceToolStripMenuItem
             // 
             this.referenceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.альпинистыToolStripMenuItem,
+            this.personsToolStripMenuItem,
             this.peaksToolStripMenuItem,
             this.groupsToolStripMenuItem});
             this.referenceToolStripMenuItem.Name = "referenceToolStripMenuItem";
             this.referenceToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
             this.referenceToolStripMenuItem.Text = "Справочники";
             // 
-            // альпинистыToolStripMenuItem
+            // personsToolStripMenuItem
             // 
-            this.альпинистыToolStripMenuItem.Name = "альпинистыToolStripMenuItem";
-            this.альпинистыToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.альпинистыToolStripMenuItem.Text = "Альпинисты";
+            this.personsToolStripMenuItem.Name = "personsToolStripMenuItem";
+            this.personsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.personsToolStripMenuItem.Text = "Альпинисты";
+            this.personsToolStripMenuItem.Click += new System.EventHandler(this.personsToolStripMenuItem_Click);
             // 
             // peaksToolStripMenuItem
             // 
@@ -118,7 +119,7 @@ namespace Ascents
         private System.Windows.Forms.ToolStripMenuItem referenceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem actionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem альпинистыToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem personsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem peaksToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem groupsToolStripMenuItem;
     }

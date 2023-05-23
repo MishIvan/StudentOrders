@@ -44,5 +44,15 @@ namespace Ascents
             PeakForm frm = new PeakForm();
             frm.ShowDialog();
         }
+        /// <summary>
+        /// Управление списком альпинистов
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void personsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PersonsForm frm = new PersonsForm();
+            frm.ShowDialog();
+        }
     }
 }
