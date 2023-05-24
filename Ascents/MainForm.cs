@@ -70,10 +70,38 @@ namespace Ascents
         {
 
         }
-
-        private void ascentresultToolStripMenuItem_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Изменить статус восхождения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void ascentresultToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            var row = ascentDataGridView.CurrentRow;
+            if (row != null)
+            {
+                int status = Convert.ToInt32(row.Cells["status"].Value);
+                long idascent = Convert.ToInt64(row.Cells["idascent"].Value);
+                DateTime ascdate = Convert.ToDateTime(row.Cells["ascdate"].Value);
+                DateTime now = DateTime.Now;
+                if(now > ascdate && status == 1)
+                {
+                    MessageBox.Show("Нельзя изменить статус прошлого успешного восхождения");
+                    return;
+                }
+                AscentStatusForm frm = new AscentStatusForm(status);
+                if(frm.ShowDialog() == DialogResult.OK)
+                {
+                    int nrec = Program.m_helper.SetAscentStatus(idascent, frm.status);
+                    if (nrec > 0)
+                    {
+                        m_ascents = await Program.m_helper.GetAscents();
+                        SetPeakFilter();
+                    }
+                    else
+                        Program.DBErrorMessage();
+                }
+            }
         }
         /// <summary>
         /// Запланировать восхождение
