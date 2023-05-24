@@ -442,5 +442,24 @@ namespace Ascents
             }
             return nrec;
         }
+        /// <summary>
+        /// выдать информацию об успешных восхождениях
+        /// </summary>
+        /// <returns>список альпинистов с вершиной и датой восхождения в случае успешно выполненного запроса, иначе - null</returns>
+        public async Task<List<AscentReport>> GetAscentReport()
+        {
+            List<AscentReport> lst = null;
+            string sqlText = $"select v.ascdate, v.person, v.peakname, v.height, v.mountains from dbo.reportview v";
+            try
+            {
+                var t = await conn.QueryAsync<AscentReport>(sqlText);
+                lst = t.ToList();
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return lst;
+        }
     }
 }

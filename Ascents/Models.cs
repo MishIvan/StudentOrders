@@ -84,4 +84,15 @@ namespace Ascents
         public int status { get; set; }
         public string statusname { get; set; }
     }
+    /// <summary>
+    /// объект с информацмей для отчёта
+    /// </summary>
+    public class AscentReport
+    {
+        public string person { get; set; }
+        public DateTime ascdate { get; set; }
+        public string peakname { get; set; }
+        public double height { get; set; }
+        public string mountains { get; set; }
+    }
 }
