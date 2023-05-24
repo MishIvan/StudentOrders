@@ -29,13 +29,13 @@ namespace Ascents
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.actionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.planascentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ascentresultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.referenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.personsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.peaksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,6 +51,7 @@ namespace Ascents
             this.mountains = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.replanAscentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ascentDataGridView)).BeginInit();
             this.SuspendLayout();
@@ -70,6 +71,7 @@ namespace Ascents
             // 
             this.actionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.planascentToolStripMenuItem,
+            this.replanAscentToolStripMenuItem,
             this.ascentresultToolStripMenuItem,
             this.groupToolStripMenuItem,
             this.exitToolStripMenuItem});
@@ -80,30 +82,30 @@ namespace Ascents
             // planascentToolStripMenuItem
             // 
             this.planascentToolStripMenuItem.Name = "planascentToolStripMenuItem";
-            this.planascentToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.planascentToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.planascentToolStripMenuItem.Text = "Запланировать восхождение";
             this.planascentToolStripMenuItem.Click += new System.EventHandler(this.planascentToolStripMenuItem_Click);
             // 
             // ascentresultToolStripMenuItem
             // 
             this.ascentresultToolStripMenuItem.Name = "ascentresultToolStripMenuItem";
-            this.ascentresultToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.ascentresultToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.ascentresultToolStripMenuItem.Text = "Изменить статус восхождения";
             this.ascentresultToolStripMenuItem.Click += new System.EventHandler(this.ascentresultToolStripMenuItem_Click);
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
-            this.exitToolStripMenuItem.Text = "Выход";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // groupToolStripMenuItem
             // 
             this.groupToolStripMenuItem.Name = "groupToolStripMenuItem";
-            this.groupToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.groupToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.groupToolStripMenuItem.Text = "Показать состав группы";
             this.groupToolStripMenuItem.Click += new System.EventHandler(this.groupToolStripMenuItem_Click);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
+            this.exitToolStripMenuItem.Text = "Выход";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // referenceToolStripMenuItem
             // 
@@ -163,6 +165,7 @@ namespace Ascents
             this.ascentDataGridView.Location = new System.Drawing.Point(15, 72);
             this.ascentDataGridView.Name = "ascentDataGridView";
             this.ascentDataGridView.ReadOnly = true;
+            this.ascentDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.ascentDataGridView.Size = new System.Drawing.Size(751, 392);
             this.ascentDataGridView.TabIndex = 3;
             // 
@@ -185,9 +188,9 @@ namespace Ascents
             // ascdate
             // 
             this.ascdate.DataPropertyName = "ascdate";
-            dataGridViewCellStyle5.Format = "d";
-            dataGridViewCellStyle5.NullValue = null;
-            this.ascdate.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle3.Format = "d";
+            dataGridViewCellStyle3.NullValue = null;
+            this.ascdate.DefaultCellStyle = dataGridViewCellStyle3;
             this.ascdate.HeaderText = "Дата";
             this.ascdate.Name = "ascdate";
             this.ascdate.ReadOnly = true;
@@ -239,6 +242,13 @@ namespace Ascents
             this.statusname.ReadOnly = true;
             this.statusname.Width = 150;
             // 
+            // replanAscentToolStripMenuItem
+            // 
+            this.replanAscentToolStripMenuItem.Name = "replanAscentToolStripMenuItem";
+            this.replanAscentToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
+            this.replanAscentToolStripMenuItem.Text = "Перепланировать восхождение";
+            this.replanAscentToolStripMenuItem.Click += new System.EventHandler(this.replanAscentToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -284,6 +294,7 @@ namespace Ascents
         private System.Windows.Forms.DataGridViewTextBoxColumn mountains;
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
         private System.Windows.Forms.DataGridViewTextBoxColumn statusname;
+        private System.Windows.Forms.ToolStripMenuItem replanAscentToolStripMenuItem;
     }
 }
 

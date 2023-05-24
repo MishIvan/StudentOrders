@@ -40,7 +40,7 @@ namespace Ascents
         void SetPeakFilter()
         {
             string filter = peakFilterTextBox.Text.ToLower();
-            if (string.IsNullOrEmpty(filter) || string.IsNullOrWhiteSpace(filter))
+            if (!(string.IsNullOrEmpty(filter) || string.IsNullOrWhiteSpace(filter)))
                 ascentDataGridView.DataSource = m_ascents.Where(a => a.peakname.ToLower().Contains(filter)).ToList();
             else
                 ascentDataGridView.DataSource = m_ascents;
@@ -99,6 +99,32 @@ namespace Ascents
             if(e.KeyChar == (char)Keys.Enter)
             {
                 SetPeakFilter();
+            }
+        }
+        /// <summary>
+        /// Перепланировать восхождение
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void replanAscentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var row = ascentDataGridView.CurrentRow;
+            if(row != null)
+            {
+                int status = Convert.ToInt32(row.Cells["status"].Value);
+                if(status == 1)
+                {
+                    MessageBox.Show("Успешно осуществлёное восхождение не планируется");
+                    return;
+                }
+                long idascent = Convert.ToInt64(row.Cells["idascent"].Value);
+
+                AscentForm frm = new AscentForm(idascent);
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    m_ascents = await Program.m_helper.GetAscents();
+                    SetPeakFilter();
+                }
             }
         }
     }

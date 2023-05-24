@@ -35,19 +35,19 @@ namespace Ascents
             this.peakNameTextBox = new System.Windows.Forms.TextBox();
             this.peakChoiceButton = new System.Windows.Forms.Button();
             this.personsGroupBox = new System.Windows.Forms.GroupBox();
-            this.personsDataGridView = new System.Windows.Forms.DataGridView();
-            this.addPersonButton = new System.Windows.Forms.Button();
-            this.delPersonButton = new System.Windows.Forms.Button();
-            this.chiefSetButton = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
             this.personsComboBox = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.chiefSetButton = new System.Windows.Forms.Button();
+            this.delPersonButton = new System.Windows.Forms.Button();
+            this.addPersonButton = new System.Windows.Forms.Button();
+            this.personsDataGridView = new System.Windows.Forms.DataGridView();
             this.acceptButton = new System.Windows.Forms.Button();
             this.rejectButton = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.commentsTextBox = new System.Windows.Forms.TextBox();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.leader = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.label4 = new System.Windows.Forms.Label();
-            this.commentsTextBox = new System.Windows.Forms.TextBox();
             this.personsGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.personsDataGridView)).BeginInit();
             this.SuspendLayout();
@@ -110,6 +110,54 @@ namespace Ascents
             this.personsGroupBox.TabStop = false;
             this.personsGroupBox.Text = "Группа альпинистов";
             // 
+            // personsComboBox
+            // 
+            this.personsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.personsComboBox.FormattingEnabled = true;
+            this.personsComboBox.Location = new System.Drawing.Point(89, 23);
+            this.personsComboBox.Name = "personsComboBox";
+            this.personsComboBox.Size = new System.Drawing.Size(321, 21);
+            this.personsComboBox.TabIndex = 7;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(10, 27);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(72, 13);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Альпинисты:";
+            // 
+            // chiefSetButton
+            // 
+            this.chiefSetButton.Location = new System.Drawing.Point(200, 237);
+            this.chiefSetButton.Name = "chiefSetButton";
+            this.chiefSetButton.Size = new System.Drawing.Size(151, 23);
+            this.chiefSetButton.TabIndex = 6;
+            this.chiefSetButton.Text = "Назначить руководителем";
+            this.chiefSetButton.UseVisualStyleBackColor = true;
+            this.chiefSetButton.Click += new System.EventHandler(this.chiefSetButton_Click);
+            // 
+            // delPersonButton
+            // 
+            this.delPersonButton.Location = new System.Drawing.Point(104, 237);
+            this.delPersonButton.Name = "delPersonButton";
+            this.delPersonButton.Size = new System.Drawing.Size(75, 23);
+            this.delPersonButton.TabIndex = 6;
+            this.delPersonButton.Text = "Удалить";
+            this.delPersonButton.UseVisualStyleBackColor = true;
+            this.delPersonButton.Click += new System.EventHandler(this.delPersonButton_Click);
+            // 
+            // addPersonButton
+            // 
+            this.addPersonButton.Location = new System.Drawing.Point(13, 237);
+            this.addPersonButton.Name = "addPersonButton";
+            this.addPersonButton.Size = new System.Drawing.Size(75, 23);
+            this.addPersonButton.TabIndex = 1;
+            this.addPersonButton.Text = "Добавить";
+            this.addPersonButton.UseVisualStyleBackColor = true;
+            this.addPersonButton.Click += new System.EventHandler(this.addPersonButton_Click);
+            // 
             // personsDataGridView
             // 
             this.personsDataGridView.AllowUserToAddRows = false;
@@ -125,54 +173,6 @@ namespace Ascents
             this.personsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.personsDataGridView.Size = new System.Drawing.Size(397, 169);
             this.personsDataGridView.TabIndex = 0;
-            // 
-            // addPersonButton
-            // 
-            this.addPersonButton.Location = new System.Drawing.Point(13, 237);
-            this.addPersonButton.Name = "addPersonButton";
-            this.addPersonButton.Size = new System.Drawing.Size(75, 23);
-            this.addPersonButton.TabIndex = 1;
-            this.addPersonButton.Text = "Добавить";
-            this.addPersonButton.UseVisualStyleBackColor = true;
-            this.addPersonButton.Click += new System.EventHandler(this.addPersonButton_Click);
-            // 
-            // delPersonButton
-            // 
-            this.delPersonButton.Location = new System.Drawing.Point(104, 237);
-            this.delPersonButton.Name = "delPersonButton";
-            this.delPersonButton.Size = new System.Drawing.Size(75, 23);
-            this.delPersonButton.TabIndex = 6;
-            this.delPersonButton.Text = "Удалить";
-            this.delPersonButton.UseVisualStyleBackColor = true;
-            this.delPersonButton.Click += new System.EventHandler(this.delPersonButton_Click);
-            // 
-            // chiefSetButton
-            // 
-            this.chiefSetButton.Location = new System.Drawing.Point(200, 237);
-            this.chiefSetButton.Name = "chiefSetButton";
-            this.chiefSetButton.Size = new System.Drawing.Size(151, 23);
-            this.chiefSetButton.TabIndex = 6;
-            this.chiefSetButton.Text = "Назначить руководителем";
-            this.chiefSetButton.UseVisualStyleBackColor = true;
-            this.chiefSetButton.Click += new System.EventHandler(this.chiefSetButton_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 27);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(72, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Альпинисты:";
-            // 
-            // personsComboBox
-            // 
-            this.personsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.personsComboBox.FormattingEnabled = true;
-            this.personsComboBox.Location = new System.Drawing.Point(89, 23);
-            this.personsComboBox.Name = "personsComboBox";
-            this.personsComboBox.Size = new System.Drawing.Size(321, 21);
-            this.personsComboBox.TabIndex = 7;
             // 
             // acceptButton
             // 
@@ -195,31 +195,6 @@ namespace Ascents
             this.rejectButton.Text = "Отмена";
             this.rejectButton.UseVisualStyleBackColor = true;
             // 
-            // id
-            // 
-            this.id.DataPropertyName = "id";
-            this.id.HeaderText = "ИД альпиниста";
-            this.id.Name = "id";
-            this.id.ReadOnly = true;
-            this.id.Visible = false;
-            // 
-            // name
-            // 
-            this.name.DataPropertyName = "name";
-            this.name.HeaderText = "Альпинист";
-            this.name.Name = "name";
-            this.name.ReadOnly = true;
-            this.name.Width = 200;
-            // 
-            // leader
-            // 
-            this.leader.DataPropertyName = "leader";
-            this.leader.FalseValue = "Да";
-            this.leader.HeaderText = "Руководитель";
-            this.leader.Name = "leader";
-            this.leader.ReadOnly = true;
-            this.leader.TrueValue = "Нет";
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -237,6 +212,31 @@ namespace Ascents
             this.commentsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.commentsTextBox.Size = new System.Drawing.Size(438, 118);
             this.commentsTextBox.TabIndex = 9;
+            // 
+            // id
+            // 
+            this.id.DataPropertyName = "id";
+            this.id.HeaderText = "ИД альпиниста";
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.Visible = false;
+            // 
+            // name
+            // 
+            this.name.DataPropertyName = "name";
+            this.name.HeaderText = "Альпинист";
+            this.name.Name = "name";
+            this.name.ReadOnly = true;
+            this.name.Width = 250;
+            // 
+            // leader
+            // 
+            this.leader.DataPropertyName = "leader";
+            this.leader.FalseValue = "Да";
+            this.leader.HeaderText = "Руководитель";
+            this.leader.Name = "leader";
+            this.leader.ReadOnly = true;
+            this.leader.TrueValue = "Нет";
             // 
             // AscentForm
             // 
@@ -283,10 +283,10 @@ namespace Ascents
         private System.Windows.Forms.DataGridView personsDataGridView;
         private System.Windows.Forms.Button acceptButton;
         private System.Windows.Forms.Button rejectButton;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox commentsTextBox;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn name;
         private System.Windows.Forms.DataGridViewCheckBoxColumn leader;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox commentsTextBox;
     }
 }

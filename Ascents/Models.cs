@@ -32,7 +32,7 @@ namespace Ascents
         }
     }
     /// <summary>
-    /// Отображение группы альпинистов при введении информации о восхождении
+    /// Отображение члена группы альпинистов при введении информации о восхождении
     /// </summary>
     public class Group : AbstractPerson
     {
@@ -80,7 +80,7 @@ namespace Ascents
         public double height { get; set; }
         public int idmountains { get; set; }
         public string mountains { get; set; }
-        DateTime ascdate { get; set; }
+        public DateTime ascdate { get; set; }
         public int status { get; set; }
         public string statusname { get; set; }
     }

@@ -24,14 +24,40 @@ namespace Ascents
         }
         private async void OnLoad(object sender, EventArgs e)
         {
+            Icon = Properties.Resources.mountain32;
+
             List<AbstractPerson> prclst = await Program.m_helper.GetFilteredPersons();
-            foreach(AbstractPerson prc in prclst)
+            foreach (AbstractPerson prc in prclst)
             {
                 m_persons.Add(prc);
             }
             personsComboBox.DataSource = m_persons;
             if (personsComboBox.Items.Count > 0)
                 personsComboBox.SelectedIndex = 0;
+
+            if (m_id > 0)
+            {
+                Ascent ascent = Program.m_helper.GetAscentByID(m_id);
+                if (ascent != null)
+                {
+                    ascentdateTimePicker.Value = ascent.ascdate;
+                    PeakMountain pm = Program.m_helper.GetPeakMountainByID(ascent.idpeak);
+                    if (pm != null)
+                    {
+                        peakChoiceButton.Enabled = false;
+                        peakNameTextBox.Text = pm.ToString();
+                        peakNameTextBox.ReadOnly = true;
+                        peakNameTextBox.Tag = pm.id;
+                    }
+                    commentsTextBox.Text = Program.m_helper.GetAscentComments(m_id);
+                    List<Group> lgp = await Program.m_helper.GetAscentGroup(m_id);
+                    foreach (Group gp in lgp)
+                    {
+                        m_group.Add(gp);
+                    }
+                }                
+            }
+
             personsDataGridView.DataSource = m_group;
         }
         void SortPersons()
@@ -120,6 +146,19 @@ namespace Ascents
             long idpeak = Convert.ToInt64(peakNameTextBox.Tag);
             string comments = commentsTextBox.Text;
             List<Group> glst = m_group.ToList();
+            if(glst.Count < 1)
+            {
+                MessageBox.Show("Группа альпинистов должна состоять хотя бы из одного человека");
+                DialogResult = DialogResult.Cancel;
+                return;
+            }
+            int nrec = m_id > 0 ? Program.m_helper.UpdateAscent(m_id, dt, comments, glst) 
+                : Program.m_helper.AddAscent(idpeak, dt, comments, glst);
+            if(nrec < 1)
+            {
+                Program.DBErrorMessage();
+                DialogResult = DialogResult.Cancel;
+            }
         }
         /// <summary>
         /// Выбор вершины
