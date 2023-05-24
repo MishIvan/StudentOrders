@@ -195,6 +195,12 @@
     <Compile Include="AscentForm.Designer.cs">
       <DependentUpon>AscentForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AscentGroupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AscentGroupForm.Designer.cs">
+      <DependentUpon>AscentGroupForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="AscentStatusForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -231,6 +237,9 @@
     <Compile Include="SQLDBHelper.cs" />
     <EmbeddedResource Include="AscentForm.resx">
       <DependentUpon>AscentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AscentGroupForm.resx">
+      <DependentUpon>AscentGroupForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AscentStatusForm.resx">
       <DependentUpon>AscentStatusForm.cs</DependentUpon>

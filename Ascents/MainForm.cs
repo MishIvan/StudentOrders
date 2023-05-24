@@ -65,10 +65,23 @@ namespace Ascents
             PersonsForm frm = new PersonsForm();
             frm.ShowDialog();
         }
-
+        /// <summary>
+        ///  Показать состав группы восхождения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void groupToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            var row = ascentDataGridView.CurrentRow;
+            if (row != null)
+            {
+                long id = Convert.ToInt64(row.Cells["idascent"].Value);
+                string peak = row.Cells["peakname"].Value.ToString();
+                string dt = Convert.ToDateTime(row.Cells["ascdate"].Value).ToString("dd.MM.yyyy");
+                AscentGroupForm frm = new AscentGroupForm(id);
+                frm.Text = $"Гзуппа восхождения {dt} {peak}";
+                frm.ShowDialog();
+            }
         }
         /// <summary>
         /// Изменить статус восхождения
@@ -154,6 +167,15 @@ namespace Ascents
                     SetPeakFilter();
                 }
             }
+        }
+        /// <summary>
+        /// Отчёт о восхождении
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ascentReportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
