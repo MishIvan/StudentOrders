@@ -363,18 +363,25 @@ namespace Ascents
             {
                 string sdt = ascdate.ToString("yyyyMMdd");
                 string sqlText = $"insert into dbo.ascents (idpeak, ascdate, status, comments) values({idpeak},'{sdt}', 2, '{comments}')";
-                nrec = conn.Execute(sqlText);
-                if (nrec > 0)
-                {
-                    long idascent = conn.QueryFirstOrDefault<long>("select ident_current('dbo.ascents')");
-                    conn.Execute("set identity_insert dbo.groups on");
-                    foreach (Group gr in glist)
+                //conn.Execute("set identity_insert dbo.ascents on");
+                conn.Execute("set identity_insert dbo.groups on");
+                using (var tran = conn.BeginTransaction())
+                {                    
+                    nrec = conn.Execute(sqlText, transaction: tran);
+                    if (nrec > 0)
                     {
-                        int ild = gr.leader ? 1 : 0;
-                        sqlText = $"insert into dbo.groups (idascent, idperson, leader) values ({idascent}, {gr.id}, {ild})";
-                        nrec = conn.Execute(sqlText);
+                        long idascent = conn.QueryFirstOrDefault<long>("select ident_current('dbo.ascents')", transaction: tran);                        
+                        foreach (Group gr in glist)
+                        {
+                            int ild = gr.leader ? 1 : 0;
+                            sqlText = $"insert into dbo.groups (idascent, idperson, leader) values ({idascent}, {gr.id}, {ild})";
+                            nrec = conn.Execute(sqlText, transaction: tran);
 
+                        }
+                        tran.Commit();
                     }
+                    else
+                        tran.Rollback();
                 }
             }
             catch(Exception ex)
@@ -412,6 +419,32 @@ namespace Ascents
                         nrec = conn.Execute(sqlText, transaction: tran);
 
                     }
+                    tran.Commit();
+                }
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+                nrec = 0;
+            }
+            return nrec;
+        }
+        /// <summary>
+        /// Удалить запись о восхождении и группу альпинистов (но не самих альпинистов)
+        /// </summary>
+        /// <param name="idascent">идетифиикатор</param>
+        /// <returns>1 - если транзакция успешна, 0 - иначе</returns>
+        public int DeleteAscent(long idascent)
+        {
+            int nrec = 0;
+            try
+            {
+                string sqlText = $"delete from dbo.groups where idascent = {idascent}";
+                using (var tran = conn.BeginTransaction())
+                {
+                    nrec = conn.Execute(sqlText, transaction: tran);
+                    sqlText = $"delete from dbo.ascents where id = {idascent}";
+                    nrec = conn.Execute(sqlText, transaction: tran);
                     tran.Commit();
                 }
             }

@@ -178,5 +178,25 @@ namespace Ascents
             AscentReportForm frm = new AscentReportForm();
             frm.ShowDialog();
         }
+        /// <summary>
+        /// Удалить запись о восхождении
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void deleteAscentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var row = ascentDataGridView.CurrentRow;
+            if (row != null)
+            {
+                long idascent = Convert.ToInt64(row.Cells["idascent"].Value);
+                if (Program.m_helper.DeleteAscent(idascent) > 0)
+                {
+                    m_ascents = await Program.m_helper.GetAscents();
+                    SetPeakFilter();
+                }
+                else
+                    Program.DBErrorMessage();
+            }
+        }
     }
 }

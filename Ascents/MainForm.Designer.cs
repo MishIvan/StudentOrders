@@ -37,6 +37,7 @@ namespace Ascents
             this.replanAscentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ascentresultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteAscentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.referenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.personsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,6 +82,7 @@ namespace Ascents
             this.actionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.planascentToolStripMenuItem,
             this.replanAscentToolStripMenuItem,
+            this.deleteAscentToolStripMenuItem,
             this.ascentresultToolStripMenuItem,
             this.groupToolStripMenuItem,
             this.exitToolStripMenuItem});
@@ -115,6 +117,13 @@ namespace Ascents
             this.groupToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.groupToolStripMenuItem.Text = "Показать состав группы";
             this.groupToolStripMenuItem.Click += new System.EventHandler(this.groupToolStripMenuItem_Click);
+            // 
+            // deleteAscentToolStripMenuItem
+            // 
+            this.deleteAscentToolStripMenuItem.Name = "deleteAscentToolStripMenuItem";
+            this.deleteAscentToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
+            this.deleteAscentToolStripMenuItem.Text = "Удалить запись о восхождении";
+            this.deleteAscentToolStripMenuItem.Click += new System.EventHandler(this.deleteAscentToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
@@ -157,7 +166,7 @@ namespace Ascents
             // ascentReportToolStripMenuItem
             // 
             this.ascentReportToolStripMenuItem.Name = "ascentReportToolStripMenuItem";
-            this.ascentReportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ascentReportToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.ascentReportToolStripMenuItem.Text = "Восхождения";
             this.ascentReportToolStripMenuItem.Click += new System.EventHandler(this.ascentReportToolStripMenuItem_Click);
             // 
@@ -357,6 +366,7 @@ namespace Ascents
         private System.Windows.Forms.ToolStripMenuItem replanContextToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeStatusContextToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem groupContextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteAscentToolStripMenuItem;
     }
 }
 
