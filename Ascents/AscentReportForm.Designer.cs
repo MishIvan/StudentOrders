@@ -29,8 +29,9 @@ namespace Ascents
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.personFilterTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -42,6 +43,8 @@ namespace Ascents
             this.peakname = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.height = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mountains = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clearFilterButton = new System.Windows.Forms.Button();
+            this.ascentToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.reportDataGridView)).BeginInit();
             this.SuspendLayout();
@@ -61,6 +64,7 @@ namespace Ascents
             this.personFilterTextBox.Name = "personFilterTextBox";
             this.personFilterTextBox.Size = new System.Drawing.Size(248, 20);
             this.personFilterTextBox.TabIndex = 1;
+            this.ascentToolTip.SetToolTip(this.personFilterTextBox, "Фильтр по вхождению строки в ФИО альпиниста");
             this.personFilterTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnApplyFilters);
             // 
             // label2
@@ -78,16 +82,19 @@ namespace Ascents
             this.peakTextBox.Name = "peakTextBox";
             this.peakTextBox.Size = new System.Drawing.Size(188, 20);
             this.peakTextBox.TabIndex = 3;
+            this.ascentToolTip.SetToolTip(this.peakTextBox, "Фильтр по вхождению строки в наименование вершины");
+            this.peakTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnApplyFilters);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.clearFilterButton);
             this.groupBox1.Controls.Add(this.personFilterTextBox);
             this.groupBox1.Controls.Add(this.peakTextBox);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(13, 13);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(801, 59);
+            this.groupBox1.Size = new System.Drawing.Size(801, 84);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Фильтры";
@@ -103,18 +110,20 @@ namespace Ascents
             this.peakname,
             this.height,
             this.mountains});
-            this.reportDataGridView.Location = new System.Drawing.Point(13, 94);
+            this.reportDataGridView.Location = new System.Drawing.Point(13, 113);
             this.reportDataGridView.Name = "reportDataGridView";
             this.reportDataGridView.ReadOnly = true;
-            this.reportDataGridView.Size = new System.Drawing.Size(801, 344);
+            this.reportDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.reportDataGridView.Size = new System.Drawing.Size(801, 355);
             this.reportDataGridView.TabIndex = 5;
+            this.ascentToolTip.SetToolTip(this.reportDataGridView, "Данные об успешных восхождениях");
             // 
             // ascdate
             // 
             this.ascdate.DataPropertyName = "ascdate";
-            dataGridViewCellStyle5.Format = "d";
-            dataGridViewCellStyle5.NullValue = null;
-            this.ascdate.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Format = "d";
+            dataGridViewCellStyle1.NullValue = null;
+            this.ascdate.DefaultCellStyle = dataGridViewCellStyle1;
             this.ascdate.HeaderText = " Дата";
             this.ascdate.Name = "ascdate";
             this.ascdate.ReadOnly = true;
@@ -138,9 +147,9 @@ namespace Ascents
             // height
             // 
             this.height.DataPropertyName = "height";
-            dataGridViewCellStyle6.Format = "N0";
-            dataGridViewCellStyle6.NullValue = null;
-            this.height.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Format = "N0";
+            dataGridViewCellStyle2.NullValue = null;
+            this.height.DefaultCellStyle = dataGridViewCellStyle2;
             this.height.HeaderText = "Высота";
             this.height.Name = "height";
             this.height.ReadOnly = true;
@@ -153,11 +162,22 @@ namespace Ascents
             this.mountains.ReadOnly = true;
             this.mountains.Width = 150;
             // 
+            // clearFilterButton
+            // 
+            this.clearFilterButton.Location = new System.Drawing.Point(14, 53);
+            this.clearFilterButton.Name = "clearFilterButton";
+            this.clearFilterButton.Size = new System.Drawing.Size(112, 22);
+            this.clearFilterButton.TabIndex = 4;
+            this.clearFilterButton.Text = "Сбросить";
+            this.ascentToolTip.SetToolTip(this.clearFilterButton, "Очистить все фильтры");
+            this.clearFilterButton.UseVisualStyleBackColor = true;
+            this.clearFilterButton.Click += new System.EventHandler(this.clearFilterButton_Click);
+            // 
             // AscentReportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(836, 450);
+            this.ClientSize = new System.Drawing.Size(836, 483);
             this.Controls.Add(this.reportDataGridView);
             this.Controls.Add(this.groupBox1);
             this.KeyPreview = true;
@@ -187,5 +207,7 @@ namespace Ascents
         private System.Windows.Forms.DataGridViewTextBoxColumn peakname;
         private System.Windows.Forms.DataGridViewTextBoxColumn height;
         private System.Windows.Forms.DataGridViewTextBoxColumn mountains;
+        private System.Windows.Forms.Button clearFilterButton;
+        private System.Windows.Forms.ToolTip ascentToolTip;
     }
 }

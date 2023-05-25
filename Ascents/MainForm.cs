@@ -175,7 +175,8 @@ namespace Ascents
         /// <param name="e"></param>
         private void ascentReportToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            AscentReportForm frm = new AscentReportForm();
+            frm.ShowDialog();
         }
     }
 }

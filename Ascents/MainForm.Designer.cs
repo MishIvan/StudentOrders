@@ -30,7 +30,7 @@ namespace Ascents
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.actionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.planascentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -157,7 +157,7 @@ namespace Ascents
             // ascentReportToolStripMenuItem
             // 
             this.ascentReportToolStripMenuItem.Name = "ascentReportToolStripMenuItem";
-            this.ascentReportToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.ascentReportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ascentReportToolStripMenuItem.Text = "Восхождения";
             this.ascentReportToolStripMenuItem.Click += new System.EventHandler(this.ascentReportToolStripMenuItem_Click);
             // 
@@ -193,6 +193,7 @@ namespace Ascents
             this.mountains,
             this.status,
             this.statusname});
+            this.ascentDataGridView.ContextMenuStrip = this.mainContextMenuStrip;
             this.ascentDataGridView.Location = new System.Drawing.Point(15, 72);
             this.ascentDataGridView.Name = "ascentDataGridView";
             this.ascentDataGridView.ReadOnly = true;
@@ -219,9 +220,9 @@ namespace Ascents
             // ascdate
             // 
             this.ascdate.DataPropertyName = "ascdate";
-            dataGridViewCellStyle2.Format = "d";
-            dataGridViewCellStyle2.NullValue = null;
-            this.ascdate.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Format = "d";
+            dataGridViewCellStyle1.NullValue = null;
+            this.ascdate.DefaultCellStyle = dataGridViewCellStyle1;
             this.ascdate.HeaderText = "Дата";
             this.ascdate.Name = "ascdate";
             this.ascdate.ReadOnly = true;
@@ -285,21 +286,21 @@ namespace Ascents
             // replanContextToolStripMenuItem
             // 
             this.replanContextToolStripMenuItem.Name = "replanContextToolStripMenuItem";
-            this.replanContextToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.replanContextToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.replanContextToolStripMenuItem.Text = "Перепланировать";
             this.replanContextToolStripMenuItem.Click += new System.EventHandler(this.replanAscentToolStripMenuItem_Click);
             // 
             // changeStatusContextToolStripMenuItem
             // 
             this.changeStatusContextToolStripMenuItem.Name = "changeStatusContextToolStripMenuItem";
-            this.changeStatusContextToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.changeStatusContextToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.changeStatusContextToolStripMenuItem.Text = "Изменить статус";
             this.changeStatusContextToolStripMenuItem.Click += new System.EventHandler(this.ascentresultToolStripMenuItem_Click);
             // 
             // groupContextToolStripMenuItem
             // 
             this.groupContextToolStripMenuItem.Name = "groupContextToolStripMenuItem";
-            this.groupContextToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.groupContextToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.groupContextToolStripMenuItem.Text = "Состав группы";
             this.groupContextToolStripMenuItem.Click += new System.EventHandler(this.groupToolStripMenuItem_Click);
             // 
@@ -308,7 +309,6 @@ namespace Ascents
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 495);
-            this.ContextMenuStrip = this.mainContextMenuStrip;
             this.Controls.Add(this.ascentDataGridView);
             this.Controls.Add(this.peakFilterTextBox);
             this.Controls.Add(this.label1);

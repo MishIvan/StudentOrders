@@ -12,6 +12,7 @@ namespace Ascents
 {
     public partial class AscentReportForm : Form
     {
+        private List<AscentReport> m_reportData;
         public AscentReportForm()
         {
             InitializeComponent();
@@ -20,7 +21,8 @@ namespace Ascents
         private async void OnLoad(object sender, EventArgs e)
         {
             Icon = Properties.Resources.person32;
-            List<AscentReport> lst = await Program.m_helper.GetAscentReport();
+            m_reportData = await Program.m_helper.GetAscentReport();
+            ApplyFilter();
             
         }
 
@@ -38,8 +40,39 @@ namespace Ascents
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
-                bool peakEmpty = string.IsNullOrEmpty(peakTextBox.Text) || string.IsNullOrWhiteSpace(peakTextBox.Text); 
+                ApplyFilter();
             }
+        }
+
+        private void ApplyFilter()
+        {
+            string person = personFilterTextBox.Text.ToLower();
+            string peak = peakTextBox.Text.ToLower();
+            bool peakEmpty = string.IsNullOrEmpty(peak) || string.IsNullOrWhiteSpace(peak);
+            bool personEmpty = string.IsNullOrEmpty(person) || string.IsNullOrWhiteSpace(person);
+            List<AscentReport> lst = null;
+
+            if (!personEmpty && peakEmpty)
+                lst = m_reportData.Where(r => r.person.ToLower().Contains(person)).ToList();
+            else if (personEmpty && !peakEmpty)
+                lst = m_reportData.Where(r => r.peakname.ToLower().Contains(peak)).ToList();
+            else if (!personEmpty && !peakEmpty)
+                lst = m_reportData.Where(r => r.person.ToLower().Contains(person) && r.peakname.ToLower().Contains(peak)).ToList();
+            else
+                lst = m_reportData;
+
+            reportDataGridView.DataSource = lst;
+        }
+        /// <summary>
+        /// Сброс фильтров
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void clearFilterButton_Click(object sender, EventArgs e)
+        {
+            personFilterTextBox.Text = string.Empty;
+            peakTextBox.Text = string.Empty;
+            ApplyFilter();
         }
     }
 }

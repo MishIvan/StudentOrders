@@ -129,6 +129,7 @@ namespace Ascents
             this.name.HeaderText = "ФИО";
             this.name.Name = "name";
             this.name.ReadOnly = true;
+            this.name.ToolTipText = "Полные ФИО альпиниста";
             this.name.Width = 200;
             // 
             // rank
@@ -145,6 +146,7 @@ namespace Ascents
             this.rankname.HeaderText = "Разряд";
             this.rankname.Name = "rankname";
             this.rankname.ReadOnly = true;
+            this.rankname.ToolTipText = "Разряд";
             this.rankname.Width = 150;
             // 
             // birthdate
@@ -153,6 +155,7 @@ namespace Ascents
             this.birthdate.HeaderText = "Дата рождения";
             this.birthdate.Name = "birthdate";
             this.birthdate.ReadOnly = true;
+            this.birthdate.ToolTipText = "Дата рождения";
             // 
             // closed
             // 
@@ -172,6 +175,7 @@ namespace Ascents
             this.closedname.HeaderText = "Действие";
             this.closedname.Name = "closedname";
             this.closedname.ReadOnly = true;
+            this.closedname.ToolTipText = "Запись действующая или закрытая";
             // 
             // comments
             // 

@@ -76,7 +76,8 @@ namespace Ascents
             "Кандидат в мастера спорта",
             "Первый разряд",
             "Второй разряд",
-            "Третий разряд"});
+            "Третий разряд",
+            "Без разряда"});
             this.rankComboBox.Location = new System.Drawing.Point(69, 60);
             this.rankComboBox.Name = "rankComboBox";
             this.rankComboBox.Size = new System.Drawing.Size(287, 21);
