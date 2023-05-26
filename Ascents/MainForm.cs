@@ -79,7 +79,7 @@ namespace Ascents
                 string peak = row.Cells["peakname"].Value.ToString();
                 string dt = Convert.ToDateTime(row.Cells["ascdate"].Value).ToString("dd.MM.yyyy");
                 AscentGroupForm frm = new AscentGroupForm(id);
-                frm.Text = $"Гзуппа восхождения {dt} {peak}";
+                frm.Text = $"Группа восхождения {dt} {peak}";
                 frm.ShowDialog();
             }
         }
@@ -185,17 +185,26 @@ namespace Ascents
         /// <param name="e"></param>
         private async void deleteAscentToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            
             var row = ascentDataGridView.CurrentRow;
             if (row != null)
             {
                 long idascent = Convert.ToInt64(row.Cells["idascent"].Value);
-                if (Program.m_helper.DeleteAscent(idascent) > 0)
+                string peak = row.Cells["peakname"].Value.ToString();
+                string sdt = Convert.ToDateTime(row.Cells["ascdate"].Value).ToString("dd.MM.yyyy");
+                string msg = $"Вы действительно хотите удалить запись о восхождении {sdt} на {peak}";
+                var result = MessageBox.Show(msg, "Внимание!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+
+                if (result == DialogResult.Yes)
                 {
-                    m_ascents = await Program.m_helper.GetAscents();
-                    SetPeakFilter();
+                    if (Program.m_helper.DeleteAscent(idascent) > 0)
+                    {
+                        m_ascents = await Program.m_helper.GetAscents();
+                        SetPeakFilter();
+                    }
+                    else
+                        Program.DBErrorMessage();
                 }
-                else
-                    Program.DBErrorMessage();
             }
         }
     }
