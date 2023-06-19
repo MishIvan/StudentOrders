@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ascents", "Ascents\Ascents.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftApp", "SoftApp\SoftApp.csproj", "{927AECFA-40C3-47C5-8003-2AFD406CE303}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PracticeCPP", "PracticeCPP\PracticeCPP.vcxproj", "{4D63D020-996F-4DAC-9D32-335EED788E17}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -153,6 +155,16 @@ Global
 		{927AECFA-40C3-47C5-8003-2AFD406CE303}.Release|x64.Build.0 = Release|Any CPU
 		{927AECFA-40C3-47C5-8003-2AFD406CE303}.Release|x86.ActiveCfg = Release|Any CPU
 		{927AECFA-40C3-47C5-8003-2AFD406CE303}.Release|x86.Build.0 = Release|Any CPU
+		{4D63D020-996F-4DAC-9D32-335EED788E17}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{4D63D020-996F-4DAC-9D32-335EED788E17}.Debug|x64.ActiveCfg = Debug|x64
+		{4D63D020-996F-4DAC-9D32-335EED788E17}.Debug|x64.Build.0 = Debug|x64
+		{4D63D020-996F-4DAC-9D32-335EED788E17}.Debug|x86.ActiveCfg = Debug|Win32
+		{4D63D020-996F-4DAC-9D32-335EED788E17}.Debug|x86.Build.0 = Debug|Win32
+		{4D63D020-996F-4DAC-9D32-335EED788E17}.Release|Any CPU.ActiveCfg = Release|Win32
+		{4D63D020-996F-4DAC-9D32-335EED788E17}.Release|x64.ActiveCfg = Release|x64
+		{4D63D020-996F-4DAC-9D32-335EED788E17}.Release|x64.Build.0 = Release|x64
+		{4D63D020-996F-4DAC-9D32-335EED788E17}.Release|x86.ActiveCfg = Release|Win32
+		{4D63D020-996F-4DAC-9D32-335EED788E17}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
