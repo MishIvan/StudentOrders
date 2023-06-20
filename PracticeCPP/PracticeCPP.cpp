@@ -1,5 +1,6 @@
 ﻿// PracticeCPP.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <iostream>
 #include <math.h>
@@ -39,6 +40,15 @@ struct Worker
     int m_nomDept; // номер отдела
     std::string m_pos; // должность
     tm m_date; // дата поступления на работу
+    Worker& operator=(Worker& src)
+    {
+        m_name = src.m_name;
+        m_pos = src.m_pos;
+        m_nomDept = src.m_nomDept;
+        m_date = src.m_date;
+        return *this;
+
+    }
 };
 
 /// <summary>
@@ -154,7 +164,7 @@ int LabW06(std::string& str)
     return nw;    
 }
 /// <summary>
-/// Для лабораторной работы №9
+/// Для лабораторной работы №9. Запись данных о сотрудниках
 /// </summary>
 /// <param name="fname">имя файла</param>
 /// <param name="wrk">массив данных для записи</param>
@@ -162,17 +172,128 @@ int LabW06(std::string& str)
 void WriteWorkers(const char* fname, Worker *wrk, int n)
 {
     std::fstream fs;
-    fs.open(fname, std::ios::out);
+    fs.open(fname, std::ios::out | std::ios::binary);
     if (fs.is_open())
     {
-        fs << n << std::endl;
+        fs.write((const char*)&n, sizeof(int));
         for (int i = 0; i < n; i++)
         {
-            fs << wrk[i].m_name << wrk[i].m_pos << wrk[i].m_nomDept << wrk[i].m_date.tm_mday << wrk[i].m_date.tm_mon << wrk[i].m_date.tm_year << std::endl;
+            int k = wrk[i].m_name.size();
+            fs.write((const char*)&k, sizeof(int));
+            fs.write(wrk[i].m_name.data(), k);
+
+            k = wrk[i].m_pos.size();
+            fs.write((const char*)&k, sizeof(int));
+            fs.write(wrk[i].m_pos.data(), k);
+            fs.write((const char*)&wrk[i].m_nomDept, sizeof(int));
+            fs.write((const char*)&wrk[i].m_date, sizeof(tm));
+            
+            
         }
         fs.close();
     }
 
+}
+/// <summary>
+/// Для лабораторной работы №9. Считывание считывание данных о сотрудниках с возвратом укзателя
+/// </summary>
+/// <param name="fname">имя файла данных</param>
+/// <param name="wrk">считываемые данные</param>
+Worker *ReadWorkers(const char* fname)
+{
+    std::fstream fs;
+    fs.open(fname, std::ios::in | std::ios::binary);
+    Worker* wrk = nullptr;
+    if (fs.is_open())
+    {
+        int n = 0;
+        fs.read((char*)&n, sizeof(int));
+        wrk = new Worker[n];
+        for (int i = 0; i < n; i++)
+        {
+            char buff[1024];
+            int k;
+            fs.read((char *)&k, sizeof(int));
+            fs.read(buff, k);
+            buff[k] = '\0';
+            wrk[i].m_name = buff;
+
+            fs.read((char*)&k, sizeof(int));
+            fs.read(buff, k);
+            buff[k] = '\0';
+            wrk[i].m_pos = buff;
+
+            fs.read((char*)&k, sizeof(int));
+            wrk[i].m_nomDept = k;
+
+            tm t;
+            fs.read((char *)&t, sizeof(tm));
+            wrk[i].m_date = t;
+        }
+        fs.close();
+        return wrk;
+    }
+}
+
+double WorkerDateDiff(Worker &w1, Worker &w2)
+{
+    tm tm1, tm2;
+    tm1 = w1.m_date;
+    tm2 = w2.m_date;
+    time_t t1 = mktime(&tm1);
+    time_t t2 = mktime(&tm2);
+    return difftime(t1, t2);
+}
+/// <summary>
+/// Лабораторная работа №10. Сортировка вставкой
+/// </summary>
+/// <param name="wrk">список работников</param>
+/// <param name="n">число элементов списка</param>
+void SortByInsert(Worker *wrk, int n)
+{
+    int i, j, t;
+    for (i = 1; i < n; i++) //  Перебор элементов
+    {
+        Worker t = wrk[i]; //  Выбор элемента
+        for (j = i - 1; j >= 0 && WorkerDateDiff(t, wrk[j]) < 0; j--) // Поиск необходимой позиции
+            wrk[j + 1] = wrk[j]; //  для втавки элемента
+        wrk[j + 1] = t; //  Вставка элемента
+    }
+}
+/// <summary>
+/// Лабораторная работа №11. Метод двоичного поиска
+/// </summary>
+/// <param name="wrk">список работников</param>
+/// <param name="n">число элементов списка</param>
+/// <param name="year">год</param>
+/// <returns>индек элемента списка</returns>
+int BinarySearchWorker(Worker *wrk, int n, int year)
+{
+    int i = 0, j = n - 1, m;
+    while (i < j)
+    {
+        m = (i + j) / 2; // Вычисление индекса среднего элемента
+        if (year > wrk[m].m_date.tm_year+1900) i = m + 1; // Исключение  левой половины массива
+        else j = m;  // Исключение  правой половины массива
+    }
+    if (wrk[i].m_date.tm_year + 1900 == year) return i; // Искомый элемент найден
+    else return -1; // Искомый элемент не найден 
+}
+
+/// <summary>
+/// Лабораторная работа №11. Метод полного перебора
+/// </summary>
+/// <param name="wrk">список работников</param>
+/// <param name="n">число элементов списка</param>
+/// <param name="year">год</param>
+/// <returns>индек элемента списка</returns>
+int FullSearchWorker(Worker* wrk, int n, int year)
+{
+    for (int i = 0; i < n; i++)
+    {
+        if (wrk[i].m_date.tm_year + 1900 == year) return i;
+    }
+    return -1;
 }
 
 int main()
@@ -182,11 +303,11 @@ int main()
     double s = LabW01(-2.235e-2, 2.23, 15.221);
     std::cout << "Лаб. работа №1. Результат: " << s << "\n";
 
-    /*std::cout << "Введите x и y:";
+    std::cout << "Введите x и y:";
     double x, y;
     std::cin >> x >> y;
     s = LabW02(x, y);
-    std::cout << "Лаб. работа №2. Результат: " << s << "\n";*/
+    std::cout << "Лаб. работа №2. Результат: " << s << "\n";
 
     std::cout << "Лаб. работа №3. Результат.\n";
     std::cout << "X\tY\n";
@@ -199,16 +320,16 @@ int main()
         std::cout << b << "\t" << y << "\n";
     }
 
-    /*std::cout << "Лаб. работа №4. Введите шесть целых чисел: ";
+    std::cout << "Лаб. работа №4. Введите шесть целых чисел: ";
     std::vector<int> v1(6);
     std::cin >> v1[0] >> v1[1] >> v1[2] >> v1[3] >> v1[4] >> v1[5];
     LabW04(v1);
     std::cout << "Массив после удаления максимального и минимального элементов" << std::endl;
-    std::cout << v1[0] << " " << v1[1] << " " << v1[2] << " " << v1[3];*/
+    std::cout << v1[0] << " " << v1[1] << " " << v1[2] << " " << v1[3];
 
     /// Лабораторная работа №5. Найти минимальный, среди элементов, лежащих выше главной диагонали
     int n, m;
-    /*std::cout << "Лаб. работа №5. Введите размерность массива NxM: ";
+    std::cout << "Лаб. работа №5. Введите размерность массива NxM: ";
     std::cin >> n >> m;
     double* arr = new double[n * m];
     for (int i = 0; i < n; i++)
@@ -227,9 +348,9 @@ int main()
             }
         }
     std::cout << "Минимальный элемент arr(" << imin << "," << jmin << ") = " << elmin << std::endl;
-    delete[] arr;*/
+    delete[] arr;
 
-    /*std::cout << "Лаб. работа №6. Введите строку: ";
+    std::cout << "Лаб. работа №6. Введите строку: ";
     std::string str;
     getline(std::cin, str);
     int wc = LabW06(str);
@@ -270,7 +391,7 @@ int main()
         if (bk[i].m_year > year)
             std::cout << bk[i].m_author << " ";
     }
-    std::cout << std::endl;*/
+    std::cout << std::endl;
 
     std::cout << "Лаб. работа №9. Введите информацию о сотрудниках" << std::endl;
     n = 5;
@@ -301,8 +422,10 @@ int main()
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 
-    WriteWorkers("wrk.txt", wrk, n);
-
+    // Эти строки пока закомментированы. Но проверено - работает
+    //WriteWorkers("wrk.bin", wrk, n);
+    //Worker* wrk = ReadWorkers("wrk.bin");
+    //if (!wrk) return 0;
  
     auto now = std::chrono::system_clock::now();
     std::time_t now_time = std::chrono::system_clock::to_time_t(now);
@@ -316,9 +439,55 @@ int main()
             if(i == 0)
                 std::cout << "Сотрудники, проработавшие более 20 лет" << std::endl;
             char buff[128];
-            std::cout << "ФИО: " << wrk[i].m_name << ", должность: " << wrk[i].m_pos << ", ном. отдела: " << wrk[i].m_nomDept << std::endl;
+            sprintf(buff, ", дата начала работы: %2d.%02d.%4d", ttm.tm_mday, ttm.tm_mon + 1, ttm.tm_year + 1900);
+            std::cout << "ФИО: " << wrk[i].m_name << ", должность: " << wrk[i].m_pos << ", ном. отдела: " << wrk[i].m_nomDept << buff << std::endl;
         }
     } 
+
+    /// <summary>
+    /// Лабораторная работа №10. Сортировка вставкой по дате начала работы
+    /// </summary>
+    std::cout << "Список сотрудников, отсортированный по дате начала работы" << std::endl;
+    SortByInsert(wrk, n);
+    for (int i = 0; i < n; i++)
+    {
+        tm ttm = wrk[i].m_date;
+        char buff[128];
+        sprintf(buff, ", дата начала работы: %2d.%02d.%4d", ttm.tm_mday, ttm.tm_mon + 1, ttm.tm_year + 1900);
+        std::cout << "ФИО: " << wrk[i].m_name << ", должность: " << wrk[i].m_pos << ", ном. отдела: " << wrk[i].m_nomDept << buff << std::endl;
+        
+    }
+
+    // Лабораторная работа №11. Поиск сотрудника методом бинарного поиска
+    std::cout << "*** Сотрудник, работающий с 2003 года. Метод бинарного поиска ***" << std::endl;
+    int idx = BinarySearchWorker(wrk, n, 2003);
+    if (idx > -1)
+    {
+        std::cout << "Сотрудник, работающий с 2003 года" << std::endl;
+        tm ttm = wrk[idx].m_date;
+        char buff[128];
+        sprintf(buff, ", дата начала работы: %2d.%02d.%4d", ttm.tm_mday, ttm.tm_mon + 1, ttm.tm_year + 1900);
+        std::cout << "ФИО: " << wrk[idx].m_name << ", должность: " << wrk[idx].m_pos << ", ном. отдела: " << wrk[idx].m_nomDept << buff << std::endl;
+    }
+    else
+    {
+        std::cout << "Сотрудник, работающий с 2003 года не найден" << std::endl;
+    }
+
+    std::cout << "*** Сотрудник, работающий с 2003 года. Метод полного перебора ***" << std::endl;
+    idx = FullSearchWorker(wrk, n, 2003);
+    if (idx > -1)
+    {
+        std::cout << "Сотрудник, работающий с 2003 года" << std::endl;
+        tm ttm = wrk[idx].m_date;
+        char buff[128];
+        sprintf(buff, ", дата начала работы: %2d.%02d.%4d", ttm.tm_mday, ttm.tm_mon + 1, ttm.tm_year + 1900);
+        std::cout << "ФИО: " << wrk[idx].m_name << ", должность: " << wrk[idx].m_pos << ", ном. отдела: " << wrk[idx].m_nomDept << buff << std::endl;
+    }
+    else
+    {
+        std::cout << "Сотрудник, работающий с 2003 года не найден" << std::endl;
+    }
 
     delete[] wrk;
 
