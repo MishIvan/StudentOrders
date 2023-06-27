@@ -125,6 +125,20 @@ void LabW04(std::vector<int>& vect)
     vect.erase(vect.begin() + k);
 }
 /// <summary>
+/// Проверка, состоит ли строка олшько из символов табуляции и пробелов.
+/// </summary>
+/// <param name="str">строка</param>
+/// <returns></returns>
+bool IsWhiteSpace(std::string& str)
+{
+    int n = str.size();
+    for (int i = 0; i < n; i++)
+    {
+        if (str[i] != ' ' || str[i] !='\t')  return false;
+    }
+    return true;
+}
+/// <summary>
 /// Лбораторная работа №6. Подсчитать количество слов, начинающихся с "а"
 /// </summary>
 /// <param name="str">исходная строка</param>
@@ -348,11 +362,16 @@ int main()
             }
         }
     std::cout << "Минимальный элемент arr(" << imin << "," << jmin << ") = " << elmin << std::endl;
-    delete[] arr;
+    delete[] arr; 
 
     std::cout << "Лаб. работа №6. Введите строку: ";
     std::string str;
     getline(std::cin, str);
+    if (str.empty() || IsWhiteSpace(str))
+    {
+        std::cout << "Введённая вами строка либо пустая, либо соcтоит из пробелов и символов табуляции" << std::endl;
+        return -1;
+    }
     int wc = LabW06(str);
     std::cout << "Число строк, начинающихся на 'а': " << wc << std::endl;
 
@@ -489,6 +508,6 @@ int main()
         std::cout << "Сотрудник, работающий с 2003 года не найден" << std::endl;
     }
 
-    delete[] wrk;
+    delete[] wrk; 
 
 }
