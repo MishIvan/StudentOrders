@@ -47,6 +47,28 @@ MATRIX& MATRIX::operator=(const MATRIX& src)
 	return *this;
 }
 /// <summary>
+/// Перегрузка оператора умножения матриц matr1 и matr2
+/// Число столбцов матрицы matr1 должно быть равно числу строк матрицы matr2
+/// </summary>
+/// <param name="matr1">первая матрица</param>
+/// <param name="matr2">вторая матрица</param>
+/// <returns>матрицу, произведение</returns>
+MATRIX& operator*(const MATRIX& matr1, const MATRIX& matr2)
+{
+	MATRIX pmatr(matr1.m_rows, matr2.m_columns);
+	if (matr1.m_columns != matr2.m_rows) return pmatr;
+	int i, j;
+	for(i = 0; i < matr1.m_rows; i++)
+		for (j = 0; j < matr2.m_columns; j++)
+		{
+			double prod = 0.0;
+			for (int k = 0; k < matr1.m_columns; k++)
+				prod += *(matr1.m_data + i * matr1.m_columns + k) * *(matr2.m_data + k * matr2.m_columns + j);
+			*(pmatr.m_data + i * pmatr.m_columns + j) = prod;
+		}
+	return pmatr;
+}
+/// <summary>
 /// Перегрузка оператора вывода на консоль или в файловый поток (файл должен быть открыт для чтения) 
 /// </summary>
 /// <param name="s"></param>
@@ -84,10 +106,12 @@ istream& operator>>(istream& s, MATRIX& matr)
 /// <returns>true - в случае успешного считывания данных, false - в случае ошибки</returns>
 bool MATRIX::readFromFile(const char* fileName, MATRIX& matr)
 {
-	ofstream fs;
+	ifstream fs;
 	fs.open(fileName);
 	if (fs.is_open())
 	{
+		fs >> matr.m_rows >> matr.m_columns;
+		fs >> matr;
 		return true;
 	}
 	return false;
@@ -95,13 +119,15 @@ bool MATRIX::readFromFile(const char* fileName, MATRIX& matr)
 /// <summary>
 ///  Запись данных в файл
 /// </summary>
-/// <param name="fileName"></param>
-/// <returns></returns>
-bool MATRIX::writeToFile(const char* fileName)
+/// <param name="fileName">полное имя файла для записи</param>
+/// <returns>true - в случае успешного считывания данных, false - в случае ошибки</returns>
+bool MATRIX::writeToFile(const char* fileName, MATRIX& matr)
 {
-	ifstream fs;
+	ofstream fs;
 	fs.open(fileName);
 	if(fs.is_open()){
+		fs << matr.m_rows << ' ' << matr.m_columns << endl;
+		fs << matr;
 		return true;
 	}
 	return false;

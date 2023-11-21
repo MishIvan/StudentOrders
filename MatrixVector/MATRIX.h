@@ -19,7 +19,7 @@ public:
 	friend ostream& operator<<(ostream& s, MATRIX& matr);
 	friend istream& operator>>(istream& s, MATRIX& matr);
 	static bool readFromFile(const char* fileName, MATRIX& matr);
-	bool writeToFile(const char* fileName);
+	static bool writeToFile(const char* fileName, MATRIX& matr);
 
 	~MATRIX();
 };

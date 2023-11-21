@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     cout << "Вектор разменостью " << v_in.size() << endl;
     cout << v_in << endl;
     GetFullPathInWD(argv[0], "Vector_out.txt", path);
-    v_in.writeToFile(path, v_in);
+    VECTOR::writeToFile(path, v_in);
 
 }
 
