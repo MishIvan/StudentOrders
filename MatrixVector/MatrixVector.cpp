@@ -1,7 +1,7 @@
 ﻿// MatrixVector.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //
 
-#include "VECTOR.h"
+#include "MATRIX.h"
 
 /// <summary>
 /// Получить полный путь файла в папке, из которой запускается исполняемый файл программы
@@ -26,9 +26,9 @@ void GetFullPathInWD(char* fullExePath, const char* dataFileName, char* fullFile
 
 int main(int argc, char *argv[])
 {
-    setlocale(LC_ALL, "");
+    setlocale(LC_ALL, ""); // для от ображения кириллицы
     char path[1024]; // буфер пути файла данных
-
+    /*
     /// Вектор. Считывание данных
     GetFullPathInWD(argv[0], "Vector_in.txt", path);
     VECTOR v(1);
@@ -39,13 +39,37 @@ int main(int argc, char *argv[])
         cout << v << endl;
     }
 
-    /// Вектор. Запись данных в файл
+    /// Вектор. Считывание данных с консоли и запись в файл
     VECTOR v_in(5);
+    cout << "Введите вектор размерностью 5 с консоли" << endl;
     cin >> v_in;
     cout << "Вектор разменостью " << v_in.size() << endl;
     cout << v_in << endl;
     GetFullPathInWD(argv[0], "Vector_out.txt", path);
     VECTOR::writeToFile(path, v_in);
+    */
+
+    /// Матрица. Считывание из файла
+    GetFullPathInWD(argv[0], "Matrix_in.txt", path);
+    MATRIX matr(3,3);
+    bool success = MATRIX::readFromFile(path, matr);
+    if (success)
+    {
+        cout << "Матрица " << matr.rows() << " x " << matr.columns() << endl;
+        cout << matr << endl;
+    }
+
+    ///  Матрица. Ввод с консоли и запись в файл
+    MATRIX matr_in(3, 5);
+    cout << "Введите матрицу 3 х 5 с консоли" << endl;
+    cin >> matr_in;
+    cout << "Введена матрица" << endl;
+    cout << matr_in << endl;
+    GetFullPathInWD(argv[0], "Matrix_out.txt", path);
+    MATRIX::writeToFile(path, matr_in);
+
+    //cout << "Нажмите любую клавишу для завершения работы программы" << endl;
+    //getchar();
 
 }
 

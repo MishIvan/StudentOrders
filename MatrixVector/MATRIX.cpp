@@ -70,6 +70,7 @@ MATRIX& operator*(const MATRIX& matr1, const MATRIX& matr2)
 }
 /// <summary>
 /// Перегрузка оператора вывода на консоль или в файловый поток (файл должен быть открыт для чтения) 
+/// матрица выводится построчно
 /// </summary>
 /// <param name="s"></param>
 /// <param name="matr">матрица</param>
@@ -79,23 +80,34 @@ ostream& operator<<(ostream& s, MATRIX& matr)
 	int m = matr.m_rows;
 	int n = matr.m_columns;
 	for (int i = 0; i < m; i++)
-		for (int j = 0; j < n; j++)
+	{
+		for (int j = 0; j < n; j++) // вывод строки в поток
 			s << *(matr.m_data + i * n + j) << ' ';
+		s << endl;
+	}
 	return s;
 }
 /// <summary>
 /// Перегрузка оператора ввода с консоли или в файловый поток (файл должен быть открыт для записи) 
+/// матрицы вводится построчно
 /// </summary>
 /// <param name="s"></param>
 /// <param name="matr">матрица</param>
-/// <returns></returns>
+/// <returns>поток</returns>
 istream& operator>>(istream& s, MATRIX& matr)
 {
 	int m = matr.m_rows;
 	int n = matr.m_columns;
+	double* buff = new double[n];
 	for (int i = 0; i < m; i++)
-		for (int j = 0; j < n; j++)
-			s >> *(matr.m_data + i * n + j);
+	{
+		for (int j = 0; j < n; j++) // считывание строки матрицы
+			s >> *(buff + j);
+		for (int j = 0; j < n; j++) // запись строки матрицы
+			*(matr.m_data + i * n + j) = *(buff + j);
+
+	}
+	delete[] buff;
 	return s;
 }
 /// <summary>
@@ -112,6 +124,7 @@ bool MATRIX::readFromFile(const char* fileName, MATRIX& matr)
 	{
 		fs >> matr.m_rows >> matr.m_columns;
 		fs >> matr;
+		fs.close();
 		return true;
 	}
 	return false;
@@ -128,10 +141,31 @@ bool MATRIX::writeToFile(const char* fileName, MATRIX& matr)
 	if(fs.is_open()){
 		fs << matr.m_rows << ' ' << matr.m_columns << endl;
 		fs << matr;
+		fs.close();
 		return true;
 	}
 	return false;
 }
+/// <summary>
+/// Уножение марицы matr на вектор v
+/// </summary>
+/// <param name="matr">матрица</param>
+/// <param name="v">вектор</param>
+/// <returns>результат умножения, вектор</returns>
+VECTOR& Multyply(const MATRIX& matr, const VECTOR& v)
+{
+	VECTOR prod(matr.m_rows);
+	if (matr.m_columns != v.m_size) return prod;
+	for (int i = 0; i < matr.m_rows; i++)
+	{
+		double val = 0.0;
+		for (int j = 0; j < matr.m_columns; j++)
+			val += *(matr.m_data + i * matr.m_columns + j) * *(v.m_data + j);
+		*(prod.m_data + i) = val;
+	}
+	return prod;
+}
+
 /// <summary>
 /// Деструктор: освобождение памяти, занимаемой под матрицу
 /// </summary>
