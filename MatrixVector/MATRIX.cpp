@@ -152,7 +152,7 @@ bool MATRIX::writeToFile(const char* fileName, MATRIX& matr)
 /// <param name="matr">матрица</param>
 /// <param name="v">вектор</param>
 /// <returns>результат умножения, вектор</returns>
-VECTOR& Multyply(const MATRIX& matr, const VECTOR& v)
+VECTOR Multyply(const MATRIX& matr, const VECTOR& v)
 {
 	VECTOR prod(matr.m_rows);
 	if (matr.m_columns != v.m_size) return prod;

@@ -23,7 +23,7 @@ public:
 	friend istream& operator>>(istream& s, VECTOR& v);
 	static bool readFromFile(const char* fileName, VECTOR& vect);
 	static bool writeToFile(const char* fileName, VECTOR& vect);
-	friend class VECTOR& Multyply(const MATRIX& matr, const VECTOR& v);
+	friend class VECTOR Multyply(const MATRIX& matr, const VECTOR& v);
 
 	~VECTOR();
 };

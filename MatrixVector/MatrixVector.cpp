@@ -23,6 +23,72 @@ void GetFullPathInWD(char* fullExePath, const char* dataFileName, char* fullFile
         strcpy_s(fullFileName, 1024, s1.data());
     }
 }
+/// <summary>
+/// Тест перегрузки операции умножения матриц
+/// </summary>
+void TestMatrixMultiplication(char *appPath, char * path)
+{
+    GetFullPathInWD(appPath, "MatrixMult_in.txt", path);
+    // считывание данных
+    ifstream fs;
+    fs.open(path);
+    if (fs.is_open())
+    {
+        int m, n;
+        fs >> m >> n;
+        MATRIX A(m, n);
+        fs >> A;
+        cout << "Матрица A" << endl;
+        cout << A;
+
+        fs >> m >> n;
+        MATRIX B(m, n);
+        fs >> B;
+        cout << endl << "Матрица B" << endl;
+        cout << B;
+
+        MATRIX C(A.rows(), B.columns());
+        C = A * B;
+        cout << endl << "Матрица C = A*B" << endl;
+        cout << C;
+
+        fs.close();
+    }
+}
+
+/// <summary>
+/// Тест перегрузки операции умножения матрицы на вектор 
+/// </summary>
+void TestMatrixVectorMultiplication(char* appPath, char* path)
+{
+    GetFullPathInWD(appPath, "MatrixVectMult_in.txt", path);
+    // считывание данных
+    ifstream fs;
+    fs.open(path);
+    if (fs.is_open())
+    {
+        int m, n;
+        fs >> m >> n;
+        MATRIX A(m, n);
+        fs >> A;
+        cout << "Матрица A" << endl;
+        cout << A;
+
+        fs >> n;
+        VECTOR v(n);
+        fs >> v;
+        cout << endl << "Вектор v" << endl;
+        cout << v;
+
+        VECTOR vp(A.rows());
+        vp = Multyply(A, v);
+        cout << endl << "Вектор  vp= A*v" << endl;
+        cout << vp;
+
+        fs.close();
+    }
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -35,7 +101,7 @@ int main(int argc, char *argv[])
     bool success = VECTOR::readFromFile(path, v);
     if (success)
     {
-        cout << "Вектор разменостью " << v.size() << endl;
+        cout << "Вектор размерностью " << v.size() << endl;
         cout << v << endl;
     }
 
@@ -47,8 +113,7 @@ int main(int argc, char *argv[])
     cout << v_in << endl;
     GetFullPathInWD(argv[0], "Vector_out.txt", path);
     VECTOR::writeToFile(path, v_in);
-    */
-
+    
     /// Матрица. Считывание из файла
     GetFullPathInWD(argv[0], "Matrix_in.txt", path);
     MATRIX matr(3,3);
@@ -63,14 +128,17 @@ int main(int argc, char *argv[])
     MATRIX matr_in(3, 5);
     cout << "Введите матрицу 3 х 5 с консоли" << endl;
     cin >> matr_in;
-    cout << "Введена матрица" << endl;
-    cout << matr_in << endl;
+    //cout << "Введена матрица" << endl;
+    //cout << matr_in << endl;
     GetFullPathInWD(argv[0], "Matrix_out.txt", path);
     MATRIX::writeToFile(path, matr_in);
+    */
 
-    //cout << "Нажмите любую клавишу для завершения работы программы" << endl;
-    //getchar();
+    /// Матрица. Умножение матриц
+    TestMatrixMultiplication(argv[0], path);
 
+    /// Матрица. Умножение вестора на матрицу
+    TestMatrixVectorMultiplication(argv[0], path);
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
