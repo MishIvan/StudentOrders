@@ -53,7 +53,7 @@ MATRIX& MATRIX::operator=(const MATRIX& src)
 /// <param name="matr1">первая матрица</param>
 /// <param name="matr2">вторая матрица</param>
 /// <returns>матрицу, произведение</returns>
-MATRIX& operator*(const MATRIX& matr1, const MATRIX& matr2)
+MATRIX operator*(const MATRIX& matr1, const MATRIX& matr2)
 {
 	MATRIX pmatr(matr1.m_rows, matr2.m_columns);
 	if (matr1.m_columns != matr2.m_rows) return pmatr;
@@ -147,7 +147,7 @@ bool MATRIX::writeToFile(const char* fileName, MATRIX& matr)
 	return false;
 }
 /// <summary>
-/// Уножение марицы matr на вектор v
+/// Умножение марицы matr на вектор v
 /// </summary>
 /// <param name="matr">матрица</param>
 /// <param name="v">вектор</param>
@@ -172,4 +172,23 @@ VECTOR Multyply(const MATRIX& matr, const VECTOR& v)
 MATRIX::~MATRIX()
 {
 	if (!m_data) delete[] m_data;
+}
+
+/// <summary>
+/// Получение количества элементов ниже главной диагонали и равных val
+/// </summary>
+/// <param name="val">значение</param>
+/// <returns>количество элементов</returns>
+
+int MATRIXEXT::getCountNotNumsUnderMD(double val) {
+	int count = 0;
+	for (int i = 0; i < m_rows; ++i) {
+		for (int j = 0; j < m_columns; j++) {
+			// получаем элементы ниже главной диагонали
+			if (i > j) {
+				if (*(m_data + i*m_columns + j) == val) count++;
+			}
+		}
+	}
+	return count;
 }

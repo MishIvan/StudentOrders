@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
 {
     setlocale(LC_ALL, ""); // для от ображения кириллицы
     char path[1024]; // буфер пути файла данных
-    
+
     /// Вектор. Считывание данных
     GetFullPathInWD(argv[0], "Vector_in.txt", path);
     VECTOR v(1);
@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
         cout << "Матрица " << matr.rows() << " x " << matr.columns() << endl;
         cout << matr << endl;
     }
-
+    
     ///  Матрица. Ввод с консоли и запись в файл
     MATRIX matr_in(3, 5);
     cout << "Введите матрицу 3 х 5 с консоли" << endl;
@@ -138,4 +138,32 @@ int main(int argc, char *argv[])
 
     /// Матрица. Умножение вестора на матрицу
     TestMatrixVectorMultiplication(argv[0], path);
+
+    ///  Матрицы
+    MATRIXEXT A(4, 5);
+    MATRIXEXT B(3, 7);
+    double D;
+    double Q;
+    int DinA;
+    int QinB;
+    //ввод данных с подсказками
+    cout << "Введите матрицу А(4х5):\n";
+    cin >> A;
+    cout << "Введите матрицу B(3х7):\n";
+    cin >> B;
+    std::cout << "Введите число D:\n";
+    std::cin >> D;
+    std::cout << "Введите число Q:\n";
+    std::cin >> Q;
+
+    //Поиск значений
+    DinA = A.getCountNotNumsUnderMD(D);
+    QinB = B.getCountNotNumsUnderMD(Q);
+    
+    //Вывод результатов
+    cout << "Число элементов матрицы А стоящих ниже главной диагонали и равных D: "
+        << D << ", равно " << DinA << endl;
+    cout << "Число элементов матрицы B стоящих ниже главной диагонали и равных Q: "
+        << Q << ", равно " << QinB << endl;
+
 }

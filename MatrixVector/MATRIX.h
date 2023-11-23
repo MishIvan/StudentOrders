@@ -5,6 +5,7 @@
 /// </summary>
 class MATRIX
 {
+protected:
 	int m_rows; //  число строк
 	int m_columns; // число столбцов
 	double* m_data; // данные матрицы
@@ -15,7 +16,7 @@ public:
 	int columns() { return m_columns; }
 
 	MATRIX& operator=(const MATRIX& src);
-	friend MATRIX& operator*(const MATRIX& matr1, const MATRIX& matr2);
+	friend MATRIX operator*(const MATRIX& matr1, const MATRIX& matr2);
 	friend ostream& operator<<(ostream& s, MATRIX& matr);
 	friend istream& operator>>(istream& s, MATRIX& matr);
 	static bool readFromFile(const char* fileName, MATRIX& matr);
@@ -23,5 +24,13 @@ public:
 	friend class VECTOR Multyply(const MATRIX& matr, const VECTOR& v);
 
 	~MATRIX();
+};
+
+class MATRIXEXT : public MATRIX
+{
+public:
+	MATRIXEXT(int M, int N) : MATRIX(M, N) {};
+	int getCountNotNumsUnderMD(double val);
+
 };
 
