@@ -94,16 +94,18 @@ int main(int argc, char *argv[])
 {
     setlocale(LC_ALL, ""); // для от ображения кириллицы
     char path[1024]; // буфер пути файла данных
-
+    
     /// Вектор. Считывание данных
     GetFullPathInWD(argv[0], "Vector_in.txt", path);
     VECTOR v(1);
     bool success = VECTOR::readFromFile(path, v);
     if (success)
     {
-        cout << "Вектор размерностью " << v.size() << endl;
+        cout << "Вектор размерностью " << v.size() << " считан из файла" << endl;
         cout << v << endl;
     }
+    else
+        cout << "Неудачная попытка чтения вектора из файла" << endl;
 
     /// Вектор. Считывание данных с консоли и запись в файл
     VECTOR v_in(5);
@@ -112,7 +114,12 @@ int main(int argc, char *argv[])
     cout << "Вектор разменостью " << v_in.size() << endl;
     cout << v_in << endl;
     GetFullPathInWD(argv[0], "Vector_out.txt", path);
-    VECTOR::writeToFile(path, v_in);
+    success = VECTOR::writeToFile(path, v_in);
+    if (success)
+        cout << "Вектор, введённый с консоли, записан в файл" << endl;
+    else
+        cout << "Неудачная попытка записи вектора, введённого с консоли" << endl;
+
     
     /// Матрица. Считывание из файла
     GetFullPathInWD(argv[0], "Matrix_in.txt", path);
@@ -120,9 +127,11 @@ int main(int argc, char *argv[])
     success = MATRIX::readFromFile(path, matr);
     if (success)
     {
-        cout << "Матрица " << matr.rows() << " x " << matr.columns() << endl;
+        cout << "Считаны данные матрицы " << matr.rows() << " x " << matr.columns() << endl;
         cout << matr << endl;
     }
+    else
+        cout << "Неудачная попытка считывания данных матрицы" << endl;
     
     ///  Матрица. Ввод с консоли и запись в файл
     MATRIX matr_in(3, 5);
@@ -131,14 +140,19 @@ int main(int argc, char *argv[])
     //cout << "Введена матрица" << endl;
     //cout << matr_in << endl;
     GetFullPathInWD(argv[0], "Matrix_out.txt", path);
-    MATRIX::writeToFile(path, matr_in);
+    success = MATRIX::writeToFile(path, matr_in);
+    if (success)
+        cout << "Матрица, введённая с консоли, записана в файл" << endl;
+    else
+        cout << "Неудачная попытка записи матрицы, введённой с консоли" << endl;
     
     /// Матрица. Умножение матриц
     TestMatrixMultiplication(argv[0], path);
 
     /// Матрица. Умножение вестора на матрицу
     TestMatrixVectorMultiplication(argv[0], path);
-
+    
+    /*
     ///  Матрицы
     MATRIXEXT A(4, 5);
     MATRIXEXT B(3, 7);
@@ -165,5 +179,6 @@ int main(int argc, char *argv[])
         << D << ", равно " << DinA << endl;
     cout << "Число элементов матрицы B стоящих ниже главной диагонали и равных Q: "
         << Q << ", равно " << QinB << endl;
+        */
 
 }
