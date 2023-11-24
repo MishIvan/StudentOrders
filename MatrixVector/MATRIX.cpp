@@ -202,7 +202,7 @@ int MATRIXEXT::getCountNotNumsUnderMD(double val) {
 /// <returns></returns>
 bool gauss(const MATRIX &a, const VECTOR &b, VECTOR &x, double& det)
 {
-	int i, k, m, im;
+	int i, k, m;
 	long double amm, aim;
 
 	// матрица должна быть квадратной и размерность вектора должна совпадать 
@@ -218,7 +218,6 @@ bool gauss(const MATRIX &a, const VECTOR &b, VECTOR &x, double& det)
 	for (m = 0; m <= size - 2; m++)
 	{
 		amm =  *(alf.m_data + m * size + m);
-		im = m;
 		for (k = m; k <= size - 1; k++)
 			*(alf.m_data + m*size + k) /= amm;
 		*(bet.m_data + m)/= amm;
@@ -231,7 +230,7 @@ bool gauss(const MATRIX &a, const VECTOR &b, VECTOR &x, double& det)
 		}//end i 
 	}//end m 
 
-	// нахождение определителя, равного произведению диагональных элементов
+	 // нахождение определителя, равного произведению диагональных элементов
 	det = 1.0;
 	for (i = 0; i < size; i++)
 		det *= *(alf.m_data + i * size + i);
