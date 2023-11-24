@@ -152,7 +152,7 @@ bool MATRIX::writeToFile(const char* fileName, MATRIX& matr)
 /// <param name="matr">матрица</param>
 /// <param name="v">вектор</param>
 /// <returns>результат умножения, вектор</returns>
-VECTOR Multyply(const MATRIX& matr, const VECTOR& v)
+VECTOR operator*(const MATRIX& matr, const VECTOR& v)
 {
 	VECTOR prod(matr.m_rows);
 	if (matr.m_columns != v.m_size) return prod;
@@ -191,4 +191,62 @@ int MATRIXEXT::getCountNotNumsUnderMD(double val) {
 		}
 	}
 	return count;
+}
+/// <summary>
+/// Решение системы линейных алгебраических уравнений (СЛАУ) методом Гаусса с вычислением определителя матрицы системы 
+/// </summary>
+/// <param name="a">матрица коэффициентов СЛАУ</param>
+/// <param name="b">вектор правой части СЛАУ</param>
+/// <param name="x">решение СЛАУ</param>
+/// <param name="det">определитель матрицы a</param>
+/// <returns></returns>
+bool gauss(const MATRIX &a, const VECTOR &b, VECTOR &x, double& det)
+{
+	int i, k, m, im;
+	long double amm, aim;
+
+	// матрица должна быть квадратной и размерность вектора должна совпадать 
+	// с размерностью матрицы
+	if (a.m_columns != b.m_size || a.m_columns != a.m_rows) return false;
+	int size = a.m_rows;
+
+	// сведение исходной системы к системе с верхней треугольной матрицей
+	MATRIX alf(size, size);
+	VECTOR bet(size);
+	alf = a;
+	bet = b;
+	for (m = 0; m <= size - 2; m++)
+	{
+		amm =  *(alf.m_data + m * size + m);
+		im = m;
+		for (k = m; k <= size - 1; k++)
+			*(alf.m_data + m*size + k) /= amm;
+		*(bet.m_data + m)/= amm;
+		for (i = m + 1; i <= size - 1; i++)
+		{
+			aim = *(alf.m_data +i*size + m);
+			for (k = m; k <= size - 1; k++)
+				*(alf.m_data +i*size + k) -= *(alf.m_data + m*size + k) * aim;
+			*(bet.m_data + i) -= *(bet.m_data + m) * aim;
+		}//end i 
+	}//end m 
+
+	// нахождение определителя, равного произведению диагональных элементов
+	det = 1.0;
+	for (i = 0; i < size; i++)
+		det *= *(alf.m_data + i * size + i);
+	if (abs(det) < 1.0e-18) { // матрица вырождена
+		det = 0.0; return true;
+	}
+
+	// нахождение решения СЛАУ с верхней треугольной матрицей
+	*(x.m_data + size - 1) = *(bet.m_data +size - 1) / *(alf.m_data + size*(size - 1) + size - 1);
+	for (i = size - 2; i >= 0; i--)
+	{
+		*(x.m_data + i) = *(bet.m_data +i);
+		for (k = i + 1; k < size; k++)
+			*(x.m_data + i) -= *(alf.m_data + i*size +k) * *(x.m_data + k);
+	}//end i
+	return true;
+	
 }

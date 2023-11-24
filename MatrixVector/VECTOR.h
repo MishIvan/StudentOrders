@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream> 
 #include <fstream>
+#include <math.h>
 
 using namespace std;
 class MATRIX;
@@ -16,14 +17,18 @@ public:
 	VECTOR(int n, double val = 0.0);
 	VECTOR(const VECTOR& src);
 	int size() { return m_size; } // возврат размерности вектора
+	double norm();
 
 	VECTOR& operator=(const VECTOR& src);
 	friend double operator*(const VECTOR& v1, const VECTOR& v2);
+	friend VECTOR operator+(const VECTOR& v1, const VECTOR& v2);
+	friend VECTOR operator-(const VECTOR& v1, const VECTOR& v2);
 	friend ostream& operator<<(ostream& s, VECTOR& v);
 	friend istream& operator>>(istream& s, VECTOR& v);
 	static bool readFromFile(const char* fileName, VECTOR& vect);
 	static bool writeToFile(const char* fileName, VECTOR& vect);
-	friend class VECTOR Multyply(const MATRIX& matr, const VECTOR& v);
+	friend VECTOR operator*(const MATRIX& matr, const VECTOR& v);
+	friend bool gauss(const MATRIX& a, const VECTOR& b, VECTOR& x, double &det);
 
 	~VECTOR();
 };

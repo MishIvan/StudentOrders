@@ -26,6 +26,19 @@ VECTOR::VECTOR(const VECTOR& src)
 	for (int i = 0; i < this->m_size; i++)
 		*(this->m_data + i) = *(src.m_data + i);
 }
+
+/// <summary>
+/// Возвращает евклидову норму вектора
+/// </summary>
+/// <returns>yорма вектора</returns>
+double VECTOR::norm()
+{
+	double val = 0.0;
+	for (int i = 0; i < m_size; i++)
+		val += *(m_data + i) * *(m_data + i);
+	return sqrt(val);
+}
+
 /// <summary>
 /// 
 /// </summary>
@@ -55,6 +68,31 @@ double operator*(const VECTOR& v1, const VECTOR& v2)
 		prod += *(v1.m_data + i) * *(v2.m_data + i);
 	return prod;
 }
+/// <summary>
+/// Перегрузка операторов вычитания и сложения векторов v1 и v2
+/// размерности векторов должны совпадать
+/// </summary>
+/// <param name="v1"></param>
+/// <param name="v2"></param>
+/// <returns>вектор - разность (сумму) векторов  </returns>
+VECTOR operator-(const VECTOR& v1, const VECTOR& v2)
+{
+	if (v1.m_size != v2.m_size) return VECTOR(3);
+	VECTOR res(v1.m_size);
+	for (int i = 0; i < res.m_size; i++)
+		*(res.m_data + i) = *(v1.m_data + i) - *(v2.m_data + i);
+	return res;
+}
+
+VECTOR operator+(const VECTOR& v1, const VECTOR& v2)
+{
+	if (v1.m_size != v2.m_size) return VECTOR(3);
+	VECTOR res(v1.m_size);
+	for (int i = 0; i < res.m_size; i++)
+		*(res.m_data + i) = *(v1.m_data + i) - *(v2.m_data + i);
+	return res;
+}
+
 /// <summary>
 /// Перегрузка оператора вывода на консоль или в файловый поток (файл нужно будет открыть для чтения)
 /// </summary>

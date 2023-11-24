@@ -32,5 +32,8 @@
     <ClInclude Include="MATRIX.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="MatrixVector.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

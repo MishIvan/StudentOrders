@@ -21,7 +21,8 @@ public:
 	friend istream& operator>>(istream& s, MATRIX& matr);
 	static bool readFromFile(const char* fileName, MATRIX& matr);
 	static bool writeToFile(const char* fileName, MATRIX& matr);
-	friend class VECTOR Multyply(const MATRIX& matr, const VECTOR& v);
+	friend VECTOR operator*(const MATRIX& matr, const VECTOR& v);
+	friend bool gauss(const MATRIX& a, const VECTOR& b, VECTOR& x, double& det);
 
 	~MATRIX();
 };
@@ -31,6 +32,6 @@ class MATRIXEXT : public MATRIX
 public:
 	MATRIXEXT(int M, int N) : MATRIX(M, N) {};
 	int getCountNotNumsUnderMD(double val);
-
+	
 };
 

@@ -2,6 +2,7 @@
 //
 
 #include "MATRIX.h"
+#include "MatrixVector.h"
 
 /// <summary>
 /// Получить полный путь файла в папке, из которой запускается исполняемый файл программы
@@ -81,7 +82,7 @@ void TestMatrixVectorMultiplication(char* appPath, char* path)
         cout << v;
 
         VECTOR vp(A.rows());
-        vp = Multyply(A, v);
+        vp = A* v;
         cout << endl << "Вектор  vp= A*v" << endl;
         cout << vp;
 
@@ -89,14 +90,15 @@ void TestMatrixVectorMultiplication(char* appPath, char* path)
     }
 }
 
-
-int main(int argc, char *argv[])
+/// <summary>
+/// Тест функционала матрицы и вектора
+/// </summary>
+/// <param name="appPath">полный путь к программе</param>
+/// <param name="path">указатель на полные путь файла</param>
+void TestMatrixNVector(char*appPath, char*  path)
 {
-    setlocale(LC_ALL, ""); // для от ображения кириллицы
-    char path[1024]; // буфер пути файла данных
-    
     /// Вектор. Считывание данных
-    GetFullPathInWD(argv[0], "Vector_in.txt", path);
+    GetFullPathInWD(appPath, "Vector_in.txt", path);
     VECTOR v(1);
     bool success = VECTOR::readFromFile(path, v);
     if (success)
@@ -113,17 +115,17 @@ int main(int argc, char *argv[])
     cin >> v_in;
     cout << "Вектор разменостью " << v_in.size() << endl;
     cout << v_in << endl;
-    GetFullPathInWD(argv[0], "Vector_out.txt", path);
+    GetFullPathInWD(appPath, "Vector_out.txt", path);
     success = VECTOR::writeToFile(path, v_in);
     if (success)
         cout << "Вектор, введённый с консоли, записан в файл" << endl;
     else
         cout << "Неудачная попытка записи вектора, введённого с консоли" << endl;
 
-    
+
     /// Матрица. Считывание из файла
-    GetFullPathInWD(argv[0], "Matrix_in.txt", path);
-    MATRIX matr(3,3);
+    GetFullPathInWD(appPath, "Matrix_in.txt", path);
+    MATRIX matr(3, 3);
     success = MATRIX::readFromFile(path, matr);
     if (success)
     {
@@ -132,25 +134,76 @@ int main(int argc, char *argv[])
     }
     else
         cout << "Неудачная попытка считывания данных матрицы" << endl;
-    
+
     ///  Матрица. Ввод с консоли и запись в файл
     MATRIX matr_in(3, 5);
     cout << "Введите матрицу 3 х 5 с консоли" << endl;
     cin >> matr_in;
     //cout << "Введена матрица" << endl;
     //cout << matr_in << endl;
-    GetFullPathInWD(argv[0], "Matrix_out.txt", path);
+    GetFullPathInWD(appPath, "Matrix_out.txt", path);
     success = MATRIX::writeToFile(path, matr_in);
     if (success)
         cout << "Матрица, введённая с консоли, записана в файл" << endl;
     else
         cout << "Неудачная попытка записи матрицы, введённой с консоли" << endl;
-    
+
     /// Матрица. Умножение матриц
-    TestMatrixMultiplication(argv[0], path);
+    TestMatrixMultiplication(appPath, path);
 
     /// Матрица. Умножение вестора на матрицу
-    TestMatrixVectorMultiplication(argv[0], path);
+    TestMatrixVectorMultiplication(appPath, path);
+}
+
+void TestGaussLinearSystem(char* appPath, char* path)
+{
+    GetFullPathInWD(appPath, "MatrixVectMult_in.txt", path);
+    // считывание данных
+    ifstream fs;
+    fs.open(path);
+    if (fs.is_open())
+    {
+        int m, n;
+        fs >> m >> n;
+        MATRIX A(m, n);
+        fs >> A;
+        cout << "Матрица СЛАУ A" << endl;
+        cout << A;
+
+        fs >> n;
+        VECTOR v(n);
+        fs >> v;
+        cout << endl << "Вектор правой части СЛАУ v" << endl;
+        cout << v << endl;
+
+        VECTOR x(A.rows());
+        double det = 0.0;
+        bool res = gauss(A, v, x, det);
+        if (det != 0.0 && res)
+        {
+            cout << endl << "Вектор  решения CЛАУ A*x = v" << endl;
+            cout << x;
+
+            cout << endl << "Определитель марицы A равен " << det << endl;
+
+            VECTOR vn(x.size());
+            vn = A*x - v;
+            double norm = vn.norm();
+            cout << endl << "Норма невязки " << norm << endl;
+
+        }
+
+        fs.close();
+    }
+}
+
+int main(int argc, char *argv[])
+{
+    setlocale(LC_ALL, ""); // для от ображения кириллицы
+    char path[1024]; // буфер пути файла данных
+    
+    //TestMatrixNVector(argv[0], path);
+    TestGaussLinearSystem(argv[0], path);
     
     /*
     ///  Матрицы

@@ -133,6 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MATRIX.h" />
+    <ClInclude Include="MatrixVector.h" />
     <ClInclude Include="VECTOR.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
