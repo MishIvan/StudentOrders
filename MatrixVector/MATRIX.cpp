@@ -111,6 +111,16 @@ istream& operator>>(istream& s, MATRIX& matr)
 	return s;
 }
 /// <summary>
+/// Вычисление определителя квадратной матрицы
+/// </summary>
+/// <returns></returns>
+double MATRIX::Determinant()
+{
+	if(m_rows != m_columns) return NAN;
+	MATRIX alpha(m_rows, m_columns);
+	return FormMatrixCompactScheme(alpha);
+}
+/// <summary>
 /// Считывание данных их файла и загрузка их в матрицу matr
 /// </summary>
 /// <param name="fileName">полное имя файла</param>
@@ -200,7 +210,7 @@ int MATRIXEXT::getCountNotNumsUnderMD(double val) {
 /// <param name="x">решение СЛАУ</param>
 /// <param name="det">определитель матрицы a</param>
 /// <returns></returns>
-bool gauss(const MATRIX &a, const VECTOR &b, VECTOR &x, double& det)
+bool Gauss(const MATRIX &a, const VECTOR &b, VECTOR &x)
 {
 	int i, k, m;
 	long double amm, aim;
@@ -230,14 +240,6 @@ bool gauss(const MATRIX &a, const VECTOR &b, VECTOR &x, double& det)
 		}//end i 
 	}//end m 
 
-	 // нахождение определителя, равного произведению диагональных элементов
-	det = 1.0;
-	for (i = 0; i < size; i++)
-		det *= *(alf.m_data + i * size + i);
-	if (abs(det) < 1.0e-18) { // матрица вырождена
-		det = 0.0; return true;
-	}
-
 	// нахождение решения СЛАУ с верхней треугольной матрицей
 	*(x.m_data + size - 1) = *(bet.m_data +size - 1) / *(alf.m_data + size*(size - 1) + size - 1);
 	for (i = size - 2; i >= 0; i--)
@@ -247,5 +249,101 @@ bool gauss(const MATRIX &a, const VECTOR &b, VECTOR &x, double& det)
 			*(x.m_data + i) -= *(alf.m_data + i*size +k) * *(x.m_data + k);
 	}//end i
 	return true;
+	
+}
+/// <summary>
+/// Формирование матриц alpha и gamma в компактной схеме исключения
+/// Матрица alpha верхняя треугольная, gamma - нижняя треугольная
+/// </summary>
+/// <param name="alpha">формируемые матрицы</param>
+/// <returns>значение определителя матрицы</returns>
+double MATRIX::FormMatrixCompactScheme(MATRIX& alpha)
+{
+	if (this->m_columns != this->m_rows) return NAN;
+	int n = this->m_rows;
+
+	for (int i = 0; i < n; i++)
+	{
+		*(alpha.m_data +i * n) = *(this->m_data + i * n);
+		if (i > 0) *(alpha.m_data + i) = *(this->m_data +i) / *this->m_data;
+	}
+
+	double sum = 0.0;
+	int k = 1, i = 1;
+	while (i < n)
+	{
+		if (k >= n)
+		{
+			k = 1; i++;
+			if (i >= n) break;
+		}
+		if (i >= k)
+		{
+			sum = 0.0;
+			for (int j = 0; j <= k - 1; j++)
+			{
+				sum += *(alpha.m_data +i * n + j) * *(alpha.m_data +j * n + k);
+			}
+			*(alpha.m_data +i * n + k) = *(this->m_data +i * n + k) - sum;
+		}
+		else
+		{
+			sum = 0.0;
+			for (int j = 0; j <= i - 1; j++)
+			{
+				sum += *(alpha.m_data + i * n + j) * *(alpha.m_data +j * n + k);
+			}
+			if (*(alpha.m_data + i * n + i) == 0.0)
+			{
+				return 0.0;
+			}
+			*(alpha.m_data + i * n + k) = (*(this->m_data +i * n + k) - sum) / *(alpha.m_data +i * n + i);
+		}
+		k++;
+	}
+
+	// вычисление определителя
+	double det = 1.0;
+	for (int i = 0; i < n; i++)
+		det *= *(alpha.m_data + i * n + i);
+	return det;
+}
+
+/// <summary>
+/// Решение системы линейных уравнений компактной схемой исключения
+/// </summary>
+/// <param name="A">матрица системы уравнений</param>
+/// <param name="b">вектор правой части системы уравнений</param>
+/// <param name="x">решение системы уравнений</param>
+void CompactSchemeSolve(MATRIX &A, VECTOR& b, VECTOR& x)
+{
+	if (A.m_rows != A.m_columns) return;
+	int n = A.m_rows;
+	MATRIX alpha(n , n);
+	double det = A.FormMatrixCompactScheme(alpha);
+	// решение только для неособенной матрицы
+	if (det != 0.0)
+	{
+		VECTOR beta(n);
+		double sum = 0.0;
+		*beta.m_data = *b.m_data / *A.m_data;
+		for (int i = 1; i < n; i++)
+		{
+			sum = 0.0;
+			for (int j = 0; j <= i - 1; j++)
+				sum += *(alpha.m_data + i * n + j) * *(beta.m_data +j);
+			*(beta.m_data +i) = (*(b.m_data+i) - sum) / *(alpha.m_data + i * n + i);
+		}
+
+		// решение системы уравнений с труегольной матрицей		   
+		*(x.m_data + n - 1) = *(beta.m_data + n - 1);
+		for (int i = n - 2; i >= 0; i--)
+		{
+			sum = 0.0;
+			for (int j = n - 1; j > i; j--)
+				sum += *(alpha.m_data +i * n + j) * *(x.m_data + j);
+			*(x.m_data + i) = *(beta.m_data + i) - sum;
+		}
+	}
 	
 }

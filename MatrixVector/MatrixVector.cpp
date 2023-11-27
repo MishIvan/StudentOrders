@@ -177,9 +177,11 @@ void TestGaussLinearSystem(char* appPath, char* path)
         cout << v << endl;
 
         VECTOR x(A.rows());
-        double det = 0.0;
-        bool res = gauss(A, v, x, det);
-        if (det != 0.0 && res)
+        double det = A.Determinant();
+        bool res = true; 
+        //res = Gauss(A, v, x);
+        CompactSchemeSolve(A, v, x);
+        if ((det != 0.0 || !isnan(det)) && res)
         {
             cout << endl << "Вектор  решения CЛАУ A*x = v" << endl;
             cout << x;
