@@ -20,10 +20,14 @@ public:
 	friend MATRIX operator*(const MATRIX& matr1, const MATRIX& matr2);
 	friend ostream& operator<<(ostream& s, MATRIX& matr);
 	friend istream& operator>>(istream& s, MATRIX& matr);
+	friend VECTOR operator*(const MATRIX& matr, const VECTOR& v);
+
 	double Determinant();
+	double Minor(int i, int j);
+
 	static bool readFromFile(const char* fileName, MATRIX& matr);
 	static bool writeToFile(const char* fileName, MATRIX& matr);
-	friend VECTOR operator*(const MATRIX& matr, const VECTOR& v);
+	
 	friend bool Gauss(const MATRIX& a, const VECTOR& b, VECTOR& x);
 	friend void CompactSchemeSolve(MATRIX& A, VECTOR& b, VECTOR& x);
 

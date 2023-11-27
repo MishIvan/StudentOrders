@@ -347,3 +347,33 @@ void CompactSchemeSolve(MATRIX &A, VECTOR& b, VECTOR& x)
 	}
 	
 }
+/// <summary>
+/// ¬ычисление минора квадаратной матрицы
+/// </summary>
+/// <param name="i">строка</param>
+/// <param name="j">столбец</param>
+/// <returns>значение минора, в случае ошибки NAN</returns>
+double MATRIX::Minor(int i, int j)
+{
+	int n = m_rows;
+	if (i < 0 || j < 0 || i > n - 1 || j > n - 1 || m_columns != m_rows ) return NAN;
+	MATRIX minor(n - 1,n - 1);
+
+	// заполнение матрицы минора данными
+	for (int k = 0; k < n; k++)
+	{
+		for (int m = 0; m < n; m++)
+		{
+			if (k < i && m < j)
+				*(minor.m_data + k * (n - 1) + m) = *(m_data + k * n + m);
+			else if (k < i && m > j)
+				*(minor.m_data + k * (n - 1) + m - 1) = *(m_data + k * n + m);
+			else if (k > i && m < j)
+				*(minor.m_data + (k - 1) * (n - 1) + m) = *(m_data + k * n + m);
+			else if (k > i && m > j)
+				*(minor.m_data + (k - 1) * (n - 1) + m - 1) = *(m_data + k * n + m);
+		}
+	}
+
+	return minor.Determinant();
+}

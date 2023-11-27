@@ -195,6 +195,9 @@ void TestGaussLinearSystem(char* appPath, char* path)
 
         }
 
+        det = A.Minor(2, 3);
+        cout << endl << "Минор 2 х 3 марицы A равен " << det << endl;
+
         fs.close();
     }
 }
