@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /DISNET.dll
 /PracticeCPP/wrk.bin
+/MatrixVector/getCPUTime.cpp
