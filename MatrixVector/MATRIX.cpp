@@ -175,6 +175,61 @@ VECTOR operator*(const MATRIX& matr, const VECTOR& v)
 	}
 	return prod;
 }
+/// <summary>
+/// QR разложение квадратной матрицы
+/// </summary>
+/// <param name="Q">матрица Q</param>
+/// <param name="R">матрица R</param>
+bool MATRIX::QRDecomposition(MATRIX& Q, MATRIX& R)
+{
+	if (m_columns != m_rows) return false;
+	int n = m_rows;
+	double sum = 0.0;
+	for (int j = 0; j < n; j++)
+	{
+		// q(j) = a(j)
+		for (int k = 0; k < n; k++)
+			*(Q.m_data + k * n + j) = *(m_data + k * n + j);
+		for (int i = 0; i < j - 1; i++)
+		{
+			// rij = q(i)^T*a(j)
+			sum = 0.0;
+			for (int k = 0; k < n; k++)
+				sum += *(Q.m_data + k* n + i) * *(m_data + k * n + j);
+			*(R.m_data + i * n + j) = sum;
+
+			// q(j) = q(j) - r(i,j)*q(i)
+			for(int k=0; k < n; k++)
+				*(Q.m_data + k * n + j) -= *(R.m_data + i * n + j) * *(Q.m_data + k * n + i);
+		}
+
+		// r(j,j) = || q(j)) ||2
+		sum = 0.0;
+		for (int k = 0; k < n; k++)
+			sum += *(Q.m_data + k * n + j) * *(Q.m_data + k * n + j);
+		*(R.m_data + j * n + j) = sqrt(sum);
+		if (*(R.m_data + j * n + j) == 0.0)
+			return false;
+		for (int k = 0; k < n; k++)
+		{
+			*(Q.m_data + k * n + j) /= *(R.m_data + j * n + j);
+		}
+
+	}
+	return true;
+}
+/// <summary>
+/// Получение транспонированной матрицы 
+/// </summary>
+/// <returns>транспонированную матрицу</returns>
+MATRIX MATRIX::Transpose()
+{
+	MATRIX tr(m_columns, m_rows);
+	for (int i = 0; i < m_columns; i++)
+		for (int j = 0; j < m_rows; j++)
+			*(tr.m_data + i * tr.m_columns + j) = *(m_data + j * m_columns + i);
+	return tr;
+}
 
 /// <summary>
 /// Деструктор: освобождение памяти, занимаемой под матрицу
@@ -183,6 +238,7 @@ MATRIX::~MATRIX()
 {
 	if (!m_data) delete[] m_data;
 }
+
 
 /// <summary>
 /// Получение количества элементов ниже главной диагонали и равных val

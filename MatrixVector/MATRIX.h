@@ -21,6 +21,7 @@ public:
 	friend ostream& operator<<(ostream& s, MATRIX& matr);
 	friend istream& operator>>(istream& s, MATRIX& matr);
 	friend VECTOR operator*(const MATRIX& matr, const VECTOR& v);
+	MATRIX Transpose();
 
 	double Determinant();
 	double Minor(int i, int j);
@@ -30,6 +31,8 @@ public:
 	
 	friend bool Gauss(const MATRIX& a, const VECTOR& b, VECTOR& x);
 	friend void CompactSchemeSolve(MATRIX& A, VECTOR& b, VECTOR& x);
+
+	bool QRDecomposition(MATRIX& Q, MATRIX& R);
 
 	~MATRIX();
 };

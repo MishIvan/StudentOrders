@@ -1,8 +1,9 @@
 ﻿// MatrixVector.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //
-
+#include <ctime>
 #include "MATRIX.h"
 #include "MatrixVector.h"
+
 
 /// <summary>
 /// Получить полный путь файла в папке, из которой запускается исполняемый файл программы
@@ -179,24 +180,46 @@ void TestGaussLinearSystem(char* appPath, char* path)
         VECTOR x(A.rows());
         double det = A.Determinant();
         bool res = true; 
+        clock_t  time_begin, time_end;
+        time_begin = clock();
         //res = Gauss(A, v, x);
         CompactSchemeSolve(A, v, x);
+        time_end = clock();
+        double secs = (double)time_end/CLOCKS_PER_SEC;
         if ((det != 0.0 || !isnan(det)) && res)
         {
+            cout << "Время решения " << secs << " сек" << endl;
             cout << endl << "Вектор  решения CЛАУ A*x = v" << endl;
             cout << x;
 
             cout << endl << "Определитель марицы A равен " << det << endl;
 
             VECTOR vn(x.size());
-            vn = A*x - v;
-            double norm = vn.norm();
+            // vn = A*x - v;
+            double norm = (A * x - v).norm();
             cout << endl << "Норма невязки " << norm << endl;
 
         }
 
-        det = A.Minor(2, 3);
-        cout << endl << "Минор 2 х 3 марицы A равен " << det << endl;
+        // QR разложение
+        MATRIX Q(A.rows(), A.columns()), R(A.rows(), A.columns());
+        res = A.QRDecomposition(Q, R);
+
+        cout << endl << "Matrix Q" << endl;
+        cout << Q << endl;
+
+        cout << endl << "Matrix R" << endl;
+        cout << R << endl;
+
+        MATRIX rt(R.columns(), R.rows());
+        rt = Q*R.Transpose();
+
+        cout << rt << endl;
+
+        rt = Q*Q.Transpose();
+        cout << rt << endl;
+
+
 
         fs.close();
     }
