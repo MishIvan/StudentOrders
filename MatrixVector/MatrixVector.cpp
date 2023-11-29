@@ -155,8 +155,40 @@ void TestMatrixNVector(char*appPath, char*  path)
     /// Матрица. Умножение вестора на матрицу
     TestMatrixVectorMultiplication(appPath, path);
 }
+/// <summary>
+/// QR разложение
+/// </summary>
+/// <param name="A"></param>
+/// <param name="res"></param>
+void TestQRDecomposition(MATRIX& A)
+{
+    // 
+    MATRIX Q(A.rows(), A.columns()), R(A.rows(), A.columns());
+    if (!A.QRDecomposition(Q, R))
+    {
+        cout << "Матрица R вырождена" << endl;
+        return;
+    }
 
-void TestGaussLinearSystem(char* appPath, char* path)
+
+    cout << endl << "Matrix Q" << endl;
+    cout << Q << endl;
+
+    cout << endl << "Matrix R" << endl;
+    cout << R << endl;
+
+    MATRIX rt(R.columns(), R.rows());
+    rt = Q * R;
+
+    cout << endl << "Matrix A = Q*R" << endl;
+    cout << rt << endl;
+
+    cout << endl << "Matrix E = Q^t*Q" << endl;
+    rt = Q.Transpose() * Q;
+    cout << rt << endl;
+}
+
+void TestLinearSystemSolve(char* appPath, char* path)
 {
     GetFullPathInWD(appPath, "MatrixVectMult_in.txt", path);
     // считывание данных
@@ -183,7 +215,8 @@ void TestGaussLinearSystem(char* appPath, char* path)
         clock_t  time_begin, time_end;
         time_begin = clock();
         //res = Gauss(A, v, x);
-        CompactSchemeSolve(A, v, x);
+        //CompactSchemeSolve(A, v, x);
+        QRDecompositionSolve(A, v, x);
         time_end = clock();
         double secs = (double)time_end/CLOCKS_PER_SEC;
         if ((det != 0.0 || !isnan(det)) && res)
@@ -201,27 +234,7 @@ void TestGaussLinearSystem(char* appPath, char* path)
 
         }
 
-        // QR разложение
-        MATRIX Q(A.rows(), A.columns()), R(A.rows(), A.columns());
-        res = A.QRDecomposition(Q, R);
-
-        cout << endl << "Matrix Q" << endl;
-        cout << Q << endl;
-
-        cout << endl << "Matrix R" << endl;
-        cout << R << endl;
-
-        MATRIX rt(R.columns(), R.rows());
-        rt = Q*R;
-
-        cout << endl << "Matrix A = Q*R" << endl;
-        cout << rt << endl;
-
-        cout << endl << "Matrix E = Q^t*Q" << endl;
-        rt = Q.Transpose()*Q;
-        cout << rt << endl;
-
-
+        //TestQRDecomposition(A);
 
         fs.close();
     }
@@ -233,7 +246,7 @@ int main(int argc, char *argv[])
     char path[1024]; // буфер пути файла данных
     
     //TestMatrixNVector(argv[0], path);
-    TestGaussLinearSystem(argv[0], path);
+    TestLinearSystemSolve(argv[0], path);
     
     /*
     ///  Матрицы

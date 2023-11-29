@@ -408,6 +408,34 @@ void CompactSchemeSolve(MATRIX &A, VECTOR& b, VECTOR& x)
 	
 }
 /// <summary>
+/// Решение СЛАУ с применением QR декомпозиции матрицы системы A
+/// </summary>
+/// <param name="A">ьатрица системы линейных уравнений</param>
+/// <param name="b">вектор правой части системы линейных уравнений</param>
+/// <param name="x">вектор решения системы линейныз уравнений</param>
+void QRDecompositionSolve(MATRIX& A, VECTOR& b, VECTOR& x)
+{ 
+	if (A.m_rows != A.m_columns || A.m_rows != b.m_size) return;
+	MATRIX Q(A.m_rows, A.m_columns), R(A.m_rows, A.m_columns);
+	int n = A.m_rows;
+	A.QRDecomposition(Q, R);
+	VECTOR beta(b.m_size);
+	beta = Q.Transpose() * b;
+	cout << beta << endl;
+
+	// решение системы уравнений с труегольной матрицей		   
+	*(x.m_data + n - 1) = *(beta.m_data + n - 1)/ *(R.m_data + (n - 1)*n + n - 1);
+	for (int i = n - 2; i >= 0; i--)
+	{
+		double sum = 0.0;
+		for (int j = n - 1; j > i; j--)
+			sum += *(R.m_data + i * n + j) * *(x.m_data + j);
+		*(x.m_data + i) = (*(beta.m_data + i) - sum) / *(R.m_data + i*n + i);
+	}
+
+
+}
+/// <summary>
 /// Вычисление минора квадаратной матрицы
 /// </summary>
 /// <param name="i">строка</param>
