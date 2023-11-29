@@ -212,11 +212,13 @@ void TestGaussLinearSystem(char* appPath, char* path)
         cout << R << endl;
 
         MATRIX rt(R.columns(), R.rows());
-        rt = Q*R.Transpose();
+        rt = Q*R;
 
+        cout << endl << "Matrix A = Q*R" << endl;
         cout << rt << endl;
 
-        rt = Q*Q.Transpose();
+        cout << endl << "Matrix E = Q^t*Q" << endl;
+        rt = Q.Transpose()*Q;
         cout << rt << endl;
 
 

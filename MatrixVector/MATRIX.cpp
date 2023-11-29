@@ -185,12 +185,14 @@ bool MATRIX::QRDecomposition(MATRIX& Q, MATRIX& R)
 	if (m_columns != m_rows) return false;
 	int n = m_rows;
 	double sum = 0.0;
+
 	for (int j = 0; j < n; j++)
 	{
 		// q(j) = a(j)
 		for (int k = 0; k < n; k++)
 			*(Q.m_data + k * n + j) = *(m_data + k * n + j);
-		for (int i = 0; i < j - 1; i++)
+
+		for (int i = 0; i <= j - 1; i++)
 		{
 			// rij = q(i)^T*a(j)
 			sum = 0.0;
@@ -198,7 +200,7 @@ bool MATRIX::QRDecomposition(MATRIX& Q, MATRIX& R)
 				sum += *(Q.m_data + k* n + i) * *(m_data + k * n + j);
 			*(R.m_data + i * n + j) = sum;
 
-			// q(j) = q(j) - r(i,j)*q(i)
+			// r(i,j)*q(i)
 			for(int k=0; k < n; k++)
 				*(Q.m_data + k * n + j) -= *(R.m_data + i * n + j) * *(Q.m_data + k * n + i);
 		}
@@ -208,14 +210,16 @@ bool MATRIX::QRDecomposition(MATRIX& Q, MATRIX& R)
 		for (int k = 0; k < n; k++)
 			sum += *(Q.m_data + k * n + j) * *(Q.m_data + k * n + j);
 		*(R.m_data + j * n + j) = sqrt(sum);
+
 		if (*(R.m_data + j * n + j) == 0.0)
-			return false;
-		for (int k = 0; k < n; k++)
 		{
-			*(Q.m_data + k * n + j) /= *(R.m_data + j * n + j);
+			return false;
 		}
+		for (int k = 0; k < n; k++)
+			*(Q.m_data + k * n + j) /= *(R.m_data + j * n + j);
 
 	}
+	
 	return true;
 }
 /// <summary>
