@@ -186,6 +186,35 @@ void TestQRDecomposition(MATRIX& A)
     cout << endl << "Matrix E = Q^t*Q" << endl;
     rt = Q.Transpose() * Q;
     cout << rt << endl;
+    
+}
+/// <summary>
+/// Тест разложения Холецкого.  Разложение Холецкого работает для симметричнйо и положительно определённой матрицы
+/// </summary>
+/// <param name="A"></param>
+void TestCholeskyDecomposuition(MATRIX& A)
+{
+    MATRIX L(A.rows(), A.columns()), Anorm(A.rows(), A.columns());
+    Anorm = A.Transpose() * A;
+
+    cout << endl << "Matrix A^t*A" << endl;
+    cout << Anorm << endl;
+
+    if (!Anorm.CholeskyDecomposition(L))
+    {
+        cout << "Разложение Холецкого неприменимо для матрицы" << endl;
+        return;
+    }
+
+    cout << endl << "Matrix L" << endl;
+    cout << L << endl;
+
+    MATRIX rt(A.columns(), A.rows());
+    rt = L * L.Transpose();
+
+    cout << endl << "Matrix A^t*A = L*L^t" << endl;
+    cout << rt << endl;
+
 }
 
 void TestLinearSystemSolve(char* appPath, char* path)
@@ -215,8 +244,8 @@ void TestLinearSystemSolve(char* appPath, char* path)
         clock_t  time_begin, time_end;
         time_begin = clock();
         //res = Gauss(A, v, x);
-        //CompactSchemeSolve(A, v, x);
-        QRDecompositionSolve(A, v, x);
+        CompactSchemeSolve(A, v, x);
+        //QRDecompositionSolve(A, v, x);
         time_end = clock();
         double secs = (double)time_end/CLOCKS_PER_SEC;
         if ((det != 0.0 || !isnan(det)) && res)
@@ -235,6 +264,7 @@ void TestLinearSystemSolve(char* appPath, char* path)
         }
 
         //TestQRDecomposition(A);
+        TestCholeskyDecomposuition(A);
 
         fs.close();
     }
@@ -248,33 +278,4 @@ int main(int argc, char *argv[])
     //TestMatrixNVector(argv[0], path);
     TestLinearSystemSolve(argv[0], path);
     
-    /*
-    ///  Матрицы
-    MATRIXEXT A(4, 5);
-    MATRIXEXT B(3, 7);
-    double D;
-    double Q;
-    int DinA;
-    int QinB;
-    //ввод данных с подсказками
-    cout << "Введите матрицу А(4х5):\n";
-    cin >> A;
-    cout << "Введите матрицу B(3х7):\n";
-    cin >> B;
-    std::cout << "Введите число D:\n";
-    std::cin >> D;
-    std::cout << "Введите число Q:\n";
-    std::cin >> Q;
-
-    //Поиск значений
-    DinA = A.getCountNotNumsUnderMD(D);
-    QinB = B.getCountNotNumsUnderMD(Q);
-    
-    //Вывод результатов
-    cout << "Число элементов матрицы А стоящих ниже главной диагонали и равных D: "
-        << D << ", равно " << DinA << endl;
-    cout << "Число элементов матрицы B стоящих ниже главной диагонали и равных Q: "
-        << Q << ", равно " << QinB << endl;
-        */
-
 }

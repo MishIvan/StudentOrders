@@ -223,6 +223,33 @@ bool MATRIX::QRDecomposition(MATRIX& Q, MATRIX& R)
 	return true;
 }
 /// <summary>
+///  Разложение Холецкого матрицы A = L*L^t
+/// </summary>
+/// <param name="L">матрица в разложении Холецкого</param>
+/// <returns></returns>
+bool MATRIX::CholeskyDecomposition(MATRIX& L)
+{
+	if (m_rows != m_columns) return false;
+	int n = m_rows;
+	for (int i = 0; i < n; i++) 
+		for (int j = 0; j <= i; j++) {
+
+			double sum = 0;
+			for (int k = 0; k < j; k++) 
+				sum += *(L.m_data + i*n + k) * *(L.m_data + j*n + k);
+
+			if (i == j)
+			{
+				*(L.m_data + i * n + j) = sqrt(*(m_data + i * n + i) - sum);
+				if ( *(L.m_data + i * n + j) <= 0.0 || isnan(*(L.m_data + i * n + j)) ) return false;
+			}
+			else 
+				*(L.m_data + i * n + j) = (*(m_data + i * n + j) - sum)/(*(L.m_data + j * n + j));
+		}
+	
+	return true;
+}
+/// <summary>
 /// Получение транспонированной матрицы 
 /// </summary>
 /// <returns>транспонированную матрицу</returns>
