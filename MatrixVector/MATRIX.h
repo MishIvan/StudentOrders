@@ -13,8 +13,8 @@ protected:
 public:
 	MATRIX(int M, int N, double val = 0.0);
 	MATRIX(const MATRIX& src);
-	int rows() { return m_rows; }
-	int columns() { return m_columns; }
+	inline int rows() { return m_rows; }
+	inline int columns() { return m_columns; }
 
 	MATRIX& operator=(const MATRIX& src);
 	friend MATRIX operator*(const MATRIX& matr1, const MATRIX& matr2);
@@ -22,6 +22,7 @@ public:
 	friend istream& operator>>(istream& s, MATRIX& matr);
 	friend VECTOR operator*(const MATRIX& matr, const VECTOR& v);
 	MATRIX Transpose();
+	MATRIX Reverse();
 
 	double Determinant();
 	double Minor(int i, int j);

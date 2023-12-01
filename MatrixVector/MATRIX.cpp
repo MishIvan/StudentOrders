@@ -1,4 +1,6 @@
 #include "MATRIX.h"
+#include <thread>
+
 /// <summary>
 /// Конструктор матрицы M x N, всем элементам которой присваивается значение val
 /// </summary>
@@ -561,4 +563,41 @@ double MATRIX::Minor(int i, int j)
 	}
 
 	return minor.Determinant();
+}
+/// <summary>
+/// Возвращает обратную матрицу
+/// </summary>
+/// <returns></returns>
+MATRIX MATRIX::Reverse()
+{
+	MATRIX A(m_rows, m_columns);
+	if (m_rows != m_columns) return A;
+	double det = Determinant();
+	if (abs(det) >= 1.0e-18)
+	{
+		auto Minors = [&](int row_begin, int row_end, int column_begin, int column_end)
+			{
+				for (int i = row_begin; i < row_end; i++)
+					for (int j = column_begin; j < column_end; j++)
+						*(A.m_data + A.m_columns*i + j) = Minor(j, i) * pow(-1.0, i + j) / det;
+			};
+		int size = A.m_rows;
+		if (size >= 100)
+		{
+			int size2 = size / 2;
+			thread t1(Minors, 0, size2, 0, size2);
+			t1.join();
+			thread t2(Minors, size2, size, 0, size2);
+			t2.join();
+			thread t3(Minors, 0, size2, size2, size);
+			t3.join();
+			thread t4(Minors, size2, size, size2, size);
+			t4.join();
+		}
+		else
+			Minors(0, size, 0, size);
+	}
+
+
+	return A;
 }

@@ -16,7 +16,7 @@ class VECTOR
 public:
 	VECTOR(int n, double val = 0.0);
 	VECTOR(const VECTOR& src);
-	int size() { return m_size; } // возврат размерности вектора
+	inline int size() { return m_size; } // возврат размерности вектора
 	double norm();
 
 	VECTOR& operator=(const VECTOR& src);

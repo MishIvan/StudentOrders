@@ -217,6 +217,23 @@ void TestCholeskyDecomposuition(MATRIX& A)
 
 }
 
+void TestMatrixReverse(MATRIX& A)
+{
+    MATRIX A1(A.rows(), A.columns());
+    A1 = A.Reverse();
+
+    cout << endl << "Matrix A(-1)" << endl;
+    cout << A1 << endl;
+
+    MATRIX E(A.rows(), A.columns());
+    E = A1 * A;
+
+    cout << endl << "Matrix A(-1)*A" << endl;
+    cout << E << endl;
+
+
+}
+
 void TestLinearSystemSolve(char* appPath, char* path)
 {
     GetFullPathInWD(appPath, "MatrixVectMult_in.txt", path);
@@ -239,16 +256,18 @@ void TestLinearSystemSolve(char* appPath, char* path)
         cout << v << endl;
 
         VECTOR x(A.rows());
-        double det = A.Determinant();
-        bool res = true; 
-        clock_t  time_begin, time_end;
-        time_begin = clock();
+        double det = 0.0;//A.Determinant();
+        bool res = false; 
+        clock_t  time_end;
         //res = Gauss(A, v, x);
         //CompactSchemeSolve(A, v, x);
-        QRDecompositionSolve(A, v, x);
+        //QRDecompositionSolve(A, v, x);
         //LLTDecompositionSolve(A, v, x);
+        TestMatrixReverse(A);
+
         time_end = clock();
         double secs = (double)time_end/CLOCKS_PER_SEC;
+        cout << "Время решения " << secs << " сек" << endl;
         if ((det != 0.0 || !isnan(det)) && res)
         {
             cout << "Время решения " << secs << " сек" << endl;
