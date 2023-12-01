@@ -244,8 +244,9 @@ void TestLinearSystemSolve(char* appPath, char* path)
         clock_t  time_begin, time_end;
         time_begin = clock();
         //res = Gauss(A, v, x);
-        CompactSchemeSolve(A, v, x);
-        //QRDecompositionSolve(A, v, x);
+        //CompactSchemeSolve(A, v, x);
+        QRDecompositionSolve(A, v, x);
+        //LLTDecompositionSolve(A, v, x);
         time_end = clock();
         double secs = (double)time_end/CLOCKS_PER_SEC;
         if ((det != 0.0 || !isnan(det)) && res)
@@ -264,7 +265,7 @@ void TestLinearSystemSolve(char* appPath, char* path)
         }
 
         //TestQRDecomposition(A);
-        TestCholeskyDecomposuition(A);
+        //TestCholeskyDecomposuition(A);
 
         fs.close();
     }

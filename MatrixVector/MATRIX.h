@@ -25,6 +25,7 @@ public:
 
 	double Determinant();
 	double Minor(int i, int j);
+	bool IsSymmetric();
 
 	static bool readFromFile(const char* fileName, MATRIX& matr);
 	static bool writeToFile(const char* fileName, MATRIX& matr);
@@ -32,6 +33,7 @@ public:
 	friend bool Gauss(const MATRIX& a, const VECTOR& b, VECTOR& x);
 	friend void CompactSchemeSolve(MATRIX& A, VECTOR& b, VECTOR& x);
 	friend void QRDecompositionSolve(MATRIX& A, VECTOR& b, VECTOR& x);
+	friend void LLTDecompositionSolve(MATRIX& A, VECTOR& b, VECTOR& x);
 	
 
 	bool QRDecomposition(MATRIX& Q, MATRIX& R);

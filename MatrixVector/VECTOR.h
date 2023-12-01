@@ -32,6 +32,7 @@ public:
 	friend bool Gauss(const MATRIX& a, const VECTOR& b, VECTOR& x);
 	friend void CompactSchemeSolve(MATRIX& A, VECTOR& b, VECTOR& x);
 	friend void QRDecompositionSolve(MATRIX& A, VECTOR& b, VECTOR& x);
+	friend void LLTDecompositionSolve(MATRIX& A, VECTOR& b, VECTOR& x);
 
 	~VECTOR();
 };

@@ -157,6 +157,21 @@ bool MATRIX::writeToFile(const char* fileName, MATRIX& matr)
 	return false;
 }
 /// <summary>
+/// Является ли квадратная матрица симметричной
+/// </summary>
+/// <returns></returns>
+bool MATRIX::IsSymmetric()
+{
+	if (m_rows != m_columns) return false;
+	int n = m_rows;
+	for(int i=0; i < n; i++)
+		for (int j = 0; j < n; j++)
+		{
+			if (*(m_data + i*n + j) != *(m_data + j*n + i)) return false;
+		}
+	return true;
+}
+/// <summary>
 /// Умножение марицы matr на вектор v
 /// </summary>
 /// <param name="matr">матрица</param>
@@ -450,7 +465,7 @@ void QRDecompositionSolve(MATRIX& A, VECTOR& b, VECTOR& x)
 	beta = Q.Transpose() * b;
 	cout << beta << endl;
 
-	// решение системы уравнений с труегольной матрицей		   
+	// решение системы уравнений с верхней труегольной матрицей		   
 	*(x.m_data + n - 1) = *(beta.m_data + n - 1)/ *(R.m_data + (n - 1)*n + n - 1);
 	for (int i = n - 2; i >= 0; i--)
 	{
@@ -458,6 +473,61 @@ void QRDecompositionSolve(MATRIX& A, VECTOR& b, VECTOR& x)
 		for (int j = n - 1; j > i; j--)
 			sum += *(R.m_data + i * n + j) * *(x.m_data + j);
 		*(x.m_data + i) = (*(beta.m_data + i) - sum) / *(R.m_data + i*n + i);
+	}
+
+
+}
+/// <summary>
+/// Решение системы уравнений с применением метода LLT декомпозиции A = LLT
+/// </summary>
+/// <param name="A"></param>
+/// <param name="b"></param>
+/// <param name="x"></param>
+void LLTDecompositionSolve(MATRIX& A, VECTOR& b, VECTOR& x)
+{
+	if (A.m_rows != A.m_columns || A.m_rows != b.m_size) return;
+
+	MATRIX L(A.m_rows, A.m_columns), Anorm(A.m_rows, A.m_columns);
+	VECTOR bet(A.m_rows);
+
+	int n = A.m_rows;
+	if (!A.CholeskyDecomposition(L))
+	{
+		MATRIX At(A.m_rows, A.m_columns);
+		At = A.Transpose();
+		Anorm =  At * A; // нормализация матрицы
+		bet = At * b;
+		Anorm.CholeskyDecomposition(L);
+	}
+	else
+	{
+		Anorm = A; bet = b;
+	}
+
+	// решение системы с верхней треугольной матрицей Ly = b
+	VECTOR y(n);
+	for (int i = 0; i < n; i++)
+	{
+		*(y.m_data + i) = *(bet.m_data + i);
+		double sum = 0.0;
+		for (int k = 0; k < i; k++)
+		{
+			sum += *(L.m_data + i * n + k) * *(y.m_data + k);
+		}
+		*(y.m_data + i) -= sum;
+		*(y.m_data + i) /= *(L.m_data + i * n + i);
+		
+	}
+
+	L = L.Transpose();
+	// решение системы уравнений с верхней труегольной матрицей L^tx = y   
+	*(x.m_data + n - 1) = *(y.m_data + n - 1) / *(L.m_data + (n - 1) * n + n - 1);
+	for (int i = n - 2; i >= 0; i--)
+	{
+		double sum = 0.0;
+		for (int j = n - 1; j > i; j--)
+			sum += *(L.m_data + i * n + j) * *(x.m_data + j);
+		*(x.m_data + i) = (*(y.m_data + i) - sum) / *(L.m_data + i * n + i);
 	}
 
 
