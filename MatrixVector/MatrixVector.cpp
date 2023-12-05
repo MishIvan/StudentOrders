@@ -217,10 +217,22 @@ void TestCholeskyDecomposuition(MATRIX& A)
 
 }
 
-void TestMatrixReverse(MATRIX& A)
+void TestMatrixReverse()
 {
-    MATRIX A1(A.rows(), A.columns());
+    int size = 10;
+    MATRIX A(size, size), A1(size, size);
+    for (int i = 0; i < size; i++)
+        for (int j = 0; j < size; j++)
+            A(i, j) = fmod((double)(i + 1) ,(double)(j + 2)) +0.25;
+ 
+    cout << endl << "Matrix A" << endl;
+    cout << A << endl;
+
     A1 = A.Reverse();
+    clock_t time_end = clock();
+    double secs = (double)time_end / CLOCKS_PER_SEC;
+    cout << "Время решения " << secs << " сек" << endl;
+
 
     cout << endl << "Matrix A(-1)" << endl;
     cout << A1 << endl;
@@ -256,14 +268,13 @@ void TestLinearSystemSolve(char* appPath, char* path)
         cout << v << endl;
 
         VECTOR x(A.rows());
-        double det = 0.0;//A.Determinant();
-        bool res = false; 
+        double det = A.Determinant();
+        bool res = true; 
         clock_t  time_end;
         //res = Gauss(A, v, x);
         //CompactSchemeSolve(A, v, x);
-        //QRDecompositionSolve(A, v, x);
+        QRDecompositionSolve(A, v, x);
         //LLTDecompositionSolve(A, v, x);
-        TestMatrixReverse(A);
 
         time_end = clock();
         double secs = (double)time_end/CLOCKS_PER_SEC;
@@ -294,8 +305,8 @@ int main(int argc, char *argv[])
 {
     setlocale(LC_ALL, ""); // для от ображения кириллицы
     char path[1024]; // буфер пути файла данных
-    
+    TestMatrixReverse();
     //TestMatrixNVector(argv[0], path);
-    TestLinearSystemSolve(argv[0], path);
+    //TestLinearSystemSolve(argv[0], path);
     
 }

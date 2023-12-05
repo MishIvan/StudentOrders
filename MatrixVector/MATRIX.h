@@ -6,6 +6,7 @@
 class MATRIX
 {
 protected:
+	const int MIN_SIZE_FOR_THREAD = 100; // минимальный размер матрицы, начиная с которого запускаются потоки для вычисления обратной матрицы
 	int m_rows; //  число строк
 	int m_columns; // число столбцов
 	double* m_data; // данные матрицы
@@ -17,6 +18,7 @@ public:
 	inline int columns() { return m_columns; }
 
 	MATRIX& operator=(const MATRIX& src);
+	double& operator()(int i, int j);
 	friend MATRIX operator*(const MATRIX& matr1, const MATRIX& matr2);
 	friend ostream& operator<<(ostream& s, MATRIX& matr);
 	friend istream& operator>>(istream& s, MATRIX& matr);

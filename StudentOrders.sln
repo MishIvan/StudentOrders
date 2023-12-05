@@ -27,6 +27,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MatrixVector", "MatrixVecto
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MatrixDet", "MatrixDet\MatrixDet.vcxproj", "{FA5392FB-F840-4A90-A1B1-A8D8A420CEF6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graduates", "Graduates\Graduates.csproj", "{C5C1F14A-E135-4F01-BFC7-DDA20E93FF4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -181,6 +183,18 @@ Global
 		{FA5392FB-F840-4A90-A1B1-A8D8A420CEF6}.Release|x64.Build.0 = Release|x64
 		{FA5392FB-F840-4A90-A1B1-A8D8A420CEF6}.Release|x86.ActiveCfg = Release|Win32
 		{FA5392FB-F840-4A90-A1B1-A8D8A420CEF6}.Release|x86.Build.0 = Release|Win32
+		{C5C1F14A-E135-4F01-BFC7-DDA20E93FF4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5C1F14A-E135-4F01-BFC7-DDA20E93FF4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5C1F14A-E135-4F01-BFC7-DDA20E93FF4F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C5C1F14A-E135-4F01-BFC7-DDA20E93FF4F}.Debug|x64.Build.0 = Debug|Any CPU
+		{C5C1F14A-E135-4F01-BFC7-DDA20E93FF4F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C5C1F14A-E135-4F01-BFC7-DDA20E93FF4F}.Debug|x86.Build.0 = Debug|Any CPU
+		{C5C1F14A-E135-4F01-BFC7-DDA20E93FF4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5C1F14A-E135-4F01-BFC7-DDA20E93FF4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5C1F14A-E135-4F01-BFC7-DDA20E93FF4F}.Release|x64.ActiveCfg = Release|Any CPU
+		{C5C1F14A-E135-4F01-BFC7-DDA20E93FF4F}.Release|x64.Build.0 = Release|Any CPU
+		{C5C1F14A-E135-4F01-BFC7-DDA20E93FF4F}.Release|x86.ActiveCfg = Release|Any CPU
+		{C5C1F14A-E135-4F01-BFC7-DDA20E93FF4F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

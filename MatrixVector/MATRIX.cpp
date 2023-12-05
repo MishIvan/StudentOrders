@@ -11,7 +11,11 @@ MATRIX::MATRIX(int M, int N, double val)
 {
 	m_columns = m_rows = 0;
 	m_data = 0;
-	if (M < 1 || N < 1) return;
+	if (M < 0 || N < 0)
+	{
+		throw invalid_argument("Задана отрицательная размерность матрицы");
+		return;
+	}
 	m_rows = M; m_columns = N;
 	this->m_data = new double[this->m_rows * this->m_columns];
 	for (int i = 0; i < M; i++)
@@ -47,6 +51,16 @@ MATRIX& MATRIX::operator=(const MATRIX& src)
 		for (int j = 0; j < this->m_columns; j++)
 			*(this->m_data + i * this->m_columns + j) = *(src.m_data + i * src.m_columns + j);
 	return *this;
+}
+/// <summary>
+/// Элемент матрицы
+/// </summary>
+/// <param name="i">строка</param>
+/// <param name="j">колонка</param>
+/// <returns>элемент на i-ой строке и j-ой колонке</returns>
+double& MATRIX::operator()(int i, int j)
+{
+	return *(m_data + i * m_columns + j);
 }
 /// <summary>
 /// Перегрузка оператора умножения матриц matr1 и matr2
@@ -164,7 +178,11 @@ bool MATRIX::writeToFile(const char* fileName, MATRIX& matr)
 /// <returns></returns>
 bool MATRIX::IsSymmetric()
 {
-	if (m_rows != m_columns) return false;
+	if (m_rows != m_columns)
+	{
+		throw "Симметричной может быть только квадратная матрица";
+		return false;
+	}
 	int n = m_rows;
 	for(int i=0; i < n; i++)
 		for (int j = 0; j < n; j++)
@@ -397,7 +415,7 @@ double MATRIX::FormMatrixCompactScheme(MATRIX& alpha)
 			{
 				sum += *(alpha.m_data + i * n + j) * *(alpha.m_data +j * n + k);
 			}
-			if (*(alpha.m_data + i * n + i) == 0.0)
+			if (abs(*(alpha.m_data + i * n + i)) < 1.0e-18)
 			{
 				return 0.0;
 			}
@@ -543,7 +561,16 @@ void LLTDecompositionSolve(MATRIX& A, VECTOR& b, VECTOR& x)
 double MATRIX::Minor(int i, int j)
 {
 	int n = m_rows;
-	if (i < 0 || j < 0 || i > n - 1 || j > n - 1 || m_columns != m_rows ) return NAN;
+	if (m_columns != m_rows)
+	{
+		throw "Миноры вычисляются только для квадратной матрицы";
+		return NAN;
+	}
+	if (i < 0 || j < 0 || i > n - 1 || j > n - 1 || m_columns != m_rows) 
+	{
+		throw "Выход индексов минора за допустимые пределы";
+		return NAN;
+	}
 	MATRIX minor(n - 1,n - 1);
 
 	// заполнение матрицы минора данными
@@ -571,27 +598,35 @@ double MATRIX::Minor(int i, int j)
 MATRIX MATRIX::Reverse()
 {
 	MATRIX A(m_rows, m_columns);
-	if (m_rows != m_columns) return A;
+	if (m_rows != m_columns)
+	{
+		throw "Для вычисления обратной матрицы исходная матрица должна быть квадратной";
+		return A;
+	}
 	double det = Determinant();
+	
 	if (abs(det) >= 1.0e-18)
 	{
 		auto Minors = [&](int row_begin, int row_end, int column_begin, int column_end)
 			{
 				for (int i = row_begin; i < row_end; i++)
 					for (int j = column_begin; j < column_end; j++)
-						*(A.m_data + A.m_columns*i + j) = Minor(j, i) * pow(-1.0, i + j) / det;
+					{
+						*(A.m_data + A.m_columns * i + j) = Minor(j, i) * pow(-1.0, i + j) / det;
+					}
 			};
 		int size = A.m_rows;
-		if (size >= 100)
+		if (size >= MIN_SIZE_FOR_THREAD)
 		{
 			int size2 = size / 2;
 			thread t1(Minors, 0, size2, 0, size2);
-			t1.join();
 			thread t2(Minors, size2, size, 0, size2);
-			t2.join();
 			thread t3(Minors, 0, size2, size2, size);
-			t3.join();
 			thread t4(Minors, size2, size, size2, size);
+			
+			t1.join();
+			t2.join();
+			t3.join();
 			t4.join();
 		}
 		else
