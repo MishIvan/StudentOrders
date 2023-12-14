@@ -29,27 +29,33 @@ namespace PersonalNotes
         /// <param name="e"></param>
         private async void OnLoad(object sender, EventArgs e)
         {
-            Icon = Properties.Resources.notes32;
-            m_address_book = await Program.m_helper.GetAddressData();   
+            Icon = Properties.Resources.notes32;   
             addressTabPage.TabIndex = 0;
-            abcTabControl.SelectedIndex = 0;
-            OnABCSelectedIndexChanged(null, null);
+            int idx = 0;
 
+            abcTabControl.SelectedIndex = idx;
+            m_letter = abcTabControl.TabPages[idx].Text;
+            m_address_book = await Program.m_helper.GetAddressData(m_letter);
+            addressDataGridView.DataSource = m_address_book;
+
+            var lst = await Program.m_helper.GetNotes();
+            notesDataGridView.DataSource = lst;
         }
         /// <summary>
         /// выбрана буква алфавита
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnABCSelectedIndexChanged(object sender, EventArgs e)
+        private async void OnABCSelectedIndexChanged(object sender, EventArgs e)
         {
+            if (addressTabPage.TabIndex != 0) return;
             int idx = abcTabControl.SelectedIndex;
 
             if(idx > -1)
             {
                 m_letter = abcTabControl.TabPages[idx].Text;
-                List<AddressBook> list = m_address_book.Where(r => r.name.Substring(0, 1) == m_letter).OrderBy(r => r.name).ToList();
-                addressDataGridView.DataSource = list;
+                m_address_book = await Program.m_helper.GetAddressData(m_letter);
+                addressDataGridView.DataSource = m_address_book;
 
             }
         }
@@ -67,7 +73,7 @@ namespace PersonalNotes
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void addButton_Click(object sender, EventArgs e)
+        private async void addButton_Click(object sender, EventArgs e)
         {
             int itab = MainTabControl.SelectedIndex;
             if (itab == 0)
@@ -75,19 +81,19 @@ namespace PersonalNotes
                 AddressForm form = new AddressForm();
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    OnABCSelectedIndexChanged(sender, e);  
+                    m_letter = abcTabControl.TabPages[abcTabControl.SelectedIndex].Text;
+                    m_address_book = await Program.m_helper.GetAddressData(m_letter);
+                    addressDataGridView.DataSource = m_address_book;
                 }
             }
             else if(itab==1)
             {
-                var row = addressDataGridView.CurrentRow;
-                long id = Convert.ToInt64(row.Cells[0].Value);
-                AddressForm form = new AddressForm(id);
-                if (form.ShowDialog() == DialogResult.OK)
+                NoteForm form = new NoteForm();
+                if(form.ShowDialog() == DialogResult.OK) 
                 {
-                    OnABCSelectedIndexChanged(sender, e);
+                    var lst = await Program.m_helper.GetNotes();
+                    notesDataGridView.DataSource = lst; 
                 }
-
             }
 
         }
@@ -96,8 +102,37 @@ namespace PersonalNotes
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void editButton_Click(object sender, EventArgs e)
+        private async void editButton_Click(object sender, EventArgs e)
         {
+            int itab = MainTabControl.SelectedIndex;
+            if(itab == 0)
+            {
+                var row = addressDataGridView.CurrentRow;
+                if (row == null) return;
+                long id = Convert.ToInt64(row.Cells[0].Value);
+                AddressForm form = new AddressForm(id);
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    m_letter = abcTabControl.TabPages[abcTabControl.SelectedIndex].Text;
+                    m_address_book = await Program.m_helper.GetAddressData(m_letter);
+                    addressDataGridView.DataSource = m_address_book;
+
+                }
+
+            }
+            else if(itab ==1)
+            {
+                var row = notesDataGridView.CurrentRow;
+                if(row == null) return;
+                long id = Convert.ToInt64(row.Cells[0].Value);
+                NoteForm form = new NoteForm(id);
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    var lst = await Program.m_helper.GetNotes();
+                    notesDataGridView.DataSource = lst;
+                }
+
+            }
 
         }
         /// <summary>
@@ -105,9 +140,56 @@ namespace PersonalNotes
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void deleteButton_Click(object sender, EventArgs e)
+        private async void deleteButton_Click(object sender, EventArgs e)
         {
+            int itab = MainTabControl.SelectedIndex;
+            if (itab == 0)
+            {
+                var row = addressDataGridView.CurrentRow;
+                if (row == null) return;    
+                long id = Convert.ToInt64(row.Cells[0].Value);
+                int nrec = Program.m_helper.DeleteAddressRecord(id);   
+                if (nrec > 0)
+                {
+                    m_letter = abcTabControl.TabPages[abcTabControl.SelectedIndex].Text;
+                    m_address_book = await Program.m_helper.GetAddressData(m_letter);
+                    addressDataGridView.DataSource = m_address_book;
 
+                }
+
+            }
+            else if (itab == 1)
+            {
+                var row = notesDataGridView.CurrentRow;
+                if (row == null) return;
+                long id = Convert.ToInt64(row.Cells[0].Value);
+                int recs = Program.m_helper.DeleteNotesRecord(id);
+                if (recs > 0)
+                {
+                    var lst = await Program.m_helper.GetNotes();
+                    notesDataGridView.DataSource = lst;
+                }
+            }
+
+        }
+        /// <summary>
+        /// Обработчики контекстного меню
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void add_toolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            addButton_Click(sender, e);
+        }
+
+        private void edit_toolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            editButton_Click(sender, e);
+        }
+
+        private void delete_toolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            deleteButton_Click(sender, e);
         }
     }
 }

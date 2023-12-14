@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.MainTabControl = new System.Windows.Forms.TabControl();
             this.addressTabPage = new System.Windows.Forms.TabPage();
             this.addressDataGridView = new System.Windows.Forms.DataGridView();
@@ -38,6 +41,10 @@
             this.birth_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.address = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.comments = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mainContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.add_toolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.edit_toolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.delete_toolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.abcTabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -65,14 +72,21 @@
             this.tabPage24 = new System.Windows.Forms.TabPage();
             this.tabPage25 = new System.Windows.Forms.TabPage();
             this.notesTabPage = new System.Windows.Forms.TabPage();
+            this.notesDataGridView = new System.Windows.Forms.DataGridView();
             this.addButton = new System.Windows.Forms.Button();
             this.mainToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.editButton = new System.Windows.Forms.Button();
             this.deleteButton = new System.Windows.Forms.Button();
+            this.id_notes = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.note_datetime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.note = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MainTabControl.SuspendLayout();
             this.addressTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.addressDataGridView)).BeginInit();
+            this.mainContextMenuStrip.SuspendLayout();
             this.abcTabControl.SuspendLayout();
+            this.notesTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.notesDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // MainTabControl
@@ -109,6 +123,7 @@
             this.birth_date,
             this.address,
             this.comments});
+            this.addressDataGridView.ContextMenuStrip = this.mainContextMenuStrip;
             this.addressDataGridView.Location = new System.Drawing.Point(7, 40);
             this.addressDataGridView.MultiSelect = false;
             this.addressDataGridView.Name = "addressDataGridView";
@@ -145,6 +160,9 @@
             // birth_date
             // 
             this.birth_date.DataPropertyName = "birth_date";
+            dataGridViewCellStyle1.Format = "d";
+            dataGridViewCellStyle1.NullValue = null;
+            this.birth_date.DefaultCellStyle = dataGridViewCellStyle1;
             this.birth_date.HeaderText = "Дата рожд.";
             this.birth_date.Name = "birth_date";
             this.birth_date.ReadOnly = true;
@@ -166,6 +184,38 @@
             this.comments.Name = "comments";
             this.comments.ReadOnly = true;
             this.comments.Visible = false;
+            // 
+            // mainContextMenuStrip
+            // 
+            this.mainContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.add_toolStripMenuItem,
+            this.edit_toolStripMenuItem,
+            this.delete_toolStripMenuItem});
+            this.mainContextMenuStrip.Name = "mainContextMenuStrip";
+            this.mainContextMenuStrip.Size = new System.Drawing.Size(129, 70);
+            // 
+            // add_toolStripMenuItem
+            // 
+            this.add_toolStripMenuItem.Name = "add_toolStripMenuItem";
+            this.add_toolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.add_toolStripMenuItem.Text = "Добавить";
+            this.add_toolStripMenuItem.ToolTipText = "Добавить запись";
+            this.add_toolStripMenuItem.Click += new System.EventHandler(this.add_toolStripMenuItem_Click);
+            // 
+            // edit_toolStripMenuItem
+            // 
+            this.edit_toolStripMenuItem.Name = "edit_toolStripMenuItem";
+            this.edit_toolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.edit_toolStripMenuItem.Text = "Изменить";
+            this.edit_toolStripMenuItem.ToolTipText = "Изменить запись";
+            this.edit_toolStripMenuItem.Click += new System.EventHandler(this.edit_toolStripMenuItem_Click);
+            // 
+            // delete_toolStripMenuItem
+            // 
+            this.delete_toolStripMenuItem.Name = "delete_toolStripMenuItem";
+            this.delete_toolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.delete_toolStripMenuItem.Text = "Удалить";
+            this.delete_toolStripMenuItem.Click += new System.EventHandler(this.delete_toolStripMenuItem_Click);
             // 
             // abcTabControl
             // 
@@ -431,12 +481,31 @@
             // notesTabPage
             // 
             this.notesTabPage.BackColor = System.Drawing.Color.LightGray;
+            this.notesTabPage.Controls.Add(this.notesDataGridView);
             this.notesTabPage.Location = new System.Drawing.Point(4, 22);
             this.notesTabPage.Name = "notesTabPage";
             this.notesTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.notesTabPage.Size = new System.Drawing.Size(1047, 399);
+            this.notesTabPage.Size = new System.Drawing.Size(1047, 454);
             this.notesTabPage.TabIndex = 1;
             this.notesTabPage.Text = "Заметки";
+            // 
+            // notesDataGridView
+            // 
+            this.notesDataGridView.AllowUserToAddRows = false;
+            this.notesDataGridView.AllowUserToDeleteRows = false;
+            this.notesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.notesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.id_notes,
+            this.note_datetime,
+            this.note});
+            this.notesDataGridView.ContextMenuStrip = this.mainContextMenuStrip;
+            this.notesDataGridView.Location = new System.Drawing.Point(7, 7);
+            this.notesDataGridView.MultiSelect = false;
+            this.notesDataGridView.Name = "notesDataGridView";
+            this.notesDataGridView.ReadOnly = true;
+            this.notesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.notesDataGridView.Size = new System.Drawing.Size(1014, 433);
+            this.notesDataGridView.TabIndex = 0;
             // 
             // addButton
             // 
@@ -470,6 +539,35 @@
             this.deleteButton.UseVisualStyleBackColor = true;
             this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
             // 
+            // id_notes
+            // 
+            this.id_notes.DataPropertyName = "id";
+            this.id_notes.HeaderText = "ИД";
+            this.id_notes.Name = "id_notes";
+            this.id_notes.ReadOnly = true;
+            this.id_notes.Visible = false;
+            this.id_notes.Width = 40;
+            // 
+            // note_datetime
+            // 
+            this.note_datetime.DataPropertyName = "note_datetime";
+            dataGridViewCellStyle2.Format = "g";
+            dataGridViewCellStyle2.NullValue = null;
+            this.note_datetime.DefaultCellStyle = dataGridViewCellStyle2;
+            this.note_datetime.HeaderText = "Дата и время";
+            this.note_datetime.Name = "note_datetime";
+            this.note_datetime.ReadOnly = true;
+            // 
+            // note
+            // 
+            this.note.DataPropertyName = "comments";
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.note.DefaultCellStyle = dataGridViewCellStyle3;
+            this.note.HeaderText = "Заметки";
+            this.note.Name = "note";
+            this.note.ReadOnly = true;
+            this.note.Width = 500;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -487,7 +585,10 @@
             this.MainTabControl.ResumeLayout(false);
             this.addressTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.addressDataGridView)).EndInit();
+            this.mainContextMenuStrip.ResumeLayout(false);
             this.abcTabControl.ResumeLayout(false);
+            this.notesTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.notesDataGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -534,6 +635,14 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn birth_date;
         private System.Windows.Forms.DataGridViewTextBoxColumn address;
         private System.Windows.Forms.DataGridViewTextBoxColumn comments;
+        private System.Windows.Forms.DataGridView notesDataGridView;
+        private System.Windows.Forms.ContextMenuStrip mainContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem add_toolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem edit_toolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem delete_toolStripMenuItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id_notes;
+        private System.Windows.Forms.DataGridViewTextBoxColumn note_datetime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn note;
     }
 }
 

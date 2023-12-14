@@ -7,8 +7,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+/// Классы для работы с базой данных
+/// Создание и открытие соединения, получения информации об ошибках
+/// добавления, изменения и удаления записей в записной книжке
+
 namespace PersonalNotes
 {
+    /// <summary>
+    /// Базовый класс для работы с базой данных
+    /// создание и открытие соединения
+    /// проверка открытия базы данных, закрытие соединения
+    /// </summary>
     class BaseDBHelper : IDisposable
     {
         protected SQLiteConnection m_conn; // объект соединееия
@@ -17,6 +26,7 @@ namespace PersonalNotes
         public string errorText { get { return m_errorText; } }
         // открыто ли  соединение
         public bool isOpen { get { return m_conn.State == System.Data.ConnectionState.Open; } }
+
         /// <summary>
         /// Создать объект соединения и открыть созаное соединение
         /// </summary>
@@ -45,7 +55,10 @@ namespace PersonalNotes
                 m_conn.Close();
         }
     }
-
+    /// <summary>
+    /// Производный класс от BaseDBHelper для управления данными
+    /// получение записей, добаление, изменение, удаление данных
+    /// </summary>
     class DBHelper : BaseDBHelper
     {
         public DBHelper(string dataFileName) : base(dataFileName)
@@ -56,11 +69,12 @@ namespace PersonalNotes
         /// <summary>
         /// Выдать список адресов
         /// </summary>
-        /// <returns></returns>
-        public async Task<List<AddressBook>> GetAddressData()
+        /// <returns>список объектов, представление записей</returns>
+        public async Task<List<AddressBook>> GetAddressData(string letter = "")
         {
             List<AddressBook> lst = null;
-            string sqlText = "select id, name, birth_date, phone, address, comments from address_book order by name";
+            string sqlText = string.IsNullOrEmpty(letter) ? "select id, name, birth_date, phone, address, comments from address_book order by name" :
+                $"select id, name, birth_date, phone, address, comments from address_book where substr(name,1,1) = '{letter}' order by name";
             try
             {
                 var task = await m_conn.QueryAsync<AddressBook>(sqlText);
@@ -80,7 +94,7 @@ namespace PersonalNotes
         public AddressBook GetAddressDataRecord(long idrec)
         {
             AddressBook rec = null;
-            string sqlText = $"select id, name, birth_date, pbone, address, comments from address_book where id ={idrec}";
+            string sqlText = $"select id, name, birth_date, phone, address, comments from address_book where id ={idrec}";
             try
             {
                 rec = m_conn.QueryFirstOrDefault<AddressBook>(sqlText);
@@ -93,7 +107,7 @@ namespace PersonalNotes
             return rec;
         }
         /// <summary>
-        /// Добавить запись
+        /// Добавить запись в адресную книжку
         /// </summary>
         /// <param name="rec">реквизиты для добавления записи</param>
         /// <returns>число добавленных записей</returns>
@@ -114,7 +128,7 @@ namespace PersonalNotes
             return recs;
         }
         /// <summary>
-        /// Изменить запись по шаблону
+        /// Изменить запись в адресной книжке по шаблону
         /// </summary>
         /// <param name="rec">объект, шаблон для изменения записи</param>
         /// <returns></returns>
@@ -135,16 +149,37 @@ namespace PersonalNotes
             return recs;
         }
         /// <summary>
-        /// Выдать список гаек
+        /// Удаление записи в адресной книжке
         /// </summary>
+        /// <param name="id">идентификатор удаляемой записи</param>
         /// <returns></returns>
-        /*public async Task<List<Nut>> GetNuts()
+        public int DeleteAddressRecord(long id)
         {
-            List<Nut> lst = null;
-            string sqlText = "select id, name, d, m, s, e, p from nut";
+            int recs = 0;
+            string sqlText = $"delete from address_book where id = {id}";
             try
             {
-                var task = await m_conn.QueryAsync<Nut>(sqlText);
+                recs = m_conn.Execute(sqlText);
+            }
+            catch (Exception ex)
+            {
+                m_errorText = ex.Message;
+            }
+
+            return recs;
+
+        }
+        /// <summary>
+        /// Выдать список заметок в записной книжке
+        /// </summary>
+        /// <returns>список объектов, представлений записей</returns>
+        public async Task<List<Note>> GetNotes()
+        {
+            List<Note> lst = null;
+            string sqlText = "select id, note_datetime, comments from notes order by note_datetime";
+            try
+            {
+                var task = await m_conn.QueryAsync<Note>(sqlText);
                 lst = task.ToList();
             }
             catch (Exception ex)
@@ -154,61 +189,89 @@ namespace PersonalNotes
             return lst;
         }
         /// <summary>
-        /// Выдать список шайб
+        /// Возвратить запись из заметок по идентификатору
         /// </summary>
+        /// <param name="idrec"></param>
         /// <returns></returns>
-        public async Task<List<Washer>> GetWashers()
+        public Note GetNotesDataRecord(long idrec)
         {
-            List<Washer> lst = null;
-            string sqlText = "select id, name, d, d1, d2, s from washer";
+            Note rec = null;
+            string sqlText = $"select id, note_datetime, comments from notes where id ={idrec}";
             try
             {
-                var task = await m_conn.QueryAsync<Washer>(sqlText);
-                lst = task.ToList();
+                rec = m_conn.QueryFirstOrDefault<Note>(sqlText);
             }
             catch (Exception ex)
             {
                 m_errorText = ex.Message;
             }
-            return lst;
+
+            return rec;
+        }
+
+        /// <summary>
+        /// Добавить запись в заметки
+        /// </summary>
+        /// <param name="rec">реквизиты для добавления записи</param>
+        /// <returns>число добавленных записей</returns>
+        public int AddNoteRecord(Note rec)
+        {
+            int recs = 0;
+            string sdate = rec.note_datetime.ToString("yyyy-MM-dd HH:mm:ss");
+            string sqlText = $"insert into notes(note_datetime,comments) values( '{sdate}', '{rec.comments}')";
+            try
+            {
+                recs = m_conn.Execute(sqlText);
+            }
+            catch (Exception ex)
+            {
+                m_errorText = ex.Message;
+            }
+
+            return recs;
         }
         /// <summary>
-        /// Выдать список материалов
+        /// Изменить запись по шаблону
         /// </summary>
+        /// <param name="rec">объект, шаблон для изменения записи</param>
         /// <returns></returns>
-        public async Task<List<Material>> GetMaterials()
+        public int UpdateNotesRecord(Note rec)
         {
-            List<Material> lst = null;
-            string sqlText = "select id, name, sigmt, sigmv from material order by name";
+            int recs = 0;
+            string sdate = rec.note_datetime.ToString("yyyy-MM-dd HH:mm:ss");
+            string sqlText = $"update notes set note_datetime = '{sdate}', comments = '{rec.comments}' where id = {rec.id}";
             try
             {
-                var task = await m_conn.QueryAsync<Material>(sqlText);
-                lst = task.ToList();
+                recs = m_conn.Execute(sqlText);
             }
             catch (Exception ex)
             {
                 m_errorText = ex.Message;
             }
-            return lst;
+
+            return recs;
         }
         /// <summary>
-        /// Заполнить список диаметров болтов
+        /// Удаление записи в записной книжке
         /// </summary>
+        /// <param name="id">идентификатор удаляемой записи</param>
         /// <returns></returns>
-        public async Task<List<double>> GetBoltDiams()
+        public int DeleteNotesRecord(long id)
         {
-            List<double> lst = null;
-            string sqlText = "select distinct d from bolt order by d";
+            int recs = 0;
+            string sqlText = $"delete from notes where id = {id}";
             try
             {
-                var task = await m_conn.QueryAsync<double>(sqlText);
-                lst = task.ToList();
+                recs = m_conn.Execute(sqlText);
             }
             catch (Exception ex)
             {
                 m_errorText = ex.Message;
             }
-            return lst;
-        }*/
+
+            return recs;
+
+        }
+
     }
 }
