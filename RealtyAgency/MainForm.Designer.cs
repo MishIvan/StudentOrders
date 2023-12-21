@@ -28,23 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
-            this.usersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.updateUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aminToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.agentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changePasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dealToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contractTabControl = new System.Windows.Forms.TabControl();
             this.contractTabPage = new System.Windows.Forms.TabPage();
-            this.realtyTabPage = new System.Windows.Forms.TabPage();
-            this.principalsTabPage = new System.Windows.Forms.TabPage();
             this.contractsDataGridView = new System.Windows.Forms.DataGridView();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Contract = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -59,6 +56,7 @@
             this.deal_status_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.csumma = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.realtyTabPage = new System.Windows.Forms.TabPage();
             this.realtyDataGridView = new System.Windows.Forms.DataGridView();
             this.id_r = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.address_r = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -68,18 +66,19 @@
             this.mortage = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.secondary = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.repair = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.principalsTabPage = new System.Windows.Forms.TabPage();
             this.mainMenuStrip.SuspendLayout();
             this.contractTabControl.SuspendLayout();
             this.contractTabPage.SuspendLayout();
-            this.realtyTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.contractsDataGridView)).BeginInit();
+            this.realtyTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.realtyDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // mainMenuStrip
             // 
             this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.usersToolStripMenuItem,
+            this.aminToolStripMenuItem,
             this.dealToolStripMenuItem});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
@@ -87,36 +86,28 @@
             this.mainMenuStrip.TabIndex = 1;
             this.mainMenuStrip.Text = "menuStrip1";
             // 
-            // usersToolStripMenuItem
+            // aminToolStripMenuItem
             // 
-            this.usersToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addUserToolStripMenuItem,
-            this.updateUserToolStripMenuItem,
-            this.deleteUserToolStripMenuItem});
-            this.usersToolStripMenuItem.Name = "usersToolStripMenuItem";
-            this.usersToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
-            this.usersToolStripMenuItem.Text = "Агенты";
+            this.aminToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.agentsToolStripMenuItem,
+            this.changePasswordToolStripMenuItem});
+            this.aminToolStripMenuItem.Name = "aminToolStripMenuItem";
+            this.aminToolStripMenuItem.Size = new System.Drawing.Size(134, 20);
+            this.aminToolStripMenuItem.Text = "Администрирование";
             // 
-            // addUserToolStripMenuItem
+            // agentsToolStripMenuItem
             // 
-            this.addUserToolStripMenuItem.Name = "addUserToolStripMenuItem";
-            this.addUserToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.addUserToolStripMenuItem.Text = "Добавить";
-            this.addUserToolStripMenuItem.Click += new System.EventHandler(this.addUserToolStripMenuItem_Click);
+            this.agentsToolStripMenuItem.Name = "agentsToolStripMenuItem";
+            this.agentsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.agentsToolStripMenuItem.Text = "Агенты";
+            this.agentsToolStripMenuItem.Click += new System.EventHandler(this.agentsToolStripMenuItem_Click);
             // 
-            // updateUserToolStripMenuItem
+            // changePasswordToolStripMenuItem
             // 
-            this.updateUserToolStripMenuItem.Name = "updateUserToolStripMenuItem";
-            this.updateUserToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.updateUserToolStripMenuItem.Text = "Изменить";
-            this.updateUserToolStripMenuItem.Click += new System.EventHandler(this.updateUserToolStripMenuItem_Click);
-            // 
-            // deleteUserToolStripMenuItem
-            // 
-            this.deleteUserToolStripMenuItem.Name = "deleteUserToolStripMenuItem";
-            this.deleteUserToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.deleteUserToolStripMenuItem.Text = "Удалить";
-            this.deleteUserToolStripMenuItem.Click += new System.EventHandler(this.deleteUserToolStripMenuItem_Click);
+            this.changePasswordToolStripMenuItem.Name = "changePasswordToolStripMenuItem";
+            this.changePasswordToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.changePasswordToolStripMenuItem.Text = "Изменить свой пароль";
+            this.changePasswordToolStripMenuItem.Click += new System.EventHandler(this.changePasswordToolStripMenuItem_Click);
             // 
             // dealToolStripMenuItem
             // 
@@ -131,21 +122,21 @@
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.addToolStripMenuItem.Text = "Добавить запись";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
             // updateToolStripMenuItem
             // 
             this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
-            this.updateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.updateToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.updateToolStripMenuItem.Text = "Изменить запись";
             this.updateToolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.deleteToolStripMenuItem.Text = "Удалить запись";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
@@ -170,27 +161,6 @@
             this.contractTabPage.Size = new System.Drawing.Size(857, 473);
             this.contractTabPage.TabIndex = 0;
             this.contractTabPage.Text = "Сделки";
-            // 
-            // realtyTabPage
-            // 
-            this.realtyTabPage.BackColor = System.Drawing.Color.LightGray;
-            this.realtyTabPage.Controls.Add(this.realtyDataGridView);
-            this.realtyTabPage.Location = new System.Drawing.Point(4, 22);
-            this.realtyTabPage.Name = "realtyTabPage";
-            this.realtyTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.realtyTabPage.Size = new System.Drawing.Size(857, 473);
-            this.realtyTabPage.TabIndex = 1;
-            this.realtyTabPage.Text = "Объекты недвижимости";
-            // 
-            // principalsTabPage
-            // 
-            this.principalsTabPage.BackColor = System.Drawing.Color.LightGray;
-            this.principalsTabPage.Location = new System.Drawing.Point(4, 22);
-            this.principalsTabPage.Name = "principalsTabPage";
-            this.principalsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.principalsTabPage.Size = new System.Drawing.Size(857, 473);
-            this.principalsTabPage.TabIndex = 2;
-            this.principalsTabPage.Text = "Контрагенты";
             // 
             // contractsDataGridView
             // 
@@ -309,9 +279,9 @@
             // csumma
             // 
             this.csumma.DataPropertyName = "csumma";
-            dataGridViewCellStyle25.Format = "N2";
-            dataGridViewCellStyle25.NullValue = null;
-            this.csumma.DefaultCellStyle = dataGridViewCellStyle25;
+            dataGridViewCellStyle13.Format = "N2";
+            dataGridViewCellStyle13.NullValue = null;
+            this.csumma.DefaultCellStyle = dataGridViewCellStyle13;
             this.csumma.HeaderText = "Сумма";
             this.csumma.Name = "csumma";
             this.csumma.ReadOnly = true;
@@ -322,6 +292,17 @@
             this.status.HeaderText = "Статус";
             this.status.Name = "status";
             this.status.ReadOnly = true;
+            // 
+            // realtyTabPage
+            // 
+            this.realtyTabPage.BackColor = System.Drawing.Color.LightGray;
+            this.realtyTabPage.Controls.Add(this.realtyDataGridView);
+            this.realtyTabPage.Location = new System.Drawing.Point(4, 22);
+            this.realtyTabPage.Name = "realtyTabPage";
+            this.realtyTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.realtyTabPage.Size = new System.Drawing.Size(857, 473);
+            this.realtyTabPage.TabIndex = 1;
+            this.realtyTabPage.Text = "Объекты недвижимости";
             // 
             // realtyDataGridView
             // 
@@ -362,9 +343,9 @@
             // full_square
             // 
             this.full_square.DataPropertyName = "full_square";
-            dataGridViewCellStyle26.Format = "N2";
-            dataGridViewCellStyle26.NullValue = null;
-            this.full_square.DefaultCellStyle = dataGridViewCellStyle26;
+            dataGridViewCellStyle14.Format = "N2";
+            dataGridViewCellStyle14.NullValue = null;
+            this.full_square.DefaultCellStyle = dataGridViewCellStyle14;
             this.full_square.HeaderText = "Общая площадь";
             this.full_square.Name = "full_square";
             this.full_square.ReadOnly = true;
@@ -373,9 +354,9 @@
             // room_square
             // 
             this.room_square.DataPropertyName = "room_square";
-            dataGridViewCellStyle27.Format = "N2";
-            dataGridViewCellStyle27.NullValue = null;
-            this.room_square.DefaultCellStyle = dataGridViewCellStyle27;
+            dataGridViewCellStyle15.Format = "N2";
+            dataGridViewCellStyle15.NullValue = null;
+            this.room_square.DefaultCellStyle = dataGridViewCellStyle15;
             this.room_square.HeaderText = "Жилая площадь";
             this.room_square.Name = "room_square";
             this.room_square.ReadOnly = true;
@@ -384,9 +365,9 @@
             // room_count
             // 
             this.room_count.DataPropertyName = "room_count";
-            dataGridViewCellStyle28.Format = "N0";
-            dataGridViewCellStyle28.NullValue = null;
-            this.room_count.DefaultCellStyle = dataGridViewCellStyle28;
+            dataGridViewCellStyle16.Format = "N0";
+            dataGridViewCellStyle16.NullValue = null;
+            this.room_count.DefaultCellStyle = dataGridViewCellStyle16;
             this.room_count.HeaderText = "Число комнат";
             this.room_count.Name = "room_count";
             this.room_count.ReadOnly = true;
@@ -420,6 +401,16 @@
             this.repair.ReadOnly = true;
             this.repair.Width = 140;
             // 
+            // principalsTabPage
+            // 
+            this.principalsTabPage.BackColor = System.Drawing.Color.LightGray;
+            this.principalsTabPage.Location = new System.Drawing.Point(4, 22);
+            this.principalsTabPage.Name = "principalsTabPage";
+            this.principalsTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.principalsTabPage.Size = new System.Drawing.Size(857, 473);
+            this.principalsTabPage.TabIndex = 2;
+            this.principalsTabPage.Text = "Контрагенты";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -436,8 +427,8 @@
             this.mainMenuStrip.PerformLayout();
             this.contractTabControl.ResumeLayout(false);
             this.contractTabPage.ResumeLayout(false);
-            this.realtyTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.contractsDataGridView)).EndInit();
+            this.realtyTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.realtyDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -446,10 +437,8 @@
 
         #endregion
         private System.Windows.Forms.MenuStrip mainMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem usersToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addUserToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem updateUserToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deleteUserToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aminToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem agentsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dealToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
@@ -481,5 +470,6 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn mortage;
         private System.Windows.Forms.DataGridViewCheckBoxColumn secondary;
         private System.Windows.Forms.DataGridViewTextBoxColumn repair;
+        private System.Windows.Forms.ToolStripMenuItem changePasswordToolStripMenuItem;
     }
 }

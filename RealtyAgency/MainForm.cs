@@ -25,12 +25,12 @@ namespace RealtyAgency
             if(Program.m_userrole == 2) // руководитель видит договоры своих подчинённых
             {
                 lst = lst.Where(el => el.idchief== Program.m_userid).ToList();
-                usersToolStripMenuItem.Visible = false;
+                agentsToolStripMenuItem.Visible = false;
             }
             else if(Program.m_userrole == 3) // агент работает только со своими договорами
             {
-                lst = lst.Where(el => el.idagent == Program.m_userid).ToList();
-                usersToolStripMenuItem.Visible = false;
+                lst = lst.Where(el => el.id == Program.m_userid).ToList();
+                agentsToolStripMenuItem.Visible = false;
             }
             contractsDataGridView.DataSource = lst;
         }
@@ -102,30 +102,14 @@ namespace RealtyAgency
             }
 
         }
-        /// <summary>
-        /// Добавить агента
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void addUserToolStripMenuItem_Click(object sender, EventArgs e)
+ 
+        private void agentsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            AgentForm agfrm = new AgentForm();
+            agfrm.ShowDialog();
         }
-        /// <summary>
-        /// Изменить запись выбранного агента
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void updateUserToolStripMenuItem_Click(object sender, EventArgs e)
-        {
 
-        }
-        /// <summary>
-        /// Удалить запись выбранного агента
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void deleteUserToolStripMenuItem_Click(object sender, EventArgs e)
+        private void changePasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }

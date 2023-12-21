@@ -62,6 +62,26 @@ namespace RealtyAgency
             return lst;
         }
         /// <summary>
+        /// Получить объект записи агента по его идентификатору
+        /// </summary>
+        /// <param name="agentId">идентификатор агента</param>
+        /// <returns>Объект записи об агенте</returns>
+        public Agent GetAgentById(long agentId)
+        {
+            Agent agent = null;
+            string sqlText = $"select id, name, phone, email, password, idchief from public.agents where id = {agentId}";
+            try
+            {
+                agent = m_connection.QueryFirstOrDefault<Agent>(sqlText);
+            }
+            catch (Exception ex)
+            {
+
+                m_errorText = ex.Message;
+            }
+            return agent;
+        }
+        /// <summary>
         /// Добавить новую запись об агенте
         /// </summary>
         /// <param name="agent">Шаблон для добавлпения записи</param>

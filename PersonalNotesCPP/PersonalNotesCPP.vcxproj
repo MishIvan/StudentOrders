@@ -20,8 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
-    <ProjectGuid>{7E94C990-5FB6-4DCC-BDAE-4DBA9A4BDE17}</ProjectGuid>
-    <Keyword>MFCProj</Keyword>
+    <ProjectGuid>{f18f823f-5be8-4aa8-a7ec-f1b34a418f20}</ProjectGuid>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <Keyword>ManagedCProj</Keyword>
     <RootNamespace>PersonalNotesCPP</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -30,31 +31,29 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
+    <CLRSupport>true</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
-    <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CLRSupport>true</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
-    <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
+    <CLRSupport>true</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
-    <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CLRSupport>true</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
-    <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -74,140 +73,100 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
+  <PropertyGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
+      <AdditionalDependencies />
       <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>main</EntryPointSymbol>
     </Link>
-    <Midl>
-      <MkTypLibCompatible>false</MkTypLibCompatible>
-      <ValidateAllParameters>true</ValidateAllParameters>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </Midl>
-    <ResourceCompile>
-      <Culture>0x0419</Culture>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
+      <AdditionalDependencies />
       <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>main</EntryPointSymbol>
     </Link>
-    <Midl>
-      <MkTypLibCompatible>false</MkTypLibCompatible>
-      <ValidateAllParameters>true</ValidateAllParameters>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </Midl>
-    <ResourceCompile>
-      <Culture>0x0419</Culture>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
+      <AdditionalDependencies />
       <SubSystem>Windows</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
+      <EntryPointSymbol>main</EntryPointSymbol>
     </Link>
-    <Midl>
-      <MkTypLibCompatible>false</MkTypLibCompatible>
-      <ValidateAllParameters>true</ValidateAllParameters>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </Midl>
-    <ResourceCompile>
-      <Culture>0x0419</Culture>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
+      <AdditionalDependencies />
       <SubSystem>Windows</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
+      <EntryPointSymbol>main</EntryPointSymbol>
     </Link>
-    <Midl>
-      <MkTypLibCompatible>false</MkTypLibCompatible>
-      <ValidateAllParameters>true</ValidateAllParameters>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </Midl>
-    <ResourceCompile>
-      <Culture>0x0419</Culture>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="framework.h" />
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="PersonalNotesCPP.h" />
-    <ClInclude Include="PersonalNotesCPPDlg.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="targetver.h" />
+    <ResourceCompile Include="app.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MainForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="CppCLR_WinFormsProject.cpp" />
+    <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="PersonalNotesCPP.cpp" />
-    <ClCompile Include="PersonalNotesCPPDlg.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="PersonalNotesCPP.rc" />
+    <Image Include="add_icon48.png" />
+    <Image Include="app.ico" />
+    <Image Include="cancel48.png" />
+    <Image Include="delete_icon48.png" />
+    <Image Include="edit_icon48.png" />
+    <Image Include="notes32.ico" />
+    <Image Include="OK48.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\PersonalNotesCPP.rc2" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\PersonalNotesCPP.ico" />
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.h</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

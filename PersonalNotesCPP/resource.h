@@ -1,21 +1,21 @@
-п»ї//{{NO_DEPENDENCIES}}
-// Р’РєР»СЋС‡Р°РµРјС‹Р№ С„Р°Р№Р», СЃРѕР·РґР°РЅРЅС‹Р№ РІ Microsoft Visual C++.
-// РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ PersonalNotesCPP.rc
+//{{NO_DEPENDENCIES}}
+// Включаемый файл, созданный в Microsoft Visual C++.
+// Используется app.rc
 //
-#define IDM_ABOUTBOX                    0x0010
-#define IDD_ABOUTBOX                    100
-#define IDS_ABOUTBOX                    101
-#define IDD_PERSONALNOTESCPP_DIALOG     102
-#define IDR_MAINFRAME                   128
-#define IDC_LIST2                       1004
+#define IDB_PNG1                        101
+#define IDB_PNG2                        102
+#define IDB_PNG3                        103
+#define IDB_PNG4                        104
+#define IDB_PNG5                        105
+#define IDI_ICON1                       106
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        130
-#define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1005
+#define _APS_NEXT_RESOURCE_VALUE        107
+#define _APS_NEXT_COMMAND_VALUE         40001
+#define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
