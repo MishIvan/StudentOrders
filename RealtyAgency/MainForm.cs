@@ -102,16 +102,25 @@ namespace RealtyAgency
             }
 
         }
- 
+        /// <summary>
+        /// Управление списком агентов, они же пользоват ели системы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void agentsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AgentForm agfrm = new AgentForm();
             agfrm.ShowDialog();
         }
-
+        /// <summary>
+        /// Изменить свой пароль
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void changePasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            PasswordForm pwdform = new PasswordForm();
+            pwdform.ShowDialog();
         }
     }
 }

@@ -119,7 +119,7 @@
             // 
             // deleteButton
             // 
-            this.deleteButton.Image = global::RealtyAgency.Properties.Resources.icons8_plus_32;
+            this.deleteButton.Image = global::RealtyAgency.Properties.Resources.icons8_minus_32;
             this.deleteButton.Location = new System.Drawing.Point(512, 153);
             this.deleteButton.Name = "deleteButton";
             this.deleteButton.Size = new System.Drawing.Size(75, 40);

@@ -148,7 +148,7 @@ namespace RealtyAgency
 
             long id = Program.m_helper.UpdateAgent(agent);
             if (id < 1)
-                Program.ErrorMessageDB();
+                Program.ErrorMessageDB(); 
             else // если запись добавлена, обновить списки
             {
                 var lst = await Program.m_helper.GetAgents();

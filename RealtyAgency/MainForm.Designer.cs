@@ -28,10 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.aminToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.agentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,21 +57,32 @@
             this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.realtyTabPage = new System.Windows.Forms.TabPage();
             this.realtyDataGridView = new System.Windows.Forms.DataGridView();
+            this.principalsTabPage = new System.Windows.Forms.TabPage();
+            this.principalsDataGridView = new System.Windows.Forms.DataGridView();
+            this.id_p = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.name_p = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.phone = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.email = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.address_p = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.passport = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.inn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.kpp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ogrn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.id_r = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.address_r = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.full_square = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.room_square = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.room_count = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mortage = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.secondary = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.repair = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.principalsTabPage = new System.Windows.Forms.TabPage();
             this.mainMenuStrip.SuspendLayout();
             this.contractTabControl.SuspendLayout();
             this.contractTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.contractsDataGridView)).BeginInit();
             this.realtyTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.realtyDataGridView)).BeginInit();
+            this.principalsTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.principalsDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // mainMenuStrip
@@ -279,9 +289,9 @@
             // csumma
             // 
             this.csumma.DataPropertyName = "csumma";
-            dataGridViewCellStyle13.Format = "N2";
-            dataGridViewCellStyle13.NullValue = null;
-            this.csumma.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle1.Format = "N2";
+            dataGridViewCellStyle1.NullValue = null;
+            this.csumma.DefaultCellStyle = dataGridViewCellStyle1;
             this.csumma.HeaderText = "Сумма";
             this.csumma.Name = "csumma";
             this.csumma.ReadOnly = true;
@@ -313,7 +323,6 @@
             this.id_r,
             this.address_r,
             this.full_square,
-            this.room_square,
             this.room_count,
             this.mortage,
             this.secondary,
@@ -323,6 +332,108 @@
             this.realtyDataGridView.ReadOnly = true;
             this.realtyDataGridView.Size = new System.Drawing.Size(844, 460);
             this.realtyDataGridView.TabIndex = 0;
+            // 
+            // principalsTabPage
+            // 
+            this.principalsTabPage.BackColor = System.Drawing.Color.LightGray;
+            this.principalsTabPage.Controls.Add(this.principalsDataGridView);
+            this.principalsTabPage.Location = new System.Drawing.Point(4, 22);
+            this.principalsTabPage.Name = "principalsTabPage";
+            this.principalsTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.principalsTabPage.Size = new System.Drawing.Size(857, 473);
+            this.principalsTabPage.TabIndex = 2;
+            this.principalsTabPage.Text = "Контрагенты";
+            // 
+            // principalsDataGridView
+            // 
+            this.principalsDataGridView.AllowUserToAddRows = false;
+            this.principalsDataGridView.AllowUserToDeleteRows = false;
+            this.principalsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.principalsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.id_p,
+            this.name_p,
+            this.phone,
+            this.email,
+            this.address_p,
+            this.passport,
+            this.inn,
+            this.kpp,
+            this.ogrn});
+            this.principalsDataGridView.Location = new System.Drawing.Point(7, 7);
+            this.principalsDataGridView.MultiSelect = false;
+            this.principalsDataGridView.Name = "principalsDataGridView";
+            this.principalsDataGridView.ReadOnly = true;
+            this.principalsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.principalsDataGridView.Size = new System.Drawing.Size(844, 460);
+            this.principalsDataGridView.TabIndex = 0;
+            // 
+            // id_p
+            // 
+            this.id_p.DataPropertyName = "id";
+            this.id_p.HeaderText = "ИД";
+            this.id_p.Name = "id_p";
+            this.id_p.ReadOnly = true;
+            this.id_p.Visible = false;
+            // 
+            // name_p
+            // 
+            this.name_p.DataPropertyName = "name";
+            this.name_p.HeaderText = "Наименование (ФИО)";
+            this.name_p.Name = "name_p";
+            this.name_p.ReadOnly = true;
+            this.name_p.Width = 270;
+            // 
+            // phone
+            // 
+            this.phone.DataPropertyName = "phone";
+            this.phone.HeaderText = "Тел.";
+            this.phone.Name = "phone";
+            this.phone.ReadOnly = true;
+            // 
+            // email
+            // 
+            this.email.DataPropertyName = "email";
+            this.email.HeaderText = "e-mail";
+            this.email.Name = "email";
+            this.email.ReadOnly = true;
+            this.email.Width = 120;
+            // 
+            // address_p
+            // 
+            this.address_p.DataPropertyName = "address";
+            this.address_p.HeaderText = "Юр. адрес";
+            this.address_p.Name = "address_p";
+            this.address_p.ReadOnly = true;
+            this.address_p.Visible = false;
+            // 
+            // passport
+            // 
+            this.passport.DataPropertyName = "passport";
+            this.passport.HeaderText = "Паспортные данные";
+            this.passport.Name = "passport";
+            this.passport.ReadOnly = true;
+            this.passport.Visible = false;
+            // 
+            // inn
+            // 
+            this.inn.DataPropertyName = "inn";
+            this.inn.HeaderText = "ИНН";
+            this.inn.Name = "inn";
+            this.inn.ReadOnly = true;
+            // 
+            // kpp
+            // 
+            this.kpp.DataPropertyName = "kpp";
+            this.kpp.HeaderText = "КПП";
+            this.kpp.Name = "kpp";
+            this.kpp.ReadOnly = true;
+            // 
+            // ogrn
+            // 
+            this.ogrn.DataPropertyName = "ogrn";
+            this.ogrn.HeaderText = "ОГРН";
+            this.ogrn.Name = "ogrn";
+            this.ogrn.ReadOnly = true;
             // 
             // id_r
             // 
@@ -338,36 +449,25 @@
             this.address_r.HeaderText = "Адрес";
             this.address_r.Name = "address_r";
             this.address_r.ReadOnly = true;
-            this.address_r.Width = 200;
+            this.address_r.Width = 250;
             // 
             // full_square
             // 
             this.full_square.DataPropertyName = "full_square";
-            dataGridViewCellStyle14.Format = "N2";
-            dataGridViewCellStyle14.NullValue = null;
-            this.full_square.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle2.Format = "N2";
+            dataGridViewCellStyle2.NullValue = null;
+            this.full_square.DefaultCellStyle = dataGridViewCellStyle2;
             this.full_square.HeaderText = "Общая площадь";
             this.full_square.Name = "full_square";
             this.full_square.ReadOnly = true;
             this.full_square.Width = 80;
             // 
-            // room_square
-            // 
-            this.room_square.DataPropertyName = "room_square";
-            dataGridViewCellStyle15.Format = "N2";
-            dataGridViewCellStyle15.NullValue = null;
-            this.room_square.DefaultCellStyle = dataGridViewCellStyle15;
-            this.room_square.HeaderText = "Жилая площадь";
-            this.room_square.Name = "room_square";
-            this.room_square.ReadOnly = true;
-            this.room_square.Width = 80;
-            // 
             // room_count
             // 
             this.room_count.DataPropertyName = "room_count";
-            dataGridViewCellStyle16.Format = "N0";
-            dataGridViewCellStyle16.NullValue = null;
-            this.room_count.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle3.Format = "N0";
+            dataGridViewCellStyle3.NullValue = null;
+            this.room_count.DefaultCellStyle = dataGridViewCellStyle3;
             this.room_count.HeaderText = "Число комнат";
             this.room_count.Name = "room_count";
             this.room_count.ReadOnly = true;
@@ -399,17 +499,7 @@
             this.repair.HeaderText = "Ремонт";
             this.repair.Name = "repair";
             this.repair.ReadOnly = true;
-            this.repair.Width = 140;
-            // 
-            // principalsTabPage
-            // 
-            this.principalsTabPage.BackColor = System.Drawing.Color.LightGray;
-            this.principalsTabPage.Location = new System.Drawing.Point(4, 22);
-            this.principalsTabPage.Name = "principalsTabPage";
-            this.principalsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.principalsTabPage.Size = new System.Drawing.Size(857, 473);
-            this.principalsTabPage.TabIndex = 2;
-            this.principalsTabPage.Text = "Контрагенты";
+            this.repair.Width = 170;
             // 
             // MainForm
             // 
@@ -430,6 +520,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.contractsDataGridView)).EndInit();
             this.realtyTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.realtyDataGridView)).EndInit();
+            this.principalsTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.principalsDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -462,14 +554,23 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn csumma;
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
         private System.Windows.Forms.DataGridView realtyDataGridView;
+        private System.Windows.Forms.ToolStripMenuItem changePasswordToolStripMenuItem;
+        private System.Windows.Forms.DataGridView principalsDataGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id_p;
+        private System.Windows.Forms.DataGridViewTextBoxColumn name_p;
+        private System.Windows.Forms.DataGridViewTextBoxColumn phone;
+        private System.Windows.Forms.DataGridViewTextBoxColumn email;
+        private System.Windows.Forms.DataGridViewTextBoxColumn address_p;
+        private System.Windows.Forms.DataGridViewTextBoxColumn passport;
+        private System.Windows.Forms.DataGridViewTextBoxColumn inn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn kpp;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ogrn;
         private System.Windows.Forms.DataGridViewTextBoxColumn id_r;
         private System.Windows.Forms.DataGridViewTextBoxColumn address_r;
         private System.Windows.Forms.DataGridViewTextBoxColumn full_square;
-        private System.Windows.Forms.DataGridViewTextBoxColumn room_square;
         private System.Windows.Forms.DataGridViewTextBoxColumn room_count;
         private System.Windows.Forms.DataGridViewCheckBoxColumn mortage;
         private System.Windows.Forms.DataGridViewCheckBoxColumn secondary;
         private System.Windows.Forms.DataGridViewTextBoxColumn repair;
-        private System.Windows.Forms.ToolStripMenuItem changePasswordToolStripMenuItem;
     }
 }

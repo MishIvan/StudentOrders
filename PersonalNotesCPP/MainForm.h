@@ -609,9 +609,9 @@ namespace CppCLRWinFormsProject {
 #pragma endregion
 	private: System::Void OnLoad(System::Object^ sender, System::EventArgs^ e) 
 	{
-		
+		addressDataGridView->DataSource = nullptr;
 	}
-private: System::Void addButton_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-};
+	private: System::Void addButton_Click(System::Object^ sender, System::EventArgs^ e) {
+	}
+	};
 }

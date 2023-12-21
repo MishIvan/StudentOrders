@@ -82,6 +82,28 @@ namespace RealtyAgency
             return agent;
         }
         /// <summary>
+        /// Установить пароль пользователя
+        /// </summary>
+        /// <param name="agentId">идентификатор пользователя</param>
+        /// <param name="password">устанавливаемый пароль</param>
+        /// <returns>идентификатор записи, для которой устанавливается пароль</returns>
+        public long ChangeAgentPassword(long agentId, string password)
+        {
+            long id = 0;
+            string sqlText = $"update public.agents set password = @passw where id = @pid returning id";
+            try
+            {
+                id = m_connection.ExecuteScalar<long>(sqlText, new { pid = agentId, passw = password });
+            }
+            catch (Exception ex)
+            {
+
+                m_errorText = ex.Message;
+            }
+            return id;
+
+        }
+        /// <summary>
         /// Добавить новую запись об агенте
         /// </summary>
         /// <param name="agent">Шаблон для добавлпения записи</param>
