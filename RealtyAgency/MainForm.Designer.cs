@@ -31,6 +31,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.aminToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.agentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,6 +74,7 @@
             this.full_square = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.room_count = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mortage = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.rsumma = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.secondary = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.repair = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mainMenuStrip.SuspendLayout();
@@ -325,6 +327,7 @@
             this.full_square,
             this.room_count,
             this.mortage,
+            this.rsumma,
             this.secondary,
             this.repair});
             this.realtyDataGridView.Location = new System.Drawing.Point(7, 7);
@@ -483,6 +486,16 @@
             this.mortage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.mortage.Width = 70;
             // 
+            // rsumma
+            // 
+            this.rsumma.DataPropertyName = "rsumma";
+            dataGridViewCellStyle4.Format = "N2";
+            dataGridViewCellStyle4.NullValue = null;
+            this.rsumma.DefaultCellStyle = dataGridViewCellStyle4;
+            this.rsumma.HeaderText = "Стоимость за кв. м";
+            this.rsumma.Name = "rsumma";
+            this.rsumma.ReadOnly = true;
+            // 
             // secondary
             // 
             this.secondary.DataPropertyName = "secondary";
@@ -570,6 +583,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn full_square;
         private System.Windows.Forms.DataGridViewTextBoxColumn room_count;
         private System.Windows.Forms.DataGridViewCheckBoxColumn mortage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn rsumma;
         private System.Windows.Forms.DataGridViewCheckBoxColumn secondary;
         private System.Windows.Forms.DataGridViewTextBoxColumn repair;
     }

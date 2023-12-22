@@ -29,6 +29,12 @@
     <ClInclude Include="MainForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BaseDBHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Models.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppCLR_WinFormsProject.cpp">
@@ -43,31 +49,16 @@
     <ClCompile Include="MainForm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BaseDBHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Models.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="app.ico">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="add_icon48.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="cancel48.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="delete_icon48.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="edit_icon48.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="OK48.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="notes32.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
 </Project>

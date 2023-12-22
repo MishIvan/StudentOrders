@@ -69,11 +69,15 @@ namespace RealtyAgency
         public long id { get; set; }
         public string address { get; set; }
         public double full_square { get; set; }
-        public double room_square { get; set; }
         public int room_count { get; set; }
         public bool mortage { get; set; }
         public bool seconary { get; set; }
         public string repair { get; set; }
+        public double rsumma { get; set; }
+        public override string ToString()
+        {
+            return $"{address} - {full_square}";
+        }
     }
     /// <summary>
     /// Модель записи принципала физлица или юрлица
