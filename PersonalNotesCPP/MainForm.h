@@ -1,6 +1,6 @@
 #pragma once
-#include "BaseDBHelper.h"
-#include <future>
+#include "AddressForm.h"
+#include "NoteForm.h"
 
 namespace CppCLRWinFormsProject {
 
@@ -75,18 +75,21 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::TabPage^ tabPage25;
 	private: System::Windows::Forms::TabPage^ notesTabPage;
 	private: System::Windows::Forms::DataGridView^ notesDataGridView;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ id_notes;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ note_datetime;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ note;
+
+
+
 	private: System::Windows::Forms::Button^ deleteButton;
 	private: System::Windows::Forms::Button^ editButton;
 	private: System::Windows::Forms::Button^ addButton;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ id_note;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ note_datetime;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ note;
 
 	private:
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -135,12 +138,12 @@ namespace CppCLRWinFormsProject {
 			this->tabPage25 = (gcnew System::Windows::Forms::TabPage());
 			this->notesTabPage = (gcnew System::Windows::Forms::TabPage());
 			this->notesDataGridView = (gcnew System::Windows::Forms::DataGridView());
-			this->id_notes = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->note_datetime = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->note = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->deleteButton = (gcnew System::Windows::Forms::Button());
 			this->editButton = (gcnew System::Windows::Forms::Button());
 			this->addButton = (gcnew System::Windows::Forms::Button());
+			this->id_note = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->note_datetime = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->note = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->MainTabControl->SuspendLayout();
 			this->addressTabPage->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->addressDataGridView))->BeginInit();
@@ -519,7 +522,7 @@ namespace CppCLRWinFormsProject {
 			this->notesDataGridView->AllowUserToDeleteRows = false;
 			this->notesDataGridView->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->notesDataGridView->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(3) {
-				this->id_notes,
+				this->id_note,
 					this->note_datetime, this->note
 			});
 			this->notesDataGridView->Location = System::Drawing::Point(7, 7);
@@ -530,14 +533,41 @@ namespace CppCLRWinFormsProject {
 			this->notesDataGridView->Size = System::Drawing::Size(1014, 433);
 			this->notesDataGridView->TabIndex = 0;
 			// 
-			// id_notes
+			// deleteButton
 			// 
-			this->id_notes->DataPropertyName = L"id";
-			this->id_notes->HeaderText = L"ÈÄ";
-			this->id_notes->Name = L"id_notes";
-			this->id_notes->ReadOnly = true;
-			this->id_notes->Visible = false;
-			this->id_notes->Width = 40;
+			this->deleteButton->Location = System::Drawing::Point(1116, 216);
+			this->deleteButton->Name = L"deleteButton";
+			this->deleteButton->Size = System::Drawing::Size(64, 64);
+			this->deleteButton->TabIndex = 6;
+			this->deleteButton->UseVisualStyleBackColor = true;
+			this->deleteButton->Click += gcnew System::EventHandler(this, &MainForm::OnDeleteButtonClick);
+			// 
+			// editButton
+			// 
+			this->editButton->Location = System::Drawing::Point(1116, 126);
+			this->editButton->Name = L"editButton";
+			this->editButton->Size = System::Drawing::Size(64, 64);
+			this->editButton->TabIndex = 5;
+			this->editButton->UseVisualStyleBackColor = true;
+			this->editButton->Click += gcnew System::EventHandler(this, &MainForm::OnEditButtonClick);
+			// 
+			// addButton
+			// 
+			this->addButton->Location = System::Drawing::Point(1116, 36);
+			this->addButton->Name = L"addButton";
+			this->addButton->Size = System::Drawing::Size(64, 64);
+			this->addButton->TabIndex = 4;
+			this->addButton->UseVisualStyleBackColor = true;
+			this->addButton->Click += gcnew System::EventHandler(this, &MainForm::addButton_Click);
+			// 
+			// id_note
+			// 
+			this->id_note->DataPropertyName = L"id";
+			this->id_note->HeaderText = L"ÈÄ";
+			this->id_note->Name = L"id_note";
+			this->id_note->ReadOnly = true;
+			this->id_note->Visible = false;
+			this->id_note->Width = 40;
 			// 
 			// note_datetime
 			// 
@@ -558,31 +588,6 @@ namespace CppCLRWinFormsProject {
 			this->note->Name = L"note";
 			this->note->ReadOnly = true;
 			this->note->Width = 500;
-			// 
-			// deleteButton
-			// 
-			this->deleteButton->Location = System::Drawing::Point(1116, 216);
-			this->deleteButton->Name = L"deleteButton";
-			this->deleteButton->Size = System::Drawing::Size(64, 64);
-			this->deleteButton->TabIndex = 6;
-			this->deleteButton->UseVisualStyleBackColor = true;
-			// 
-			// editButton
-			// 
-			this->editButton->Location = System::Drawing::Point(1116, 126);
-			this->editButton->Name = L"editButton";
-			this->editButton->Size = System::Drawing::Size(64, 64);
-			this->editButton->TabIndex = 5;
-			this->editButton->UseVisualStyleBackColor = true;
-			// 
-			// addButton
-			// 
-			this->addButton->Location = System::Drawing::Point(1116, 36);
-			this->addButton->Name = L"addButton";
-			this->addButton->Size = System::Drawing::Size(64, 64);
-			this->addButton->TabIndex = 4;
-			this->addButton->UseVisualStyleBackColor = true;
-			this->addButton->Click += gcnew System::EventHandler(this, &MainForm::addButton_Click);
 			// 
 			// MainForm
 			// 
@@ -607,45 +612,69 @@ namespace CppCLRWinFormsProject {
 		}
 #pragma endregion
 
-	private: 
+	private:
 		CppCLRWinFormsProject::DBHelper^ m_helper;
-	System::Void OnLoad(System::Object^ sender, System::EventArgs^ e) 
-	{
-		String^ fname = L"notebook.db";
-		String^ progExe = L"PersonalNotesCPP.exe";
-		String^ documentsPath = System::Environment::GetCommandLineArgs()[0];
-		String^ path = documentsPath->Replace(progExe, fname);
-		m_helper = gcnew DBHelper(path);
-		if (!m_helper->isOpen())
+		System::Void OnLoad(System::Object^ sender, System::EventArgs^ e)
 		{
-			MessageBox::Show(m_helper->getErrorText(), L"Îøèáêà");
-			Close();
-			Application::Exit();
+			String^ fname = L"notebook.db";
+			String^ progExe = L"PersonalNotesCPP.exe";
+			String^ documentsPath = System::Environment::GetCommandLineArgs()[0];
+			String^ path = documentsPath->Replace(progExe, fname);
+			m_helper = gcnew DBHelper(path);
+			if (!m_helper->isOpen())
+			{
+				MessageBox::Show(m_helper->getErrorText(), L"Îøèáêà");
+				Close();
+				Application::Exit();
+			}
+
+			fname = L"Images\\add_icon48.png";
+			path = documentsPath->Replace(progExe, fname);
+			addButton->Image = Image::FromFile(path);
+
+			fname = L"Images\\edit_icon48.png";
+			path = documentsPath->Replace(progExe, fname);
+			editButton->Image = Image::FromFile(path);
+
+			fname = L"Images\\delete_icon48.png";
+			path = documentsPath->Replace(progExe, fname);
+			deleteButton->Image = Image::FromFile(path);
+
+			//fname = L"Images\\note32.ico";
+			//path = documentsPath->Replace(progExe, fname);
+			//Icon = Icon::ExtractAssociatedIcon(path);
+
+
+			List<AddressBook^>^ lst = m_helper->GetAddressData(L"À");
+			addressDataGridView->DataSource = lst;
+
+			List<Note^>^ notes = m_helper->GetNotes();
+			notesDataGridView->DataSource = notes;
+		}
+	private: System::Void addButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		int itab = MainTabControl->SelectedIndex;
+		if (itab == 0)
+		{
+			AddressForm^ form = gcnew AddressForm(0, m_helper);
+			if (form->ShowDialog() == System::Windows::Forms::DialogResult::OK)
+			{
+				String^ m_letter = abcTabControl->TabPages[abcTabControl->SelectedIndex]->Text;
+				List<AddressBook^>^ lst = m_helper->GetAddressData(m_letter);
+				addressDataGridView->DataSource = lst;
+			}
+		}
+		else if (itab == 1)
+		{
+			NoteForm^ form = gcnew NoteForm(0, m_helper);
+			if (form->ShowDialog() == System::Windows::Forms::DialogResult::OK)
+			{
+				List<Note^>^ lst = m_helper->GetNotes();
+				notesDataGridView->DataSource = lst;
+			}
 		}
 
-		fname = L"Images\\add_icon48.png";
-		path = documentsPath->Replace(progExe, fname);
-		addButton->Image = Image::FromFile(path);
-
-		fname = L"Images\\edit_icon48.png";
-		path = documentsPath->Replace(progExe, fname);
-		editButton->Image = Image::FromFile(path);
-
-		fname = L"Images\\delete_icon48.png";
-		path = documentsPath->Replace(progExe, fname);
-		deleteButton->Image = Image::FromFile(path);
-
-		//fname = L"Images\\note32.ico";
-		//path = documentsPath->Replace(progExe, fname);
-		//Icon = Icon::ExtractAssociatedIcon(path);
-
-
-		List<AddressBook^>^ lst = m_helper->GetAddressData(L"À");
-		addressDataGridView->DataSource = lst;
 	}
-	private: System::Void addButton_Click(System::Object^ sender, System::EventArgs^ e) {
-	}
-	private: System::Void OnLetterChanged(System::Object^ sender, System::EventArgs^ e) 
+	private: System::Void OnLetterChanged(System::Object^ sender, System::EventArgs^ e)
 	{
 		if (addressTabPage->TabIndex != 0) return;
 		int idx = abcTabControl->SelectedIndex;
@@ -658,5 +687,71 @@ namespace CppCLRWinFormsProject {
 		}
 
 	}
-};
+	private: System::Void OnEditButtonClick(System::Object^ sender, System::EventArgs^ e) {
+
+		int itab = MainTabControl->SelectedIndex;
+		if (itab == 0)
+		{
+			auto row = addressDataGridView->CurrentRow;
+			if (row == nullptr) return;
+			long id = Convert::ToInt64(row->Cells["id"]->Value);
+			AddressForm^ form = gcnew AddressForm(id, m_helper);
+			if (form->ShowDialog() == System::Windows::Forms::DialogResult::OK)
+			{
+				String^ m_letter = abcTabControl->TabPages[abcTabControl->SelectedIndex]->Text;
+				List<AddressBook^>^ m_address_book = m_helper->GetAddressData(m_letter);
+				addressDataGridView->DataSource = m_address_book;
+
+			}
+
+		}
+		else if (itab == 1)
+		{
+			auto row = notesDataGridView->CurrentRow;
+			if (row == nullptr) return;
+			long id = Convert::ToInt64(row->Cells["id_note"]->Value);
+			NoteForm^ form = gcnew NoteForm(id, m_helper);
+			if (form->ShowDialog() == System::Windows::Forms::DialogResult::OK)
+			{
+				List<Note^>^ lst = m_helper->GetNotes();
+				notesDataGridView->DataSource = lst;
+			}
+
+		}
+
+	}
+	private: System::Void OnDeleteButtonClick(System::Object^ sender, System::EventArgs^ e) {
+
+		int itab = MainTabControl->SelectedIndex;
+		if (itab == 0)
+		{
+			auto row = addressDataGridView->CurrentRow;
+			if (row == nullptr) return;
+			long id = Convert::ToInt64(row->Cells["id"]->Value);
+			int nrec = m_helper->DeleteAddressRecord(id);
+			if (nrec > 0)
+			{
+				String^ m_letter = abcTabControl->TabPages[abcTabControl->SelectedIndex]->Text;
+				List<AddressBook^>^ m_address_book = m_helper->GetAddressData(m_letter);
+				addressDataGridView->DataSource = m_address_book;
+
+			}
+
+		}
+		else if (itab == 1)
+		{
+			auto row = notesDataGridView->CurrentRow;
+			if (row == nullptr) return;
+			long id = Convert::ToInt64(row->Cells["id_note"]->Value);
+			int recs = m_helper->DeleteNotesRecord(id);
+			if (recs > 0)
+			{
+				List<Note^>^ lst = m_helper->GetNotes();
+				notesDataGridView->DataSource = lst;
+			}
+		}
+
+
+	}
+	};
 }
