@@ -215,7 +215,7 @@
             this.OK_Button.Size = new System.Drawing.Size(72, 40);
             this.OK_Button.TabIndex = 17;
             this.OK_Button.UseVisualStyleBackColor = true;
-            this.OK_Button.Click += new System.EventHandler(this.OK_Button_Click);
+            this.OK_Button.Click += new System.EventHandler(this.OnOK);
             // 
             // PrincipalForm
             // 

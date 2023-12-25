@@ -83,6 +83,16 @@ namespace RealtyAgency.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
         /// </summary>
+        internal static System.Drawing.Icon choice_32 {
+            get {
+                object obj = ResourceManager.GetObject("choice_32", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
+        /// </summary>
         internal static System.Drawing.Icon contract32 {
             get {
                 object obj = ResourceManager.GetObject("contract32", resourceCulture);

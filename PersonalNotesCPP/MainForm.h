@@ -647,6 +647,9 @@ namespace CppCLRWinFormsProject {
 
 			List<AddressBook^>^ lst = m_helper->GetAddressData(L"À");
 			addressDataGridView->DataSource = lst;
+			addressDataGridView->Columns["id"]->DisplayIndex = 0;
+			addressDataGridView->Columns["name"]->DisplayIndex = 1;
+
 
 			List<Note^>^ notes = m_helper->GetNotes();
 			notesDataGridView->DataSource = notes;
@@ -661,6 +664,9 @@ namespace CppCLRWinFormsProject {
 				String^ m_letter = abcTabControl->TabPages[abcTabControl->SelectedIndex]->Text;
 				List<AddressBook^>^ lst = m_helper->GetAddressData(m_letter);
 				addressDataGridView->DataSource = lst;
+				addressDataGridView->Columns["id"]->DisplayIndex = 0;
+				addressDataGridView->Columns["name"]->DisplayIndex = 1;
+
 			}
 		}
 		else if (itab == 1)
@@ -684,6 +690,9 @@ namespace CppCLRWinFormsProject {
 			String^ m_letter = abcTabControl->TabPages[idx]->Text;
 			List<AddressBook^>^ lst = m_helper->GetAddressData(m_letter);
 			addressDataGridView->DataSource = lst;
+			addressDataGridView->Columns["id"]->DisplayIndex = 0;
+			addressDataGridView->Columns["name"]->DisplayIndex = 1;
+
 		}
 
 	}

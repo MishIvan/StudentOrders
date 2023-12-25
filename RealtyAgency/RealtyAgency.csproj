@@ -130,6 +130,12 @@
       <DependentUpon>AutorizationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="BasePSqlClient.cs" />
+    <Compile Include="ChoiceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChoiceForm.Designer.cs">
+      <DependentUpon>ChoiceForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -151,11 +157,20 @@
     <Compile Include="PrincipalForm.Designer.cs">
       <DependentUpon>PrincipalForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="RealtyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RealtyForm.Designer.cs">
+      <DependentUpon>RealtyForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AgentForm.resx">
       <DependentUpon>AgentForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AutorizationForm.resx">
       <DependentUpon>AutorizationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChoiceForm.resx">
+      <DependentUpon>ChoiceForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -175,6 +190,9 @@
     </Compile>
     <EmbeddedResource Include="PrincipalForm.resx">
       <DependentUpon>PrincipalForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RealtyForm.resx">
+      <DependentUpon>RealtyForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="AppSettings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -232,6 +250,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\person_32.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\choice_32.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" />

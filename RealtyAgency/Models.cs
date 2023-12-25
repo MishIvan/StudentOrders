@@ -42,6 +42,10 @@ namespace RealtyAgency
         public long deal_status_id { get; set; }
         public byte[] content { get; set; }
         public string contenttype { get; set; }
+        public override string ToString()
+        {
+            return $" Договор № {number} от " + cdate.ToString("dd.MM.yyyy");
+        }
 
     }
     /// <summary>
@@ -71,7 +75,7 @@ namespace RealtyAgency
         public double full_square { get; set; }
         public int room_count { get; set; }
         public bool mortage { get; set; }
-        public bool seconary { get; set; }
+        public bool secondary { get; set; }
         public string repair { get; set; }
         public double rsumma { get; set; }
         public override string ToString()

@@ -202,6 +202,173 @@ namespace RealtyAgency
             return lst;
 
         }
+        /// <summary>
+        /// Выдать объект с информацией о договоре
+        /// </summary>
+        /// <param name="id">идке</param>
+        /// <returns>Объект с информациоей о договоре</returns>
+        public Contract GetContractByid(long id)
+        {
+            Contract contract = null;
+            string sqlText = $"select id, idprincipal, idagent, idrealty, number, cdate, sail, csumma, premium, deal_status_id, content, contenttype from public.contract where id = {id}";
+            try
+            {
+                contract = m_connection.QueryFirstOrDefault<Contract>(sqlText);
+            }
+            catch (Exception ex)
+            {
+
+                m_errorText = ex.Message;
+            }
+            return contract;
+
+        }
+        /// <summary>
+        /// Загрузка содержания договора в БД
+        /// </summary>
+        /// <param name="idc">идентификатор договора</param>
+        /// <param name="content">содержание договора</param>
+        /// <param name="type">расширение загружаемого файла</param>
+        /// <returns>идентификатор договора с загруженным содержанием</returns>
+        public async Task<long> UploadContractContent(long idc, byte[] content, string type )
+        {
+            long id = 0;
+            string sqlText = "updare public.contract set content = @cnt, contenttype = @ptype where id = @pid returning id";
+            try
+            {
+                id = await m_connection.ExecuteScalarAsync<long>(sqlText, new {@cnt = content, @pid = idc, ptype = type});
+            }
+            catch (Exception ex)
+            {
+
+                m_errorText = ex.Message;
+            }
+            return id;
+
+        }
+        /// <summary>
+        /// Добавить запись о договоре
+        /// </summary>
+        /// <param name="contract">шабло с данными</param>
+        /// <returns>идентификатор добавленной записи</returns>
+        public long AddContract(Contract contract)
+        {
+            long id = 0;
+            string sdate = contract.cdate.ToString("yyyy-MM-dd HH:mm:ss");
+            string sqlText = contract.content[0] == '\x00' ? $"insert into public.realty (idprincipal, idagent,idrealty, number, cdate, sail, csumma, premium, deal_status_id) "+
+                " values (@pidprincipal, @pidagent, @pidrealty, @pnum, '{sdate}', @psail, @psum,@pp, @pids) returning id" :
+                $"insert into public.realty (idprincipal, idagent,idrealty, number, cdate, sail, csumma, premium, deal_status_id, content, contenttype) " +
+                " values (@pidprincipal, @pidagent, @pidrealty, @pnum, '{sdate}', @psail, @psum,@pp, @pids, @pcontent, @ctype) returning id";
+            try
+            {
+                object parm = null;
+                if (contract.content[0] == '\x00')
+                    parm = new
+                    {
+                        pidprincipal = contract.idprincipal,
+                        pidagent = contract.idagent,
+                        pidrealty = contract.idrealty,
+                        pnum = contract.number,
+                        psail = contract.sail,
+                        psum = contract.csumma,
+                        pp = contract.premium,
+                        pids = contract.deal_status_id
+                    };
+                else
+                    parm = new
+                    {
+                        pidprincipal = contract.idprincipal,
+                        pidagent = contract.idagent,
+                        pidrealty = contract.idrealty,
+                        pnum = contract.number,
+                        psail = contract.sail,
+                        psum = contract.csumma,
+                        pp = contract.premium,
+                        pids = contract.deal_status_id,
+                        pcontent = contract.content,
+                        ctype = contract.contenttype
+                    };
+                id = m_connection.Execute(sqlText, parm); 
+            }
+            catch (Exception ex)
+            {
+                m_errorText = ex.Message;
+            }
+            return id;
+        }
+        /// <summary>
+        /// Изменение записи о договоре
+        /// </summary>
+        /// <param name="contract">шаблон с данными об изменении записи</param>
+        /// <returns>идентификатор изменённой записи</returns>
+        public long UpdateContract(Contract contract)
+        {
+            long id = 0;
+            string sdate = contract.cdate.ToString("yyyy-MM-dd HH:mm:ss");
+            string sqlText = contract.content[0] == '\x00' ? $"update public.realty set idprincipal = @pidprincipal, idagent = @pidagent,idrealty = @pidrealty, number = @pnum, cdate = '{sdate}'," +
+                " sail = @psail, csumma = @psum, premium = @pp, deal_status_id = @pids where id = @pid returning id" :
+                $"update public.realty set idprincipal = @pidprincipal, idagent = @pidagent,idrealty = @pidrealty, number = @pnum, cdate = '{sdate}'," +
+                " sail = @psail, csumma = @psum, premium = @pp, deal_status_id = @pids, content = @pc, contenttype = @ptype where id = @pid returning id";
+            try
+            {
+                object parms = null;
+                if (contract.content[0] == '\x00')
+                    parms = new
+                    {
+                        pid = contract.id,
+                        pidprincipal = contract.idprincipal,
+                        pidagent = contract.idagent,
+                        pidrealty = contract.idrealty,
+                        pnum = contract.number,
+                        psail = contract.sail,
+                        psum = contract.csumma,
+                        pp = contract.premium,
+                        pids = contract.deal_status_id
+                    };
+                else
+                    parms = new
+                    {
+                        pid = contract.id,
+                        pidprincipal = contract.idprincipal,
+                        pidagent = contract.idagent,
+                        pidrealty = contract.idrealty,
+                        pnum = contract.number,
+                        psail = contract.sail,
+                        psum = contract.csumma,
+                        pp = contract.premium,
+                        pids = contract.deal_status_id,
+                        pc = contract.content,
+                        ptype = contract.contenttype
+                    };
+                id = m_connection.Execute(sqlText,parms);
+            }
+            catch (Exception ex)
+            {
+                m_errorText = ex.Message;
+            }
+            return id;
+
+        }
+        /// <summary>
+        /// Удалить запись о договоре
+        /// </summary>
+        /// <param name="idc">идкентификатор удаляемого договора</param>
+        /// <returns>идентификатор удалённого договора</returns>
+        public long DeleteContract(long idc) 
+        {
+            long id = 0;
+            string sqlText = $"delete from public.realty where id = {idc} returning id";
+            try
+            {
+                id = m_connection.Execute(sqlText);
+            }
+            catch (Exception ex)
+            {
+                m_errorText = ex.Message;
+            }
+            return id;
+
+        }
         #endregion
 
         #region Realty
@@ -259,7 +426,7 @@ namespace RealtyAgency
             {
                 id = m_connection.ExecuteScalar<long>(sqlText,
                     new { padr = realty.address, psquare = realty.full_square, pcount = realty.room_count, 
-                        pm = realty.mortage, ps = realty.seconary, pr = realty.repair, psum = realty.rsumma });
+                        pm = realty.mortage, ps = realty.secondary, pr = realty.repair, psum = realty.rsumma });
             }
             catch (Exception ex)
             {
@@ -287,7 +454,7 @@ namespace RealtyAgency
                         psquare = realty.full_square,
                         pcount = realty.room_count,
                         pm = realty.mortage,
-                        ps = realty.seconary,
+                        ps = realty.secondary,
                         pr = realty.repair,
                         psum = realty.rsumma
                     });
@@ -406,7 +573,7 @@ namespace RealtyAgency
         public long UpdatePrincipal(Principal pr)
         {
             long id = 0;
-            string sqlText = $"update public.principals set name = @pname, inn = @pinn, kpp = @pkpp, ogrn = @pogrn, address = @paddress, passport = @ppass, phone = @pphone, email = @pemail) " +
+            string sqlText = $"update public.principals set name = @pname, inn = @pinn, kpp = @pkpp, ogrn = @pogrn, address = @paddress, passport = @ppass, phone = @pphone, email = @pemail " +
                 "where id = @pid returning id";
             try
             {
@@ -435,16 +602,16 @@ namespace RealtyAgency
         /// </summary>
         /// <param name="pr">шаблон объекта с данными</param>
         /// <returns>идентификатор удалённой записи</returns>
-        public long DeletePrincipal(Principal pr)
+        public long DeletePrincipal(long idp)
         {
             long id = 0;
-            string sqlText = $"update public.principals where id = @pid returning id";
+            string sqlText = $"delete from public.principals where id = @pid returning id";
             try
             {
                 id = m_connection.ExecuteScalar<long>(sqlText,
                     new
                     {
-                        pid = pr.id
+                        pid = idp
                     });
             }
             catch (Exception ex)

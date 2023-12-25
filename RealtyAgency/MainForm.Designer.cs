@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -69,12 +70,16 @@
             this.inn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kpp = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ogrn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mainContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.add_toolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.edit_toolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.delete_toolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.id_r = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.address_r = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.full_square = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.room_count = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mortage = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.rsumma = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mortage = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.secondary = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.repair = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mainMenuStrip.SuspendLayout();
@@ -85,6 +90,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.realtyDataGridView)).BeginInit();
             this.principalsTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.principalsDataGridView)).BeginInit();
+            this.mainContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainMenuStrip
@@ -154,6 +160,7 @@
             // 
             // contractTabControl
             // 
+            this.contractTabControl.ContextMenuStrip = this.mainContextMenuStrip;
             this.contractTabControl.Controls.Add(this.contractTabPage);
             this.contractTabControl.Controls.Add(this.realtyTabPage);
             this.contractTabControl.Controls.Add(this.principalsTabPage);
@@ -326,10 +333,11 @@
             this.address_r,
             this.full_square,
             this.room_count,
-            this.mortage,
             this.rsumma,
+            this.mortage,
             this.secondary,
             this.repair});
+            this.realtyDataGridView.ContextMenuStrip = this.mainContextMenuStrip;
             this.realtyDataGridView.Location = new System.Drawing.Point(7, 7);
             this.realtyDataGridView.Name = "realtyDataGridView";
             this.realtyDataGridView.ReadOnly = true;
@@ -362,6 +370,7 @@
             this.inn,
             this.kpp,
             this.ogrn});
+            this.principalsDataGridView.ContextMenuStrip = this.mainContextMenuStrip;
             this.principalsDataGridView.Location = new System.Drawing.Point(7, 7);
             this.principalsDataGridView.MultiSelect = false;
             this.principalsDataGridView.Name = "principalsDataGridView";
@@ -438,6 +447,36 @@
             this.ogrn.Name = "ogrn";
             this.ogrn.ReadOnly = true;
             // 
+            // mainContextMenuStrip
+            // 
+            this.mainContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.add_toolStripMenuItem,
+            this.edit_toolStripMenuItem,
+            this.delete_toolStripMenuItem});
+            this.mainContextMenuStrip.Name = "mainContextMenuStrip";
+            this.mainContextMenuStrip.Size = new System.Drawing.Size(129, 70);
+            // 
+            // add_toolStripMenuItem
+            // 
+            this.add_toolStripMenuItem.Name = "add_toolStripMenuItem";
+            this.add_toolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.add_toolStripMenuItem.Text = "Добавить";
+            this.add_toolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
+            // 
+            // edit_toolStripMenuItem
+            // 
+            this.edit_toolStripMenuItem.Name = "edit_toolStripMenuItem";
+            this.edit_toolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.edit_toolStripMenuItem.Text = "Изменить";
+            this.edit_toolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
+            // 
+            // delete_toolStripMenuItem
+            // 
+            this.delete_toolStripMenuItem.Name = "delete_toolStripMenuItem";
+            this.delete_toolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.delete_toolStripMenuItem.Text = "Удалить";
+            this.delete_toolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
             // id_r
             // 
             this.id_r.DataPropertyName = "id";
@@ -476,16 +515,6 @@
             this.room_count.ReadOnly = true;
             this.room_count.Width = 50;
             // 
-            // mortage
-            // 
-            this.mortage.DataPropertyName = "mortage";
-            this.mortage.HeaderText = "Ипотека";
-            this.mortage.Name = "mortage";
-            this.mortage.ReadOnly = true;
-            this.mortage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.mortage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.mortage.Width = 70;
-            // 
             // rsumma
             // 
             this.rsumma.DataPropertyName = "rsumma";
@@ -495,6 +524,16 @@
             this.rsumma.HeaderText = "Стоимость за кв. м";
             this.rsumma.Name = "rsumma";
             this.rsumma.ReadOnly = true;
+            // 
+            // mortage
+            // 
+            this.mortage.DataPropertyName = "mortage";
+            this.mortage.HeaderText = "Ипотека";
+            this.mortage.Name = "mortage";
+            this.mortage.ReadOnly = true;
+            this.mortage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.mortage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.mortage.Width = 70;
             // 
             // secondary
             // 
@@ -535,6 +574,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.realtyDataGridView)).EndInit();
             this.principalsTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.principalsDataGridView)).EndInit();
+            this.mainContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -578,12 +618,16 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn inn;
         private System.Windows.Forms.DataGridViewTextBoxColumn kpp;
         private System.Windows.Forms.DataGridViewTextBoxColumn ogrn;
+        private System.Windows.Forms.ContextMenuStrip mainContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem add_toolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem edit_toolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem delete_toolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn id_r;
         private System.Windows.Forms.DataGridViewTextBoxColumn address_r;
         private System.Windows.Forms.DataGridViewTextBoxColumn full_square;
         private System.Windows.Forms.DataGridViewTextBoxColumn room_count;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn mortage;
         private System.Windows.Forms.DataGridViewTextBoxColumn rsumma;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn mortage;
         private System.Windows.Forms.DataGridViewCheckBoxColumn secondary;
         private System.Windows.Forms.DataGridViewTextBoxColumn repair;
     }

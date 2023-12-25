@@ -33,6 +33,12 @@ namespace RealtyAgency
                 agentsToolStripMenuItem.Visible = false;
             }
             contractsDataGridView.DataSource = lst;
+
+            var lstr = await Program.m_helper.GetRealtyObjects();
+            realtyDataGridView.DataSource = lstr;
+
+            var lstp = await Program.m_helper.GetPrincipals();
+            principalsDataGridView.DataSource = lstp;
         }
 
         private void OnClose(object sender, FormClosedEventArgs e)
@@ -45,7 +51,7 @@ namespace RealtyAgency
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void addToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void addToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int idx = contractTabControl.SelectedIndex;
             switch(idx)
@@ -53,8 +59,20 @@ namespace RealtyAgency
                 case 0:
                     break; 
                 case 1:  
+                    RealtyForm rfrm = new RealtyForm();
+                    if(rfrm.ShowDialog() == DialogResult.OK)
+                    {
+                        var lst = await Program.m_helper.GetRealtyObjects();
+                        realtyDataGridView.DataSource = lst;
+                    }
                     break; 
                 case 2: 
+                    PrincipalForm pfrm = new PrincipalForm();
+                    if(pfrm.ShowDialog() == DialogResult.OK)
+                    {
+                        var lst = await Program.m_helper.GetPrincipals();
+                        principalsDataGridView.DataSource = lst;
+                    }
                     break;
                 default:
                     return;
@@ -65,7 +83,7 @@ namespace RealtyAgency
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void updateToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void updateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int idx = contractTabControl.SelectedIndex;
             switch (idx)
@@ -73,8 +91,33 @@ namespace RealtyAgency
                 case 0:
                     break;
                 case 1:
+                    var rrow = realtyDataGridView.CurrentRow;
+                    if(rrow != null)
+                    {
+                        long id = Convert.ToInt64(rrow.Cells[0].Value);
+                        PrincipalForm rfrm = new PrincipalForm(id);
+                        if (rfrm.ShowDialog() == DialogResult.OK)
+                        {
+                            var lst = await Program.m_helper.GetRealtyObjects();
+                            realtyDataGridView.DataSource = lst;
+                        }
+
+                    }
                     break;
                 case 2:
+                    var prow = principalsDataGridView.CurrentRow;
+                    if (prow != null)
+                    {
+                        long id = Convert.ToInt64(prow.Cells[0].Value);
+                        PrincipalForm rfrm = new PrincipalForm(id);
+                        if (rfrm.ShowDialog() == DialogResult.OK)
+                        {
+                            var lst = await Program.m_helper.GetPrincipals();
+                            principalsDataGridView.DataSource = lst;
+                        }
+
+                    }
+
                     break;
                 default:
                     return;
@@ -86,7 +129,7 @@ namespace RealtyAgency
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int idx = contractTabControl.SelectedIndex;
             switch (idx)
@@ -94,8 +137,33 @@ namespace RealtyAgency
                 case 0:
                     break;
                 case 1:
+                    var rrow = realtyDataGridView.CurrentRow;
+                    if (rrow != null)
+                    {
+                        long id = Convert.ToInt64(rrow.Cells[0].Value);
+                        if (Program.m_helper.DeleteRealtyObject(id) > 0)
+                        {
+                            var lst = await Program.m_helper.GetRealtyObjects();
+                            realtyDataGridView.DataSource = lst;
+                        }
+                        else
+                            Program.ErrorMessageDB();
+                    }
                     break;
                 case 2:
+                    var prow = principalsDataGridView.CurrentRow;
+                    if (prow != null)
+                    {
+                        long id = Convert.ToInt64(prow.Cells[0].Value);
+                        if (Program.m_helper.DeletePrincipal(id) > 0)
+                        {
+                            var lst = await Program.m_helper.GetPrincipals();
+                            principalsDataGridView.DataSource = lst;
+                        }
+                        else
+                            Program.ErrorMessageDB();
+
+                    }
                     break;
                 default:
                     return;
