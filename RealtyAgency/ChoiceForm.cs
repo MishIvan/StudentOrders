@@ -16,13 +16,20 @@ namespace RealtyAgency
     public partial class ChoiceForm : Form
     {
         long m_id;
-        char m_who; // 'p' - принципал, 'a' - агент, 'r' - объект недвижимости 
+        char m_who; // 'p' - принципал, 'r' - объект недвижимости, 's' - статус сделки
+        string m_name;
+        double m_summ;
+
         public long id { get { return m_id; } }
+        public string name { get { return m_name; } }
+        public double summ { get { return m_summ; } }
+
         public ChoiceForm(char who = 'p')
         {
             InitializeComponent();
             m_who = who;
             m_id = 0;
+            m_name = string.Empty;
         }
 
         private async void OnLoad(object sender, EventArgs e)
@@ -32,15 +39,19 @@ namespace RealtyAgency
             switch(m_who)
             {
                 case 'p':
+                    Text = "Выбор принципала";
                     lst = await Program.m_helper.GetPrincipals();
                     choice_listBox.DataSource = lst;
                     break;
-                case 'a': 
-                    List<Agent> m_agents = await Program.m_helper.GetAgents();
-                    lst = m_agents.Where(el => el.id > 1).ToList();
+                case 's':
+                    Text = "Выбор статуса сделки";
+                    lst = await Program.m_helper.GetContractStalusList();
+                    choice_listBox.DataSource = lst;
                     break;
                 case 'r':
-                    lst = await Program.m_helper.GetRealtyObjects();
+                    Text = "Выбор объекта недвижимости";
+                    List<RealtyObject> m_realty = await Program.m_helper.GetRealtyObjects();
+                    lst = m_realty.Where(el => !el.deal).ToList();
                     break;
                 default:
                     Close();
@@ -60,6 +71,7 @@ namespace RealtyAgency
                     if(pr != null)
                     {
                         m_id = pr.id;
+                        m_name = pr.name;
                     }
                     else
                     {
@@ -67,23 +79,28 @@ namespace RealtyAgency
                         DialogResult = DialogResult.Cancel;
                     }
                     break;
-                case 'a':
-                    Agent ag = choice_listBox.Items[idx] as Agent;
-                    if (ag != null)
+                case 's':
+                    Simple status = choice_listBox.Items[idx] as Simple;
+                    if(status != null)
                     {
-                        m_id = ag.id;
+                        m_id = status.id;
+                        m_name = status.name;
+
                     }
                     else
                     {
                         m_id = 0;
                         DialogResult = DialogResult.Cancel;
                     }
+
                     break;
                 case 'r':
                     RealtyObject ro = choice_listBox.Items[idx] as RealtyObject;
                     if (ro != null)
                     {
                         m_id = ro.id;
+                        m_name = ro.ToString();
+                        m_summ = ro.rsumma * ro.full_square;
                     }
                     else
                     {

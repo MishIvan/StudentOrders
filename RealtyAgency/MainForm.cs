@@ -34,7 +34,7 @@ namespace RealtyAgency
             }
             contractsDataGridView.DataSource = lst;
 
-            var lstr = await Program.m_helper.GetRealtyObjects();
+            var lstr = await Program.m_helper.GetRealtyObjects();            
             realtyDataGridView.DataSource = lstr;
 
             var lstp = await Program.m_helper.GetPrincipals();
@@ -57,6 +57,12 @@ namespace RealtyAgency
             switch(idx)
             {
                 case 0:
+                    ContractForm contractForm = new ContractForm();
+                    if(contractForm.ShowDialog() == DialogResult.OK)
+                    {
+                        var lst = await Program.m_helper.GetContractList();
+                        contractsDataGridView.DataSource= lst;
+                    }
                     break; 
                 case 1:  
                     RealtyForm rfrm = new RealtyForm();
@@ -89,13 +95,25 @@ namespace RealtyAgency
             switch (idx)
             {
                 case 0:
+                    var crow = contractsDataGridView.CurrentRow;
+                    if(crow != null)
+                    {
+                        long id = Convert.ToInt64(crow.Cells["id"].Value);
+                        ContractForm frm = new ContractForm(id);
+                        if(frm.ShowDialog() == DialogResult.OK)
+                        {
+                            var lst = await Program.m_helper.GetContractList();
+                            contractsDataGridView.DataSource = lst;
+                        }
+
+                    }
                     break;
                 case 1:
                     var rrow = realtyDataGridView.CurrentRow;
                     if(rrow != null)
                     {
-                        long id = Convert.ToInt64(rrow.Cells[0].Value);
-                        PrincipalForm rfrm = new PrincipalForm(id);
+                        long id = Convert.ToInt64(rrow.Cells["id_r"].Value);
+                        RealtyForm rfrm = new RealtyForm(id);
                         if (rfrm.ShowDialog() == DialogResult.OK)
                         {
                             var lst = await Program.m_helper.GetRealtyObjects();
@@ -108,7 +126,7 @@ namespace RealtyAgency
                     var prow = principalsDataGridView.CurrentRow;
                     if (prow != null)
                     {
-                        long id = Convert.ToInt64(prow.Cells[0].Value);
+                        long id = Convert.ToInt64(prow.Cells["id_p"].Value);
                         PrincipalForm rfrm = new PrincipalForm(id);
                         if (rfrm.ShowDialog() == DialogResult.OK)
                         {
@@ -135,12 +153,30 @@ namespace RealtyAgency
             switch (idx)
             {
                 case 0:
+                    var crow = contractsDataGridView.CurrentRow;
+                    if (crow != null)
+                    {
+                        string dogName = crow.Cells["Contract"].Value.ToString();
+                        if (MessageBox.Show($"Вы удаляете {dogName}.\nЕго невозможно будет восстановить.\nВы действительно хотите удалить договор?","Внимание!",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                            return;
+
+                        long id = Convert.ToInt64(crow.Cells["id"].Value);
+                        if (Program.m_helper.DeleteContract(id) > 0)
+                        {
+                            var lst = await Program.m_helper.GetContractList();
+                            contractsDataGridView.DataSource = lst;
+                        }
+                        else
+                            Program.ErrorMessageDB();
+
+                    }
                     break;
                 case 1:
                     var rrow = realtyDataGridView.CurrentRow;
                     if (rrow != null)
                     {
-                        long id = Convert.ToInt64(rrow.Cells[0].Value);
+                        long id = Convert.ToInt64(rrow.Cells["id_r"].Value);
                         if (Program.m_helper.DeleteRealtyObject(id) > 0)
                         {
                             var lst = await Program.m_helper.GetRealtyObjects();
@@ -154,7 +190,7 @@ namespace RealtyAgency
                     var prow = principalsDataGridView.CurrentRow;
                     if (prow != null)
                     {
-                        long id = Convert.ToInt64(prow.Cells[0].Value);
+                        long id = Convert.ToInt64(prow.Cells["id_p"].Value);
                         if (Program.m_helper.DeletePrincipal(id) > 0)
                         {
                             var lst = await Program.m_helper.GetPrincipals();
@@ -189,6 +225,18 @@ namespace RealtyAgency
         {
             PasswordForm pwdform = new PasswordForm();
             pwdform.ShowDialog();
+        }
+        /// <summary>
+        /// Переход на другую закладку
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnTabDealChanged(object sender, EventArgs e)
+        {
+            int idx = contractTabControl.SelectedIndex;
+            changeStatusToolStripMenuItem.Visible = idx == 0;
+            showContentДоговораToolStripMenuItem.Visible = idx == 0;
+
         }
     }
 }

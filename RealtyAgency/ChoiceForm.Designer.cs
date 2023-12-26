@@ -37,7 +37,7 @@
             // 
             this.Cancel_Button.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.Cancel_Button.Image = global::RealtyAgency.Properties.Resources.cancel_32;
-            this.Cancel_Button.Location = new System.Drawing.Point(573, 110);
+            this.Cancel_Button.Location = new System.Drawing.Point(374, 112);
             this.Cancel_Button.Name = "Cancel_Button";
             this.Cancel_Button.Size = new System.Drawing.Size(72, 40);
             this.Cancel_Button.TabIndex = 22;
@@ -47,7 +47,7 @@
             // 
             this.OK_Button.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.OK_Button.Image = global::RealtyAgency.Properties.Resources.ok_32;
-            this.OK_Button.Location = new System.Drawing.Point(573, 13);
+            this.OK_Button.Location = new System.Drawing.Point(374, 15);
             this.OK_Button.Name = "OK_Button";
             this.OK_Button.Size = new System.Drawing.Size(72, 40);
             this.OK_Button.TabIndex = 21;
@@ -56,10 +56,12 @@
             // 
             // choice_listBox
             // 
+            this.choice_listBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.choice_listBox.FormattingEnabled = true;
+            this.choice_listBox.ItemHeight = 15;
             this.choice_listBox.Location = new System.Drawing.Point(13, 13);
             this.choice_listBox.Name = "choice_listBox";
-            this.choice_listBox.Size = new System.Drawing.Size(539, 433);
+            this.choice_listBox.Size = new System.Drawing.Size(343, 424);
             this.choice_listBox.TabIndex = 23;
             // 
             // ChoiceForm
@@ -68,7 +70,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.Cancel_Button;
-            this.ClientSize = new System.Drawing.Size(664, 450);
+            this.ClientSize = new System.Drawing.Size(465, 450);
             this.Controls.Add(this.choice_listBox);
             this.Controls.Add(this.Cancel_Button);
             this.Controls.Add(this.OK_Button);

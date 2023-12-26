@@ -28,7 +28,7 @@ namespace RealtyAgency
     /// <summary>
     /// Модель записи о договоре (сделке)
     /// </summary>
-    public class Contract 
+    public class Contract : Content
     {
         public long id { get; set; }
         public long idprincipal { get; set; }
@@ -40,8 +40,6 @@ namespace RealtyAgency
         public double csumma { get; set; } = 1.0;
         public double premium { get; set; } = 0.5;
         public long deal_status_id { get; set; }
-        public byte[] content { get; set; }
-        public string contenttype { get; set; }
         public override string ToString()
         {
             return $" Договор № {number} от " + cdate.ToString("dd.MM.yyyy");
@@ -49,12 +47,29 @@ namespace RealtyAgency
 
     }
     /// <summary>
-    /// Модель записи Агента 
+    /// Контент агентского договора и его тип
     /// </summary>
-    public class Agent
+    public class Content
+    {
+        public byte[] content { get; set; }
+        public string contenttype { get; set; }
+    }
+
+    public class Simple
     {
         public long id { get; set; }
         public string name { get; set; }
+        public override string ToString()
+        {
+            return name;
+        }
+
+    }
+    /// <summary>
+    /// Модель записи Агента 
+    /// </summary>
+    public class Agent : Simple
+    {
         public string phone { get; set; }
         public string email { get; set; }
         public string password { get; set; }
@@ -78,18 +93,17 @@ namespace RealtyAgency
         public bool secondary { get; set; }
         public string repair { get; set; }
         public double rsumma { get; set; }
+        public bool deal { get; set; } 
         public override string ToString()
         {
-            return $"{address} - {full_square}";
+            return $"{address} - {full_square} кв. м";
         }
     }
     /// <summary>
     /// Модель записи принципала физлица или юрлица
     /// </summary>
-    public class Principal 
+    public class Principal : Simple
     {
-        public long id { get; set; }
-        public string name { get; set; }
         public string passport { get; set; } = string.Empty;
         public string address { get; set; } = string.Empty;
         public string phone { get; set; }

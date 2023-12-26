@@ -182,13 +182,35 @@ namespace RealtyAgency
 
         #region Contracts
         /// <summary>
+        /// Выдать список статусов сделки по агентскому договору
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Simple>> GetContractStalusList()
+        {
+            List<Simple> lst = null;
+            string sqlText = "select id, name from public.deal_status order by id";
+            try
+            {
+                var t = await m_connection.QueryAsync<Simple>(sqlText);
+                lst = t.ToList();
+            }
+            catch (Exception ex)
+            {
+
+                m_errorText = ex.Message;
+            }
+            return lst;
+
+        }
+
+        /// <summary>
         /// Получить список всех сделок
         /// </summary>
         /// <returns></returns>
         public async Task <List<ContractView>> GetContractList()
         {
             List<ContractView> lst = null;
-            string sqlText = "select id, contract, idprincipal, principal, idagent, agent, idrealty, idchief, sail, csumma, deal_status_id, deal_status from public.contract_view order by contract";
+            string sqlText = "select id, contract, idprincipal, principal, idagent, agent, idrealty, address, idchief, sail, csumma, deal_status_id, deal_status from public.contract_view order by contract";
             try
             {
                 var t = await m_connection.QueryAsync<ContractView>(sqlText);
@@ -224,19 +246,39 @@ namespace RealtyAgency
 
         }
         /// <summary>
-        /// Загрузка содержания договора в БД
+        /// Получение содержимого договора по его идентификатору
         /// </summary>
         /// <param name="idc">идентификатор договора</param>
-        /// <param name="content">содержание договора</param>
-        /// <param name="type">расширение загружаемого файла</param>
-        /// <returns>идентификатор договора с загруженным содержанием</returns>
-        public async Task<long> UploadContractContent(long idc, byte[] content, string type )
+        /// <returns></returns>
+        public async Task<Content> DownLoadContractContent(long idc)
         {
-            long id = 0;
-            string sqlText = "updare public.contract set content = @cnt, contenttype = @ptype where id = @pid returning id";
+            Content content  = null;
+            string sqlText = "select content, contenttype public.contract where id = @pid";
             try
             {
-                id = await m_connection.ExecuteScalarAsync<long>(sqlText, new {@cnt = content, @pid = idc, ptype = type});
+                content = await m_connection.QueryFirstOrDefaultAsync<Content>(sqlText, new { @pid = idc });
+            }
+            catch (Exception ex)
+            {
+
+                m_errorText = ex.Message;
+            }
+            return content;
+
+        }
+        /// <summary>
+        /// установить статус договора
+        /// </summary>
+        /// <param name="idc">идентификатор договора</param>
+        /// <param name="statusid"></param>
+        /// <returns>идентификатор договора с установленным статусом</returns>
+        public long SetContractStatus(long idc , long statusid)
+        {
+            long id = 0;
+            string sqlText = "update public.contract set deal_status_id = @pstatus where id = @pid";
+            try
+            {
+                id = m_connection.Execute(sqlText, new {pstatus = statusid, pid = idc} );
             }
             catch (Exception ex)
             {
@@ -255,10 +297,10 @@ namespace RealtyAgency
         {
             long id = 0;
             string sdate = contract.cdate.ToString("yyyy-MM-dd HH:mm:ss");
-            string sqlText = contract.content[0] == '\x00' ? $"insert into public.realty (idprincipal, idagent,idrealty, number, cdate, sail, csumma, premium, deal_status_id) "+
-                " values (@pidprincipal, @pidagent, @pidrealty, @pnum, '{sdate}', @psail, @psum,@pp, @pids) returning id" :
-                $"insert into public.realty (idprincipal, idagent,idrealty, number, cdate, sail, csumma, premium, deal_status_id, content, contenttype) " +
-                " values (@pidprincipal, @pidagent, @pidrealty, @pnum, '{sdate}', @psail, @psum,@pp, @pids, @pcontent, @ctype) returning id";
+            string sqlText = contract.content[0] == '\x00' ? "insert into public.contract (idprincipal, idagent,idrealty, number, cdate, sail, csumma, premium, deal_status_id) "+
+                $" values (@pidprincipal, @pidagent, @pidrealty, @pnum, '{sdate}', @psail, @psum,@pp, @pids) returning id" :
+                "insert into public.contract (idprincipal, idagent,idrealty, number, cdate, sail, csumma, premium, deal_status_id, content, contenttype) " +
+                $" values (@pidprincipal, @pidagent, @pidrealty, @pnum, '{sdate}', @psail, @psum,@pp, @pids, @pcontent, @ctype) returning id";
             try
             {
                 object parm = null;
@@ -305,9 +347,9 @@ namespace RealtyAgency
         {
             long id = 0;
             string sdate = contract.cdate.ToString("yyyy-MM-dd HH:mm:ss");
-            string sqlText = contract.content[0] == '\x00' ? $"update public.realty set idprincipal = @pidprincipal, idagent = @pidagent,idrealty = @pidrealty, number = @pnum, cdate = '{sdate}'," +
+            string sqlText = contract.content[0] == '\x00' ? $"update public.contract set idprincipal = @pidprincipal, idagent = @pidagent,idrealty = @pidrealty, number = @pnum, cdate = '{sdate}'," +
                 " sail = @psail, csumma = @psum, premium = @pp, deal_status_id = @pids where id = @pid returning id" :
-                $"update public.realty set idprincipal = @pidprincipal, idagent = @pidagent,idrealty = @pidrealty, number = @pnum, cdate = '{sdate}'," +
+                $"update public.contract set idprincipal = @pidprincipal, idagent = @pidagent,idrealty = @pidrealty, number = @pnum, cdate = '{sdate}'," +
                 " sail = @psail, csumma = @psum, premium = @pp, deal_status_id = @pids, content = @pc, contenttype = @ptype where id = @pid returning id";
             try
             {
@@ -357,7 +399,7 @@ namespace RealtyAgency
         public long DeleteContract(long idc) 
         {
             long id = 0;
-            string sqlText = $"delete from public.realty where id = {idc} returning id";
+            string sqlText = $"delete from public.contract where id = {idc} returning id";
             try
             {
                 id = m_connection.Execute(sqlText);
@@ -379,7 +421,7 @@ namespace RealtyAgency
         public async Task<List<RealtyObject>> GetRealtyObjects()
         {
             List<RealtyObject> lst = null;
-            string sqlText = "select id, address, full_square, room_count, mortage, secondary, repair, rsumma from public.realty order by address";
+            string sqlText = "select id, address, full_square, room_count, mortage, secondary, repair, rsumma, deal from public.realty_view order by address";
             try
             {
                 var t = await m_connection.QueryAsync<RealtyObject>(sqlText);
