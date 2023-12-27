@@ -292,6 +292,9 @@ namespace RealtyAgency
         private void OnTabDealChanged(object sender, EventArgs e)
         {
             int idx = contractTabControl.SelectedIndex;
+            dealToolStripMenuItem.Visible = !(idx == 1  && Program.m_userrole == 3);
+            mainContextMenuStrip.Enabled = !(idx == 1 && Program.m_userrole == 3);
+
             changeStatusToolStripMenuItem.Visible = idx == 0;
             showContentToolStripMenuItem.Visible = idx == 0;
             dealtoolStripSeparator.Visible = idx == 0;
