@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.aminToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.agentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,6 +41,9 @@
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dealtoolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.changeStatusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showContentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contractTabControl = new System.Windows.Forms.TabControl();
             this.mainContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.add_toolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,19 +51,6 @@
             this.delete_toolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contractTabPage = new System.Windows.Forms.TabPage();
             this.contractsDataGridView = new System.Windows.Forms.DataGridView();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Contract = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idprincipal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.principal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idagent = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.agent = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idrealty = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.address = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idchief = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sail = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.deal_status_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.csumma = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.realtyTabPage = new System.Windows.Forms.TabPage();
             this.realtyDataGridView = new System.Windows.Forms.DataGridView();
             this.id_r = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -83,9 +73,22 @@
             this.inn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kpp = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ogrn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.changeStatusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showContentДоговораToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Contract = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idprincipal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.principal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idagent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.agent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idrealty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.address = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idchief = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sail = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.deal_status_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.csumma = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.main_toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.changeStatusContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenuStrip.SuspendLayout();
             this.contractTabControl.SuspendLayout();
             this.mainContextMenuStrip.SuspendLayout();
@@ -137,9 +140,9 @@
             this.addToolStripMenuItem,
             this.updateToolStripMenuItem,
             this.deleteToolStripMenuItem,
-            this.toolStripSeparator1,
+            this.dealtoolStripSeparator,
             this.changeStatusToolStripMenuItem,
-            this.showContentДоговораToolStripMenuItem});
+            this.showContentToolStripMenuItem});
             this.dealToolStripMenuItem.Name = "dealToolStripMenuItem";
             this.dealToolStripMenuItem.Size = new System.Drawing.Size(129, 20);
             this.dealToolStripMenuItem.Text = "Работа со сделками";
@@ -165,6 +168,25 @@
             this.deleteToolStripMenuItem.Text = "Удалить запись";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
+            // dealtoolStripSeparator
+            // 
+            this.dealtoolStripSeparator.Name = "dealtoolStripSeparator";
+            this.dealtoolStripSeparator.Size = new System.Drawing.Size(206, 6);
+            // 
+            // changeStatusToolStripMenuItem
+            // 
+            this.changeStatusToolStripMenuItem.Name = "changeStatusToolStripMenuItem";
+            this.changeStatusToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.changeStatusToolStripMenuItem.Text = "Изменить статус";
+            this.changeStatusToolStripMenuItem.Click += new System.EventHandler(this.changeStatusToolStripMenuItem_Click);
+            // 
+            // showContentToolStripMenuItem
+            // 
+            this.showContentToolStripMenuItem.Name = "showContentToolStripMenuItem";
+            this.showContentToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.showContentToolStripMenuItem.Text = "Показать текст договора";
+            this.showContentToolStripMenuItem.Click += new System.EventHandler(this.showContentToolStripMenuItem_Click);
+            // 
             // contractTabControl
             // 
             this.contractTabControl.ContextMenuStrip = this.mainContextMenuStrip;
@@ -183,28 +205,31 @@
             this.mainContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.add_toolStripMenuItem,
             this.edit_toolStripMenuItem,
-            this.delete_toolStripMenuItem});
+            this.delete_toolStripMenuItem,
+            this.main_toolStripSeparator,
+            this.changeStatusContextToolStripMenuItem,
+            this.showContextToolStripMenuItem});
             this.mainContextMenuStrip.Name = "mainContextMenuStrip";
-            this.mainContextMenuStrip.Size = new System.Drawing.Size(129, 70);
+            this.mainContextMenuStrip.Size = new System.Drawing.Size(249, 142);
             // 
             // add_toolStripMenuItem
             // 
             this.add_toolStripMenuItem.Name = "add_toolStripMenuItem";
-            this.add_toolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.add_toolStripMenuItem.Size = new System.Drawing.Size(248, 22);
             this.add_toolStripMenuItem.Text = "Добавить";
             this.add_toolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
             // edit_toolStripMenuItem
             // 
             this.edit_toolStripMenuItem.Name = "edit_toolStripMenuItem";
-            this.edit_toolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.edit_toolStripMenuItem.Size = new System.Drawing.Size(248, 22);
             this.edit_toolStripMenuItem.Text = "Изменить";
             this.edit_toolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
             // 
             // delete_toolStripMenuItem
             // 
             this.delete_toolStripMenuItem.Name = "delete_toolStripMenuItem";
-            this.delete_toolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.delete_toolStripMenuItem.Size = new System.Drawing.Size(248, 22);
             this.delete_toolStripMenuItem.Text = "Удалить";
             this.delete_toolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
@@ -245,110 +270,6 @@
             this.contractsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.contractsDataGridView.Size = new System.Drawing.Size(844, 460);
             this.contractsDataGridView.TabIndex = 0;
-            // 
-            // id
-            // 
-            this.id.DataPropertyName = "id";
-            this.id.HeaderText = "ИД";
-            this.id.Name = "id";
-            this.id.ReadOnly = true;
-            this.id.Visible = false;
-            // 
-            // Contract
-            // 
-            this.Contract.DataPropertyName = "contract";
-            this.Contract.HeaderText = "Договор";
-            this.Contract.Name = "Contract";
-            this.Contract.ReadOnly = true;
-            // 
-            // idprincipal
-            // 
-            this.idprincipal.DataPropertyName = "idprincipal";
-            this.idprincipal.HeaderText = "ИД принципала";
-            this.idprincipal.Name = "idprincipal";
-            this.idprincipal.ReadOnly = true;
-            this.idprincipal.Visible = false;
-            // 
-            // principal
-            // 
-            this.principal.DataPropertyName = "principal";
-            this.principal.HeaderText = "Принципал";
-            this.principal.Name = "principal";
-            this.principal.ReadOnly = true;
-            // 
-            // idagent
-            // 
-            this.idagent.DataPropertyName = "idagent";
-            this.idagent.HeaderText = "ИД агента";
-            this.idagent.Name = "idagent";
-            this.idagent.ReadOnly = true;
-            this.idagent.Visible = false;
-            // 
-            // agent
-            // 
-            this.agent.DataPropertyName = "agent";
-            this.agent.HeaderText = "Агент";
-            this.agent.Name = "agent";
-            this.agent.ReadOnly = true;
-            // 
-            // idrealty
-            // 
-            this.idrealty.DataPropertyName = "idrealty";
-            this.idrealty.HeaderText = "ИД объекта недвижимости";
-            this.idrealty.Name = "idrealty";
-            this.idrealty.ReadOnly = true;
-            this.idrealty.Visible = false;
-            // 
-            // address
-            // 
-            this.address.DataPropertyName = "address";
-            this.address.HeaderText = "Адрес";
-            this.address.Name = "address";
-            this.address.ReadOnly = true;
-            // 
-            // idchief
-            // 
-            this.idchief.DataPropertyName = "idchief";
-            this.idchief.HeaderText = "ИД руководителя агента";
-            this.idchief.Name = "idchief";
-            this.idchief.ReadOnly = true;
-            this.idchief.Visible = false;
-            // 
-            // sail
-            // 
-            this.sail.DataPropertyName = "sail";
-            this.sail.HeaderText = "Вид сделки";
-            this.sail.Name = "sail";
-            this.sail.ReadOnly = true;
-            this.sail.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.sail.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // deal_status_id
-            // 
-            this.deal_status_id.DataPropertyName = "deal_status_id";
-            this.deal_status_id.HeaderText = "ИД статуса сделки";
-            this.deal_status_id.Name = "deal_status_id";
-            this.deal_status_id.ReadOnly = true;
-            this.deal_status_id.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.deal_status_id.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.deal_status_id.Visible = false;
-            // 
-            // csumma
-            // 
-            this.csumma.DataPropertyName = "csumma";
-            dataGridViewCellStyle9.Format = "N2";
-            dataGridViewCellStyle9.NullValue = null;
-            this.csumma.DefaultCellStyle = dataGridViewCellStyle9;
-            this.csumma.HeaderText = "Сумма";
-            this.csumma.Name = "csumma";
-            this.csumma.ReadOnly = true;
-            // 
-            // status
-            // 
-            this.status.DataPropertyName = "deal_status";
-            this.status.HeaderText = "Статус";
-            this.status.Name = "status";
-            this.status.ReadOnly = true;
             // 
             // realtyTabPage
             // 
@@ -404,9 +325,9 @@
             // full_square
             // 
             this.full_square.DataPropertyName = "full_square";
-            dataGridViewCellStyle10.Format = "N2";
-            dataGridViewCellStyle10.NullValue = null;
-            this.full_square.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle5.Format = "N2";
+            dataGridViewCellStyle5.NullValue = null;
+            this.full_square.DefaultCellStyle = dataGridViewCellStyle5;
             this.full_square.HeaderText = "Общая площадь";
             this.full_square.Name = "full_square";
             this.full_square.ReadOnly = true;
@@ -415,9 +336,9 @@
             // room_count
             // 
             this.room_count.DataPropertyName = "room_count";
-            dataGridViewCellStyle11.Format = "N0";
-            dataGridViewCellStyle11.NullValue = null;
-            this.room_count.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle6.Format = "N0";
+            dataGridViewCellStyle6.NullValue = null;
+            this.room_count.DefaultCellStyle = dataGridViewCellStyle6;
             this.room_count.HeaderText = "Число комнат";
             this.room_count.Name = "room_count";
             this.room_count.ReadOnly = true;
@@ -426,9 +347,9 @@
             // rsumma
             // 
             this.rsumma.DataPropertyName = "rsumma";
-            dataGridViewCellStyle12.Format = "N2";
-            dataGridViewCellStyle12.NullValue = null;
-            this.rsumma.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle7.Format = "N2";
+            dataGridViewCellStyle7.NullValue = null;
+            this.rsumma.DefaultCellStyle = dataGridViewCellStyle7;
             this.rsumma.HeaderText = "Стоимость за кв. м";
             this.rsumma.Name = "rsumma";
             this.rsumma.ReadOnly = true;
@@ -577,22 +498,128 @@
             this.ogrn.Name = "ogrn";
             this.ogrn.ReadOnly = true;
             // 
-            // toolStripSeparator1
+            // id
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(206, 6);
+            this.id.DataPropertyName = "id";
+            this.id.HeaderText = "ИД";
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.Visible = false;
             // 
-            // changeStatusToolStripMenuItem
+            // Contract
             // 
-            this.changeStatusToolStripMenuItem.Name = "changeStatusToolStripMenuItem";
-            this.changeStatusToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.changeStatusToolStripMenuItem.Text = "Изменить статус";
+            this.Contract.DataPropertyName = "contract";
+            this.Contract.HeaderText = "Договор";
+            this.Contract.Name = "Contract";
+            this.Contract.ReadOnly = true;
             // 
-            // showContentДоговораToolStripMenuItem
+            // idprincipal
             // 
-            this.showContentДоговораToolStripMenuItem.Name = "showContentДоговораToolStripMenuItem";
-            this.showContentДоговораToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.showContentДоговораToolStripMenuItem.Text = "Показать текст договора";
+            this.idprincipal.DataPropertyName = "idprincipal";
+            this.idprincipal.HeaderText = "ИД принципала";
+            this.idprincipal.Name = "idprincipal";
+            this.idprincipal.ReadOnly = true;
+            this.idprincipal.Visible = false;
+            // 
+            // principal
+            // 
+            this.principal.DataPropertyName = "principal";
+            this.principal.HeaderText = "Принципал";
+            this.principal.Name = "principal";
+            this.principal.ReadOnly = true;
+            // 
+            // idagent
+            // 
+            this.idagent.DataPropertyName = "idagent";
+            this.idagent.HeaderText = "ИД агента";
+            this.idagent.Name = "idagent";
+            this.idagent.ReadOnly = true;
+            this.idagent.Visible = false;
+            // 
+            // agent
+            // 
+            this.agent.DataPropertyName = "agent";
+            this.agent.HeaderText = "Агент";
+            this.agent.Name = "agent";
+            this.agent.ReadOnly = true;
+            // 
+            // idrealty
+            // 
+            this.idrealty.DataPropertyName = "idrealty";
+            this.idrealty.HeaderText = "ИД объекта недвижимости";
+            this.idrealty.Name = "idrealty";
+            this.idrealty.ReadOnly = true;
+            this.idrealty.Visible = false;
+            // 
+            // address
+            // 
+            this.address.DataPropertyName = "address";
+            this.address.HeaderText = "Адрес";
+            this.address.Name = "address";
+            this.address.ReadOnly = true;
+            // 
+            // idchief
+            // 
+            this.idchief.DataPropertyName = "idchief";
+            this.idchief.HeaderText = "ИД руководителя агента";
+            this.idchief.Name = "idchief";
+            this.idchief.ReadOnly = true;
+            this.idchief.Visible = false;
+            // 
+            // sail
+            // 
+            this.sail.DataPropertyName = "sail";
+            this.sail.HeaderText = "Вид сделки";
+            this.sail.Name = "sail";
+            this.sail.ReadOnly = true;
+            this.sail.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.sail.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // deal_status_id
+            // 
+            this.deal_status_id.DataPropertyName = "deal_status_id";
+            this.deal_status_id.HeaderText = "ИД статуса сделки";
+            this.deal_status_id.Name = "deal_status_id";
+            this.deal_status_id.ReadOnly = true;
+            this.deal_status_id.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.deal_status_id.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.deal_status_id.Visible = false;
+            // 
+            // csumma
+            // 
+            this.csumma.DataPropertyName = "csumma";
+            dataGridViewCellStyle8.Format = "N3";
+            dataGridViewCellStyle8.NullValue = null;
+            this.csumma.DefaultCellStyle = dataGridViewCellStyle8;
+            this.csumma.HeaderText = "Сумма";
+            this.csumma.Name = "csumma";
+            this.csumma.ReadOnly = true;
+            // 
+            // status
+            // 
+            this.status.DataPropertyName = "deal_status";
+            this.status.HeaderText = "Статус";
+            this.status.Name = "status";
+            this.status.ReadOnly = true;
+            // 
+            // main_toolStripSeparator
+            // 
+            this.main_toolStripSeparator.Name = "main_toolStripSeparator";
+            this.main_toolStripSeparator.Size = new System.Drawing.Size(245, 6);
+            // 
+            // changeStatusContextToolStripMenuItem
+            // 
+            this.changeStatusContextToolStripMenuItem.Name = "changeStatusContextToolStripMenuItem";
+            this.changeStatusContextToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
+            this.changeStatusContextToolStripMenuItem.Text = "Изменить статус договора";
+            this.changeStatusContextToolStripMenuItem.Click += new System.EventHandler(this.changeStatusToolStripMenuItem_Click);
+            // 
+            // showContextToolStripMenuItem
+            // 
+            this.showContextToolStripMenuItem.Name = "showContextToolStripMenuItem";
+            this.showContextToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
+            this.showContextToolStripMenuItem.Text = "Показать содержание договора";
+            this.showContextToolStripMenuItem.Click += new System.EventHandler(this.showContentToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -634,19 +661,6 @@
         private System.Windows.Forms.TabPage realtyTabPage;
         private System.Windows.Forms.TabPage principalsTabPage;
         private System.Windows.Forms.DataGridView contractsDataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Contract;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idprincipal;
-        private System.Windows.Forms.DataGridViewTextBoxColumn principal;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idagent;
-        private System.Windows.Forms.DataGridViewTextBoxColumn agent;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idrealty;
-        private System.Windows.Forms.DataGridViewTextBoxColumn address;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idchief;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sail;
-        private System.Windows.Forms.DataGridViewTextBoxColumn deal_status_id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn csumma;
-        private System.Windows.Forms.DataGridViewTextBoxColumn status;
         private System.Windows.Forms.DataGridView realtyDataGridView;
         private System.Windows.Forms.ToolStripMenuItem changePasswordToolStripMenuItem;
         private System.Windows.Forms.DataGridView principalsDataGridView;
@@ -672,8 +686,24 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn mortage;
         private System.Windows.Forms.DataGridViewCheckBoxColumn secondary;
         private System.Windows.Forms.DataGridViewCheckBoxColumn deal;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator dealtoolStripSeparator;
         private System.Windows.Forms.ToolStripMenuItem changeStatusToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem showContentДоговораToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showContentToolStripMenuItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Contract;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idprincipal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn principal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idagent;
+        private System.Windows.Forms.DataGridViewTextBoxColumn agent;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idrealty;
+        private System.Windows.Forms.DataGridViewTextBoxColumn address;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idchief;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sail;
+        private System.Windows.Forms.DataGridViewTextBoxColumn deal_status_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn csumma;
+        private System.Windows.Forms.DataGridViewTextBoxColumn status;
+        private System.Windows.Forms.ToolStripSeparator main_toolStripSeparator;
+        private System.Windows.Forms.ToolStripMenuItem changeStatusContextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showContextToolStripMenuItem;
     }
 }

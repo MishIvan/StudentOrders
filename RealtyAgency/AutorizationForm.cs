@@ -62,7 +62,7 @@ namespace RealtyAgency
                             Program.m_userrole = 1;
                         else 
                         {
-                            Program.m_userrole = agent.idchief.HasValue ? 2 : 3;
+                            Program.m_userrole = agent.idchief.HasValue ? 3 : 2;
                         }
                        
                         MainForm frm = new MainForm();

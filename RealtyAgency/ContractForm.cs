@@ -45,30 +45,24 @@ namespace RealtyAgency
             {
                 dealStatus_comboBox.SelectedIndex = 0;
                 dealStatus_comboBox.Enabled = false;
+                m_agentId = Program.m_userid;
             }
-
-            m_agentId = Program.m_userid;
-            Agent agent = Program.m_helper.GetAgentById(m_agentId);
-            if (agent != null)
-                agent_textBox.Text = agent.name;
-
-
-            if (m_id > 0)
+            else
             {
                 Contract cnt = Program.m_helper.GetContractByid(m_id);
-                if(cnt != null)
+                if (cnt != null)
                 {
                     number_textBox.Text = cnt.number;
                     date_dateTimePicker.Value = cnt.cdate;
 
                     m_principalId = cnt.idprincipal;
                     Principal principal = Program.m_helper.GetPrincipalById(m_principalId);
-                    if(principal != null)
+                    if (principal != null)
                         principal_textBox.Text = principal.name;
 
                     m_realtyId = cnt.idrealty;
                     RealtyObject ro = Program.m_helper.GetRealtyObjectById(m_realtyId);
-                    if(ro != null)
+                    if (ro != null)
                         realty_textBox.Text = ro.ToString();
 
                     m_content = cnt.content;
@@ -76,13 +70,19 @@ namespace RealtyAgency
 
                     m_oldPremium = cnt.premium;
                     m_summa = cnt.csumma;
-                  
-                    premium_maskedTextBox.Text = string.Format("{0:#0.#}", cnt.premium).Replace('0', ' ');
+
+                    premium_maskedTextBox.Text = string.Format("{0:00.#}", cnt.premium).Replace('0', ' ');
                     summa_textBox.Text = string.Format("{0:N3}", m_summa);
 
                     sail_checkBox.Checked = cnt.sail;
+                    m_agentId = cnt.idagent;
                 }
             }
+
+            Agent agent = Program.m_helper.GetAgentById(m_agentId);
+            if (agent != null)
+                agent_textBox.Text = agent.name;
+            OK_Button.Visible = m_agentId == Program.m_userid || Program.m_userrole == 1;
         }
         /// <summary>
         /// Выбор принципала
@@ -98,15 +98,6 @@ namespace RealtyAgency
                 m_principalId = frm.id; 
             }
         }
-        /*/// <summary>
-        /// Выбор агента
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void agentChoice_button_Click(object sender, EventArgs e)
-        {
-
-        }*/
         /// <summary>
         /// Выбор объекта недвижимости
         /// </summary>
@@ -123,9 +114,13 @@ namespace RealtyAgency
                 double premium = 0.0;
                 try
                 {
-                    premium = Convert.ToDouble(premium_maskedTextBox.Text);
+                    premium = Convert.ToDouble(premium_maskedTextBox.Text.Trim());
+                    m_oldPremium = premium;
                 }
-                catch { }
+                catch 
+                {
+                    return;
+                }
                 m_summa = summ*(1.0 +premium*0.01);
                 summa_textBox.Text = string.Format("{0:N3}", m_summa);
             }
@@ -136,12 +131,16 @@ namespace RealtyAgency
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OK_Button_Click(object sender, EventArgs e)
-        {
-            double sum = 0.0;
+        {            
+            string num = number_textBox.Text;
+            if(string.IsNullOrEmpty(num) || string.IsNullOrWhiteSpace(num))
+            {
+                MessageBox.Show("Требуется задать номер договора");
+                DialogResult = DialogResult.Cancel;
+            }
             double _premium = 0.0;
             try
             {
-                sum = Convert.ToDouble(m_summa);
                 _premium = Convert.ToDouble(premium_maskedTextBox.Text.Trim());
             }
             catch
@@ -168,10 +167,10 @@ namespace RealtyAgency
                 idagent = m_agentId,
                 idrealty = m_realtyId,
                 idprincipal = m_principalId,
-                number = number_textBox.Text,
+                number = num,
                 cdate = date_dateTimePicker.Value,
                 sail = sail_checkBox.Checked,
-                csumma = sum,
+                csumma = m_summa,
                 premium = _premium,
                 content = m_content,
                 contenttype = m_contenttype,
@@ -196,11 +195,10 @@ namespace RealtyAgency
         private void OnPremiumChanged(object sender, EventArgs e)
         {
             double premium = 0.0;
-            double sum = 0.0;
             try 
             { 
-                premium = Convert.ToDouble(premium_maskedTextBox.Text.Trim())*0.01;
-                m_summa = m_summa*(1.0 + premium)/(1.0 + m_oldPremium);
+                premium = Convert.ToDouble(premium_maskedTextBox.Text.Trim());
+                m_summa = m_summa*(1.0 + premium*0.01)/(1.0 + m_oldPremium*0.01);
                 m_oldPremium = premium;
                 summa_textBox.Text = string.Format("{0:N3}", m_summa);
 

@@ -253,7 +253,7 @@ namespace RealtyAgency
         public async Task<Content> DownLoadContractContent(long idc)
         {
             Content content  = null;
-            string sqlText = "select content, contenttype public.contract where id = @pid";
+            string sqlText = "select content, contenttype from public.contract where id = @pid";
             try
             {
                 content = await m_connection.QueryFirstOrDefaultAsync<Content>(sqlText, new { @pid = idc });

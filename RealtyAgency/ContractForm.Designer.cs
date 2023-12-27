@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.number_textBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -51,6 +52,7 @@
             this.upload_button = new System.Windows.Forms.Button();
             this.show_button = new System.Windows.Forms.Button();
             this.sail_checkBox = new System.Windows.Forms.CheckBox();
+            this.cotract_toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // label1
@@ -68,6 +70,7 @@
             this.number_textBox.Name = "number_textBox";
             this.number_textBox.Size = new System.Drawing.Size(146, 20);
             this.number_textBox.TabIndex = 1;
+            this.cotract_toolTip.SetToolTip(this.number_textBox, "Номер договора");
             // 
             // label2
             // 
@@ -85,6 +88,7 @@
             this.date_dateTimePicker.Name = "date_dateTimePicker";
             this.date_dateTimePicker.Size = new System.Drawing.Size(100, 20);
             this.date_dateTimePicker.TabIndex = 3;
+            this.cotract_toolTip.SetToolTip(this.date_dateTimePicker, "Дата договора");
             // 
             // label3
             // 
@@ -102,6 +106,7 @@
             this.principal_textBox.Name = "principal_textBox";
             this.principal_textBox.Size = new System.Drawing.Size(282, 20);
             this.principal_textBox.TabIndex = 5;
+            this.cotract_toolTip.SetToolTip(this.principal_textBox, "Пригципал договора");
             // 
             // principalChoice_button
             // 
@@ -110,6 +115,7 @@
             this.principalChoice_button.Size = new System.Drawing.Size(33, 20);
             this.principalChoice_button.TabIndex = 6;
             this.principalChoice_button.Text = "...";
+            this.cotract_toolTip.SetToolTip(this.principalChoice_button, "Выбрать принсипала договора из списка контрагентов");
             this.principalChoice_button.UseVisualStyleBackColor = true;
             this.principalChoice_button.Click += new System.EventHandler(this.principalChoice_button_Click);
             // 
@@ -120,6 +126,7 @@
             this.agent_textBox.Name = "agent_textBox";
             this.agent_textBox.Size = new System.Drawing.Size(282, 20);
             this.agent_textBox.TabIndex = 8;
+            this.cotract_toolTip.SetToolTip(this.agent_textBox, "Агент, ведущий договор");
             // 
             // label4
             // 
@@ -138,6 +145,7 @@
             this.Cancel_Button.Name = "Cancel_Button";
             this.Cancel_Button.Size = new System.Drawing.Size(72, 40);
             this.Cancel_Button.TabIndex = 22;
+            this.cotract_toolTip.SetToolTip(this.Cancel_Button, "Отказ от изменений в базе данных");
             this.Cancel_Button.UseVisualStyleBackColor = true;
             // 
             // OK_Button
@@ -148,6 +156,7 @@
             this.OK_Button.Name = "OK_Button";
             this.OK_Button.Size = new System.Drawing.Size(72, 40);
             this.OK_Button.TabIndex = 21;
+            this.cotract_toolTip.SetToolTip(this.OK_Button, "Внести изменения в базу данных");
             this.OK_Button.UseVisualStyleBackColor = true;
             this.OK_Button.Click += new System.EventHandler(this.OK_Button_Click);
             // 
@@ -158,6 +167,7 @@
             this.realtyChoice_button.Size = new System.Drawing.Size(33, 20);
             this.realtyChoice_button.TabIndex = 25;
             this.realtyChoice_button.Text = "...";
+            this.cotract_toolTip.SetToolTip(this.realtyChoice_button, "Выбор объекта недвижимости");
             this.realtyChoice_button.UseVisualStyleBackColor = true;
             this.realtyChoice_button.Click += new System.EventHandler(this.realtyChoice_button_Click);
             // 
@@ -168,6 +178,7 @@
             this.realty_textBox.Name = "realty_textBox";
             this.realty_textBox.Size = new System.Drawing.Size(282, 20);
             this.realty_textBox.TabIndex = 24;
+            this.cotract_toolTip.SetToolTip(this.realty_textBox, "Объект недвижимости");
             // 
             // label5
             // 
@@ -185,6 +196,7 @@
             this.summa_textBox.Name = "summa_textBox";
             this.summa_textBox.Size = new System.Drawing.Size(130, 20);
             this.summa_textBox.TabIndex = 27;
+            this.cotract_toolTip.SetToolTip(this.summa_textBox, "Полная сумма договора в тыс., включающая агентское вознаграждение");
             // 
             // label6
             // 
@@ -211,6 +223,7 @@
             this.premium_maskedTextBox.Name = "premium_maskedTextBox";
             this.premium_maskedTextBox.Size = new System.Drawing.Size(85, 20);
             this.premium_maskedTextBox.TabIndex = 29;
+            this.cotract_toolTip.SetToolTip(this.premium_maskedTextBox, "Процент агентского вознаграждения");
             this.premium_maskedTextBox.TextChanged += new System.EventHandler(this.OnPremiumChanged);
             // 
             // label8
@@ -230,6 +243,7 @@
             this.dealStatus_comboBox.Name = "dealStatus_comboBox";
             this.dealStatus_comboBox.Size = new System.Drawing.Size(254, 21);
             this.dealStatus_comboBox.TabIndex = 31;
+            this.cotract_toolTip.SetToolTip(this.dealStatus_comboBox, "Статус сделки по договору");
             // 
             // upload_button
             // 
@@ -238,6 +252,7 @@
             this.upload_button.Size = new System.Drawing.Size(142, 23);
             this.upload_button.TabIndex = 32;
             this.upload_button.Text = "Загрузить содержание";
+            this.cotract_toolTip.SetToolTip(this.upload_button, "Загрузить содержание договора (файл)");
             this.upload_button.UseVisualStyleBackColor = true;
             this.upload_button.Click += new System.EventHandler(this.upload_button_Click);
             // 
@@ -248,6 +263,7 @@
             this.show_button.Size = new System.Drawing.Size(142, 23);
             this.show_button.TabIndex = 33;
             this.show_button.Text = "Показать содержание";
+            this.cotract_toolTip.SetToolTip(this.show_button, "Показать содержание договора");
             this.show_button.UseVisualStyleBackColor = true;
             this.show_button.Click += new System.EventHandler(this.show_button_Click);
             // 
@@ -261,6 +277,7 @@
             this.sail_checkBox.Size = new System.Drawing.Size(72, 17);
             this.sail_checkBox.TabIndex = 34;
             this.sail_checkBox.Text = "Продажа";
+            this.cotract_toolTip.SetToolTip(this.sail_checkBox, "Сделка продажи или покупки недвижимости");
             this.sail_checkBox.UseVisualStyleBackColor = true;
             // 
             // ContractForm
@@ -327,5 +344,6 @@
         private System.Windows.Forms.Button upload_button;
         private System.Windows.Forms.Button show_button;
         private System.Windows.Forms.CheckBox sail_checkBox;
+        private System.Windows.Forms.ToolTip cotract_toolTip;
     }
 }
