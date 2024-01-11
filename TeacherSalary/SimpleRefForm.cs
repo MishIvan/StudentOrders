@@ -18,6 +18,11 @@ namespace TeacherSalary
         long m_id;
         string m_tableName;
         public long id { get { return m_id; } }
+        /// <summary>
+        ///  Конструктор формы
+        /// </summary>
+        /// <param name="numRef">Порядок справочника в списке: 0 - должности преподавателей, 1 - кафедры, 2 - учебный дисциплины, 3 - виды занятий</param>
+        /// <param name="selMode">true - режим выбора, false - режим управления</param>
         public SimpleRefForm(int numRef, bool selMode = false)
         {
             InitializeComponent();
@@ -28,7 +33,7 @@ namespace TeacherSalary
         private async void OnLoad(object sender, EventArgs e)
         {
             Icon = Properties.Resources.records_32;
-            records_listBox.SelectedIndex = m_numRef;
+            ref_comboBox.SelectedIndex = m_numRef;
             switch(m_numRef)
             {
                 case 0:
@@ -52,7 +57,8 @@ namespace TeacherSalary
                 add_button.Text = "Выбор";
                 edit_button.Text = "Отмена";
                 delete_button.Visible = false;
-                records_listBox.Enabled = false;
+                ref_comboBox.Enabled = false;
+                input_textBox.Enabled = false;
             }
 
             List<SimpleRef> refs = await Program.m_helper.GetSimpleRefRecords(m_tableName);
@@ -62,12 +68,24 @@ namespace TeacherSalary
                 records_listBox.SelectedIndex = 0;
                 SimpleRef _ref = records_listBox.Items[0] as SimpleRef;
                 if (_ref != null)
+                {
                     input_textBox.Text = _ref.name;
+                    m_id = _ref.id;
+                }
+            }
+            else
+            {
+                records_listBox.DataSource=null;
+                input_textBox.Text = string.Empty; 
             }
 
         }
-
-        private void add_button_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Кнопка Добавить (в режиме выбора 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void add_button_Click(object sender, EventArgs e)
         {
             if (m_selectMode)
             {
@@ -83,11 +101,35 @@ namespace TeacherSalary
             }
             else
             {
-                
+                string name = input_textBox.Text;
+                int recs = Program.m_helper.AddSimpleRefRecord(m_tableName, name);
+                if (recs < 1)
+                    Program.DBErrorMessage();
+                else
+                {
+                    List<SimpleRef> refs = await Program.m_helper.GetSimpleRefRecords(m_tableName);
+                    if (!refs.IsNullOrEmpty())
+                    {
+                        records_listBox.DataSource = refs;
+                        records_listBox.SelectedIndex = 0;
+                        SimpleRef _ref = records_listBox.Items[0] as SimpleRef;
+                        if (_ref != null)
+                        {
+                            input_textBox.Text = _ref.name;
+                            m_id = _ref.id;
+                        }
+                    }
+
+                }
+
             }
         }
-
-        private void edit_button_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Нажата кнопка Изменить (в режиме выбора Отмена)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void edit_button_Click(object sender, EventArgs e)
         {
             if(m_selectMode)
             {
@@ -95,21 +137,74 @@ namespace TeacherSalary
             }
             else
             {
+                int idx = records_listBox.SelectedIndex;
+                if (idx < 0) return;  
+                SimpleRef _ref = records_listBox.Items[idx] as SimpleRef;
+                if (_ref != null)
+                {
+                    m_id = _ref.id;  
+                    string name = input_textBox.Text;
+                    int recs = Program.m_helper.UpdateSimpleRefRecord(m_tableName, name, m_id);
+                    if (recs < 1)
+                        Program.DBErrorMessage();
+                    else
+                    {
+                        List<SimpleRef> refs = await Program.m_helper.GetSimpleRefRecords(m_tableName);
+                        if (!refs.IsNullOrEmpty())
+                        {
+                            records_listBox.DataSource = refs;
+                            records_listBox.SelectedIndex = 0;
+                            _ref = records_listBox.Items[0] as SimpleRef;
+                            if (_ref != null)
+                            {
+                                input_textBox.Text = _ref.name;
+                                m_id = _ref.id;
+                            }
+                        }
+
+                    }
+
+                }
 
             }
 
         }
-
-        private void delete_button_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Нажата кнопка Удалить (в режиме выбора скрыта)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void delete_button_Click(object sender, EventArgs e)
         {
-            if (m_selectMode)
+            if (m_selectMode) return;
+            int idx = records_listBox.SelectedIndex;
+            if (idx < 0) return;
+            SimpleRef _ref = records_listBox.Items[idx] as SimpleRef;
+            if (_ref != null)
             {
-                return;
-            }
-            else
-            {
+                m_id = _ref.id;
+                int recs = Program.m_helper.DeleteSimpleRefRecord(m_tableName, m_id);
+                if (recs < 1)
+                    Program.DBErrorMessage();
+                else
+                {
+                    List<SimpleRef> refs = await Program.m_helper.GetSimpleRefRecords(m_tableName);
+                    if (!refs.IsNullOrEmpty())
+                    {
+                        records_listBox.DataSource = refs;
+                        records_listBox.SelectedIndex = 0;
+                        _ref = records_listBox.Items[0] as SimpleRef;
+                        if (_ref != null)
+                        {
+                            input_textBox.Text = _ref.name;
+                            m_id = _ref.id;
+                        }
+                    }
+
+                }
 
             }
+
 
         }
         /// <summary>
@@ -144,8 +239,16 @@ namespace TeacherSalary
                 records_listBox.DataSource = refs;
                 records_listBox.SelectedIndex = 0; 
                 SimpleRef _ref = records_listBox.Items[0] as SimpleRef;
-                if(_ref != null)
-                    input_textBox.Text = _ref.name; 
+                if (_ref != null)
+                {
+                    input_textBox.Text = _ref.name;
+                    m_id = _ref.id;
+                }
+            }
+            else
+            {
+                records_listBox.DataSource=null;
+                input_textBox.Text = string.Empty;
             }
         }
         /// <summary>
@@ -156,6 +259,7 @@ namespace TeacherSalary
         private void OnRecordIndexChanged(object sender, EventArgs e)
         {
             int idx = records_listBox.SelectedIndex;
+            if (idx < 0) return;
             SimpleRef _ref = records_listBox.Items[idx] as SimpleRef;
             if (_ref != null)
             {

@@ -89,5 +89,15 @@ namespace TeacherSalary.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
+        /// </summary>
+        internal static System.Drawing.Icon teacher_32 {
+            get {
+                object obj = ResourceManager.GetObject("teacher_32", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }

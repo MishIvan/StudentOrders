@@ -24,11 +24,18 @@ namespace TeacherSalary
     /// </summary>
     public class SimpleRef
     { 
-        public int id { get; set; } 
+        public long id { get; set; } 
         public string name { get; set; }
         public override string ToString()
         {
             return name;
         }
+    }
+
+    public class Teacher: SimpleRef
+    {
+        public long idpost { get; set; }
+        public long iddepartment { get; set; }
+        public double salary { get; set; }
     }
 }

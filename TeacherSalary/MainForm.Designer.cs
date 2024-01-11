@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.filter_dateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
@@ -46,6 +46,7 @@
             this.отчётыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.overallSheet_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.nameFilter_textBox = new System.Windows.Forms.TextBox();
             this.departmentFilter_comboBox = new System.Windows.Forms.ComboBox();
             this.sheet_dataGridView = new System.Windows.Forms.DataGridView();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -59,7 +60,6 @@
             this.idgroup = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stgroup = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.hour = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nameFilter_textBox = new System.Windows.Forms.TextBox();
             this.main_menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sheet_dataGridView)).BeginInit();
@@ -125,19 +125,19 @@
             // add_ToolStripMenuItem
             // 
             this.add_ToolStripMenuItem.Name = "add_ToolStripMenuItem";
-            this.add_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.add_ToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.add_ToolStripMenuItem.Text = "Добавить запись";
             // 
             // edit_ToolStripMenuItem
             // 
             this.edit_ToolStripMenuItem.Name = "edit_ToolStripMenuItem";
-            this.edit_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.edit_ToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.edit_ToolStripMenuItem.Text = "Изменить запись";
             // 
             // delete_ToolStripMenuItem
             // 
             this.delete_ToolStripMenuItem.Name = "delete_ToolStripMenuItem";
-            this.delete_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.delete_ToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.delete_ToolStripMenuItem.Text = "Удалить запись";
             // 
             // reference_ToolStripMenuItem
@@ -155,12 +155,14 @@
             this.simpleRef_ToolStripMenuItem.Name = "simpleRef_ToolStripMenuItem";
             this.simpleRef_ToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
             this.simpleRef_ToolStripMenuItem.Text = "Простые справочники";
+            this.simpleRef_ToolStripMenuItem.Click += new System.EventHandler(this.simpleRef_ToolStripMenuItem_Click);
             // 
             // teachers_ToolStripMenuItem
             // 
             this.teachers_ToolStripMenuItem.Name = "teachers_ToolStripMenuItem";
             this.teachers_ToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
             this.teachers_ToolStripMenuItem.Text = "Преподаватели";
+            this.teachers_ToolStripMenuItem.Click += new System.EventHandler(this.teachers_ToolStripMenuItem_Click);
             // 
             // groups_ToolStripMenuItem
             // 
@@ -192,6 +194,13 @@
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Фильтры";
+            // 
+            // nameFilter_textBox
+            // 
+            this.nameFilter_textBox.Location = new System.Drawing.Point(227, 23);
+            this.nameFilter_textBox.Name = "nameFilter_textBox";
+            this.nameFilter_textBox.Size = new System.Drawing.Size(256, 20);
+            this.nameFilter_textBox.TabIndex = 8;
             // 
             // departmentFilter_comboBox
             // 
@@ -238,9 +247,9 @@
             // classdate
             // 
             this.classdate.DataPropertyName = "classdate";
-            dataGridViewCellStyle1.Format = "d";
-            dataGridViewCellStyle1.NullValue = null;
-            this.classdate.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Format = "d";
+            dataGridViewCellStyle3.NullValue = null;
+            this.classdate.DefaultCellStyle = dataGridViewCellStyle3;
             this.classdate.HeaderText = "Дата";
             this.classdate.Name = "classdate";
             this.classdate.ReadOnly = true;
@@ -317,21 +326,14 @@
             // hour
             // 
             this.hour.DataPropertyName = "hours";
-            dataGridViewCellStyle2.Format = "N0";
-            dataGridViewCellStyle2.NullValue = null;
-            this.hour.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Format = "N0";
+            dataGridViewCellStyle4.NullValue = null;
+            this.hour.DefaultCellStyle = dataGridViewCellStyle4;
             this.hour.HeaderText = "Кол-во часов";
             this.hour.Name = "hour";
             this.hour.ReadOnly = true;
             this.hour.ToolTipText = "Количество часов на занятие";
             this.hour.Width = 70;
-            // 
-            // nameFilter_textBox
-            // 
-            this.nameFilter_textBox.Location = new System.Drawing.Point(227, 23);
-            this.nameFilter_textBox.Name = "nameFilter_textBox";
-            this.nameFilter_textBox.Size = new System.Drawing.Size(256, 20);
-            this.nameFilter_textBox.TabIndex = 8;
             // 
             // MainForm
             // 

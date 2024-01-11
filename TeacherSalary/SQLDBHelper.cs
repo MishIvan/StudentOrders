@@ -157,6 +157,26 @@ namespace TeacherSalary
             return recs;
 
         }
+        /// <summary>
+        /// Добавить запись о преподавателе
+        /// </summary>
+        /// <param name="teacher"></param>
+        /// <returns></returns>
+        public int AddTeacher(Teacher teacher)
+        {
+            int recs = 0;
+            string sqlText = "insert into dbo.teachers (name,idpost, iddepartmet, salary) values(@pname, @pidp, @pidd, @ps)";
+            try
+            {
+                recs = conn.Execute(sqlText, new { pname = teacher.name, pidp =teacher.idpost, pidd = teacher.iddepartment,ps=teacher.salary  });
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return recs;
+
+        }
         /*
         /// <summary>
         /// Выдать список горных систем
