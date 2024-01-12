@@ -15,15 +15,19 @@ namespace TeacherSalary
     public partial class TeachersForm : Form
     {
         long m_id;
+        long m_iddept;
+        int m_idx;
         public long id {  get { return m_id; } }
         /// <summary>
         /// Если id > 0, то это режим выбора, иначе режим управления справочником
         /// </summary>
         /// <param name="id"></param>
-        public TeachersForm(long id = 0)
+        public TeachersForm(long id = 0, long iddept = 0)
         {
             InitializeComponent();
             m_id = id;
+            m_iddept = iddept;
+            m_idx = -1;
         }
 
         private async void OnLoad(object sender, EventArgs e)
@@ -36,6 +40,9 @@ namespace TeacherSalary
             lst = await Program.m_helper.GetSimpleRefRecords("department");
             dept_comboBox.DataSource = lst.IsNullOrEmpty() ? new List<SimpleRef>() : lst;
 
+            List <Teacher> lstt = await Program.m_helper.GetTeachers(m_iddept);
+            name_comboBox.DataSource = lstt.IsNullOrEmpty() ? new List<Teacher>() : lstt;
+
             if (m_id > 0)
             {
                 add_button.Text = "Выбор";
@@ -46,12 +53,10 @@ namespace TeacherSalary
             }
             else
             {
-                if(post_comboBox.Items.Count > 0)
-                    post_comboBox.SelectedIndex = 0;
-
-                if(dept_comboBox.Items.Count > 0)
-                    dept_comboBox.SelectedIndex = 0;
-                salary_textBox.Text = string.Empty;
+                if (name_comboBox.Items.Count>0)
+                    name_comboBox.SelectedIndex = 0;
+                else
+                    salary_textBox.Text = string.Empty;
             }
             
 
@@ -86,13 +91,13 @@ namespace TeacherSalary
         /// <param name="e"></param>
         private void OnChangeTeacher(object sender, EventArgs e)
         {
-            int idx = name_comboBox.SelectedIndex;
-            if (idx < 0) return;
-            Teacher teacher = name_comboBox.SelectedItem as Teacher;
+            m_idx = name_comboBox.SelectedIndex;
+            if (m_idx < 0) return;
+            Teacher teacher = name_comboBox.Items[m_idx] as Teacher;
             if (teacher != null) 
             {
                 // установить должность
-                idx = -1;
+                int idx = -1;
                 foreach (var item in post_comboBox.Items)
                 {
                     SimpleRef _ref = item as SimpleRef;
@@ -113,7 +118,7 @@ namespace TeacherSalary
                     if (_ref != null)
                     {
                         idx++;
-                        if (_ref.id == teacher.idpost) break;
+                        if (_ref.id == teacher.iddepartment) break;
                     }
                 }
                 if (idx >= 0)
@@ -125,22 +130,142 @@ namespace TeacherSalary
             }
         }
 
-        private void add_button_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Нажата кнопка Добавить (в режиме выбора Выбор)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void add_button_Click(object sender, EventArgs e)
         {
+            Teacher teacher = null;
             if(m_id > 0)
             {
                 DialogResult = DialogResult.OK;
-                return;
+                teacher = name_comboBox.SelectedItem as Teacher; 
+                if (teacher != null)
+                   m_id = teacher.id;
+            }
+            else
+            {
+                double s = double.NaN;
+                try
+                {
+                    s = Convert.ToDouble(salary_textBox.Text);
+                }
+                catch (Exception) 
+                {
+                    MessageBox.Show("Неверный формат числа");
+                    return;
+                }
+                SimpleRef _ref = post_comboBox.SelectedItem as SimpleRef;
+                if (_ref == null) return;
+                long ips = _ref.id;
+
+                _ref = dept_comboBox.SelectedItem as SimpleRef;
+                if (_ref == null) return;
+
+                string _name = name_comboBox.Text;
+
+                teacher = new Teacher
+                {
+                    id = 0,
+                    name = _name,
+                    idpost = ips,
+                    iddepartment = _ref.id,
+                    salary = s
+
+                };
+                int recs = Program.m_helper.AddTeacher(teacher);
+                if (recs < 1)
+                    Program.DBErrorMessage();
+                else
+                {
+                    var lst = await Program.m_helper.GetTeachers(m_iddept);
+                    name_comboBox.DataSource = lst;
+                    int idx = name_comboBox.FindString(_name);
+                    if(idx >= 0)
+                        name_comboBox.SelectedIndex = idx;
+                }
+                
             }
         }
-
-        private void edit_button_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Нажата кнопка Изменить (в режиме выбора Отмена)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void edit_button_Click(object sender, EventArgs e)
         {
+            if(m_id > 0)
+                DialogResult = DialogResult.Cancel;
+            else
+            {
+                if (m_idx < 0) return;
+                Teacher teacher = name_comboBox.Items[m_idx] as Teacher;
+                if (teacher == null) return;
+
+                double s = double.NaN;
+                try
+                {
+                    s = Convert.ToDouble(salary_textBox.Text);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Неверный формат числа");
+                    return;
+                }
+                SimpleRef _ref = post_comboBox.SelectedItem as SimpleRef;
+                if (_ref == null) return;
+                long ips = _ref.id;
+
+                _ref = dept_comboBox.SelectedItem as SimpleRef;
+                if (_ref == null) return;
+
+                string _name = name_comboBox.Text;
+
+                teacher.name = _name;
+                teacher.idpost = ips;
+                teacher.iddepartment = _ref.id;
+                teacher.salary = s;
+
+                int recs = Program.m_helper.UpdateTeacher(teacher);
+                if (recs < 1)
+                    Program.DBErrorMessage();
+                else
+                {
+                    var lst = await Program.m_helper.GetTeachers(m_iddept);
+                    name_comboBox.DataSource = lst;
+                    int idx = name_comboBox.FindString(_name);
+                    if (idx >= 0)
+                        name_comboBox.SelectedIndex = idx;
+                }
+
+
+            }
 
         }
-
-        private void delete_button_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Нажата кнопка Удалить (в режиме выбора кнопка невидима)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void delete_button_Click(object sender, EventArgs e)
         {
+            if (m_idx < 0) return;
+            Teacher teacher = name_comboBox.Items[m_idx] as Teacher;
+            if (teacher == null) return;
+
+            int recs = Program.m_helper.DeleteTeacher(teacher.id);
+            if (recs < 1)
+                Program.DBErrorMessage();
+            else
+            {
+                var lst = await Program.m_helper.GetTeachers(m_iddept);
+                name_comboBox.DataSource = lst;
+                if(!lst.IsNullOrEmpty())
+                    name_comboBox.SelectedIndex = 0;
+            }
+
 
         }
     }

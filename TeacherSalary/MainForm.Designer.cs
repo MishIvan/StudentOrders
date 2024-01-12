@@ -47,7 +47,7 @@
             this.overallSheet_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.nameFilter_textBox = new System.Windows.Forms.TextBox();
-            this.departmentFilter_comboBox = new System.Windows.Forms.ComboBox();
+            this.deptFilter_comboBox = new System.Windows.Forms.ComboBox();
             this.sheet_dataGridView = new System.Windows.Forms.DataGridView();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.classdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -169,6 +169,7 @@
             this.groups_ToolStripMenuItem.Name = "groups_ToolStripMenuItem";
             this.groups_ToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
             this.groups_ToolStripMenuItem.Text = "Группы";
+            this.groups_ToolStripMenuItem.Click += new System.EventHandler(this.groups_ToolStripMenuItem_Click);
             // 
             // отчётыToolStripMenuItem
             // 
@@ -187,7 +188,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.nameFilter_textBox);
-            this.groupBox1.Controls.Add(this.departmentFilter_comboBox);
+            this.groupBox1.Controls.Add(this.deptFilter_comboBox);
             this.groupBox1.Location = new System.Drawing.Point(15, 27);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(821, 60);
@@ -202,14 +203,14 @@
             this.nameFilter_textBox.Size = new System.Drawing.Size(256, 20);
             this.nameFilter_textBox.TabIndex = 8;
             // 
-            // departmentFilter_comboBox
+            // deptFilter_comboBox
             // 
-            this.departmentFilter_comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.departmentFilter_comboBox.FormattingEnabled = true;
-            this.departmentFilter_comboBox.Location = new System.Drawing.Point(551, 22);
-            this.departmentFilter_comboBox.Name = "departmentFilter_comboBox";
-            this.departmentFilter_comboBox.Size = new System.Drawing.Size(239, 21);
-            this.departmentFilter_comboBox.TabIndex = 7;
+            this.deptFilter_comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.deptFilter_comboBox.FormattingEnabled = true;
+            this.deptFilter_comboBox.Location = new System.Drawing.Point(551, 22);
+            this.deptFilter_comboBox.Name = "deptFilter_comboBox";
+            this.deptFilter_comboBox.Size = new System.Drawing.Size(239, 21);
+            this.deptFilter_comboBox.TabIndex = 7;
             // 
             // sheet_dataGridView
             // 
@@ -380,7 +381,7 @@
         private System.Windows.Forms.ToolStripMenuItem отчётыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem overallSheet_ToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ComboBox departmentFilter_comboBox;
+        private System.Windows.Forms.ComboBox deptFilter_comboBox;
         private System.Windows.Forms.DataGridView sheet_dataGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn classdate;

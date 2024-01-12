@@ -31,11 +31,26 @@ namespace TeacherSalary
             return name;
         }
     }
-
+    /// <summary>
+    /// Преподаватель
+    /// </summary>
     public class Teacher: SimpleRef
     {
         public long idpost { get; set; }
         public long iddepartment { get; set; }
         public double salary { get; set; }
+    }
+    /// <summary>
+    /// Группа студентов
+    /// </summary>
+    public class Group
+    { 
+        public long id { get; set; } 
+        public string number { get; set; }
+        public int year { get; set; }
+        public override string ToString()
+        {
+            return number;
+        }
     }
 }

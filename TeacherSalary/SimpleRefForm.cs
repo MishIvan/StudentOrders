@@ -17,7 +17,9 @@ namespace TeacherSalary
         int m_numRef;
         long m_id;
         string m_tableName;
+        bool m_deptChanged;
         public long id { get { return m_id; } }
+        public bool deptChanged { get { return m_deptChanged; } }
         /// <summary>
         ///  Конструктор формы
         /// </summary>
@@ -28,6 +30,7 @@ namespace TeacherSalary
             InitializeComponent();
             m_selectMode = selMode;
             m_numRef = numRef;
+            m_deptChanged = false;  
         }
 
         private async void OnLoad(object sender, EventArgs e)
@@ -107,6 +110,7 @@ namespace TeacherSalary
                     Program.DBErrorMessage();
                 else
                 {
+                    m_deptChanged = true;
                     List<SimpleRef> refs = await Program.m_helper.GetSimpleRefRecords(m_tableName);
                     if (!refs.IsNullOrEmpty())
                     {
@@ -149,6 +153,7 @@ namespace TeacherSalary
                         Program.DBErrorMessage();
                     else
                     {
+                        m_deptChanged = true;
                         List<SimpleRef> refs = await Program.m_helper.GetSimpleRefRecords(m_tableName);
                         if (!refs.IsNullOrEmpty())
                         {

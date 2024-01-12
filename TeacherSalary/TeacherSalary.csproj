@@ -211,6 +211,12 @@
       <DependentUpon>SimpleRefForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SQLDBHelper.cs" />
+    <Compile Include="GroupsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GroupsForm.Designer.cs">
+      <DependentUpon>GroupsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="TeachersForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -235,6 +241,9 @@
     </Compile>
     <EmbeddedResource Include="SimpleRefForm.resx">
       <DependentUpon>SimpleRefForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GroupsForm.resx">
+      <DependentUpon>GroupsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TeachersForm.resx">
       <DependentUpon>TeachersForm.cs</DependentUpon>
@@ -268,6 +277,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\teacher_32.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\student_32.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Data.SqlClient.SNI.5.1.0\build\net462\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('..\packages\Microsoft.Data.SqlClient.SNI.5.1.0\build\net462\Microsoft.Data.SqlClient.SNI.targets')" />
