@@ -28,10 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
-            this.filter_dateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.main_menuStrip = new System.Windows.Forms.MenuStrip();
@@ -60,6 +59,8 @@
             this.idgroup = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stgroup = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.hour = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.iddept = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.data_maskedTextBox = new System.Windows.Forms.MaskedTextBox();
             this.main_menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sheet_dataGridView)).BeginInit();
@@ -73,14 +74,6 @@
             this.label1.Size = new System.Drawing.Size(36, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Дата:";
-            // 
-            // filter_dateTimePicker
-            // 
-            this.filter_dateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.filter_dateTimePicker.Location = new System.Drawing.Point(68, 49);
-            this.filter_dateTimePicker.Name = "filter_dateTimePicker";
-            this.filter_dateTimePicker.Size = new System.Drawing.Size(106, 20);
-            this.filter_dateTimePicker.TabIndex = 1;
             // 
             // label2
             // 
@@ -125,20 +118,23 @@
             // add_ToolStripMenuItem
             // 
             this.add_ToolStripMenuItem.Name = "add_ToolStripMenuItem";
-            this.add_ToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.add_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.add_ToolStripMenuItem.Text = "Добавить запись";
+            this.add_ToolStripMenuItem.Click += new System.EventHandler(this.add_ToolStripMenuItem_Click);
             // 
             // edit_ToolStripMenuItem
             // 
             this.edit_ToolStripMenuItem.Name = "edit_ToolStripMenuItem";
-            this.edit_ToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.edit_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.edit_ToolStripMenuItem.Text = "Изменить запись";
+            this.edit_ToolStripMenuItem.Click += new System.EventHandler(this.edit_ToolStripMenuItem_Click);
             // 
             // delete_ToolStripMenuItem
             // 
             this.delete_ToolStripMenuItem.Name = "delete_ToolStripMenuItem";
-            this.delete_ToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.delete_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.delete_ToolStripMenuItem.Text = "Удалить запись";
+            this.delete_ToolStripMenuItem.Click += new System.EventHandler(this.delete_ToolStripMenuItem_Click);
             // 
             // reference_ToolStripMenuItem
             // 
@@ -187,6 +183,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.data_maskedTextBox);
             this.groupBox1.Controls.Add(this.nameFilter_textBox);
             this.groupBox1.Controls.Add(this.deptFilter_comboBox);
             this.groupBox1.Location = new System.Drawing.Point(15, 27);
@@ -202,6 +199,7 @@
             this.nameFilter_textBox.Name = "nameFilter_textBox";
             this.nameFilter_textBox.Size = new System.Drawing.Size(256, 20);
             this.nameFilter_textBox.TabIndex = 8;
+            this.nameFilter_textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnKeyPressTeacherFilter);
             // 
             // deptFilter_comboBox
             // 
@@ -211,6 +209,7 @@
             this.deptFilter_comboBox.Name = "deptFilter_comboBox";
             this.deptFilter_comboBox.Size = new System.Drawing.Size(239, 21);
             this.deptFilter_comboBox.TabIndex = 7;
+            this.deptFilter_comboBox.SelectedIndexChanged += new System.EventHandler(this.OnDeptChanged);
             // 
             // sheet_dataGridView
             // 
@@ -228,7 +227,8 @@
             this.teacher,
             this.idgroup,
             this.stgroup,
-            this.hour});
+            this.hour,
+            this.iddept});
             this.sheet_dataGridView.Location = new System.Drawing.Point(12, 96);
             this.sheet_dataGridView.MultiSelect = false;
             this.sheet_dataGridView.Name = "sheet_dataGridView";
@@ -248,9 +248,9 @@
             // classdate
             // 
             this.classdate.DataPropertyName = "classdate";
-            dataGridViewCellStyle3.Format = "d";
-            dataGridViewCellStyle3.NullValue = null;
-            this.classdate.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Format = "d";
+            dataGridViewCellStyle1.NullValue = null;
+            this.classdate.DefaultCellStyle = dataGridViewCellStyle1;
             this.classdate.HeaderText = "Дата";
             this.classdate.Name = "classdate";
             this.classdate.ReadOnly = true;
@@ -327,14 +327,30 @@
             // hour
             // 
             this.hour.DataPropertyName = "hours";
-            dataGridViewCellStyle4.Format = "N0";
-            dataGridViewCellStyle4.NullValue = null;
-            this.hour.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Format = "N0";
+            dataGridViewCellStyle2.NullValue = null;
+            this.hour.DefaultCellStyle = dataGridViewCellStyle2;
             this.hour.HeaderText = "Кол-во часов";
             this.hour.Name = "hour";
             this.hour.ReadOnly = true;
             this.hour.ToolTipText = "Количество часов на занятие";
             this.hour.Width = 70;
+            // 
+            // iddept
+            // 
+            this.iddept.HeaderText = "ИД Каф";
+            this.iddept.Name = "iddept";
+            this.iddept.ReadOnly = true;
+            this.iddept.Visible = false;
+            // 
+            // data_maskedTextBox
+            // 
+            this.data_maskedTextBox.Location = new System.Drawing.Point(56, 24);
+            this.data_maskedTextBox.Mask = "00.00.0000";
+            this.data_maskedTextBox.Name = "data_maskedTextBox";
+            this.data_maskedTextBox.Size = new System.Drawing.Size(100, 20);
+            this.data_maskedTextBox.TabIndex = 9;
+            this.data_maskedTextBox.ValidatingType = typeof(System.DateTime);
             // 
             // MainForm
             // 
@@ -344,7 +360,6 @@
             this.Controls.Add(this.sheet_dataGridView);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.filter_dateTimePicker);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.main_menuStrip);
             this.Controls.Add(this.groupBox1);
@@ -366,7 +381,6 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DateTimePicker filter_dateTimePicker;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.MenuStrip main_menuStrip;
@@ -383,6 +397,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox deptFilter_comboBox;
         private System.Windows.Forms.DataGridView sheet_dataGridView;
+        private System.Windows.Forms.TextBox nameFilter_textBox;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn classdate;
         private System.Windows.Forms.DataGridViewTextBoxColumn iddiscipline;
@@ -394,6 +409,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn idgroup;
         private System.Windows.Forms.DataGridViewTextBoxColumn stgroup;
         private System.Windows.Forms.DataGridViewTextBoxColumn hour;
-        private System.Windows.Forms.TextBox nameFilter_textBox;
+        private System.Windows.Forms.DataGridViewTextBoxColumn iddept;
+        private System.Windows.Forms.MaskedTextBox data_maskedTextBox;
     }
 }

@@ -141,9 +141,11 @@ namespace TeacherSalary
             if(m_id > 0)
             {
                 DialogResult = DialogResult.OK;
-                teacher = name_comboBox.SelectedItem as Teacher; 
+                teacher = name_comboBox.SelectedItem as Teacher;
                 if (teacher != null)
-                   m_id = teacher.id;
+                    m_id = teacher.id;
+                else
+                    m_id = 0;
             }
             else
             {

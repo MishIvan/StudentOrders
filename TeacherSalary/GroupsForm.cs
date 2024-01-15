@@ -107,6 +107,8 @@ namespace TeacherSalary
                 gr = number_comboBox.SelectedItem as Group; 
                 if (gr != null)
                    m_id = gr.id;
+                else
+                    m_id = 0;
             }
             else
             {

@@ -181,6 +181,27 @@ namespace TeacherSalary
             return lst;
 
         }
+
+        /// <summary>
+        /// Получить объект с реквизитами преподавателя
+        /// </summary>
+        /// <param name="id">идентификатор преподавателя</param>
+        /// <returns></returns>
+        public Teacher GetTeacherbyId(long id)
+        {
+            Teacher t = null;
+            string sqlText = "select id, name,idpost, iddepartment, salary from dbo.teachers where id = @pid";
+            try
+            {
+                t = conn.QueryFirstOrDefault<Teacher>(sqlText, new { pid = id });
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return t;
+
+        }
         /// <summary>
         /// Добавить запись о преподавателе
         /// </summary>
@@ -265,6 +286,27 @@ namespace TeacherSalary
         }
 
         /// <summary>
+        /// Получить объект с данными группы
+        /// </summary>
+        /// <param name="id">идентификатор группы</param>
+        /// <returns></returns>
+        public Group GetGroupById(long id)
+        {
+            Group gr = null;
+            string sqlText = "select id, number, year from dbo.stgroup where id = @pid";
+            try
+            {
+                gr = conn.QueryFirstOrDefault<Group>(sqlText, new { pid = id });
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return gr;
+
+        }
+
+        /// <summary>
         /// Добавить группу студентов
         /// </summary>
         /// <param name="group">объект с данными группы</param>
@@ -324,6 +366,54 @@ namespace TeacherSalary
                 _errorText = ex.Message;
             }
             return recs;
+
+        }
+        /// <summary>
+        /// Выдать ведомость проведённых занятий
+        /// </summary>
+        /// <param name="iddept">фильтр по идентификатору кафедры</param>
+        /// <param name="classdate">фильтр по дате занятий</param>
+        /// <param name="tfilter">фильтр по фамилии преподавателя</param>
+        /// <returns>ведомость проведённых занятий</returns>
+        public async Task<List<SheetView>> GetSheetViewRecords(long iddept,DateTime classdate, string tfilter = "")
+        {
+            List<SheetView> lst = null;
+            string stdate = classdate.ToString("yyyyMMdd");
+            string sqlText = "select id,classdate,iddiscipline,discipline,idclasstype,classtype,idteacher,teacher," +
+                $"idgroup,stgroup,hours,iddepartment from dbo.sheet_view where iddepartment = {iddept}" +
+                (classdate == DateTime.MinValue ? string.Empty : $" and classdate = '{stdate}'") +
+                (string.IsNullOrEmpty(tfilter) ? string.Empty : $" and teacher like '%{tfilter}%'");
+            try
+            {
+                var t = await conn.QueryAsync<SheetView>(sqlText);
+                lst = t.ToList();
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+
+            return lst;
+        }
+
+        /// <summary>
+        /// Выдать объект записи ведомости
+        /// </summary>
+        /// <param name="id">идентификатор записи ведомости</param>
+        /// <returns></returns>
+        public Sheet GetSheetRecordById(long id) 
+        {
+            Sheet sheet = null;
+            string sqlText = "select id,classdate,iddiscipline,idclasstype,idteacher,idgroup,hours from dbo.sheet where id = @pid";
+            try
+            {
+                sheet = conn.QueryFirstOrDefault<Sheet>(sqlText, new { pid = id});
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return sheet;
 
         }
 

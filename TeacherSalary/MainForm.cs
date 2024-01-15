@@ -13,9 +13,13 @@ namespace TeacherSalary
 {
     public partial class MainForm : Form
     {
+        long m_iddept;
+        string m_filterTeacher;
         public MainForm()
         {
             InitializeComponent();
+            m_iddept = 0;
+            m_filterTeacher = string.Empty;
         }
 
         private async void OnLoad(object sender, EventArgs e)
@@ -85,6 +89,144 @@ namespace TeacherSalary
         {
             GroupsForm frm = new GroupsForm();
             frm.ShowDialog();   
+        }
+        /// <summary>
+        /// Проверка правильности вводв двты и времени
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private bool ValidateDate(ref DateTime value)
+        {
+            string dt = data_maskedTextBox.Text;
+            if (string.IsNullOrEmpty(dt) || dt == "  ,  ,")
+            {
+                value = DateTime.MinValue;
+                return true;
+            }
+            else
+            {
+                try
+                {
+                    value = DateTime.Parse(dt);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Недопустимое значение даты");
+                    return false;
+                }
+                return true;
+            }
+                
+        }
+        /// <summary>
+        /// Выбрали кафедру
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void OnDeptChanged(object sender, EventArgs e)
+        {
+            int idx = deptFilter_comboBox.SelectedIndex;
+            if (idx < 0) return;
+            SimpleRef _ref = deptFilter_comboBox.SelectedItem as SimpleRef;
+            if (_ref != null)
+            {
+                m_filterTeacher = nameFilter_textBox.Text;
+                m_iddept = _ref.id;
+                DateTime cdate = DateTime.MinValue;
+                if(!ValidateDate(ref cdate)) { return; }
+                var lsts = await Program.m_helper.GetSheetViewRecords(m_iddept, cdate, m_filterTeacher);
+                sheet_dataGridView.DataSource = lsts;
+            }
+
+        }
+        /// <summary>
+        /// Применить фильтр по преподавателю
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void OnKeyPressTeacherFilter(object sender, KeyPressEventArgs e)
+        {
+            if(e.KeyChar == (char)Keys.Return)
+            {
+                int idx = deptFilter_comboBox.SelectedIndex;
+                if (idx < 0) return;
+                SimpleRef _ref = deptFilter_comboBox.SelectedItem as SimpleRef;
+                if (_ref != null)
+                {
+                    m_filterTeacher = nameFilter_textBox.Text;
+                    m_iddept = _ref.id;
+                    DateTime cdate = DateTime.MinValue;
+                    if (!ValidateDate(ref cdate)) { return; }
+                    var lsts = await Program.m_helper.GetSheetViewRecords(m_iddept, cdate, m_filterTeacher);
+                    sheet_dataGridView.DataSource = lsts;
+                }
+            }
+        }
+        /// <summary>
+        /// Изменилась дата на панели фильтров
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void OnDateChanged(object sender, EventArgs e)
+        {
+            int idx = deptFilter_comboBox.SelectedIndex;
+            if (idx < 0) return;
+            SimpleRef _ref = deptFilter_comboBox.SelectedItem as SimpleRef;
+            if (_ref != null)
+            {
+                m_filterTeacher = nameFilter_textBox.Text;
+                m_iddept = _ref.id;
+                DateTime cdate = DateTime.MinValue;
+                if (!ValidateDate(ref cdate)) { return; }
+                var lsts = await Program.m_helper.GetSheetViewRecords(m_iddept, cdate, m_filterTeacher);
+                sheet_dataGridView.DataSource = lsts;
+            }
+
+        }
+
+        /// <summary>
+        /// Добавить запись в ведомость
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void add_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SheetForm frm = new SheetForm();
+            if(frm.ShowDialog() == DialogResult.OK)
+            {
+                int idx = deptFilter_comboBox.SelectedIndex;
+                if (idx < 0) return;
+                SimpleRef _ref = deptFilter_comboBox.SelectedItem as SimpleRef;
+                if (_ref != null)
+                {
+                    m_filterTeacher = nameFilter_textBox.Text;
+                    m_iddept = _ref.id;
+                    DateTime cdate = DateTime.MinValue;
+                    if (!ValidateDate(ref cdate)) { return; }
+                    var lsts = await Program.m_helper.GetSheetViewRecords(m_iddept, cdate, m_filterTeacher);
+                    sheet_dataGridView.DataSource = lsts;
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// Изменить запись в ведомости
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void edit_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+        /// <summary>
+        /// Удалить запись из ведомости
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void delete_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

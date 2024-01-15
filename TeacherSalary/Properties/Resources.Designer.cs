@@ -63,6 +63,16 @@ namespace TeacherSalary.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
         /// </summary>
+        internal static System.Drawing.Icon list_23 {
+            get {
+                object obj = ResourceManager.GetObject("list_23", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
+        /// </summary>
         internal static System.Drawing.Icon password_32 {
             get {
                 object obj = ResourceManager.GetObject("password_32", resourceCulture);
