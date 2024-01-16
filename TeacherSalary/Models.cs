@@ -78,4 +78,15 @@ namespace TeacherSalary
         public long iddepartment { get; set; }
 
     }
+    /// <summary>
+    /// Сводная ведомость оплаты
+    /// </summary>
+    public class OverallSheet
+    {
+        public string teacher { get; set; }
+        public string department { get; set; }
+        public int hours { get; set; }
+        public double pay_sum { get; set; }
+
+    }
 }

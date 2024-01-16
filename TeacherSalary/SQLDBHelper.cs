@@ -478,7 +478,30 @@ namespace TeacherSalary
             return recs;
 
         }
+        /// <summary>
+        /// Выдать сводную ведомость по зарплате за период
+        /// </summary>
+        /// <param name="dateBegin">начало периода</param>
+        /// <param name="dateEnd">окончание периода</param>
+        /// <returns>ведомость</returns>
+        public async Task<List<OverallSheet>> GetOverallSheets(DateTime dateBegin, DateTime dateEnd)
+        {
+            List<OverallSheet> sheet = null;
+            string d1 = dateBegin.ToString("yyyyMMdd");
+            string d2 = dateEnd.ToString("yyyyMMdd");
+            string sqlText = string.Format(Properties.Resources.OverallSheetQueryString, d1, d2);
+            try 
+            {
+                var t = await conn.QueryAsync<OverallSheet>(sqlText);
+                sheet = t.ToList();
 
+            }
+            catch (Exception ex) 
+            {
+                _errorText = ex.Message;
+            }
+            return sheet;
+        }
 
     }
 }

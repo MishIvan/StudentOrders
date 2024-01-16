@@ -71,6 +71,21 @@ namespace TeacherSalary.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на SELECT dbo.teachers.name teacher,dbo.department.[name] as department,
+        ///sum(dbo.sheet.[hours]) hours, sum(dbo.sheet.[hours]*dbo.teachers.salary) pay_sum          
+        ///FROM dbo.sheet left JOIN
+        ///     dbo.teachers ON dbo.sheet.idteacher = dbo.teachers.id left JOIN
+        ///	 dbo.department on dbo.department.id = dbo.teachers.iddepartment
+        ///	 where dbo.sheet.classdate between &apos;{0}&apos; and &apos;{1}&apos;
+        ///group by dbo.teachers.[name], dbo.department.[name].
+        /// </summary>
+        internal static string OverallSheetQueryString {
+            get {
+                return ResourceManager.GetString("OverallSheetQueryString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
         /// </summary>
         internal static System.Drawing.Icon password_32 {

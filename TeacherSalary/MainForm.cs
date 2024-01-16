@@ -30,6 +30,10 @@ namespace TeacherSalary
             deptFilter_comboBox.DataSource = lst;
             if(!lst.IsNullOrEmpty() )
                 deptFilter_comboBox.SelectedIndex = 0;
+            reference_ToolStripMenuItem.Visible = Program.m_userId < 2;
+            sheet_ToolStripMenuItem.Visible= Program.m_userId < 3;
+            reports_ToolStripMenuItem.Visible = Program.m_userId == 1 || Program.m_userId == 3;
+            main_contextMenuStrip.Enabled = Program.m_userId < 3;
 
         }
 
@@ -287,6 +291,16 @@ namespace TeacherSalary
                 return;
             }
 
+        }
+        /// <summary>
+        ///  Выдать сводную ведомость
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void overallSheet_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OverallSheetForm form = new OverallSheetForm();
+            form.ShowDialog();
         }
     }
 }

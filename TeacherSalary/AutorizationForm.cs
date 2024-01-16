@@ -52,6 +52,7 @@ namespace TeacherSalary
             }
             else
             {
+                Program.m_userId = usr.id;
                 Hide();                
                 m_mainForm.Show();                
             }

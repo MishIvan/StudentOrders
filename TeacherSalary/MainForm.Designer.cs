@@ -50,10 +50,6 @@
             this.nameFilter_textBox = new System.Windows.Forms.TextBox();
             this.deptFilter_comboBox = new System.Windows.Forms.ComboBox();
             this.sheet_dataGridView = new System.Windows.Forms.DataGridView();
-            this.main_contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.addContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.updateContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.classdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.iddiscipline = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -66,6 +62,10 @@
             this.stgroup = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.hour = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.iddept = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.main_contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.updateContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.main_toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.main_menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -125,21 +125,21 @@
             // add_ToolStripMenuItem
             // 
             this.add_ToolStripMenuItem.Name = "add_ToolStripMenuItem";
-            this.add_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.add_ToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.add_ToolStripMenuItem.Text = "Добавить запись";
             this.add_ToolStripMenuItem.Click += new System.EventHandler(this.add_ToolStripMenuItem_Click);
             // 
             // edit_ToolStripMenuItem
             // 
             this.edit_ToolStripMenuItem.Name = "edit_ToolStripMenuItem";
-            this.edit_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.edit_ToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.edit_ToolStripMenuItem.Text = "Изменить запись";
             this.edit_ToolStripMenuItem.Click += new System.EventHandler(this.edit_ToolStripMenuItem_Click);
             // 
             // delete_ToolStripMenuItem
             // 
             this.delete_ToolStripMenuItem.Name = "delete_ToolStripMenuItem";
-            this.delete_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.delete_ToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.delete_ToolStripMenuItem.Text = "Удалить запись";
             this.delete_ToolStripMenuItem.Click += new System.EventHandler(this.delete_ToolStripMenuItem_Click);
             // 
@@ -187,6 +187,7 @@
             this.overallSheet_ToolStripMenuItem.Name = "overallSheet_ToolStripMenuItem";
             this.overallSheet_ToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
             this.overallSheet_ToolStripMenuItem.Text = "Сводная ведомость зарплаты";
+            this.overallSheet_ToolStripMenuItem.Click += new System.EventHandler(this.overallSheet_ToolStripMenuItem_Click);
             // 
             // groupBox1
             // 
@@ -259,36 +260,6 @@
             this.sheet_dataGridView.Size = new System.Drawing.Size(824, 390);
             this.sheet_dataGridView.TabIndex = 7;
             this.main_toolTip.SetToolTip(this.sheet_dataGridView, "Ведомость проведённых занятий. Список.");
-            // 
-            // main_contextMenuStrip
-            // 
-            this.main_contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addContextToolStripMenuItem,
-            this.updateContextToolStripMenuItem,
-            this.deleteContextToolStripMenuItem});
-            this.main_contextMenuStrip.Name = "main_contextMenuStrip";
-            this.main_contextMenuStrip.Size = new System.Drawing.Size(129, 70);
-            // 
-            // addContextToolStripMenuItem
-            // 
-            this.addContextToolStripMenuItem.Name = "addContextToolStripMenuItem";
-            this.addContextToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.addContextToolStripMenuItem.Text = "Добавить";
-            this.addContextToolStripMenuItem.Click += new System.EventHandler(this.add_ToolStripMenuItem_Click);
-            // 
-            // updateContextToolStripMenuItem
-            // 
-            this.updateContextToolStripMenuItem.Name = "updateContextToolStripMenuItem";
-            this.updateContextToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.updateContextToolStripMenuItem.Text = "Изменить";
-            this.updateContextToolStripMenuItem.Click += new System.EventHandler(this.edit_ToolStripMenuItem_Click);
-            // 
-            // deleteContextToolStripMenuItem
-            // 
-            this.deleteContextToolStripMenuItem.Name = "deleteContextToolStripMenuItem";
-            this.deleteContextToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.deleteContextToolStripMenuItem.Text = "Удалить";
-            this.deleteContextToolStripMenuItem.Click += new System.EventHandler(this.delete_ToolStripMenuItem_Click);
             // 
             // id
             // 
@@ -396,6 +367,36 @@
             this.iddept.Name = "iddept";
             this.iddept.ReadOnly = true;
             this.iddept.Visible = false;
+            // 
+            // main_contextMenuStrip
+            // 
+            this.main_contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addContextToolStripMenuItem,
+            this.updateContextToolStripMenuItem,
+            this.deleteContextToolStripMenuItem});
+            this.main_contextMenuStrip.Name = "main_contextMenuStrip";
+            this.main_contextMenuStrip.Size = new System.Drawing.Size(129, 70);
+            // 
+            // addContextToolStripMenuItem
+            // 
+            this.addContextToolStripMenuItem.Name = "addContextToolStripMenuItem";
+            this.addContextToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.addContextToolStripMenuItem.Text = "Добавить";
+            this.addContextToolStripMenuItem.Click += new System.EventHandler(this.add_ToolStripMenuItem_Click);
+            // 
+            // updateContextToolStripMenuItem
+            // 
+            this.updateContextToolStripMenuItem.Name = "updateContextToolStripMenuItem";
+            this.updateContextToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.updateContextToolStripMenuItem.Text = "Изменить";
+            this.updateContextToolStripMenuItem.Click += new System.EventHandler(this.edit_ToolStripMenuItem_Click);
+            // 
+            // deleteContextToolStripMenuItem
+            // 
+            this.deleteContextToolStripMenuItem.Name = "deleteContextToolStripMenuItem";
+            this.deleteContextToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.deleteContextToolStripMenuItem.Text = "Удалить";
+            this.deleteContextToolStripMenuItem.Click += new System.EventHandler(this.delete_ToolStripMenuItem_Click);
             // 
             // MainForm
             // 
