@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
@@ -42,12 +43,17 @@
             this.simpleRef_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.teachers_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groups_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.отчётыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reports_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.overallSheet_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.data_maskedTextBox = new System.Windows.Forms.MaskedTextBox();
             this.nameFilter_textBox = new System.Windows.Forms.TextBox();
             this.deptFilter_comboBox = new System.Windows.Forms.ComboBox();
             this.sheet_dataGridView = new System.Windows.Forms.DataGridView();
+            this.main_contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.updateContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.classdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.iddiscipline = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -60,10 +66,11 @@
             this.stgroup = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.hour = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.iddept = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.data_maskedTextBox = new System.Windows.Forms.MaskedTextBox();
+            this.main_toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.main_menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sheet_dataGridView)).BeginInit();
+            this.main_contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -98,7 +105,7 @@
             this.main_menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sheet_ToolStripMenuItem,
             this.reference_ToolStripMenuItem,
-            this.отчётыToolStripMenuItem});
+            this.reports_ToolStripMenuItem});
             this.main_menuStrip.Location = new System.Drawing.Point(0, 0);
             this.main_menuStrip.Name = "main_menuStrip";
             this.main_menuStrip.Size = new System.Drawing.Size(848, 24);
@@ -167,13 +174,13 @@
             this.groups_ToolStripMenuItem.Text = "Группы";
             this.groups_ToolStripMenuItem.Click += new System.EventHandler(this.groups_ToolStripMenuItem_Click);
             // 
-            // отчётыToolStripMenuItem
+            // reports_ToolStripMenuItem
             // 
-            this.отчётыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.reports_ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.overallSheet_ToolStripMenuItem});
-            this.отчётыToolStripMenuItem.Name = "отчётыToolStripMenuItem";
-            this.отчётыToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
-            this.отчётыToolStripMenuItem.Text = "Отчёты";
+            this.reports_ToolStripMenuItem.Name = "reports_ToolStripMenuItem";
+            this.reports_ToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
+            this.reports_ToolStripMenuItem.Text = "Отчёты";
             // 
             // overallSheet_ToolStripMenuItem
             // 
@@ -193,12 +200,25 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Фильтры";
             // 
+            // data_maskedTextBox
+            // 
+            this.data_maskedTextBox.Location = new System.Drawing.Point(56, 24);
+            this.data_maskedTextBox.Mask = "00.00.0000";
+            this.data_maskedTextBox.Name = "data_maskedTextBox";
+            this.data_maskedTextBox.Size = new System.Drawing.Size(100, 20);
+            this.data_maskedTextBox.TabIndex = 9;
+            this.main_toolTip.SetToolTip(this.data_maskedTextBox, "Фильтр по дате. Нажмите ENTER, чтобы применить фильтр");
+            this.data_maskedTextBox.ValidatingType = typeof(System.DateTime);
+            this.data_maskedTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnKeyPressTeacherFilter);
+            // 
             // nameFilter_textBox
             // 
             this.nameFilter_textBox.Location = new System.Drawing.Point(227, 23);
             this.nameFilter_textBox.Name = "nameFilter_textBox";
             this.nameFilter_textBox.Size = new System.Drawing.Size(256, 20);
             this.nameFilter_textBox.TabIndex = 8;
+            this.main_toolTip.SetToolTip(this.nameFilter_textBox, "Фильтр по фрагменту строки в ФИО преподавателя. Нажмите ENTER, чтобы применить фи" +
+        "льтр");
             this.nameFilter_textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnKeyPressTeacherFilter);
             // 
             // deptFilter_comboBox
@@ -209,6 +229,7 @@
             this.deptFilter_comboBox.Name = "deptFilter_comboBox";
             this.deptFilter_comboBox.Size = new System.Drawing.Size(239, 21);
             this.deptFilter_comboBox.TabIndex = 7;
+            this.main_toolTip.SetToolTip(this.deptFilter_comboBox, "Выбор кафедры, на которой числится преподаватель");
             this.deptFilter_comboBox.SelectedIndexChanged += new System.EventHandler(this.OnDeptChanged);
             // 
             // sheet_dataGridView
@@ -229,6 +250,7 @@
             this.stgroup,
             this.hour,
             this.iddept});
+            this.sheet_dataGridView.ContextMenuStrip = this.main_contextMenuStrip;
             this.sheet_dataGridView.Location = new System.Drawing.Point(12, 96);
             this.sheet_dataGridView.MultiSelect = false;
             this.sheet_dataGridView.Name = "sheet_dataGridView";
@@ -236,6 +258,37 @@
             this.sheet_dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.sheet_dataGridView.Size = new System.Drawing.Size(824, 390);
             this.sheet_dataGridView.TabIndex = 7;
+            this.main_toolTip.SetToolTip(this.sheet_dataGridView, "Ведомость проведённых занятий. Список.");
+            // 
+            // main_contextMenuStrip
+            // 
+            this.main_contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addContextToolStripMenuItem,
+            this.updateContextToolStripMenuItem,
+            this.deleteContextToolStripMenuItem});
+            this.main_contextMenuStrip.Name = "main_contextMenuStrip";
+            this.main_contextMenuStrip.Size = new System.Drawing.Size(129, 70);
+            // 
+            // addContextToolStripMenuItem
+            // 
+            this.addContextToolStripMenuItem.Name = "addContextToolStripMenuItem";
+            this.addContextToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.addContextToolStripMenuItem.Text = "Добавить";
+            this.addContextToolStripMenuItem.Click += new System.EventHandler(this.add_ToolStripMenuItem_Click);
+            // 
+            // updateContextToolStripMenuItem
+            // 
+            this.updateContextToolStripMenuItem.Name = "updateContextToolStripMenuItem";
+            this.updateContextToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.updateContextToolStripMenuItem.Text = "Изменить";
+            this.updateContextToolStripMenuItem.Click += new System.EventHandler(this.edit_ToolStripMenuItem_Click);
+            // 
+            // deleteContextToolStripMenuItem
+            // 
+            this.deleteContextToolStripMenuItem.Name = "deleteContextToolStripMenuItem";
+            this.deleteContextToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.deleteContextToolStripMenuItem.Text = "Удалить";
+            this.deleteContextToolStripMenuItem.Click += new System.EventHandler(this.delete_ToolStripMenuItem_Click);
             // 
             // id
             // 
@@ -338,19 +391,11 @@
             // 
             // iddept
             // 
+            this.iddept.DataPropertyName = "iddepartment";
             this.iddept.HeaderText = "ИД Каф";
             this.iddept.Name = "iddept";
             this.iddept.ReadOnly = true;
             this.iddept.Visible = false;
-            // 
-            // data_maskedTextBox
-            // 
-            this.data_maskedTextBox.Location = new System.Drawing.Point(56, 24);
-            this.data_maskedTextBox.Mask = "00.00.0000";
-            this.data_maskedTextBox.Name = "data_maskedTextBox";
-            this.data_maskedTextBox.Size = new System.Drawing.Size(100, 20);
-            this.data_maskedTextBox.TabIndex = 9;
-            this.data_maskedTextBox.ValidatingType = typeof(System.DateTime);
             // 
             // MainForm
             // 
@@ -364,6 +409,7 @@
             this.Controls.Add(this.main_menuStrip);
             this.Controls.Add(this.groupBox1);
             this.MainMenuStrip = this.main_menuStrip;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Ведомость проведённых занятий";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnClose);
@@ -373,6 +419,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sheet_dataGridView)).EndInit();
+            this.main_contextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -392,12 +439,17 @@
         private System.Windows.Forms.ToolStripMenuItem simpleRef_ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem teachers_ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem groups_ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem отчётыToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reports_ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem overallSheet_ToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox deptFilter_comboBox;
         private System.Windows.Forms.DataGridView sheet_dataGridView;
         private System.Windows.Forms.TextBox nameFilter_textBox;
+        private System.Windows.Forms.MaskedTextBox data_maskedTextBox;
+        private System.Windows.Forms.ContextMenuStrip main_contextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem addContextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem updateContextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteContextToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn classdate;
         private System.Windows.Forms.DataGridViewTextBoxColumn iddiscipline;
@@ -410,6 +462,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn stgroup;
         private System.Windows.Forms.DataGridViewTextBoxColumn hour;
         private System.Windows.Forms.DataGridViewTextBoxColumn iddept;
-        private System.Windows.Forms.MaskedTextBox data_maskedTextBox;
+        private System.Windows.Forms.ToolTip main_toolTip;
     }
 }

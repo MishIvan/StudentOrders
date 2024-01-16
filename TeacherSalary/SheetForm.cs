@@ -32,7 +32,7 @@ namespace TeacherSalary
             discipline_comboBox.DataSource = lst;
 
             lst = await Program.m_helper.GetSimpleRefRecords("classtype");
-            discipline_comboBox.DataSource = lst;
+            classtype_comboBox.DataSource = lst;
 
             if (m_id > 0)
             {
@@ -43,12 +43,13 @@ namespace TeacherSalary
                     FindItem(sheet.idclasstype, classtype_comboBox);
 
                     Teacher t = Program.m_helper.GetTeacherbyId(sheet.idteacher);
-                    if (t != null) { teacher_textBox.Text = t.name; }
+                    if (t != null) { teacher_textBox.Text = t.name; m_teacherId = t.id; }
 
                     Group gr = Program.m_helper.GetGroupById(sheet.idgroup.HasValue ? sheet.idgroup.Value : 0);
-                    if(gr != null) { group_textBox.Text = gr.number; }
+                    if(gr != null) { group_textBox.Text = gr.number; m_groupId = gr.id; }
 
-
+                    hours_textBox.Text = sheet.hours.ToString();
+                    date_dateTimePicker.Value = sheet.classdate;
                 }
             }
 
@@ -58,18 +59,19 @@ namespace TeacherSalary
         /// <summary>
         /// Установить учебную дисциплину или вид занятий
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="cb"></param>
-        /// <returns></returns>
+        /// <param name="id">идентификатор записи</param>
+        /// <param name="cb">ComboBox со списком</param>
+        /// <returns>индекс в выпадающем списке</returns>
         private int FindItem(long id, ComboBox cb)
         {
             int idx = -1;
-            foreach(var item in cb.Items) 
+            int cnt = cb.Items.Count;
+            for(idx = 0; idx < cnt; idx++) 
             { 
-                SimpleRef _ref = item as SimpleRef;
+                SimpleRef _ref = cb.Items[idx] as SimpleRef;
                 if (_ref != null) 
                 {
-                    if (_ref.id == id) { cb.SelectedIndex = ++idx; break; }
+                    if (_ref.id == id) { cb.SelectedIndex = idx; break; }
                 }
             }
             return idx;
@@ -81,18 +83,28 @@ namespace TeacherSalary
         /// <param name="e"></param>
         private void OnPressHours(object sender, KeyPressEventArgs e)
         {
-            e.Handled = e.KeyChar >= (char)Keys.D0 && e.KeyChar <= (char)Keys.D9;
+            e.Handled = !((e.KeyChar >= (char)Keys.D0 && e.KeyChar <= (char)Keys.D9) || (e.KeyChar == (char)Keys.Back));
         }
-
+        /// <summary>
+        /// Выбран преподаватель
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void choiceTeacher_button_Click(object sender, EventArgs e)
         {
             TeachersForm form = new TeachersForm(1, m_iddept);
             if(form.ShowDialog() == DialogResult.OK)
             {
                 m_teacherId = form.id;
+                Teacher teach = Program.m_helper.GetTeacherbyId(m_teacherId);
+                teacher_textBox.Text = teach == null ? string.Empty : teach.name;
             }
         }
-
+        /// <summary>
+        /// Выбрана группа
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void group_button_Click(object sender, EventArgs e)
         {
             GroupsForm frm = new GroupsForm(1);
@@ -102,6 +114,12 @@ namespace TeacherSalary
                     m_groupId = null;
                 else
                     m_groupId = frm.id;
+                if(m_groupId.HasValue)
+                {
+                    Group gr = Program.m_helper.GetGroupById(m_groupId.Value);
+                    if (gr != null)
+                        group_textBox.Text = gr.number;
+                }
             }
         }
 
@@ -129,16 +147,66 @@ namespace TeacherSalary
             }
             sh.idteacher = m_teacherId;
 
-            if (m_id > 0)
+            _ref = classtype_comboBox.SelectedItem as SimpleRef;
+            if (_ref != null)
             {
-
+                sh.idclasstype = _ref.id;
             }
             else
             {
-                
+                DialogResult = DialogResult.Cancel;
+                return;
+            }
+            if (string.IsNullOrEmpty(group_textBox.Text))
+                sh.idgroup = null;
+            else
+                sh.idgroup = m_groupId;
+
+            try
+            {
+                sh.hours = Convert.ToInt32(hours_textBox.Text);
+            }
+            catch(Exception) 
+            {
+                MessageBox.Show("Неверный формат числа часов");
+                DialogResult = DialogResult.Cancel;
+                return;
+
+            }
+
+            if (m_id > 0)
+            {
+                sh.id = m_id;
+                if(Program.m_helper.UpdateSheetRecord(sh) < 1) 
+                {
+                    DialogResult = DialogResult.Cancel;
+                    Program.DBErrorMessage();
+                    return;
+                }
+            }
+            else
+            {
+                sh.id = 0;
+                if (Program.m_helper.AddSheetRecord(sh) < 1)
+                {
+                    DialogResult = DialogResult.Cancel;
+                    Program.DBErrorMessage();
+                    return;
+                }
+
             }
 
             DialogResult = DialogResult.OK;
+        }
+        /// <summary>
+        /// Сбросить значение идентификатора группы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void clearGroup_button_Click(object sender, EventArgs e)
+        {
+            group_textBox.Text = string.Empty;
+            m_groupId = null;
         }
     }
 }

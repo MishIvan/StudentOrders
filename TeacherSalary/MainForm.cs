@@ -30,6 +30,7 @@ namespace TeacherSalary
             deptFilter_comboBox.DataSource = lst;
             if(!lst.IsNullOrEmpty() )
                 deptFilter_comboBox.SelectedIndex = 0;
+
         }
 
         /// <summary>
@@ -215,8 +216,36 @@ namespace TeacherSalary
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void edit_ToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void edit_ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var row = sheet_dataGridView.CurrentRow;
+            if (row == null) return;
+            try
+            {
+                long id = Convert.ToInt64(row.Cells["id"].Value);
+                SheetForm form = new SheetForm(id);
+                if(form.ShowDialog() == DialogResult.OK)
+                {
+                    int idx = deptFilter_comboBox.SelectedIndex;
+                    if (idx < 0) return;
+                    SimpleRef _ref = deptFilter_comboBox.SelectedItem as SimpleRef;
+                    if (_ref != null)
+                    {
+                        m_filterTeacher = nameFilter_textBox.Text;
+                        m_iddept = _ref.id;
+                        DateTime cdate = DateTime.MinValue;
+                        if (!ValidateDate(ref cdate)) { return; }
+                        var lsts = await Program.m_helper.GetSheetViewRecords(m_iddept, cdate, m_filterTeacher);
+                        sheet_dataGridView.DataSource = lsts;
+                    }
+
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Ошибка", ex.Message);
+                return;
+            }
 
         }
         /// <summary>
@@ -224,8 +253,39 @@ namespace TeacherSalary
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void delete_ToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void delete_ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if(MessageBox.Show("Вы действительно хотите удалить выбранную запись в ведомости", "Внимание!",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2
+                ) == DialogResult.No) { return; }
+            var row = sheet_dataGridView.CurrentRow;
+            if (row == null) return;
+            try
+            {
+                long id = Convert.ToInt64(row.Cells["id"].Value);
+                if (Program.m_helper.DeleteSheetRecord(id) > 0)
+                {
+                    int idx = deptFilter_comboBox.SelectedIndex;
+                    if (idx < 0) return;
+                    SimpleRef _ref = deptFilter_comboBox.SelectedItem as SimpleRef;
+                    if (_ref != null)
+                    {
+                        m_filterTeacher = nameFilter_textBox.Text;
+                        m_iddept = _ref.id;
+                        DateTime cdate = DateTime.MinValue;
+                        if (!ValidateDate(ref cdate)) { return; }
+                        var lsts = await Program.m_helper.GetSheetViewRecords(m_iddept, cdate, m_filterTeacher);
+                        sheet_dataGridView.DataSource = lsts;
+                    }
+                }
+                else
+                    Program.DBErrorMessage();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка", ex.Message);
+                return;
+            }
 
         }
     }

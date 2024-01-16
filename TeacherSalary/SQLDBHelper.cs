@@ -416,6 +416,68 @@ namespace TeacherSalary
             return sheet;
 
         }
+        /// <summary>
+        /// Добавить запись в ведомость
+        /// </summary>
+        /// <param name="sheet">объект с данными</param>
+        /// <returns>1 - запись добавлена, 0 - иначе</returns>
+        public int AddSheetRecord(Sheet sheet)
+        {
+            int recs = 0;
+            string sdt = sheet.classdate.ToString("yyyMMdd");
+            string sqlText = $"insert into dbo.sheet (classdate,iddiscipline,idclasstype,idteacher,idgroup,hours) values ('{sdt}', @pidd, @pic, @pit, @pigr, @ph)";
+            try
+            {
+                recs = conn.Execute(sqlText, new { pidd = sheet.iddiscipline, pic = sheet.idclasstype, pit = sheet.idteacher, pigr = sheet.idgroup, ph = sheet.hours });
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return recs;
+
+        }
+        /// <summary>
+        /// Изменить запись в ведомости
+        /// </summary>
+        /// <param name="sheet">данные записи, которую требуется изменить</param>
+        /// <returns>1 - запись изменена, 0 - иначе</returns>
+        public int UpdateSheetRecord(Sheet sheet)
+        {
+            int recs = 0;
+            string sdt = sheet.classdate.ToString("yyyMMdd");
+            string sqlText = $"update dbo.sheet set classdate = '{sdt}',iddiscipline = @pidd,idclasstype = @pic,idteacher = @pit,idgroup = @pigr,hours = @ph where id = @pid";
+            try
+            {
+                recs = conn.Execute(sqlText, new { pid = sheet.id, pidd = sheet.iddiscipline, pic = sheet.idclasstype, pit = sheet.idteacher, pigr = sheet.idgroup, ph = sheet.hours });
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return recs;
+
+        }
+        /// <summary>
+        /// Удалить запись из ведомости
+        /// </summary>
+        /// <param name="idsh">идентификатор удаляемой записи</param>
+        /// <returns>1 - запись удалена, 0 - иначе</returns>
+        public  int DeleteSheetRecord(long idsh)
+        {
+            int recs = 0;
+            string sqlText = "delete from dbo.sheet where id = @pid";
+            try
+            {
+                recs = conn.Execute(sqlText, new { pid = idsh });
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return recs;
+
+        }
 
 
     }

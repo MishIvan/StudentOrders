@@ -38,14 +38,15 @@
             this.choiceTeacher_button = new System.Windows.Forms.Button();
             this.sheet_toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.classtype_comboBox = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.group_button = new System.Windows.Forms.Button();
             this.group_textBox = new System.Windows.Forms.TextBox();
+            this.hours_textBox = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.OK_button = new System.Windows.Forms.Button();
             this.Cancel_button = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
-            this.hours_textBox = new System.Windows.Forms.TextBox();
+            this.clearGroup_button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -124,15 +125,6 @@
             this.classtype_comboBox.TabIndex = 8;
             this.sheet_toolTip.SetToolTip(this.classtype_comboBox, "Выбор вида занятий");
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(19, 141);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(73, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Вид занятий:";
-            // 
             // group_button
             // 
             this.group_button.Location = new System.Drawing.Point(324, 187);
@@ -152,6 +144,25 @@
             this.group_textBox.Size = new System.Drawing.Size(202, 20);
             this.group_textBox.TabIndex = 10;
             this.sheet_toolTip.SetToolTip(this.group_textBox, "Номер группы. Для лекционных занятий с потоком выбирать не нужно");
+            // 
+            // hours_textBox
+            // 
+            this.hours_textBox.Location = new System.Drawing.Point(116, 228);
+            this.hours_textBox.Name = "hours_textBox";
+            this.hours_textBox.Size = new System.Drawing.Size(86, 20);
+            this.hours_textBox.TabIndex = 15;
+            this.hours_textBox.Text = "2";
+            this.sheet_toolTip.SetToolTip(this.hours_textBox, "Количество часов занятия");
+            this.hours_textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnPressHours);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(19, 141);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(73, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Вид занятий:";
             // 
             // label5
             // 
@@ -192,21 +203,23 @@
             this.label6.TabIndex = 14;
             this.label6.Text = "Кол-во часов:";
             // 
-            // hours_textBox
+            // clearGroup_button
             // 
-            this.hours_textBox.Location = new System.Drawing.Point(116, 228);
-            this.hours_textBox.Name = "hours_textBox";
-            this.hours_textBox.Size = new System.Drawing.Size(86, 20);
-            this.hours_textBox.TabIndex = 15;
-            this.hours_textBox.Text = "2";
-            this.sheet_toolTip.SetToolTip(this.hours_textBox, "Количество часов занятия");
-            this.hours_textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnPressHours);
+            this.clearGroup_button.Location = new System.Drawing.Point(363, 187);
+            this.clearGroup_button.Name = "clearGroup_button";
+            this.clearGroup_button.Size = new System.Drawing.Size(34, 20);
+            this.clearGroup_button.TabIndex = 16;
+            this.clearGroup_button.Text = "X";
+            this.sheet_toolTip.SetToolTip(this.clearGroup_button, "Сбросить значение группы");
+            this.clearGroup_button.UseVisualStyleBackColor = true;
+            this.clearGroup_button.Click += new System.EventHandler(this.clearGroup_button_Click);
             // 
             // SheetForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(599, 268);
+            this.Controls.Add(this.clearGroup_button);
             this.Controls.Add(this.hours_textBox);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.Cancel_button);
@@ -252,5 +265,6 @@
         private System.Windows.Forms.Button Cancel_button;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox hours_textBox;
+        private System.Windows.Forms.Button clearGroup_button;
     }
 }
