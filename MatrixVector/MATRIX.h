@@ -18,7 +18,7 @@ public:
 	inline int columns() { return m_columns; }
 
 	MATRIX& operator=(const MATRIX& src);
-	double& operator()(int i, int j);
+	inline double& operator()(int i, int j) { return *(m_data + i * m_columns + j); };
 	friend MATRIX operator*(const MATRIX& matr1, const MATRIX& matr2);
 	friend ostream& operator<<(ostream& s, MATRIX& matr);
 	friend istream& operator>>(istream& s, MATRIX& matr);

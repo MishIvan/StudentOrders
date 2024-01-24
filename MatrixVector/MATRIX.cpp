@@ -58,10 +58,10 @@ MATRIX& MATRIX::operator=(const MATRIX& src)
 /// <param name="i">строка</param>
 /// <param name="j">колонка</param>
 /// <returns>элемент на i-ой строке и j-ой колонке</returns>
-double& MATRIX::operator()(int i, int j)
-{
-	return *(m_data + i * m_columns + j);
-}
+//double& MATRIX::operator()(int i, int j)
+//{
+//	return *(m_data + i * m_columns + j);
+//}
 /// <summary>
 /// Перегрузка оператора умножения матриц matr1 и matr2
 /// Число столбцов матрицы matr1 должно быть равно числу строк матрицы matr2
