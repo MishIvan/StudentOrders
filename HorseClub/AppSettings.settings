@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="ConnectionString" Type="System.String" Scope="User">
-      <Value Profile="(Default)">DESKTOP-F9849QL\SQLEXPRESS;Database=HorseClub;Trusted_connection=True;Encrypt=False;TrustServerCertificate=False;</Value>
+      <Value Profile="(Default)">Server=DESKTOP-F9849QL\SQLEXPRESS;Database=HorseClub;Trusted_connection=True;Encrypt=False;TrustServerCertificate=False;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

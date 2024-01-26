@@ -25,8 +25,8 @@ namespace HorseClub {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("DESKTOP-F9849QL\\SQLEXPRESS;Database=HorseClub;Trusted_connection=True;Encrypt=Fal" +
-            "se;TrustServerCertificate=False;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=DESKTOP-F9849QL\\SQLEXPRESS;Database=HorseClub;Trusted_connection=True;Encr" +
+            "ypt=False;TrustServerCertificate=False;")]
         public string ConnectionString {
             get {
                 return ((string)(this["ConnectionString"]));

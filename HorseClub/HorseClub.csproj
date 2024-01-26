@@ -189,6 +189,18 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>AppSettings.settings</DependentUpon>
     </Compile>
+    <Compile Include="CalcSummaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CalcSummaForm.Designer.cs">
+      <DependentUpon>CalcSummaForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DayVisitPriceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DayVisitPriceForm.Designer.cs">
+      <DependentUpon>DayVisitPriceForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ServicesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -211,6 +223,12 @@
       <DependentUpon>ClientsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SQLDBHelper.cs" />
+    <EmbeddedResource Include="CalcSummaForm.resx">
+      <DependentUpon>CalcSummaForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DayVisitPriceForm.resx">
+      <DependentUpon>DayVisitPriceForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ServicesForm.resx">
       <DependentUpon>ServicesForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -256,6 +274,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\list_23.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\payment_32.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\money_32.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Data.SqlClient.SNI.5.1.0\build\net462\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('..\packages\Microsoft.Data.SqlClient.SNI.5.1.0\build\net462\Microsoft.Data.SqlClient.SNI.targets')" />

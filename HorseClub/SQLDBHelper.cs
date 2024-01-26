@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Dapper;
 using System.Runtime.Versioning;
+using System.Windows.Forms;
 
 namespace HorseClub
 {
@@ -82,7 +83,7 @@ namespace HorseClub
         public int AddSimpleRefRecord(string name)
         {
             int recs = 0;
-            string sqlText = $"insert into dbo.clients (name) values(@pname)";
+            string sqlText = "insert into dbo.clients (name) values(@pname)";
             try
             {
                 recs = conn.Execute(sqlText, new { pname = name });
@@ -103,7 +104,7 @@ namespace HorseClub
         public int UpdateSimpleRefRecord(string name, long id)
         {
             int recs = 0;
-            string sqlText = $"update dbo.clients set name = @pname where id  = @pid";
+            string sqlText = "update dbo.clients set name = @pname where id  = @pid";
             try
             {
                 recs = conn.Execute(sqlText, new { pid = id, pname = name });
@@ -144,7 +145,7 @@ namespace HorseClub
         public async Task<List<Service>> GetServices()
         {
             List<Service> lst = null;
-            string sqlText = "select id, name,isumma from dbo.services order by name"; 
+            string sqlText = "select id, name,summa from dbo.services order by name"; 
             try
             {
                 var t = await conn.QueryAsync<Service>(sqlText);
@@ -208,7 +209,7 @@ namespace HorseClub
         public int DeleteService(long id)
         {
             int recs = 0;
-            string sqlText = "delete from dbo.teachers where id = @pid";
+            string sqlText = "delete from dbo.services where id = @pid";
             try
             {
                 recs = conn.Execute(sqlText, new { pid = id });
@@ -221,16 +222,16 @@ namespace HorseClub
 
         }
         /// <summary>
-        /// Выдать список групп студентов
+        /// Выдать список посещений клуба для отображения
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Group>> GetGroups()
+        public async Task<List<Visit_view>> GetVisitList()
         {
-            List<Group> lst = null;
-            string sqlText = "select id, number, year from dbo.stgroup order by number";
+            List<Visit_view> lst = null;
+            string sqlText = "select id, month, month_name, iyear, days_count, service_name , client_name, summa from dbo.visit_view order by iyear, month, client_name";
             try
             {
-                var t = await conn.QueryAsync<Group>(sqlText);
+                var t = await conn.QueryAsync<Visit_view>(sqlText);
                 lst = t.ToList();
             }
             catch (Exception ex)
@@ -242,38 +243,38 @@ namespace HorseClub
         }
 
         /// <summary>
-        /// Получить объект с данными группы
+        /// Получить объект с данными о визите
         /// </summary>
-        /// <param name="id">идентификатор группы</param>
+        /// <param name="id">идентификатор записи о визите</param>
         /// <returns></returns>
-        public Group GetGroupById(long id)
+        public Visit GetVisitById(long id)
         {
-            Group gr = null;
-            string sqlText = "select id, number, year from dbo.stgroup where id = @pid";
+            Visit vis = null;
+            string sqlText = "select id, month, year, idclient, days, idservice from dbo.visits where id = @pid";
             try
             {
-                gr = conn.QueryFirstOrDefault<Group>(sqlText, new { pid = id });
+                vis = conn.QueryFirstOrDefault<Visit>(sqlText, new { pid = id });
             }
             catch (Exception ex)
             {
                 _errorText = ex.Message;
             }
-            return gr;
+            return vis;
 
         }
 
         /// <summary>
-        /// Добавить группу студентов
+        /// Добавить запись о визите
         /// </summary>
-        /// <param name="group">объект с данными группы</param>
+        /// <param name="vis">объект с данными о визите</param>
         /// <returns>1 - если запись добавлена, 0 - иначе</returns>
-        public  int AddGroup(Group group)
+        public  int AddVisitRecord(Visit vis)
         {
             int recs = 0;
-            string sqlText = "insert into dbo.stgroup (number, year) values(@pnum, @pyear)";
+            string sqlText = "insert into dbo.visits (month, year, idclient, days, idservice, summa) values(@pmonth, @pyear, @pidc, @pdays, @pids, @ps)";
             try
             {
-                recs = conn.Execute(sqlText, new { pnum = group.number, pyear = group.year });
+                recs = conn.Execute(sqlText, new { pmonth = vis.month, pyear = vis.year, pidc = vis.idclient, pdays = vis.days, pids = vis.idservice, ps = vis.summa });
             }
             catch (Exception ex)
             {
@@ -284,17 +285,18 @@ namespace HorseClub
         }
 
         /// <summary>
-        /// Изменить данные группы студентов
+        /// Изменить данные записи о визите
         /// </summary>
-        /// <param name="group">объект с данными группы</param>
+        /// <param name="vis">объект с данными о визите</param>
         /// <returns>1 - если запись изменена, 0 - иначе</returns>
-        public int UpdateGroup(Group group)
+        public int UpdateVisitRecord(Visit vis)
         {
             int recs = 0;
-            string sqlText = "update dbo.stgroup set number = @pnum, year = @pyear where id = @pid";
+            string sqlText = "update dbo.visits set month = @pmonth, year = @pyear, idclient = @pidc, days = @pdays, idservice = @pids, summa = @ps where id = @pid";
             try
             {
-                recs = conn.Execute(sqlText, new { pid = group.id, pnum = group.number, pyear = group.year });
+                recs = conn.Execute(sqlText, 
+                    new { pid = vis.id, pmonth = vis.month, pyear = vis.year, pidc = vis.idclient, pdays = vis.days, pids = vis.idservice, ps = vis.summa });
             }
             catch (Exception ex)
             {
@@ -305,14 +307,14 @@ namespace HorseClub
         }
 
         /// <summary>
-        /// Удалить запись о группшстудентов
+        /// Удалить запись о визите
         /// </summary>
-        /// <param name="id">идентификатор удаляемой группы</param>
+        /// <param name="id">идентификатор удаляемой записи</param>
         /// <returns>1 - если запись удалена, 0 - иначе</returns>
-        public int DeleteGroup(long id)
+        public int DeleteVisitRecord(long id)
         {
             int recs = 0;
-            string sqlText = "delete from dbo.stgroup where id = @pid";
+            string sqlText = "delete from dbo.visits where id = @pid";
             try
             {
                 recs = conn.Execute(sqlText, new { pid = id });
@@ -324,88 +326,31 @@ namespace HorseClub
             return recs;
 
         }
-        /// <summary>
-        /// Выдать ведомость проведённых занятий
-        /// </summary>
-        /// <param name="iddept">фильтр по идентификатору кафедры</param>
-        /// <param name="classdate">фильтр по дате занятий</param>
-        /// <param name="tfilter">фильтр по фамилии преподавателя</param>
-        /// <returns>ведомость проведённых занятий</returns>
-        public async Task<List<SheetView>> GetSheetViewRecords(long iddept,DateTime classdate, string tfilter = "")
-        {
-            List<SheetView> lst = null;
-            string stdate = classdate.ToString("yyyyMMdd");
-            string sqlText = "select id,classdate,iddiscipline,discipline,idclasstype,classtype,idteacher,teacher," +
-                $"idgroup,stgroup,hours,iddepartment from dbo.sheet_view where iddepartment = {iddept}" +
-                (classdate == DateTime.MinValue ? string.Empty : $" and classdate = '{stdate}'") +
-                (string.IsNullOrEmpty(tfilter) ? string.Empty : $" and teacher like '%{tfilter}%'");
-            try
-            {
-                var t = await conn.QueryAsync<SheetView>(sqlText);
-                lst = t.ToList();
-            }
-            catch (Exception ex)
-            {
-                _errorText = ex.Message;
-            }
-
-            return lst;
-        }
 
         /// <summary>
-        /// Выдать объект записи ведомости
+        /// Изменить стоимость дневного посещения клуба
         /// </summary>
-        /// <param name="id">идентификатор записи ведомости</param>
-        /// <returns></returns>
-        public Sheet GetSheetRecordById(long id) 
-        {
-            Sheet sheet = null;
-            string sqlText = "select id,classdate,iddiscipline,idclasstype,idteacher,idgroup,hours from dbo.sheet where id = @pid";
-            try
-            {
-                sheet = conn.QueryFirstOrDefault<Sheet>(sqlText, new { pid = id});
-            }
-            catch (Exception ex)
-            {
-                _errorText = ex.Message;
-            }
-            return sheet;
-
-        }
-        /// <summary>
-        /// Добавить запись в ведомость
-        /// </summary>
-        /// <param name="sheet">объект с данными</param>
-        /// <returns>1 - запись добавлена, 0 - иначе</returns>
-        public int AddSheetRecord(Sheet sheet)
-        {
-            int recs = 0;
-            string sdt = sheet.classdate.ToString("yyyMMdd");
-            string sqlText = $"insert into dbo.sheet (classdate,iddiscipline,idclasstype,idteacher,idgroup,hours) values ('{sdt}', @pidd, @pic, @pit, @pigr, @ph)";
-            try
-            {
-                recs = conn.Execute(sqlText, new { pidd = sheet.iddiscipline, pic = sheet.idclasstype, pit = sheet.idteacher, pigr = sheet.idgroup, ph = sheet.hours });
-            }
-            catch (Exception ex)
-            {
-                _errorText = ex.Message;
-            }
-            return recs;
-
-        }
-        /// <summary>
-        /// Изменить запись в ведомости
-        /// </summary>
-        /// <param name="sheet">данные записи, которую требуется изменить</param>
+        /// <param name="season">1 - зима, 2 - весна и осень, 3 - лето</param>
+        /// <param name="summa">новое значение суммы</param>
         /// <returns>1 - запись изменена, 0 - иначе</returns>
-        public int UpdateSheetRecord(Sheet sheet)
+        public int UpdateSummaForDay(int season, double summa)
         {
             int recs = 0;
-            string sdt = sheet.classdate.ToString("yyyMMdd");
-            string sqlText = $"update dbo.sheet set classdate = '{sdt}',iddiscipline = @pidd,idclasstype = @pic,idteacher = @pit,idgroup = @pigr,hours = @ph where id = @pid";
+            string sqlText = "update dbo.sumforday set summa = @psum ";
+            switch(season)
+            {
+                case 1:
+                    sqlText += "where month in (1, 2, 12)"; break;
+                case 2:
+                    sqlText += "where month in (3, 4, 5, 9, 10, 11)"; break;
+                case 3:
+                    sqlText += " where month in (6, 7, 8)"; break;
+                default:
+                    return recs; 
+            }
             try
             {
-                recs = conn.Execute(sqlText, new { pid = sheet.id, pidd = sheet.iddiscipline, pic = sheet.idclasstype, pit = sheet.idteacher, pigr = sheet.idgroup, ph = sheet.hours });
+                recs = conn.Execute(sqlText, new { psum = summa});
             }
             catch (Exception ex)
             {
@@ -415,49 +360,42 @@ namespace HorseClub
 
         }
         /// <summary>
-        /// Удалить запись из ведомости
+        /// Получить стоимость 1 дня посещения в сезон
         /// </summary>
-        /// <param name="idsh">идентификатор удаляемой записи</param>
-        /// <returns>1 - запись удалена, 0 - иначе</returns>
-        public  int DeleteSheetRecord(long idsh)
+        /// <param name="season">isMonth = false: 1 - зима, 2 - весна и осень, 3 - лето, иначе месяц</param>
+        /// <returns></returns>
+        public async Task<double> GetSummaForDay(int season, bool isMonth = false)
         {
-            int recs = 0;
-            string sqlText = "delete from dbo.sheet where id = @pid";
+            double sum = double.NaN; 
+            string sqlText = "select top 1 summa from dbo.sumforday ";
+            if (!isMonth)
+            {
+                switch (season)
+                {
+                    case 1:
+                        sqlText += "where month in (1, 2, 12)"; break;
+                    case 2:
+                        sqlText += "where month in (3, 4, 5, 9, 10, 11)"; break;
+                    case 3:
+                        sqlText += " where month in (6, 7, 8)"; break;
+                    default:
+                        return sum;
+                }
+            }
+            else
+                sqlText += $" where month = {season}";
             try
             {
-                recs = conn.Execute(sqlText, new { pid = idsh });
+                sum = await conn.QuerySingleAsync<double>(sqlText);
             }
             catch (Exception ex)
             {
                 _errorText = ex.Message;
             }
-            return recs;
+            return sum;
 
         }
-        /// <summary>
-        /// Выдать сводную ведомость по зарплате за период
-        /// </summary>
-        /// <param name="dateBegin">начало периода</param>
-        /// <param name="dateEnd">окончание периода</param>
-        /// <returns>ведомость</returns>
-        public async Task<List<OverallSheet>> GetOverallSheets(DateTime dateBegin, DateTime dateEnd)
-        {
-            List<OverallSheet> sheet = null;
-            string d1 = dateBegin.ToString("yyyyMMdd");
-            string d2 = dateEnd.ToString("yyyyMMdd");
-            string sqlText = string.Empty;//string.Format(Properties.Resources.OverallSheetQueryString, d1, d2);
-            try 
-            {
-                var t = await conn.QueryAsync<OverallSheet>(sqlText);
-                sheet = t.ToList();
 
-            }
-            catch (Exception ex) 
-            {
-                _errorText = ex.Message;
-            }
-            return sheet;
-        }
 
     }
 }

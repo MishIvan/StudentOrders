@@ -14,7 +14,6 @@ namespace HorseClub
     public partial class ServicesForm : Form
     {
         long m_id;
-        public long id { get { return m_id; } }
         /// <summary>
         ///  Конструктор формы
         /// </summary>
@@ -28,22 +27,24 @@ namespace HorseClub
         {
             Icon = Properties.Resources.list_23;
 
-            List<SimpleRef> refs = await Program.m_helper.GetSimpleRefRecords();
+            List<Service> refs = await Program.m_helper.GetServices();
             if (!refs.IsNullOrEmpty())
             {
                 records_listBox.DataSource = refs;
                 records_listBox.SelectedIndex = 0;
-                SimpleRef _ref = records_listBox.Items[0] as SimpleRef;
+                /*Service _ref = records_listBox.Items[0] as Service;
                 if (_ref != null)
                 {
                     name_textBox.Text = _ref.name;
+                    cost_textBox.Text = _ref.summa.ToString();
                     m_id = _ref.id;
-                }
+                }*/
             }
             else
             {
                 records_listBox.DataSource=null;
                 name_textBox.Text = string.Empty; 
+                cost_textBox.Text = string.Empty;
             }
 
         }
@@ -54,23 +55,34 @@ namespace HorseClub
         /// <param name="e"></param>
         private async void add_button_Click(object sender, EventArgs e)
         {
-            string name = name_textBox.Text;
-            int recs = Program.m_helper.AddSimpleRefRecord(name);
+            string _name = name_textBox.Text;
+            double s = 0.0;
+            try
+            {
+                s = Convert.ToDouble(cost_textBox.Text);
+            }
+            catch 
+            {
+                Program.ShowErrorMessage("Неверный формат числа");
+                return;
+            }
+            Service svc = new Service
+            {
+                name = _name,
+                id = 0,
+                summa = s
+            };
+            int recs = Program.m_helper.AddService(svc);
             if (recs < 1)
                 Program.DBErrorMessage();
             else
             {
-                List<SimpleRef> refs = await Program.m_helper.GetSimpleRefRecords();
+                List<Service> refs = await Program.m_helper.GetServices();
                 if (!refs.IsNullOrEmpty())
                 {
                     records_listBox.DataSource = refs;
-                    records_listBox.SelectedIndex = 0;
-                    SimpleRef _ref = records_listBox.Items[0] as SimpleRef;
-                    if (_ref != null)
-                    {
-                        name_textBox.Text = _ref.name;
-                        m_id = _ref.id;
-                    }
+                    int idx = records_listBox.FindString(_name);
+                    if (idx < 0) records_listBox.SelectedIndex = idx;
                 }
 
             }
@@ -83,36 +95,41 @@ namespace HorseClub
         /// <param name="e"></param>
         private async void edit_button_Click(object sender, EventArgs e)
         {
-                int idx = records_listBox.SelectedIndex;
-                if (idx < 0) return;  
-                SimpleRef _ref = records_listBox.Items[idx] as SimpleRef;
-                if (_ref != null)
+            string _name = name_textBox.Text;
+            double s = 0.0;
+            try
+            {
+                s = Convert.ToDouble(cost_textBox.Text);
+            }
+            catch
+            {
+                Program.ShowErrorMessage("Неверный формат числа");
+                return;
+            }
+            Service svc = new Service
+            {
+                name = _name,
+                id = m_id,
+                summa = s
+            };
+
+            int recs = Program.m_helper.UpdateService(svc);
+            if (recs < 1)
+                Program.DBErrorMessage();
+            else
+            {
+                List<Service> refs = await Program.m_helper.GetServices();
+                if (!refs.IsNullOrEmpty())
                 {
-                    m_id = _ref.id;  
-                    string name = name_textBox.Text;
-                    int recs = Program.m_helper.UpdateSimpleRefRecord(name, m_id);
-                    if (recs < 1)
-                        Program.DBErrorMessage();
-                    else
-                    {
-                        List<SimpleRef> refs = await Program.m_helper.GetSimpleRefRecords();
-                        if (!refs.IsNullOrEmpty())
-                        {
-                            records_listBox.DataSource = refs;
-                            records_listBox.SelectedIndex = 0;
-                            _ref = records_listBox.Items[0] as SimpleRef;
-                            if (_ref != null)
-                            {
-                                name_textBox.Text = _ref.name;
-                                m_id = _ref.id;
-                            }
-                        }
-
-                    }
-
+                    records_listBox.DataSource = refs;
+                    int idx = records_listBox.FindString(_name);
+                    if (idx >= 0) records_listBox.SelectedIndex = idx;
                 }
 
+            }
+
         }
+
         /// <summary>
         /// Нажата кнопка Удалить (в режиме выбора скрыта)
         /// </summary>
@@ -122,26 +139,20 @@ namespace HorseClub
         {
             int idx = records_listBox.SelectedIndex;
             if (idx < 0) return;
-            SimpleRef _ref = records_listBox.Items[idx] as SimpleRef;
+            Service _ref = records_listBox.Items[idx] as Service;
             if (_ref != null)
             {
                 m_id = _ref.id;
-                int recs = Program.m_helper.DeleteSimpleRefRecord(m_id);
+                int recs = Program.m_helper.DeleteService(m_id);
                 if (recs < 1)
                     Program.DBErrorMessage();
                 else
                 {
-                    List<SimpleRef> refs = await Program.m_helper.GetSimpleRefRecords();
+                    List<Service> refs = await Program.m_helper.GetServices();
+                    records_listBox.DataSource = refs;
                     if (!refs.IsNullOrEmpty())
                     {
-                        records_listBox.DataSource = refs;
                         records_listBox.SelectedIndex = 0;
-                        _ref = records_listBox.Items[0] as SimpleRef;
-                        if (_ref != null)
-                        {
-                            name_textBox.Text = _ref.name;
-                            m_id = _ref.id;
-                        }
                     }
 
                 }
@@ -160,13 +171,21 @@ namespace HorseClub
         {
             int idx = records_listBox.SelectedIndex;
             if (idx < 0) return;
-            SimpleRef _ref = records_listBox.Items[idx] as SimpleRef;
+            Service _ref = records_listBox.Items[idx] as Service;
             if (_ref != null)
             {
                 name_textBox.Text = _ref.name;
                 m_id = _ref.id;
+                cost_textBox.Text = _ref.summa.ToString();
             }
 
+        }
+
+        private void OnKeyPressCost(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !((e.KeyChar >= (char)Keys.D0 && e.KeyChar <= (char)Keys.D9) 
+                || (e.KeyChar == (char)Keys.Back)
+                || (e.KeyChar == (char)Keys.Oemcomma));
         }
     }
 }
