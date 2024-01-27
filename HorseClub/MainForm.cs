@@ -60,5 +60,61 @@ namespace HorseClub
             ClientsForm frm = new ClientsForm();
             frm.ShowDialog();
         }
+
+        /// <summary>
+        /// Добавить запись о посещении
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void add_visit_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CalcSummaForm frm = new CalcSummaForm();
+            if(frm.ShowDialog() == DialogResult.OK)
+            {
+                var lst = await Program.m_helper.GetVisitList();
+                visit_dataGridView.DataSource = lst;
+            }
+        }
+        /// <summary>
+        /// Изменить запись о посещении
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void edit_visit_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var row = visit_dataGridView.CurrentRow;
+            if (row == null) return;
+            long id = Convert.ToInt64(row.Cells["id"].Value);
+            CalcSummaForm form = new CalcSummaForm(id);
+            if(form.ShowDialog() == DialogResult.OK)
+            {
+                var lst = await Program.m_helper.GetVisitList();
+                visit_dataGridView.DataSource = lst;
+            }
+        }
+        /// <summary>
+        /// Удалить запись о посещении
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void delete_visit_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Вы действительно хотите удалить выбранную запись о посещении клуба?", "Внимание!",
+                  MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No) 
+                return;
+            var row = visit_dataGridView.CurrentRow;
+            if (row == null) return;
+            long id = Convert.ToInt64(row.Cells["id"].Value);
+            if(Program.m_helper.DeleteVisitRecord(id) < 1)
+            {
+                Program.DBErrorMessage();
+            }
+            else
+            {
+                var lst = await Program.m_helper.GetVisitList();
+                visit_dataGridView.DataSource = lst;
+            }
+
+        }
     }
 }

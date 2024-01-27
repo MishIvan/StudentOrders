@@ -28,20 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.visit_dataGridView = new System.Windows.Forms.DataGridView();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.days_count = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.service_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.imonth = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.month_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.iyear = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.summa = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.visits_contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.add_visit_context_toolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.edit_visit_context_toolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.delete_visit_context_toolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.main_menuStrip = new System.Windows.Forms.MenuStrip();
             this.visits_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.add_visit_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,7 +48,16 @@
             this.clients_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.services_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.daycost_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.days_count = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.service_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.imonth = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.month_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.iyear = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.summa = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.visit_dataGridView)).BeginInit();
+            this.visits_contextMenuStrip.SuspendLayout();
             this.main_menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -69,94 +75,44 @@
             this.month_name,
             this.iyear,
             this.summa});
+            this.visit_dataGridView.ContextMenuStrip = this.visits_contextMenuStrip;
             this.visit_dataGridView.Location = new System.Drawing.Point(13, 28);
             this.visit_dataGridView.MultiSelect = false;
             this.visit_dataGridView.Name = "visit_dataGridView";
             this.visit_dataGridView.ReadOnly = true;
             this.visit_dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.visit_dataGridView.Size = new System.Drawing.Size(763, 399);
+            this.visit_dataGridView.Size = new System.Drawing.Size(804, 399);
             this.visit_dataGridView.TabIndex = 0;
             // 
-            // id
+            // visits_contextMenuStrip
             // 
-            this.id.DataPropertyName = "id";
-            this.id.HeaderText = "ИД";
-            this.id.Name = "id";
-            this.id.ReadOnly = true;
-            this.id.Visible = false;
+            this.visits_contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.add_visit_context_toolStripMenuItem,
+            this.edit_visit_context_toolStripMenuItem,
+            this.delete_visit_context_toolStripMenuItem});
+            this.visits_contextMenuStrip.Name = "visits_contextMenuStrip";
+            this.visits_contextMenuStrip.Size = new System.Drawing.Size(129, 70);
             // 
-            // name
+            // add_visit_context_toolStripMenuItem
             // 
-            this.name.DataPropertyName = "client_name";
-            this.name.FillWeight = 150F;
-            this.name.HeaderText = "ФИО";
-            this.name.Name = "name";
-            this.name.ReadOnly = true;
-            this.name.ToolTipText = "ФИО клиента";
+            this.add_visit_context_toolStripMenuItem.Name = "add_visit_context_toolStripMenuItem";
+            this.add_visit_context_toolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.add_visit_context_toolStripMenuItem.Text = "Добавить";
+            this.add_visit_context_toolStripMenuItem.Click += new System.EventHandler(this.add_visit_ToolStripMenuItem_Click);
             // 
-            // days_count
+            // edit_visit_context_toolStripMenuItem
             // 
-            this.days_count.DataPropertyName = "days_count";
-            dataGridViewCellStyle31.Format = "N0";
-            dataGridViewCellStyle31.NullValue = null;
-            this.days_count.DefaultCellStyle = dataGridViewCellStyle31;
-            this.days_count.HeaderText = "Посещаемость, дней";
-            this.days_count.Name = "days_count";
-            this.days_count.ReadOnly = true;
-            this.days_count.ToolTipText = "Число посещений клиента в месяц";
+            this.edit_visit_context_toolStripMenuItem.Name = "edit_visit_context_toolStripMenuItem";
+            this.edit_visit_context_toolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.edit_visit_context_toolStripMenuItem.Text = "Изменить";
+            this.edit_visit_context_toolStripMenuItem.Click += new System.EventHandler(this.edit_visit_ToolStripMenuItem_Click);
             // 
-            // service_name
+            // delete_visit_context_toolStripMenuItem
             // 
-            this.service_name.DataPropertyName = "service_name";
-            this.service_name.FillWeight = 150F;
-            this.service_name.HeaderText = "Дополнительные услуги";
-            this.service_name.Name = "service_name";
-            this.service_name.ReadOnly = true;
-            this.service_name.ToolTipText = "Наименование дополнительных услуг";
-            // 
-            // imonth
-            // 
-            this.imonth.DataPropertyName = "imonth";
-            dataGridViewCellStyle32.Format = "N0";
-            dataGridViewCellStyle32.NullValue = null;
-            this.imonth.DefaultCellStyle = dataGridViewCellStyle32;
-            this.imonth.HeaderText = "Ном. месяца";
-            this.imonth.Name = "imonth";
-            this.imonth.ReadOnly = true;
-            this.imonth.Visible = false;
-            // 
-            // month_name
-            // 
-            this.month_name.DataPropertyName = "month_name";
-            dataGridViewCellStyle33.Format = "N0";
-            dataGridViewCellStyle33.NullValue = null;
-            this.month_name.DefaultCellStyle = dataGridViewCellStyle33;
-            this.month_name.HeaderText = "Месяц";
-            this.month_name.Name = "month_name";
-            this.month_name.ReadOnly = true;
-            this.month_name.ToolTipText = "Месяц";
-            // 
-            // iyear
-            // 
-            this.iyear.DataPropertyName = "iyear";
-            dataGridViewCellStyle34.Format = "N0";
-            dataGridViewCellStyle34.NullValue = null;
-            this.iyear.DefaultCellStyle = dataGridViewCellStyle34;
-            this.iyear.HeaderText = "Год";
-            this.iyear.Name = "iyear";
-            this.iyear.ReadOnly = true;
-            this.iyear.ToolTipText = "Год";
-            // 
-            // summa
-            // 
-            this.summa.DataPropertyName = "summa";
-            dataGridViewCellStyle35.Format = "C2";
-            dataGridViewCellStyle35.NullValue = null;
-            this.summa.DefaultCellStyle = dataGridViewCellStyle35;
-            this.summa.HeaderText = "Cтоимость";
-            this.summa.Name = "summa";
-            this.summa.ReadOnly = true;
-            this.summa.ToolTipText = "Общая стоимость услуг в месяц";
+            this.delete_visit_context_toolStripMenuItem.Name = "delete_visit_context_toolStripMenuItem";
+            this.delete_visit_context_toolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.delete_visit_context_toolStripMenuItem.Text = "Удалить";
+            this.delete_visit_context_toolStripMenuItem.Click += new System.EventHandler(this.delete_visit_ToolStripMenuItem_Click);
             // 
             // main_menuStrip
             // 
@@ -165,7 +121,7 @@
             this.reference_ToolStripMenuItem});
             this.main_menuStrip.Location = new System.Drawing.Point(0, 0);
             this.main_menuStrip.Name = "main_menuStrip";
-            this.main_menuStrip.Size = new System.Drawing.Size(800, 24);
+            this.main_menuStrip.Size = new System.Drawing.Size(830, 24);
             this.main_menuStrip.TabIndex = 1;
             this.main_menuStrip.Text = "menuStrip1";
             // 
@@ -186,6 +142,7 @@
             this.add_visit_ToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.add_visit_ToolStripMenuItem.Text = "Добавить";
             this.add_visit_ToolStripMenuItem.ToolTipText = "Добавить запись о посещении";
+            this.add_visit_ToolStripMenuItem.Click += new System.EventHandler(this.add_visit_ToolStripMenuItem_Click);
             // 
             // edit_visit_ToolStripMenuItem
             // 
@@ -193,6 +150,7 @@
             this.edit_visit_ToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.edit_visit_ToolStripMenuItem.Text = "Изменить";
             this.edit_visit_ToolStripMenuItem.ToolTipText = "Изменить запись о посещени ";
+            this.edit_visit_ToolStripMenuItem.Click += new System.EventHandler(this.edit_visit_ToolStripMenuItem_Click);
             // 
             // delete_visit_ToolStripMenuItem
             // 
@@ -200,6 +158,7 @@
             this.delete_visit_ToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.delete_visit_ToolStripMenuItem.Text = "Удалить";
             this.delete_visit_ToolStripMenuItem.ToolTipText = "Удалить запись о посещении";
+            this.delete_visit_ToolStripMenuItem.Click += new System.EventHandler(this.delete_visit_ToolStripMenuItem_Click);
             // 
             // reference_ToolStripMenuItem
             // 
@@ -236,19 +195,105 @@
             this.daycost_ToolStripMenuItem.ToolTipText = "Стоимость посещения за 1  день";
             this.daycost_ToolStripMenuItem.Click += new System.EventHandler(this.daycost_ToolStripMenuItem_Click);
             // 
+            // id
+            // 
+            this.id.DataPropertyName = "id";
+            this.id.HeaderText = "ИД";
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.Visible = false;
+            // 
+            // name
+            // 
+            this.name.DataPropertyName = "client_name";
+            this.name.FillWeight = 150F;
+            this.name.HeaderText = "ФИО";
+            this.name.Name = "name";
+            this.name.ReadOnly = true;
+            this.name.ToolTipText = "ФИО клиента";
+            this.name.Width = 200;
+            // 
+            // days_count
+            // 
+            this.days_count.DataPropertyName = "days_count";
+            dataGridViewCellStyle1.Format = "N0";
+            dataGridViewCellStyle1.NullValue = null;
+            this.days_count.DefaultCellStyle = dataGridViewCellStyle1;
+            this.days_count.HeaderText = "Посещаемость, дней";
+            this.days_count.Name = "days_count";
+            this.days_count.ReadOnly = true;
+            this.days_count.ToolTipText = "Число посещений клиента в месяц";
+            // 
+            // service_name
+            // 
+            this.service_name.DataPropertyName = "service_name";
+            this.service_name.FillWeight = 150F;
+            this.service_name.HeaderText = "Дополнительные услуги";
+            this.service_name.Name = "service_name";
+            this.service_name.ReadOnly = true;
+            this.service_name.ToolTipText = "Наименование дополнительных услуг";
+            this.service_name.Width = 200;
+            // 
+            // imonth
+            // 
+            this.imonth.DataPropertyName = "imonth";
+            dataGridViewCellStyle2.Format = "N0";
+            dataGridViewCellStyle2.NullValue = null;
+            this.imonth.DefaultCellStyle = dataGridViewCellStyle2;
+            this.imonth.HeaderText = "Ном. месяца";
+            this.imonth.Name = "imonth";
+            this.imonth.ReadOnly = true;
+            this.imonth.Visible = false;
+            // 
+            // month_name
+            // 
+            this.month_name.DataPropertyName = "month_name";
+            dataGridViewCellStyle3.Format = "N0";
+            dataGridViewCellStyle3.NullValue = null;
+            this.month_name.DefaultCellStyle = dataGridViewCellStyle3;
+            this.month_name.HeaderText = "Месяц";
+            this.month_name.Name = "month_name";
+            this.month_name.ReadOnly = true;
+            this.month_name.ToolTipText = "Месяц";
+            // 
+            // iyear
+            // 
+            this.iyear.DataPropertyName = "iyear";
+            dataGridViewCellStyle4.Format = "0000";
+            dataGridViewCellStyle4.NullValue = null;
+            this.iyear.DefaultCellStyle = dataGridViewCellStyle4;
+            this.iyear.HeaderText = "Год";
+            this.iyear.Name = "iyear";
+            this.iyear.ReadOnly = true;
+            this.iyear.ToolTipText = "Год";
+            this.iyear.Width = 70;
+            // 
+            // summa
+            // 
+            this.summa.DataPropertyName = "summa";
+            dataGridViewCellStyle5.Format = "C2";
+            dataGridViewCellStyle5.NullValue = null;
+            this.summa.DefaultCellStyle = dataGridViewCellStyle5;
+            this.summa.HeaderText = "Cтоимость";
+            this.summa.Name = "summa";
+            this.summa.ReadOnly = true;
+            this.summa.ToolTipText = "Общая стоимость услуг в месяц";
+            this.summa.Width = 80;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(830, 450);
             this.Controls.Add(this.visit_dataGridView);
             this.Controls.Add(this.main_menuStrip);
             this.MainMenuStrip = this.main_menuStrip;
             this.Name = "MainForm";
-            this.Text = "Посещения клуба любителей конного спорта";
+            this.Text = "Журнал посещений клуба любителей конного спорта";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnClosed);
             this.Load += new System.EventHandler(this.OnLoad);
             ((System.ComponentModel.ISupportInitialize)(this.visit_dataGridView)).EndInit();
+            this.visits_contextMenuStrip.ResumeLayout(false);
             this.main_menuStrip.ResumeLayout(false);
             this.main_menuStrip.PerformLayout();
             this.ResumeLayout(false);
@@ -259,14 +304,6 @@
         #endregion
 
         private System.Windows.Forms.DataGridView visit_dataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn days_count;
-        private System.Windows.Forms.DataGridViewTextBoxColumn service_name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn imonth;
-        private System.Windows.Forms.DataGridViewTextBoxColumn month_name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn iyear;
-        private System.Windows.Forms.DataGridViewTextBoxColumn summa;
         private System.Windows.Forms.MenuStrip main_menuStrip;
         private System.Windows.Forms.ToolStripMenuItem visits_ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem add_visit_ToolStripMenuItem;
@@ -276,6 +313,18 @@
         private System.Windows.Forms.ToolStripMenuItem clients_ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem services_ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem daycost_ToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip visits_contextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem add_visit_context_toolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem edit_visit_context_toolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem delete_visit_context_toolStripMenuItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn days_count;
+        private System.Windows.Forms.DataGridViewTextBoxColumn service_name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn imonth;
+        private System.Windows.Forms.DataGridViewTextBoxColumn month_name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn iyear;
+        private System.Windows.Forms.DataGridViewTextBoxColumn summa;
     }
 }
 

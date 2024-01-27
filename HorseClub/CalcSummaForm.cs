@@ -18,6 +18,9 @@ namespace HorseClub
         double m_serviceprice;
         long m_idservice;
         long m_idclient;
+        int m_imonth;
+        double m_summa = 0.0;
+
         public CalcSummaForm(long id = 0)
         {
             InitializeComponent();
@@ -26,31 +29,29 @@ namespace HorseClub
             m_serviceprice = 0.0;
             m_idclient = 0;
             m_idservice = 0;
+            m_imonth = 0;
+
+            for (int i = 1; i < 13; i++)
+                month_comboBox.Items.Add(new Month(i));
+
         }
 
         private async void OnLoad(object sender, EventArgs e)
         {
             Icon = Properties.Resources.money_32;
-            List<Month> months = new List<Month>();
-            for(int i = 1; i<13;i++)
-                months.Add(new Month(i));
-            month_comboBox.DataSource = months;
 
             var lstc = await Program.m_helper.GetSimpleRefRecords();
             client_comboBox.DataSource = lstc;
 
             var lsts = await Program.m_helper.GetServices();
             service_comboBox.DataSource = lsts;
-            if(m_id > 0)
+
+            if (m_id > 0)
             {
                 Visit vis = Program.m_helper.GetVisitById(m_id);
                 if(vis != null) 
                 {
-                    Month month = month_comboBox.SelectedItem as Month;
-                    if(month != null)
-                    {
-                        month_comboBox.SelectedIndex = month.imonth - 1;
-                    }
+                    month_comboBox.SelectedIndex = vis.month - 1;
 
                     int idx = FindIndexByIdObject(vis.idclient, client_comboBox);
                     if(idx != -1)
@@ -65,10 +66,13 @@ namespace HorseClub
                     summa_textBox.Text = vis.summa.ToString();
 
                 }
+                else
+                    Program.DBErrorMessage();
             }
             else 
             {
                 month_comboBox.SelectedIndex = DateTime.Now.Month - 1;
+                year_maskedTextBox.Text = DateTime.Now.Year.ToString();
                 if (!lstc.IsNullOrEmpty()) client_comboBox.SelectedIndex = 0;
                 if(!lsts.IsNullOrEmpty()) service_comboBox.SelectedIndex = 0;
 
@@ -107,6 +111,7 @@ namespace HorseClub
             if(month != null) 
             {
                 m_dayprice = await Program.m_helper.GetSummaForDay(month.imonth, true);
+                m_imonth = month.imonth;
                 day_price_textBox.Text = m_dayprice.ToString();
             }
         }
@@ -160,8 +165,8 @@ namespace HorseClub
                 Program.ShowErrorMessage("Неверный формат числа");
                 return;
             }
-            double s = m_dayprice * days + m_serviceprice;
-            summa_textBox.Text = s.ToString();
+            m_summa = m_dayprice * days + m_serviceprice;
+            summa_textBox.Text = m_summa.ToString();
 
         }
 
@@ -172,7 +177,58 @@ namespace HorseClub
         /// <param name="e"></param>
         private void OnSave(object sender, EventArgs e)
         {
+            Visit visit = new Visit();
+            int year = 0;
+            try
+            {
+                year = Convert.ToInt32(year_maskedTextBox.Text);
+            }
+            catch 
+            {
+                Program.ShowErrorMessage("Год задан неверно");
+                return;
+            }
 
+            int days = 0;
+            try
+            {
+                days = Convert.ToInt32(days_count_textBox.Text);
+            }
+            catch 
+            {
+                Program.ShowErrorMessage("Число дней задано неверно");
+                return;
+            }
+
+            int dm = DateTime.DaysInMonth(year, m_imonth);
+            if(days < 0 ||  days > dm)
+            {
+                Program.ShowErrorMessage("Число дней задано неверно");
+                return;
+            }
+
+            visit.id = m_id > 0 ? m_id : 0;
+            visit.idclient = m_idclient;
+            visit.idservice = m_idservice;
+            visit.month = m_imonth;
+            visit.year = year;
+            visit.days = days;
+            visit.summa = m_summa;
+
+            int recs = -1;
+            if (m_id == 0)
+                recs = Program.m_helper.AddVisitRecord(visit);
+            else
+                recs = Program.m_helper.UpdateVisitRecord(visit);
+
+            if (recs < 1)
+            {
+                Program.DBErrorMessage();
+                DialogResult = DialogResult.Cancel;
+            }
+            else
+                DialogResult = DialogResult.OK;
+            Close();
         }
 
         /// <summary>

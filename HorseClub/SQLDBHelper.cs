@@ -62,7 +62,7 @@ namespace HorseClub
         public async Task<List<SimpleRef>> GetSimpleRefRecords()
         {
             List<SimpleRef> lst = null;
-            string sqlText = $"select id, name from dbo.clients order by name";
+            string sqlText = "select id, name from dbo.clients order by name";
             try
             {
                 var t = await conn.QueryAsync<SimpleRef>(sqlText);
@@ -228,7 +228,7 @@ namespace HorseClub
         public async Task<List<Visit_view>> GetVisitList()
         {
             List<Visit_view> lst = null;
-            string sqlText = "select id, month, month_name, iyear, days_count, service_name , client_name, summa from dbo.visit_view order by iyear, month, client_name";
+            string sqlText = "select id, imonth, month_name, iyear, days_count, service_name , client_name, summa from dbo.visits_view order by iyear, imonth, client_name";
             try
             {
                 var t = await conn.QueryAsync<Visit_view>(sqlText);
@@ -250,7 +250,7 @@ namespace HorseClub
         public Visit GetVisitById(long id)
         {
             Visit vis = null;
-            string sqlText = "select id, month, year, idclient, days, idservice from dbo.visits where id = @pid";
+            string sqlText = "select id, month, year, idclient, days, idservice, summa from dbo.visits where id = @pid";
             try
             {
                 vis = conn.QueryFirstOrDefault<Visit>(sqlText, new { pid = id });
