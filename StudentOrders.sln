@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeacherSalary", "TeacherSal
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HorseClub", "HorseClub\HorseClub.csproj", "{55B8D7CB-57ED-4F60-BE6E-CBA2E5C6572C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisabilityList", "DisabilityList\DisabilityList.csproj", "{63DAD1E0-DDFB-4777-9BCF-B520119F604F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -223,6 +225,18 @@ Global
 		{55B8D7CB-57ED-4F60-BE6E-CBA2E5C6572C}.Release|x64.Build.0 = Release|Any CPU
 		{55B8D7CB-57ED-4F60-BE6E-CBA2E5C6572C}.Release|x86.ActiveCfg = Release|Any CPU
 		{55B8D7CB-57ED-4F60-BE6E-CBA2E5C6572C}.Release|x86.Build.0 = Release|Any CPU
+		{63DAD1E0-DDFB-4777-9BCF-B520119F604F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63DAD1E0-DDFB-4777-9BCF-B520119F604F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63DAD1E0-DDFB-4777-9BCF-B520119F604F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{63DAD1E0-DDFB-4777-9BCF-B520119F604F}.Debug|x64.Build.0 = Debug|Any CPU
+		{63DAD1E0-DDFB-4777-9BCF-B520119F604F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{63DAD1E0-DDFB-4777-9BCF-B520119F604F}.Debug|x86.Build.0 = Debug|Any CPU
+		{63DAD1E0-DDFB-4777-9BCF-B520119F604F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63DAD1E0-DDFB-4777-9BCF-B520119F604F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63DAD1E0-DDFB-4777-9BCF-B520119F604F}.Release|x64.ActiveCfg = Release|Any CPU
+		{63DAD1E0-DDFB-4777-9BCF-B520119F604F}.Release|x64.Build.0 = Release|Any CPU
+		{63DAD1E0-DDFB-4777-9BCF-B520119F604F}.Release|x86.ActiveCfg = Release|Any CPU
+		{63DAD1E0-DDFB-4777-9BCF-B520119F604F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
