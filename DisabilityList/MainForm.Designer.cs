@@ -35,8 +35,8 @@
             this.deleteList_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.references_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hospitals_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.patients_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.doctors_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.patients_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отчётыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.main_menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -99,18 +99,19 @@
             this.hospitals_ToolStripMenuItem.Text = "Лечебные учреждения";
             this.hospitals_ToolStripMenuItem.Click += new System.EventHandler(this.hospitals_ToolStripMenuItem_Click);
             // 
-            // patients_ToolStripMenuItem
-            // 
-            this.patients_ToolStripMenuItem.Name = "patients_ToolStripMenuItem";
-            this.patients_ToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
-            this.patients_ToolStripMenuItem.Text = "Пациенты и их родственники";
-            // 
             // doctors_ToolStripMenuItem
             // 
             this.doctors_ToolStripMenuItem.Name = "doctors_ToolStripMenuItem";
             this.doctors_ToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
             this.doctors_ToolStripMenuItem.Text = "Врачи";
             this.doctors_ToolStripMenuItem.Click += new System.EventHandler(this.doctors_ToolStripMenuItem_Click);
+            // 
+            // patients_ToolStripMenuItem
+            // 
+            this.patients_ToolStripMenuItem.Name = "patients_ToolStripMenuItem";
+            this.patients_ToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
+            this.patients_ToolStripMenuItem.Text = "Пациенты и их родственники";
+            this.patients_ToolStripMenuItem.Click += new System.EventHandler(this.patients_ToolStripMenuItem_Click);
             // 
             // отчётыToolStripMenuItem
             // 

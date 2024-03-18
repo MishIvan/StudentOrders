@@ -34,4 +34,11 @@ namespace DisabilityList
         public long idhospital { get; set; }
         public long idspeciality { get; set; } 
     }
+    public class Patient : Simple
+    {
+        public DateTime birth_date { get; set; }
+        public string inn { get; set; }
+        public string snils { get; set; }
+        public string passport { get; set; }
+    }
 }

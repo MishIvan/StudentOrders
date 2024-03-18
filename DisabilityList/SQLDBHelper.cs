@@ -58,7 +58,7 @@ namespace DisabilityList
         /// <summary>
         /// Выдать спиcок лечебных учреждений
         /// </summary>
-        /// <returns>список записей</returns>
+        /// <returns>список объектов с данными о лечебных учреждениях</returns>
         public async Task<List<Hospital>> GetHospitals()
         {
             List<Hospital> lst = null;
@@ -96,7 +96,7 @@ namespace DisabilityList
         }
 
         /// <summary>
-        /// Изменить запись в справочнике клиентов
+        /// Изменить запись о лечебном учреждении
         /// </summary>
         /// <param name="hosp">даные для добавления записи</param>
         /// <returns>1 - если запись изменена, иначе - 0</returns>
@@ -117,7 +117,7 @@ namespace DisabilityList
         }
 
         /// <summary>
-        /// Удалить запись справочника
+        /// Удалить запись о лечебном учреждении
         /// </summary>
         /// <param name="id">идентификатор записи</param>
         /// <returns>1 - если запись удалена, иначе - 0</returns>
@@ -243,16 +243,16 @@ namespace DisabilityList
 
         }
         /// <summary>
-        /// Выдать список посещений клуба для отображения
+        /// Выдать список пациентов и их родвтсенников
         /// </summary>
         /// <returns></returns>
-        /*public async Task<List<Visit_view>> GetVisitList()
+        public async Task<List<Patient>> GetPatients()
         {
-            List<Visit_view> lst = null;
-            string sqlText = "select id, imonth, month_name, iyear, days_count, service_name , client_name, summa from dbo.visits_view order by iyear, imonth, client_name";
+            List<Patient> lst = null;
+            string sqlText = "select id, name, birth_date, inn, snils, passport from dbo.patients order by name";
             try
             {
-                var t = await conn.QueryAsync<Visit_view>(sqlText);
+                var t = await conn.QueryAsync<Patient>(sqlText);
                 lst = t.ToList();
             }
             catch (Exception ex)
@@ -264,38 +264,18 @@ namespace DisabilityList
         }
 
         /// <summary>
-        /// Получить объект с данными о визите
+        /// Добавить запись о пациенте или его родственнике
         /// </summary>
-        /// <param name="id">идентификатор записи о визите</param>
-        /// <returns></returns>
-        public Visit GetVisitById(long id)
-        {
-            Visit vis = null;
-            string sqlText = "select id, month, year, idclient, days, idservice, summa from dbo.visits where id = @pid";
-            try
-            {
-                vis = conn.QueryFirstOrDefault<Visit>(sqlText, new { pid = id });
-            }
-            catch (Exception ex)
-            {
-                _errorText = ex.Message;
-            }
-            return vis;
-
-        }
-
-        /// <summary>
-        /// Добавить запись о визите
-        /// </summary>
-        /// <param name="vis">объект с данными о визите</param>
+        /// <param name="p">объект с данными о пациенте или его родственнике</param>
         /// <returns>1 - если запись добавлена, 0 - иначе</returns>
-        public  int AddVisitRecord(Visit vis)
+        public int AddPatient(Patient p)
         {
             int recs = 0;
-            string sqlText = "insert into dbo.visits (month, year, idclient, days, idservice, summa) values(@pmonth, @pyear, @pidc, @pdays, @pids, @ps)";
+            string sdt = p.birth_date.ToString("yyyyMMdd");
+            string sqlText = $"insert into dbo.patients (name, birth_date, inn, snils, passport) values(@pname, '{sdt}', @pinn, @psnils, @ppas)";
             try
             {
-                recs = conn.Execute(sqlText, new { pmonth = vis.month, pyear = vis.year, pidc = vis.idclient, pdays = vis.days, pids = vis.idservice, ps = vis.summa });
+                recs = conn.Execute(sqlText, new { pname = p.name, pinn = p.inn, psnils = p.snils, ppas = p.passport });
             }
             catch (Exception ex)
             {
@@ -310,14 +290,15 @@ namespace DisabilityList
         /// </summary>
         /// <param name="vis">объект с данными о визите</param>
         /// <returns>1 - если запись изменена, 0 - иначе</returns>
-        public int UpdateVisitRecord(Visit vis)
+        public int UpdatePatient(Patient p)
         {
             int recs = 0;
-            string sqlText = "update dbo.visits set month = @pmonth, year = @pyear, idclient = @pidc, days = @pdays, idservice = @pids, summa = @ps where id = @pid";
+            string sdt = p.birth_date.ToString("yyyyMMdd");
+            string sqlText = $"update dbo.patients set name = @pname, birth_date = '{sdt}', inn = @pinn, snils = @psnils, passport = @ppas where id = @pid";
             try
             {
                 recs = conn.Execute(sqlText, 
-                    new { pid = vis.id, pmonth = vis.month, pyear = vis.year, pidc = vis.idclient, pdays = vis.days, pids = vis.idservice, ps = vis.summa });
+                    new { pid = p.id, pname = p.name, pinn = p.inn, psnils = p.snils, ppas = p.passport });
             }
             catch (Exception ex)
             {
@@ -328,14 +309,14 @@ namespace DisabilityList
         }
 
         /// <summary>
-        /// Удалить запись о визите
+        /// Удалить запись о пациенте или его родственнике
         /// </summary>
         /// <param name="id">идентификатор удаляемой записи</param>
         /// <returns>1 - если запись удалена, 0 - иначе</returns>
-        public int DeleteVisitRecord(long id)
+        public int DeletePatient(long id)
         {
             int recs = 0;
-            string sqlText = "delete from dbo.visits where id = @pid";
+            string sqlText = "delete from dbo.patients where id = @pid";
             try
             {
                 recs = conn.Execute(sqlText, new { pid = id });
@@ -347,76 +328,6 @@ namespace DisabilityList
             return recs;
 
         }
-
-        /// <summary>
-        /// Изменить стоимость дневного посещения клуба
-        /// </summary>
-        /// <param name="season">1 - зима, 2 - весна и осень, 3 - лето</param>
-        /// <param name="summa">новое значение суммы</param>
-        /// <returns>1 - запись изменена, 0 - иначе</returns>
-        public int UpdateSummaForDay(int season, double summa)
-        {
-            int recs = 0;
-            string sqlText = "update dbo.sumforday set summa = @psum ";
-            switch(season)
-            {
-                case 1:
-                    sqlText += "where month in (1, 2, 12)"; break;
-                case 2:
-                    sqlText += "where month in (3, 4, 5, 9, 10, 11)"; break;
-                case 3:
-                    sqlText += " where month in (6, 7, 8)"; break;
-                default:
-                    return recs; 
-            }
-            try
-            {
-                recs = conn.Execute(sqlText, new { psum = summa});
-            }
-            catch (Exception ex)
-            {
-                _errorText = ex.Message;
-            }
-            return recs;
-
-        }
-        /// <summary>
-        /// Получить стоимость 1 дня посещения в сезон
-        /// </summary>
-        /// <param name="season">isMonth = false: 1 - зима, 2 - весна и осень, 3 - лето, иначе месяц</param>
-        /// <returns></returns>
-        public async Task<double> GetSummaForDay(int season, bool isMonth = false)
-        {
-            double sum = double.NaN; 
-            string sqlText = "select top 1 summa from dbo.sumforday ";
-            if (!isMonth)
-            {
-                switch (season)
-                {
-                    case 1:
-                        sqlText += "where month in (1, 2, 12)"; break;
-                    case 2:
-                        sqlText += "where month in (3, 4, 5, 9, 10, 11)"; break;
-                    case 3:
-                        sqlText += " where month in (6, 7, 8)"; break;
-                    default:
-                        return sum;
-                }
-            }
-            else
-                sqlText += $" where month = {season}";
-            try
-            {
-                sum = await conn.QuerySingleAsync<double>(sqlText);
-            }
-            catch (Exception ex)
-            {
-                _errorText = ex.Message;
-            }
-            return sum;
-
-        }*/
-
 
     }
 }

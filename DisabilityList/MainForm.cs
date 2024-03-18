@@ -46,5 +46,15 @@ namespace DisabilityList
             DoctorForm frm = new DoctorForm();
             frm.ShowDialog();
         }
+        /// <summary>
+        /// Управление справочником пациентов и их родственников
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void patients_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PatientForm frm = new PatientForm();
+            frm.ShowDialog();
+        }
     }
 }
