@@ -27,12 +27,11 @@ namespace DisabilityList
     public class Hospital : Simple
     {
         public string govregnum { get; set; }
-        public string adress { get; set; }
+        public string address { get; set; }
     }
     public class Doctor : Simple
     {
         public long idhospital { get; set; }
         public long idspeciality { get; set; } 
-        public string speciality { get; set; }
     }
 }

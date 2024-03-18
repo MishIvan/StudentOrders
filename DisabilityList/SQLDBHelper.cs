@@ -83,10 +83,10 @@ namespace DisabilityList
         public int AddHospital(Hospital hosp)
         {
             int recs = 0;
-            string sqlText = "insert into dbo.hospitals (name, addressб govregnum) values(@pname, @padr, @pnum)";
+            string sqlText = "insert into dbo.hospitals (name, address, govregnum) values(@pname, @padr, @pnum)";
             try
             {
-                recs = conn.Execute(sqlText, new { pname = hosp.name, padr = hosp.adress, pnum = hosp.govregnum });
+                recs = conn.Execute(sqlText, new { pname = hosp.name, padr = hosp.address, pnum = hosp.govregnum });
             }
             catch (Exception ex)
             {
@@ -99,7 +99,6 @@ namespace DisabilityList
         /// Изменить запись в справочнике клиентов
         /// </summary>
         /// <param name="hosp">даные для добавления записи</param>
-        /// <param name="id">идентификатор изменяемой записи</param>
         /// <returns>1 - если запись изменена, иначе - 0</returns>
         public int UpdateHospital(Hospital hosp)
         {
@@ -107,7 +106,7 @@ namespace DisabilityList
             string sqlText = "update dbo.hospitals set name = @pname, address = @padr, govregnum = @pnum where id  = @pid";
             try
             {
-                recs = conn.Execute(sqlText, new { pid = hosp.id, pname = hosp.name, padr = hosp.adress, pnum = hosp.govregnum });
+                recs = conn.Execute(sqlText, new { pid = hosp.id, pname = hosp.name, padr = hosp.address, pnum = hosp.govregnum });
             }
             catch (Exception ex)
             {
@@ -139,16 +138,38 @@ namespace DisabilityList
         }
 
         /// <summary>
-        /// Получить список дополнительных услуг
+        /// Получить список врачебных специальностей
         /// </summary>
-        /// <returns>список с данными преподавателей</returns>
-        /*public async Task<List<Service>> GetServices()
+        /// <returns>список с данными о врачебных специальностей</returns>
+        public async Task<List<Simple>> GetDoctorSpecialities()
         {
-            List<Service> lst = null;
-            string sqlText = "select id, name,summa from dbo.services order by name"; 
+            List<Simple> lst = null;
+            string sqlText = "select id, name from dbo.specialities order by name";
             try
             {
-                var t = await conn.QueryAsync<Service>(sqlText);
+                var t = await conn.QueryAsync<Simple>(sqlText);
+                lst = t.ToList();
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return lst;
+
+        }
+
+
+        /// <summary>
+        /// Получить список врачей
+        /// </summary>
+        /// <returns>список с данными врачей</returns>
+        public async Task<List<Doctor>> GetDoctors()
+        {
+            List<Doctor> lst = null;
+            string sqlText = "select id, name, idspeciality, idhospital from dbo.doctors order by name"; 
+            try
+            {
+                var t = await conn.QueryAsync<Doctor>(sqlText);
                 lst = t.ToList();
             }
             catch (Exception ex)
@@ -160,17 +181,17 @@ namespace DisabilityList
         }
 
         /// <summary>
-        /// Добавить запись о доп. услуге
+        /// Добавить запись о враче
         /// </summary>
-        /// <param name="svc">Объект с данными для добавления</param>
+        /// <param name="doct">Объект с данными для добавления</param>
         /// <returns>1 - если запись добавлена, иначе - 0</returns>
-        public int AddService(Service svc)
+        public int AddDoctor(Doctor doct)
         {
             int recs = 0;
-            string sqlText = "insert into dbo.services (name,summa) values(@pname, @psumma)";
+            string sqlText = "insert into dbo.doctors (name,idspeciality, idhospital) values(@pname, @pidspec, @pidhosp)";
             try
             {
-                recs = conn.Execute(sqlText, new { pname = svc.name, psumma = svc.summa });
+                recs = conn.Execute(sqlText, new { pname = doct.name, pidspec = doct.idspeciality, pidhosp = doct.idhospital });
             }
             catch (Exception ex)
             {
@@ -181,17 +202,17 @@ namespace DisabilityList
         }
 
         /// <summary>
-        /// Изменить запись о доп. услуге
+        /// Изменить запись о враче
         /// </summary>
         /// <param name="svc">Объект с данными для изменения</param>
         /// <returns>1 - если запись изменена, иначе - 0</returns>
-        public int UpdateService(Service svc)
+        public int UpdateDoctor(Doctor doct)
         {
             int recs = 0;
-            string sqlText = "update dbo.services set name = @pname, summa = @ps where id = @pid";
+            string sqlText = "update dbo.doctors set name = @pname, idspeciality = @pidspec, idhospital = @pidhosp where id = @pid";
             try
             {
-                recs = conn.Execute(sqlText, new { pid = svc.id, pname = svc.name, ps = svc.summa });
+                recs = conn.Execute(sqlText, new { pid = doct.id, pname = doct.name, pidspec = doct.idspeciality, pidhosp = doct.idhospital });
             }
             catch (Exception ex)
             {
@@ -202,14 +223,14 @@ namespace DisabilityList
         }
 
         /// <summary>
-        /// Удалить запись о преподавателя
+        /// Удалить запись о враче
         /// </summary>
         /// <param name="id">идентификатор удаляемой записи</param>
         /// <returns>1 - если запись удалена, иначе - 0</returns>
-        public int DeleteService(long id)
+        public int DeleteDoctor(long id)
         {
             int recs = 0;
-            string sqlText = "delete from dbo.services where id = @pid";
+            string sqlText = "delete from dbo.doctors where id = @pid";
             try
             {
                 recs = conn.Execute(sqlText, new { pid = id });
@@ -225,7 +246,7 @@ namespace DisabilityList
         /// Выдать список посещений клуба для отображения
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Visit_view>> GetVisitList()
+        /*public async Task<List<Visit_view>> GetVisitList()
         {
             List<Visit_view> lst = null;
             string sqlText = "select id, imonth, month_name, iyear, days_count, service_name , client_name, summa from dbo.visits_view order by iyear, imonth, client_name";

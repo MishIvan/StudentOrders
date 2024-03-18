@@ -26,5 +26,25 @@ namespace DisabilityList
         {
 
         }
+        /// <summary>
+        /// Работа со справочником лечебных учреждений
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void hospitals_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HospitalForm frm = new HospitalForm();
+            frm.ShowDialog();
+        }
+        /// <summary>
+        /// Работа со справочником врачей
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void doctors_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DoctorForm frm = new DoctorForm();
+            frm.ShowDialog();
+        }
     }
 }

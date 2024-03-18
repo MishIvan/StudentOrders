@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.main_menuStrip = new System.Windows.Forms.MenuStrip();
-            this.references_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.hospitals_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.patients_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.doctors_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lists_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addList_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editList_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteList_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.references_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hospitals_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.patients_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.doctors_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отчётыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.main_menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -53,35 +53,6 @@
             this.main_menuStrip.TabIndex = 0;
             this.main_menuStrip.Text = "menuStrip1";
             // 
-            // references_ToolStripMenuItem
-            // 
-            this.references_ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.hospitals_ToolStripMenuItem,
-            this.patients_ToolStripMenuItem,
-            this.doctors_ToolStripMenuItem});
-            this.references_ToolStripMenuItem.Name = "references_ToolStripMenuItem";
-            this.references_ToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
-            this.references_ToolStripMenuItem.Text = "Справочники";
-            this.references_ToolStripMenuItem.Click += new System.EventHandler(this.справочникиToolStripMenuItem_Click);
-            // 
-            // hospitals_ToolStripMenuItem
-            // 
-            this.hospitals_ToolStripMenuItem.Name = "hospitals_ToolStripMenuItem";
-            this.hospitals_ToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
-            this.hospitals_ToolStripMenuItem.Text = "Лечебные учреждения";
-            // 
-            // patients_ToolStripMenuItem
-            // 
-            this.patients_ToolStripMenuItem.Name = "patients_ToolStripMenuItem";
-            this.patients_ToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
-            this.patients_ToolStripMenuItem.Text = "Пациенты и их родственники";
-            // 
-            // doctors_ToolStripMenuItem
-            // 
-            this.doctors_ToolStripMenuItem.Name = "doctors_ToolStripMenuItem";
-            this.doctors_ToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
-            this.doctors_ToolStripMenuItem.Text = "Врачи";
-            // 
             // lists_ToolStripMenuItem
             // 
             this.lists_ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -95,20 +66,51 @@
             // addList_ToolStripMenuItem
             // 
             this.addList_ToolStripMenuItem.Name = "addList_ToolStripMenuItem";
-            this.addList_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addList_ToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.addList_ToolStripMenuItem.Text = "Добавить";
             // 
             // editList_ToolStripMenuItem
             // 
             this.editList_ToolStripMenuItem.Name = "editList_ToolStripMenuItem";
-            this.editList_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editList_ToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.editList_ToolStripMenuItem.Text = "Изменить";
             // 
             // deleteList_ToolStripMenuItem
             // 
             this.deleteList_ToolStripMenuItem.Name = "deleteList_ToolStripMenuItem";
-            this.deleteList_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteList_ToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.deleteList_ToolStripMenuItem.Text = "Удалить";
+            // 
+            // references_ToolStripMenuItem
+            // 
+            this.references_ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.hospitals_ToolStripMenuItem,
+            this.doctors_ToolStripMenuItem,
+            this.patients_ToolStripMenuItem});
+            this.references_ToolStripMenuItem.Name = "references_ToolStripMenuItem";
+            this.references_ToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
+            this.references_ToolStripMenuItem.Text = "Справочники";
+            this.references_ToolStripMenuItem.Click += new System.EventHandler(this.справочникиToolStripMenuItem_Click);
+            // 
+            // hospitals_ToolStripMenuItem
+            // 
+            this.hospitals_ToolStripMenuItem.Name = "hospitals_ToolStripMenuItem";
+            this.hospitals_ToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
+            this.hospitals_ToolStripMenuItem.Text = "Лечебные учреждения";
+            this.hospitals_ToolStripMenuItem.Click += new System.EventHandler(this.hospitals_ToolStripMenuItem_Click);
+            // 
+            // patients_ToolStripMenuItem
+            // 
+            this.patients_ToolStripMenuItem.Name = "patients_ToolStripMenuItem";
+            this.patients_ToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
+            this.patients_ToolStripMenuItem.Text = "Пациенты и их родственники";
+            // 
+            // doctors_ToolStripMenuItem
+            // 
+            this.doctors_ToolStripMenuItem.Name = "doctors_ToolStripMenuItem";
+            this.doctors_ToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
+            this.doctors_ToolStripMenuItem.Text = "Врачи";
+            this.doctors_ToolStripMenuItem.Click += new System.EventHandler(this.doctors_ToolStripMenuItem_Click);
             // 
             // отчётыToolStripMenuItem
             // 
