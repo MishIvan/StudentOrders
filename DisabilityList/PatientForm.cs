@@ -15,7 +15,7 @@ namespace DisabilityList
     {
         long m_id;
         bool m_selmode;
-        const string EMPTY_SNILS = "   -   -      ";
+        const string EMPTY_SNILS_TRIMMED = "-   -";
         public long id { get { return m_id; } }
 
         public PatientForm(long id = 0, bool sel_mode = false)
@@ -78,12 +78,16 @@ namespace DisabilityList
             int idx = name_comboBox.SelectedIndex;
             if (idx < 0) return;
             Patient p = name_comboBox.Items[idx] as Patient;
-            if (p != null) 
+            if (p != null)
             {
                 m_id = p.id;
                 birthDate_dateTimePicker.Value = p.birth_date;
+
                 inn_maskedTextBox.Text = p.inn;
+                relative_checkBox.Checked = string.IsNullOrEmpty(p.inn.Trim());
+
                 snils_maskedTextBox.Text = p.snils;
+
                 passport_textBox.Text = p.passport;
             }
         }
@@ -115,7 +119,8 @@ namespace DisabilityList
                     Program.ShowErrorMessage("Неверно задан ИНН");
                     return;
                 }
-                if (relative_checkBox.Checked && E)
+                if (relative_checkBox.Checked && _snils.Trim() == EMPTY_SNILS_TRIMMED)
+                    _snils = string.Empty;
 
 
                     string _passport = passport_textBox.Text;
@@ -146,7 +151,7 @@ namespace DisabilityList
                     name_comboBox.DataSource = lst;
                     if (!lst.IsNullOrEmpty())
                     {
-                        int idx = name_comboBox.FindString(name);
+                        int idx = name_comboBox.FindString(_name);
                         if (idx >= 0)
                             name_comboBox.SelectedIndex = idx; 
                     }
@@ -179,11 +184,13 @@ namespace DisabilityList
                 }
 
                 string _snils = snils_maskedTextBox.Text;
-                if (!relative_checkBox.Checked && (string.IsNullOrEmpty(_snils) || _snils.Length < 14))
+                if (!relative_checkBox.Checked && (string.IsNullOrEmpty(_snils) || _snils.Length < 14 || _snils.Trim() == EMPTY_SNILS_TRIMMED))
                 {
-                    Program.ShowErrorMessage("Неверно задан ИНН");
+                    Program.ShowErrorMessage("Неверно задан СНИЛС");
                     return;
                 }
+                if (_snils.Trim() == EMPTY_SNILS_TRIMMED)
+                    _snils = string.Empty;
 
                 string _passport = passport_textBox.Text;
                 if (!relative_checkBox.Checked && (string.IsNullOrEmpty(_passport)))
@@ -212,7 +219,7 @@ namespace DisabilityList
                     name_comboBox.DataSource = lst;
                     if (!lst.IsNullOrEmpty())
                     {
-                        int idx = name_comboBox.FindString(name);
+                        int idx = name_comboBox.FindString(_name);
                         if (idx >= 0)
                             name_comboBox.SelectedIndex = idx;
                     }
@@ -245,9 +252,17 @@ namespace DisabilityList
 
         private void OnRelativeCheck(object sender, EventArgs e)
         {
+            if (relative_checkBox.Checked)
+            {
+                inn_maskedTextBox.Text = string.Empty;
+                snils_maskedTextBox.Text = EMPTY_SNILS_TRIMMED.PadLeft(3).PadRight(6);
+                passport_textBox.Text = string.Empty;
+            }
+            
             inn_maskedTextBox.Enabled = !relative_checkBox.Checked;
             snils_maskedTextBox.Enabled = !relative_checkBox.Checked;
             passport_textBox.Enabled = !relative_checkBox.Checked;
+
         }
     }
 }
