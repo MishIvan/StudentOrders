@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.deliveryDate_dateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
@@ -40,9 +42,15 @@
             this.label5 = new System.Windows.Forms.Label();
             this.code_button = new System.Windows.Forms.Button();
             this.list_toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.button1 = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
             this.addcode_textBox = new System.Windows.Forms.TextBox();
+            this.yearService_textBox = new System.Windows.Forms.TextBox();
+            this.monthService_textBox = new System.Windows.Forms.TextBox();
+            this.salary_textBox = new System.Windows.Forms.TextBox();
+            this.welfare_textBox = new System.Windows.Forms.TextBox();
+            this.loadDoc_button = new System.Windows.Forms.Button();
+            this.viewDoc_button = new System.Windows.Forms.Button();
+            this.add_code_button = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
             this.cancel_button = new System.Windows.Forms.Button();
             this.ok_button = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
@@ -50,18 +58,24 @@
             this.label8 = new System.Windows.Forms.Label();
             this.submitCode_maskedTextBox = new System.Windows.Forms.MaskedTextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.yearService_textBox = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.monthService_textBox = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.salary_textBox = new System.Windows.Forms.TextBox();
             this.free_groupBox = new System.Windows.Forms.GroupBox();
-            this.free_dataGridView = new System.Windows.Forms.DataGridView();
             this.delete_button = new System.Windows.Forms.Button();
+            this.free_dataGridView = new System.Windows.Forms.DataGridView();
+            this.idlist = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.relative_code = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.datefrom = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dateto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idpatient = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.patient = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.iddoctor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.doct_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idhospital = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.speciality = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.edit_button = new System.Windows.Forms.Button();
             this.add_button = new System.Windows.Forms.Button();
-            this.welfare_textBox = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.calcwelfare_button = new System.Windows.Forms.Button();
             this.free_groupBox.SuspendLayout();
@@ -85,7 +99,7 @@
             this.deliveryDate_dateTimePicker.Name = "deliveryDate_dateTimePicker";
             this.deliveryDate_dateTimePicker.Size = new System.Drawing.Size(92, 20);
             this.deliveryDate_dateTimePicker.TabIndex = 1;
-            this.list_toolTip.SetToolTip(this.deliveryDate_dateTimePicker, "Дата выдачи");
+            this.list_toolTip.SetToolTip(this.deliveryDate_dateTimePicker, "Дата выдачи листка нетрудоспособности");
             // 
             // label2
             // 
@@ -101,9 +115,10 @@
             this.hospital_comboBox.FormattingEnabled = true;
             this.hospital_comboBox.Location = new System.Drawing.Point(96, 52);
             this.hospital_comboBox.Name = "hospital_comboBox";
-            this.hospital_comboBox.Size = new System.Drawing.Size(577, 21);
+            this.hospital_comboBox.Size = new System.Drawing.Size(644, 21);
             this.hospital_comboBox.TabIndex = 14;
             this.list_toolTip.SetToolTip(this.hospital_comboBox, "Выбор лечебного учреждения");
+            this.hospital_comboBox.SelectedIndexChanged += new System.EventHandler(this.OnHospitalChanged);
             // 
             // label3
             // 
@@ -123,6 +138,7 @@
             this.patient_comboBox.Size = new System.Drawing.Size(396, 21);
             this.patient_comboBox.TabIndex = 16;
             this.list_toolTip.SetToolTip(this.patient_comboBox, "Выбор получателя листка нетрудоспособности");
+            this.patient_comboBox.SelectedIndexChanged += new System.EventHandler(this.OnPatientChanged);
             // 
             // label4
             // 
@@ -154,21 +170,89 @@
             // 
             // code_button
             // 
-            this.code_button.Location = new System.Drawing.Point(248, 122);
+            this.code_button.Location = new System.Drawing.Point(248, 121);
             this.code_button.Name = "code_button";
             this.code_button.Size = new System.Drawing.Size(30, 20);
             this.code_button.TabIndex = 20;
             this.code_button.Text = "...";
+            this.list_toolTip.SetToolTip(this.code_button, "Выбрать код причины нетрудоспособности");
             this.code_button.UseVisualStyleBackColor = true;
+            this.code_button.Click += new System.EventHandler(this.code_button_Click);
             // 
-            // button1
+            // addcode_textBox
             // 
-            this.button1.Location = new System.Drawing.Point(356, 124);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(30, 20);
-            this.button1.TabIndex = 23;
-            this.button1.Text = "...";
-            this.button1.UseVisualStyleBackColor = true;
+            this.addcode_textBox.Location = new System.Drawing.Point(294, 121);
+            this.addcode_textBox.MaxLength = 3;
+            this.addcode_textBox.Name = "addcode_textBox";
+            this.addcode_textBox.Size = new System.Drawing.Size(50, 20);
+            this.addcode_textBox.TabIndex = 21;
+            this.list_toolTip.SetToolTip(this.addcode_textBox, "Дополнительный код причины нетрудоспособности");
+            // 
+            // yearService_textBox
+            // 
+            this.yearService_textBox.Location = new System.Drawing.Point(129, 208);
+            this.yearService_textBox.MaxLength = 3;
+            this.yearService_textBox.Name = "yearService_textBox";
+            this.yearService_textBox.Size = new System.Drawing.Size(45, 20);
+            this.yearService_textBox.TabIndex = 31;
+            this.list_toolTip.SetToolTip(this.yearService_textBox, "Страховой стаж, число лет");
+            // 
+            // monthService_textBox
+            // 
+            this.monthService_textBox.Location = new System.Drawing.Point(191, 208);
+            this.monthService_textBox.MaxLength = 3;
+            this.monthService_textBox.Name = "monthService_textBox";
+            this.monthService_textBox.Size = new System.Drawing.Size(45, 20);
+            this.monthService_textBox.TabIndex = 33;
+            this.list_toolTip.SetToolTip(this.monthService_textBox, "Страховой стаж, число месяцев");
+            // 
+            // salary_textBox
+            // 
+            this.salary_textBox.Location = new System.Drawing.Point(380, 215);
+            this.salary_textBox.MaxLength = 3;
+            this.salary_textBox.Name = "salary_textBox";
+            this.salary_textBox.Size = new System.Drawing.Size(82, 20);
+            this.salary_textBox.TabIndex = 36;
+            this.list_toolTip.SetToolTip(this.salary_textBox, "Средний заработок за два года");
+            // 
+            // welfare_textBox
+            // 
+            this.welfare_textBox.Location = new System.Drawing.Point(574, 215);
+            this.welfare_textBox.MaxLength = 3;
+            this.welfare_textBox.Name = "welfare_textBox";
+            this.welfare_textBox.Size = new System.Drawing.Size(82, 20);
+            this.welfare_textBox.TabIndex = 39;
+            this.list_toolTip.SetToolTip(this.welfare_textBox, "Страховой стаж, число лет");
+            // 
+            // loadDoc_button
+            // 
+            this.loadDoc_button.Location = new System.Drawing.Point(21, 260);
+            this.loadDoc_button.Name = "loadDoc_button";
+            this.loadDoc_button.Size = new System.Drawing.Size(137, 23);
+            this.loadDoc_button.TabIndex = 41;
+            this.loadDoc_button.Text = "Загрузить документ";
+            this.list_toolTip.SetToolTip(this.loadDoc_button, "Загрузить скан листка нетрудоспособности");
+            this.loadDoc_button.UseVisualStyleBackColor = true;
+            // 
+            // viewDoc_button
+            // 
+            this.viewDoc_button.Location = new System.Drawing.Point(186, 260);
+            this.viewDoc_button.Name = "viewDoc_button";
+            this.viewDoc_button.Size = new System.Drawing.Size(137, 23);
+            this.viewDoc_button.TabIndex = 42;
+            this.viewDoc_button.Text = "Покзать документ";
+            this.list_toolTip.SetToolTip(this.viewDoc_button, "Показать загруженный скан листка нетрудоспособности");
+            this.viewDoc_button.UseVisualStyleBackColor = true;
+            // 
+            // add_code_button
+            // 
+            this.add_code_button.Location = new System.Drawing.Point(356, 121);
+            this.add_code_button.Name = "add_code_button";
+            this.add_code_button.Size = new System.Drawing.Size(30, 20);
+            this.add_code_button.TabIndex = 23;
+            this.add_code_button.Text = "...";
+            this.add_code_button.UseVisualStyleBackColor = true;
+            this.add_code_button.Click += new System.EventHandler(this.add_code_button_Click);
             // 
             // label6
             // 
@@ -180,17 +264,9 @@
             this.label6.TabIndex = 22;
             this.label6.Text = "Доп. код";
             // 
-            // addcode_textBox
-            // 
-            this.addcode_textBox.Location = new System.Drawing.Point(294, 123);
-            this.addcode_textBox.MaxLength = 3;
-            this.addcode_textBox.Name = "addcode_textBox";
-            this.addcode_textBox.Size = new System.Drawing.Size(50, 20);
-            this.addcode_textBox.TabIndex = 21;
-            this.list_toolTip.SetToolTip(this.addcode_textBox, "Дополнительный код причины нетрудоспособности");
-            // 
             // cancel_button
             // 
+            this.cancel_button.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancel_button.Location = new System.Drawing.Point(776, 57);
             this.cancel_button.Name = "cancel_button";
             this.cancel_button.Size = new System.Drawing.Size(113, 23);
@@ -222,6 +298,7 @@
             this.regnum_maskedTextBox.Name = "regnum_maskedTextBox";
             this.regnum_maskedTextBox.Size = new System.Drawing.Size(76, 20);
             this.regnum_maskedTextBox.TabIndex = 27;
+            this.list_toolTip.SetToolTip(this.regnum_maskedTextBox, "Регистрационный номер");
             // 
             // label8
             // 
@@ -239,6 +316,7 @@
             this.submitCode_maskedTextBox.Name = "submitCode_maskedTextBox";
             this.submitCode_maskedTextBox.Size = new System.Drawing.Size(76, 20);
             this.submitCode_maskedTextBox.TabIndex = 29;
+            this.list_toolTip.SetToolTip(this.submitCode_maskedTextBox, "Код подчинёности");
             // 
             // label9
             // 
@@ -248,15 +326,6 @@
             this.label9.Size = new System.Drawing.Size(91, 13);
             this.label9.TabIndex = 30;
             this.label9.Text = "Страховой стаж:";
-            // 
-            // yearService_textBox
-            // 
-            this.yearService_textBox.Location = new System.Drawing.Point(129, 208);
-            this.yearService_textBox.MaxLength = 3;
-            this.yearService_textBox.Name = "yearService_textBox";
-            this.yearService_textBox.Size = new System.Drawing.Size(45, 20);
-            this.yearService_textBox.TabIndex = 31;
-            this.list_toolTip.SetToolTip(this.yearService_textBox, "Страховой стаж, число лет");
             // 
             // label10
             // 
@@ -278,15 +347,6 @@
             this.label11.TabIndex = 34;
             this.label11.Text = "Мес.";
             // 
-            // monthService_textBox
-            // 
-            this.monthService_textBox.Location = new System.Drawing.Point(191, 208);
-            this.monthService_textBox.MaxLength = 3;
-            this.monthService_textBox.Name = "monthService_textBox";
-            this.monthService_textBox.Size = new System.Drawing.Size(45, 20);
-            this.monthService_textBox.TabIndex = 33;
-            this.list_toolTip.SetToolTip(this.monthService_textBox, "Страховой стаж, число месяцев");
-            // 
             // label12
             // 
             this.label12.Location = new System.Drawing.Point(257, 211);
@@ -295,38 +355,18 @@
             this.label12.TabIndex = 35;
             this.label12.Text = "Средний заработок исчисления пособия:";
             // 
-            // salary_textBox
-            // 
-            this.salary_textBox.Location = new System.Drawing.Point(380, 215);
-            this.salary_textBox.MaxLength = 3;
-            this.salary_textBox.Name = "salary_textBox";
-            this.salary_textBox.Size = new System.Drawing.Size(82, 20);
-            this.salary_textBox.TabIndex = 36;
-            this.list_toolTip.SetToolTip(this.salary_textBox, "Страховой стаж, число месяцев");
-            // 
             // free_groupBox
             // 
             this.free_groupBox.Controls.Add(this.delete_button);
             this.free_groupBox.Controls.Add(this.free_dataGridView);
             this.free_groupBox.Controls.Add(this.edit_button);
             this.free_groupBox.Controls.Add(this.add_button);
-            this.free_groupBox.Location = new System.Drawing.Point(16, 266);
+            this.free_groupBox.Location = new System.Drawing.Point(16, 309);
             this.free_groupBox.Name = "free_groupBox";
-            this.free_groupBox.Size = new System.Drawing.Size(657, 223);
+            this.free_groupBox.Size = new System.Drawing.Size(764, 227);
             this.free_groupBox.TabIndex = 37;
             this.free_groupBox.TabStop = false;
             this.free_groupBox.Text = "Освобождение от работы";
-            // 
-            // free_dataGridView
-            // 
-            this.free_dataGridView.AllowUserToAddRows = false;
-            this.free_dataGridView.AllowUserToDeleteRows = false;
-            this.free_dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.free_dataGridView.Location = new System.Drawing.Point(17, 56);
-            this.free_dataGridView.Name = "free_dataGridView";
-            this.free_dataGridView.ReadOnly = true;
-            this.free_dataGridView.Size = new System.Drawing.Size(618, 150);
-            this.free_dataGridView.TabIndex = 0;
             // 
             // delete_button
             // 
@@ -335,7 +375,116 @@
             this.delete_button.Size = new System.Drawing.Size(80, 23);
             this.delete_button.TabIndex = 40;
             this.delete_button.Text = "Удалить";
+            this.list_toolTip.SetToolTip(this.delete_button, "Удалить выбранную запись об освобождении от работы");
             this.delete_button.UseVisualStyleBackColor = true;
+            // 
+            // free_dataGridView
+            // 
+            this.free_dataGridView.AllowUserToAddRows = false;
+            this.free_dataGridView.AllowUserToDeleteRows = false;
+            this.free_dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.free_dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.idlist,
+            this.relative_code,
+            this.datefrom,
+            this.dateto,
+            this.idpatient,
+            this.patient,
+            this.iddoctor,
+            this.doct_name,
+            this.idhospital,
+            this.speciality});
+            this.free_dataGridView.Location = new System.Drawing.Point(17, 56);
+            this.free_dataGridView.Name = "free_dataGridView";
+            this.free_dataGridView.ReadOnly = true;
+            this.free_dataGridView.Size = new System.Drawing.Size(727, 150);
+            this.free_dataGridView.TabIndex = 0;
+            this.list_toolTip.SetToolTip(this.free_dataGridView, "Таблица с информацией об освобождении от работы");
+            // 
+            // idlist
+            // 
+            this.idlist.DataPropertyName = "idlist";
+            this.idlist.HeaderText = "ИД листка";
+            this.idlist.Name = "idlist";
+            this.idlist.ReadOnly = true;
+            this.idlist.Visible = false;
+            // 
+            // relative_code
+            // 
+            this.relative_code.DataPropertyName = "relative_code";
+            this.relative_code.HeaderText = "Родственная связь";
+            this.relative_code.Name = "relative_code";
+            this.relative_code.ReadOnly = true;
+            this.relative_code.Width = 80;
+            // 
+            // datefrom
+            // 
+            this.datefrom.DataPropertyName = "datefrom";
+            dataGridViewCellStyle11.Format = "d";
+            dataGridViewCellStyle11.NullValue = null;
+            this.datefrom.DefaultCellStyle = dataGridViewCellStyle11;
+            this.datefrom.HeaderText = "Начало";
+            this.datefrom.Name = "datefrom";
+            this.datefrom.ReadOnly = true;
+            this.datefrom.Width = 70;
+            // 
+            // dateto
+            // 
+            this.dateto.DataPropertyName = "dateto";
+            dataGridViewCellStyle12.Format = "d";
+            dataGridViewCellStyle12.NullValue = null;
+            this.dateto.DefaultCellStyle = dataGridViewCellStyle12;
+            this.dateto.HeaderText = "Окончание";
+            this.dateto.Name = "dateto";
+            this.dateto.ReadOnly = true;
+            this.dateto.Width = 70;
+            // 
+            // idpatient
+            // 
+            this.idpatient.DataPropertyName = "idpatient";
+            this.idpatient.HeaderText = "ИД пациента";
+            this.idpatient.Name = "idpatient";
+            this.idpatient.ReadOnly = true;
+            this.idpatient.Visible = false;
+            // 
+            // patient
+            // 
+            this.patient.DataPropertyName = "patient";
+            this.patient.HeaderText = "Пациент";
+            this.patient.Name = "patient";
+            this.patient.ReadOnly = true;
+            this.patient.Width = 150;
+            // 
+            // iddoctor
+            // 
+            this.iddoctor.DataPropertyName = "iddcotor";
+            this.iddoctor.HeaderText = "ИД врача";
+            this.iddoctor.Name = "iddoctor";
+            this.iddoctor.ReadOnly = true;
+            this.iddoctor.Visible = false;
+            // 
+            // doct_name
+            // 
+            this.doct_name.DataPropertyName = "doct_name";
+            this.doct_name.HeaderText = "Врач";
+            this.doct_name.Name = "doct_name";
+            this.doct_name.ReadOnly = true;
+            this.doct_name.Width = 150;
+            // 
+            // idhospital
+            // 
+            this.idhospital.DataPropertyName = "idhospital";
+            this.idhospital.HeaderText = "ИД лечебного учреждения";
+            this.idhospital.Name = "idhospital";
+            this.idhospital.ReadOnly = true;
+            this.idhospital.Visible = false;
+            // 
+            // speciality
+            // 
+            this.speciality.DataPropertyName = "speciality";
+            this.speciality.HeaderText = "Должность врача";
+            this.speciality.Name = "speciality";
+            this.speciality.ReadOnly = true;
             // 
             // edit_button
             // 
@@ -344,6 +493,7 @@
             this.edit_button.Size = new System.Drawing.Size(80, 23);
             this.edit_button.TabIndex = 39;
             this.edit_button.Text = "Изменить";
+            this.list_toolTip.SetToolTip(this.edit_button, "Изменить выбранную запись об освобождении от работы");
             this.edit_button.UseVisualStyleBackColor = true;
             // 
             // add_button
@@ -353,16 +503,8 @@
             this.add_button.Size = new System.Drawing.Size(80, 23);
             this.add_button.TabIndex = 38;
             this.add_button.Text = "Добавить";
+            this.list_toolTip.SetToolTip(this.add_button, "Добавить запись об освобождении от работы");
             this.add_button.UseVisualStyleBackColor = true;
-            // 
-            // welfare_textBox
-            // 
-            this.welfare_textBox.Location = new System.Drawing.Point(574, 215);
-            this.welfare_textBox.MaxLength = 3;
-            this.welfare_textBox.Name = "welfare_textBox";
-            this.welfare_textBox.Size = new System.Drawing.Size(82, 20);
-            this.welfare_textBox.TabIndex = 39;
-            this.list_toolTip.SetToolTip(this.welfare_textBox, "Страховой стаж, число лет");
             // 
             // label13
             // 
@@ -380,13 +522,18 @@
             this.calcwelfare_button.Size = new System.Drawing.Size(74, 20);
             this.calcwelfare_button.TabIndex = 40;
             this.calcwelfare_button.Text = "Рассчитать";
+            this.list_toolTip.SetToolTip(this.calcwelfare_button, "Рассчитать сумму пособия");
             this.calcwelfare_button.UseVisualStyleBackColor = true;
             // 
             // DisabilityListForm
             // 
+            this.AcceptButton = this.ok_button;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.cancel_button;
             this.ClientSize = new System.Drawing.Size(915, 585);
+            this.Controls.Add(this.viewDoc_button);
+            this.Controls.Add(this.loadDoc_button);
             this.Controls.Add(this.calcwelfare_button);
             this.Controls.Add(this.welfare_textBox);
             this.Controls.Add(this.label13);
@@ -404,7 +551,7 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.cancel_button);
             this.Controls.Add(this.ok_button);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.add_code_button);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.addcode_textBox);
             this.Controls.Add(this.code_button);
@@ -417,6 +564,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.deliveryDate_dateTimePicker);
             this.Controls.Add(this.label1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "DisabilityListForm";
             this.Text = "Листок нетрудоспособности";
             this.Load += new System.EventHandler(this.OnLoad);
@@ -440,7 +589,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button code_button;
         private System.Windows.Forms.ToolTip list_toolTip;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button add_code_button;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox addcode_textBox;
         private System.Windows.Forms.Button cancel_button;
@@ -464,5 +613,17 @@
         private System.Windows.Forms.TextBox welfare_textBox;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button calcwelfare_button;
+        private System.Windows.Forms.Button loadDoc_button;
+        private System.Windows.Forms.Button viewDoc_button;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idlist;
+        private System.Windows.Forms.DataGridViewTextBoxColumn relative_code;
+        private System.Windows.Forms.DataGridViewTextBoxColumn datefrom;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dateto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idpatient;
+        private System.Windows.Forms.DataGridViewTextBoxColumn patient;
+        private System.Windows.Forms.DataGridViewTextBoxColumn iddoctor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn doct_name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idhospital;
+        private System.Windows.Forms.DataGridViewTextBoxColumn speciality;
     }
 }

@@ -12,14 +12,17 @@ namespace DisabilityList
 {
     public partial class MainForm : Form
     {
+        string m_patientFilter;
         public MainForm()
         {
             InitializeComponent();
+            m_patientFilter = string.Empty;
         }
 
-        private void OnLoad(object sender, EventArgs e)
+        private async void OnLoad(object sender, EventArgs e)
         {
             Icon = Properties.Resources.illness32;
+            var lst = await Program.m_helper.GetDiasabilityListsForView();
         }
 
         private void справочникиToolStripMenuItem_Click(object sender, EventArgs e)
@@ -55,6 +58,19 @@ namespace DisabilityList
         {
             PatientForm frm = new PatientForm();
             frm.ShowDialog();
+        }
+        /// <summary>
+        /// Добавить листок нетрудоспособности
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void addList_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DisabilityListForm frm = new DisabilityListForm();
+            if(frm.ShowDialog() == DialogResult.OK)
+            {
+
+            }
         }
     }
 }

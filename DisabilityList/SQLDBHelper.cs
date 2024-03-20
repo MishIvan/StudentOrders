@@ -7,6 +7,7 @@ using Microsoft.Data.SqlClient;
 using Dapper;
 using System.Runtime.Versioning;
 using System.Windows.Forms;
+using System.Security.Permissions;
 
 namespace DisabilityList
 {
@@ -54,7 +55,82 @@ namespace DisabilityList
     {
         public DBHelper() : base() { }
 
+        /// <summary>
+        /// Получить список кодов причины нетрудоспособности
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public async Task<List<Code>> GetCodes(int type = 1)
+        {
+            List<Code> lst = null;
+            string tableName = string.Empty;
+            switch(type)
+            {
+                case 1:
+                    tableName = "dbo.BaseCodes"; break;
+                case 2:
+                    tableName = "dbo.AddCodes"; break;
+                case 3:
+                    tableName = "dbo.RelativeCodes"; break;
+                default:
+                    return lst;
 
+            }
+            string sqlText = $"select code, name from {tableName} order by code";
+            try
+            {
+                var t = await conn.QueryAsync<Code>(sqlText);
+                lst = t.ToList();
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return lst;
+
+        }
+        /// <summary>
+        /// Получить список листков нетрудоспособности
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<DisabilityListView>> GetDiasabilityListsForView()
+        {
+            List<DisabilityListView> lst = null;
+            string sqlText = "select id, delivery_date, date_from, date_to, patient, hospital from dbo.list_view order by delivery_date";
+            try
+            {
+                var t = await conn.QueryAsync<DisabilityListView>(sqlText);
+                lst = t.ToList();
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return lst;
+
+        }
+        /// <summary>
+        /// Получить список освобождений от работы для листка нетрудоспособности по его идентификатору
+        /// </summary>
+        /// <param name="idl">идентификатор листка для получения списка</param>
+        /// <returns></returns>
+        public async Task<List<FreeRecordView>> GetFreeFromWorkList(long idl) 
+        {
+            List <FreeRecordView> lst = null;
+            string sqlText = "select idlist, relative_code,datefrom, dateto, idpatient, patient, " +
+                "iddoctor, doctor, idhospital, speciality from dbo.free_list_view where idlist = @pid";
+            try
+            {
+                var t = await conn.QueryAsync<FreeRecordView>(sqlText, new {pid = idl});
+                lst = t.ToList();
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return lst;
+
+        }
         /// <summary>
         /// Выдать спиcок лечебных учреждений
         /// </summary>
@@ -162,11 +238,14 @@ namespace DisabilityList
         /// <summary>
         /// Получить список врачей
         /// </summary>
+        /// <param name="idhosp">Идентификатор лечебного учреждения для отбора врачей</param>
         /// <returns>список с данными врачей</returns>
-        public async Task<List<Doctor>> GetDoctors()
+        public async Task<List<Doctor>> GetDoctors(long idhosp = 0)
         {
             List<Doctor> lst = null;
-            string sqlText = "select id, name, idspeciality, idhospital from dbo.doctors order by name"; 
+            string sqlText = "select id, name, idspeciality, idhospital from dbo.doctors";
+            sqlText += idhosp <= 0 ? string.Empty : $" where idhospital = {idhosp}";
+            sqlText += " order by name";
             try
             {
                 var t = await conn.QueryAsync<Doctor>(sqlText);
@@ -179,6 +258,31 @@ namespace DisabilityList
             return lst;
 
         }
+
+        /// <summary>
+        /// Получить список врачей для отображения
+        /// </summary>
+        /// <param name="idhosp">Идентификатор лечебного учреждения для отбора врачей</param>
+        /// <returns>список с данными врачей</returns>
+        public async Task<List<DoctorView>> GetDoctorsForView(long idhosp = 0)
+        {
+            List<DoctorView> lst = null;
+            string sqlText = "select id, doct_name, idhospital, speciality from dbo.doctors_view";
+            sqlText += idhosp <= 0 ? string.Empty : $" where idhospital = {idhosp}";
+            sqlText += " order by doct_name";
+            try
+            {
+                var t = await conn.QueryAsync<DoctorView>(sqlText);
+                lst = t.ToList();
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return lst;
+
+        }
+
 
         /// <summary>
         /// Добавить запись о враче
@@ -328,6 +432,28 @@ namespace DisabilityList
             return recs;
 
         }
+
+        /// <summary>
+        /// Получить данные листка нетрудоспособности по идентификатору
+        /// </summary>
+        /// <param name="id">идентификатор в БД</param>
+        /// <returns>объект с данными</returns>
+        public DisabilityListWithContent GetDisalbilityListByID(long id)
+        {
+            DisabilityListWithContent dl = null;
+            string sqlText = "select id, name,delivery_date, reason_code, add_reason_code, idhospital, idpatient, " + 
+                "regnum, code_sub, time_service, salary, list_content, content_type from dbo.list_headers where id = @pid";
+                try
+                {
+                    dl = conn.QueryFirstOrDefault<DisabilityListWithContent>(sqlText, new { pid = id});
+                }
+                catch (Exception ex)
+                {
+                    _errorText = ex.Message;
+                }
+                return dl;
+        }
+
 
     }
 }
