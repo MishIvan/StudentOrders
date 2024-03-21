@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.main_menuStrip = new System.Windows.Forms.MenuStrip();
             this.lists_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addList_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,14 +50,22 @@
             this.patient = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.hospital = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.filter_groupBox = new System.Windows.Forms.GroupBox();
-            this.main_toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.label2 = new System.Windows.Forms.Label();
-            this.filterPatient_textBox = new System.Windows.Forms.TextBox();
+            this.filterReset_button = new System.Windows.Forms.Button();
             this.filterApply_button = new System.Windows.Forms.Button();
-            this.fiterReset_button = new System.Windows.Forms.Button();
+            this.filterPatient_textBox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.main_toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.showContent_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.main_contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addContext_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editContext_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteContext_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showContext_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.main_menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.list_dataGridView)).BeginInit();
             this.filter_groupBox.SuspendLayout();
+            this.main_contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // main_menuStrip
@@ -77,10 +85,12 @@
             this.lists_ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addList_ToolStripMenuItem,
             this.editList_ToolStripMenuItem,
-            this.deleteList_ToolStripMenuItem});
+            this.deleteList_ToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.showContent_ToolStripMenuItem});
             this.lists_ToolStripMenuItem.Name = "lists_ToolStripMenuItem";
-            this.lists_ToolStripMenuItem.Size = new System.Drawing.Size(177, 20);
-            this.lists_ToolStripMenuItem.Text = "Листок нетрудоспособности";
+            this.lists_ToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
+            this.lists_ToolStripMenuItem.Text = "Документ";
             // 
             // addList_ToolStripMenuItem
             // 
@@ -94,12 +104,14 @@
             this.editList_ToolStripMenuItem.Name = "editList_ToolStripMenuItem";
             this.editList_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.editList_ToolStripMenuItem.Text = "Изменить";
+            this.editList_ToolStripMenuItem.Click += new System.EventHandler(this.editList_ToolStripMenuItem_Click);
             // 
             // deleteList_ToolStripMenuItem
             // 
             this.deleteList_ToolStripMenuItem.Name = "deleteList_ToolStripMenuItem";
             this.deleteList_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.deleteList_ToolStripMenuItem.Text = "Удалить";
+            this.deleteList_ToolStripMenuItem.Click += new System.EventHandler(this.deleteList_ToolStripMenuItem_Click);
             // 
             // references_ToolStripMenuItem
             // 
@@ -151,6 +163,7 @@
             this.dateto,
             this.patient,
             this.hospital});
+            this.list_dataGridView.ContextMenuStrip = this.main_contextMenuStrip;
             this.list_dataGridView.Location = new System.Drawing.Point(13, 100);
             this.list_dataGridView.Name = "list_dataGridView";
             this.list_dataGridView.ReadOnly = true;
@@ -169,8 +182,8 @@
             // delivery_date
             // 
             this.delivery_date.DataPropertyName = "delivery_date";
-            dataGridViewCellStyle1.Format = "d";
-            this.delivery_date.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle10.Format = "d";
+            this.delivery_date.DefaultCellStyle = dataGridViewCellStyle10;
             this.delivery_date.HeaderText = "Дата выдачи";
             this.delivery_date.Name = "delivery_date";
             this.delivery_date.ReadOnly = true;
@@ -179,9 +192,9 @@
             // datefrom
             // 
             this.datefrom.DataPropertyName = "datefrom";
-            dataGridViewCellStyle2.Format = "d";
-            dataGridViewCellStyle2.NullValue = null;
-            this.datefrom.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle11.Format = "d";
+            dataGridViewCellStyle11.NullValue = null;
+            this.datefrom.DefaultCellStyle = dataGridViewCellStyle11;
             this.datefrom.HeaderText = "Начало";
             this.datefrom.Name = "datefrom";
             this.datefrom.ReadOnly = true;
@@ -190,8 +203,8 @@
             // dateto
             // 
             this.dateto.DataPropertyName = "dateto";
-            dataGridViewCellStyle3.Format = "d";
-            this.dateto.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle12.Format = "d";
+            this.dateto.DefaultCellStyle = dataGridViewCellStyle12;
             this.dateto.HeaderText = "Окончание";
             this.dateto.Name = "dateto";
             this.dateto.ReadOnly = true;
@@ -215,7 +228,7 @@
             // 
             // filter_groupBox
             // 
-            this.filter_groupBox.Controls.Add(this.fiterReset_button);
+            this.filter_groupBox.Controls.Add(this.filterReset_button);
             this.filter_groupBox.Controls.Add(this.filterApply_button);
             this.filter_groupBox.Controls.Add(this.filterPatient_textBox);
             this.filter_groupBox.Controls.Add(this.label2);
@@ -226,22 +239,14 @@
             this.filter_groupBox.TabStop = false;
             this.filter_groupBox.Text = "Фильтры";
             // 
-            // label2
+            // filterReset_button
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 20);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(58, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Работник:";
-            // 
-            // filterPatient_textBox
-            // 
-            this.filterPatient_textBox.Location = new System.Drawing.Point(78, 18);
-            this.filterPatient_textBox.Name = "filterPatient_textBox";
-            this.filterPatient_textBox.Size = new System.Drawing.Size(211, 20);
-            this.filterPatient_textBox.TabIndex = 3;
-            this.main_toolTip.SetToolTip(this.filterPatient_textBox, "Отбор записей по ргагменту в ФИО работника");
+            this.filterReset_button.Location = new System.Drawing.Point(399, 17);
+            this.filterReset_button.Name = "filterReset_button";
+            this.filterReset_button.Size = new System.Drawing.Size(75, 20);
+            this.filterReset_button.TabIndex = 5;
+            this.filterReset_button.Text = "Сбросить фильтр, показать все записи";
+            this.filterReset_button.UseVisualStyleBackColor = true;
             // 
             // filterApply_button
             // 
@@ -251,15 +256,74 @@
             this.filterApply_button.TabIndex = 4;
             this.filterApply_button.Text = "Применить";
             this.filterApply_button.UseVisualStyleBackColor = true;
+            this.filterApply_button.Click += new System.EventHandler(this.filterApply_button_Click);
             // 
-            // fiterReset_button
+            // filterPatient_textBox
             // 
-            this.fiterReset_button.Location = new System.Drawing.Point(399, 17);
-            this.fiterReset_button.Name = "fiterReset_button";
-            this.fiterReset_button.Size = new System.Drawing.Size(75, 20);
-            this.fiterReset_button.TabIndex = 5;
-            this.fiterReset_button.Text = "Сбросить фильтр, показать все записи";
-            this.fiterReset_button.UseVisualStyleBackColor = true;
+            this.filterPatient_textBox.Location = new System.Drawing.Point(78, 18);
+            this.filterPatient_textBox.Name = "filterPatient_textBox";
+            this.filterPatient_textBox.Size = new System.Drawing.Size(211, 20);
+            this.filterPatient_textBox.TabIndex = 3;
+            this.main_toolTip.SetToolTip(this.filterPatient_textBox, "Отбор записей по ргагменту в ФИО работника");
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(14, 20);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(58, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Работник:";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            // 
+            // showContent_ToolStripMenuItem
+            // 
+            this.showContent_ToolStripMenuItem.Name = "showContent_ToolStripMenuItem";
+            this.showContent_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.showContent_ToolStripMenuItem.Text = "Показать";
+            this.showContent_ToolStripMenuItem.Click += new System.EventHandler(this.showContent_ToolStripMenuItem_Click);
+            // 
+            // main_contextMenuStrip
+            // 
+            this.main_contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addContext_ToolStripMenuItem,
+            this.editContext_ToolStripMenuItem,
+            this.deleteContext_ToolStripMenuItem,
+            this.showContext_ToolStripMenuItem});
+            this.main_contextMenuStrip.Name = "main_contextMenuStrip";
+            this.main_contextMenuStrip.Size = new System.Drawing.Size(181, 114);
+            // 
+            // addContext_ToolStripMenuItem
+            // 
+            this.addContext_ToolStripMenuItem.Name = "addContext_ToolStripMenuItem";
+            this.addContext_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addContext_ToolStripMenuItem.Text = "Добавить";
+            this.addContext_ToolStripMenuItem.Click += new System.EventHandler(this.addList_ToolStripMenuItem_Click);
+            // 
+            // editContext_ToolStripMenuItem
+            // 
+            this.editContext_ToolStripMenuItem.Name = "editContext_ToolStripMenuItem";
+            this.editContext_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editContext_ToolStripMenuItem.Text = "Изменить";
+            this.editContext_ToolStripMenuItem.Click += new System.EventHandler(this.editList_ToolStripMenuItem_Click);
+            // 
+            // deleteContext_ToolStripMenuItem
+            // 
+            this.deleteContext_ToolStripMenuItem.Name = "deleteContext_ToolStripMenuItem";
+            this.deleteContext_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteContext_ToolStripMenuItem.Text = "Удалить";
+            this.deleteContext_ToolStripMenuItem.Click += new System.EventHandler(this.deleteList_ToolStripMenuItem_Click);
+            // 
+            // showContext_ToolStripMenuItem
+            // 
+            this.showContext_ToolStripMenuItem.Name = "showContext_ToolStripMenuItem";
+            this.showContext_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.showContext_ToolStripMenuItem.Text = "Показать документ";
+            this.showContext_ToolStripMenuItem.Click += new System.EventHandler(this.showContent_ToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -272,12 +336,14 @@
             this.MainMenuStrip = this.main_menuStrip;
             this.Name = "MainForm";
             this.Text = "Листки нетрудоспособности";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnClose);
             this.Load += new System.EventHandler(this.OnLoad);
             this.main_menuStrip.ResumeLayout(false);
             this.main_menuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.list_dataGridView)).EndInit();
             this.filter_groupBox.ResumeLayout(false);
             this.filter_groupBox.PerformLayout();
+            this.main_contextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -306,8 +372,15 @@
         private System.Windows.Forms.ToolTip main_toolTip;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox filterPatient_textBox;
-        private System.Windows.Forms.Button fiterReset_button;
+        private System.Windows.Forms.Button filterReset_button;
         private System.Windows.Forms.Button filterApply_button;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem showContent_ToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip main_contextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem addContext_ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editContext_ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteContext_ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showContext_ToolStripMenuItem;
     }
 }
 

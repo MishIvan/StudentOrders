@@ -64,13 +64,136 @@ namespace DisabilityList
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void addList_ToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void addList_ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DisabilityListForm frm = new DisabilityListForm();
             if(frm.ShowDialog() == DialogResult.OK)
             {
+                var lst = await Program.m_helper.GetDiasabilityListsForView();
+                if(!string.IsNullOrEmpty(m_patientFilter.Trim()))
+                    list_dataGridView.DataSource = lst.Where(el => el.patient.Contains(m_patientFilter)).ToList();
+            }
+        }
+
+        /// <summary>
+        /// Главная форма закрыта, закрыть соединение и удалить временные файлы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClose(object sender, FormClosedEventArgs e)
+        {
+            Program.m_helper.Dispose();
+            foreach (string fname in Program.m_tmpFiles)
+            {
+                try
+                {
+                    System.IO.File.Delete(fname);
+                }
+                catch (Exception) { }
+            }
+            Program.m_tmpFiles.Clear();
+        }
+
+        private async void editList_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var row = list_dataGridView.CurrentRow;
+            if(row == null ) return;
+            long id = Convert.ToInt64(row.Cells["id"].Value);
+            DisabilityListForm frm = new DisabilityListForm(id);
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                var lst = await Program.m_helper.GetDiasabilityListsForView();
+                if (!string.IsNullOrEmpty(m_patientFilter.Trim()))
+                    list_dataGridView.DataSource = lst.Where(el => el.patient.Contains(m_patientFilter)).ToList();
+            }
+
+        }
+
+        /// <summary>
+        /// Удалить запись
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void deleteList_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var row = list_dataGridView.CurrentRow;
+            if (row == null) return;
+            long id = Convert.ToInt64(row.Cells["id"].Value);
+            int recs = Program.m_helper.DeleteDisabilityList(id);
+            if (recs > 0)
+            {
+                var lst = await Program.m_helper.GetDiasabilityListsForView();
+                if (!string.IsNullOrEmpty(m_patientFilter.Trim()))
+                    list_dataGridView.DataSource = lst.Where(el => el.patient.Contains(m_patientFilter)).ToList();
 
             }
+            else
+                Program.DBErrorMessage();
+        }
+
+        /// <summary>
+        /// Применить фильтр по работникам на виде отображения списка листков нетрудоспособности
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void filterApply_button_Click(object sender, EventArgs e)
+        {
+            if(sender == filterApply_button)
+            {
+                m_patientFilter = filterPatient_textBox.Text;
+            }
+            else if(sender == filterReset_button)
+            {
+                filterPatient_textBox.Text = string.Empty;
+                m_patientFilter = string.Empty;
+            }
+            var lst = await Program.m_helper.GetDiasabilityListsForView();
+            if (!string.IsNullOrEmpty(m_patientFilter.Trim()))
+                list_dataGridView.DataSource = lst.Where(el => el.patient.Contains(m_patientFilter)).ToList();
+
+        }
+
+        /// <summary>
+        /// Показать содержимое листка нетрудоспособности
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void showContent_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var row = list_dataGridView.CurrentRow;
+            if (row == null) return;
+            long id = Convert.ToInt64(row.Cells["id"].Value);
+
+            DisabilityListWithContent m_dlist = Program.m_helper.GetDisalbilityListByID(id);
+            if (m_dlist == null) return;    
+
+            string tmpPath = System.IO.Path.GetTempPath();
+            DateTime now = DateTime.Now;
+            string fileName = "DisabilityList_" + now.ToString("yyyyMMddHHmmss");
+
+            if (m_dlist.list_content != null)
+            {
+                if (m_dlist.list_content.Length < 2 && m_dlist.list_content[0] == 0)
+                {
+                    MessageBox.Show("Отсутсвует содержимое листка нетрудоспособности");
+                }
+                fileName = tmpPath + fileName + (string.IsNullOrEmpty(m_dlist.content_type) ? string.Empty : "." + m_dlist.content_type);
+                await Task.Run(() => { System.IO.File.WriteAllBytes(fileName, m_dlist.list_content); });
+
+                Program.m_tmpFiles.Add(fileName);
+                try
+                {
+                    System.Diagnostics.Process.Start(fileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Ошибка показа содержимого листка нетрудоспособности");
+                }
+
+            }
+            else
+                MessageBox.Show("Не найден документ листка нетрудоспособности");
+
         }
     }
 }

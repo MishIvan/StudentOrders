@@ -52,6 +52,9 @@ namespace DisabilityList
         public string snils { get; set; }
         public string passport { get; set; }
     }
+    /// <summary>
+    /// Запись о листке освобождения в таблице
+    /// </summary>
     public class DisabilityList
     {
         public long id { get; set; }
@@ -70,6 +73,16 @@ namespace DisabilityList
         public byte[] list_content { get; set; }
         public string content_type { get; set; }
     }
+
+    public class Content
+    {
+        public byte[] list_content { get; set; }
+        public string content_type { get; set; }
+    }
+
+    /// <summary>
+    /// Запись о листке нетрудоспособности на виде отображения
+    /// </summary>
     public class DisabilityListView
     {
         public long id { get; set; }
@@ -80,6 +93,10 @@ namespace DisabilityList
         public string hospital { get; set; }
 
     }
+
+    /// <summary>
+    /// Запись об освободжении от работы в таблице
+    /// </summary>
     public class FreeRecord
     {
         public long idlist { get; set; }
@@ -89,6 +106,10 @@ namespace DisabilityList
         public DateTime dateto { get; set; }
         public long iddoctor { get; set; }
     }
+
+    /// <summary>
+    /// Запись об освобождении от работы на виде отображения
+    /// </summary>
     public class FreeRecordView : FreeRecord 
     { 
         public string patient { get; set; }

@@ -9,6 +9,7 @@ namespace DisabilityList
     internal static class Program
     {
         public static DBHelper m_helper;
+        public static List<string> m_tmpFiles; // список временных файлов, которые по завершению следует удалить
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
@@ -18,6 +19,8 @@ namespace DisabilityList
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             m_helper = new DBHelper();
+            m_tmpFiles = new List<string>();
+
             if (!m_helper.isOpened)
             {
                 ShowErrorMessage("Не удалось соединиться с базой данных");

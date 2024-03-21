@@ -8,6 +8,8 @@ using Dapper;
 using System.Runtime.Versioning;
 using System.Windows.Forms;
 using System.Security.Permissions;
+using System.Collections;
+using System.Xml.Linq;
 
 namespace DisabilityList
 {
@@ -131,6 +133,146 @@ namespace DisabilityList
             return lst;
 
         }
+
+        /// <summary>
+        /// Добавить запись о листке нетрудоспособности
+        /// </summary>
+        /// <param name="dlist">объект с данными листка нетрудоспособности</param>
+        /// <param name="frl">таблица с записями об освобождении от работы</param>
+        /// <returns></returns>
+        public int AddDisabilityList(DisabilityListWithContent dlist, List<FreeRecordView> frl)
+        {
+            int nrec = 0;
+            try
+            {
+                string ddt = dlist.delivery_date.ToString("yyyyMMdd");
+                string sqlText = "insert into dbo.list_headers (delivery_date, reason_code, add_reason_code,idhospital, idpatient, regnum, code_sub,"+
+                    "time_service, salary, list_content,  content_type) "
+                    +$"values('{ddt}', @pcode, @paddcode, @pidhospital, @pidpatient, @pregnum, @pcs, @pts, @ps, @plc, @pct)";
+                conn.Execute("set identity_insert dbo.free_list on");
+                using (var tran = conn.BeginTransaction())
+                {
+                    nrec = conn.Execute(sqlText, transaction: tran, 
+                        param: new { pcode = dlist.reason_code, paddcode = dlist.add_reason_code, 
+                            pidhospital = dlist.idhospital, pidpatient = dlist.idpatient, 
+                            pregnum = dlist.regnum, pcs = dlist.code_sub, 
+                            pts = dlist.time_service, ps = dlist.salary, 
+                            plc = dlist.list_content, pct = dlist.content_type });
+                    if (nrec > 0)
+                    {
+                        long idlist = conn.QueryFirstOrDefault<long>("select ident_current('dbo.list_headers')", transaction: tran);
+                        foreach (var el in frl)
+                        {
+                            string dd1 = el.datefrom.ToString("yyyyMMdd");
+                            string dd2 = el.dateto.ToString("yyyyMMdd");
+                            sqlText = $"insert into dbo.free_list (idlist, relative_code, idpatient, datefrom, dateto , iddoctor) "+
+                                $" values (@pidlist, @prc, @pidpatient,'{dd1}', '{dd2}', @piddoctor)";
+                            nrec = conn.Execute(sqlText, transaction: tran,
+                                param: new { pidlist = idlist, prc = el.relative_code, 
+                                    pidpatient = el.idpatient, piddoctor =el.iddoctor  });
+
+                        }
+                        tran.Commit();
+                    }
+                    else
+                        tran.Rollback();
+                }
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+                nrec = 0;
+            }
+            return nrec;
+        }
+
+        /// <summary>
+        /// Изменить данные записи о листке нетрудоспособности
+        /// </summary>
+        /// <param name="dlist">объект с данными листка нетрудоспособности</param>
+        /// <param name="frl">таблица с записями об освобождении от работы</param>
+        /// <returns></returns>
+        public int UpdateDisabilityList(DisabilityListWithContent dlist, List<FreeRecordView> frl)
+        {
+            int nrec = 0;
+            try
+            {
+                string ddt = dlist.delivery_date.ToString("yyyyMMdd");
+                string sqlText = $"update dbo.list_headers set delivery_date = '{ddt}', reason_code = @pcode, add_reason_code = @paddcode, " +
+                    "idhospital = @pidhospital, idpatient = @pidpatient, regnum = @pregnum, code_sub = @pcs, " +
+                    "time_service = @pts, salary = @ps, list_content = @plc,  content_type = @pct) where id = @pid";
+                conn.Execute("set identity_insert dbo.free_list on");
+                using (var tran = conn.BeginTransaction())
+                {
+                    nrec = conn.Execute(sqlText, transaction: tran,
+                        param: new
+                        {
+                            pid = dlist.id,
+                            pcode = dlist.reason_code,
+                            paddcode = dlist.add_reason_code,
+                            pidhospital = dlist.idhospital,
+                            pidpatient = dlist.idpatient,
+                            pregnum = dlist.regnum,
+                            pcs = dlist.code_sub,
+                            pts = dlist.time_service,
+                            ps = dlist.salary,
+                            plc = dlist.list_content,
+                            pct = dlist.content_type
+                        });
+                    if (nrec > 0)
+                    {
+
+                        nrec = conn.Execute($"delete from dbo.free_list where idlist = {dlist.id}", transaction: tran);
+                        foreach (var el in frl)
+                        {
+                            string dd1 = el.datefrom.ToString("yyyyMMdd");
+                            string dd2 = el.dateto.ToString("yyyyMMdd");
+                            sqlText = $"insert into dbo.free_list (idlist, relative_code, idpatient, datefrom, dateto , iddoctor) " +
+                                $" values (@pidlist, @prc, @pidpatient,'{dd1}', '{dd2}', @piddoctor)";
+                            nrec = conn.Execute(sqlText, transaction: tran,
+                                param: new
+                                {
+                                    pidlist = el.idlist,
+                                    prc = el.relative_code,
+                                    pidpatient = el.idpatient,
+                                    piddoctor = el.iddoctor
+                                });
+
+                        }
+                        tran.Commit();
+                    }
+                    else
+                        tran.Rollback();
+                }
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+                nrec = 0;
+            }
+            return nrec;
+        }
+
+        /// <summary>
+        /// Удалить данные о листке нетрудоспособности
+        /// </summary>
+        /// <param name="id">идентификатор листка нетрудоспособности</param>
+        /// <returns></returns>
+        public int DeleteDisabilityList(long id)
+        {
+            int recs = 0;
+            string sqlText = "delete from dbo.list_headers where id  = @pid";
+            try
+            {
+                recs = conn.Execute(sqlText, new { pid = id });
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return recs;
+
+        }
         /// <summary>
         /// Выдать спиcок лечебных учреждений
         /// </summary>
@@ -210,7 +352,6 @@ namespace DisabilityList
                 _errorText = ex.Message;
             }
             return recs;
-
         }
 
         /// <summary>

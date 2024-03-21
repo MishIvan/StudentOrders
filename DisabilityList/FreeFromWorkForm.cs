@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,34 +13,48 @@ namespace DisabilityList
 {
     public partial class FreeFromWorkForm : Form
     {
-        long m_idhospital;
-        long m_idpatient;
-        long m_idlist;
         FreeRecordView m_recordview;
         public FreeRecordView recordView { get { return m_recordview; } }
 
-        public FreeFromWorkForm(long idhospital, long idpatient, long idlist = 0)
+        public FreeFromWorkForm(FreeRecordView rv)
         {
             InitializeComponent();
-            m_idhospital = idhospital;
-            m_idpatient = idpatient;
-            m_idlist = idlist;
-            m_recordview = new FreeRecordView();
+            m_recordview = rv;
         }
 
         private async void OnLoad(object sender, EventArgs e)
         {
             Icon = Properties.Resources.illness32;
 
+            long id = m_recordview.iddoctor;
+            var lstd = await Program.m_helper.GetDoctorsForView(m_recordview.idhospital > 0 ? m_recordview.idhospital : 0);
+            doctor_comboBox.DataSource = lstd;
+            int idx = GetIndexByID(doctor_comboBox, id);
+            if(idx >= 0)
+                doctor_comboBox.SelectedIndex = idx;
+            else
+            {
+                if (!lstd.IsNullOrEmpty())
+                    doctor_comboBox.SelectedIndex = 0;
+            }
+
+
+            id = m_recordview.idpatient;
             var lstp = await Program.m_helper.GetPatients();
             patient_comboBox.DataSource = lstp;
-
-            var lstd = await Program.m_helper.GetDoctorsForView(m_idhospital > 0 ? m_idhospital : 0);
-            doctor_comboBox.DataSource = lstd;
-
-            int idx =  GetIndexByID(patient_comboBox, m_idpatient);
+            idx =  GetIndexByID(patient_comboBox, id);
             if(idx >=0)
                 patient_comboBox.SelectedIndex = idx;
+            else
+            {
+                if(!lstp.IsNullOrEmpty())
+                    patient_comboBox.SelectedIndex = 0;
+            }
+
+            relativeCode_textBox.Text = m_recordview.relative_code;
+
+            from_dateTimePicker.Value = m_recordview.datefrom;
+            to_dateTimePicker.Value=m_recordview.dateto;
         }
 
         /// <summary>
@@ -62,7 +77,19 @@ namespace DisabilityList
                     idx++;
                 }
             }
-            return idx;
+            else if (cmb == doctor_comboBox)
+            {
+                foreach (var el in doctor_comboBox.Items)
+                {
+                    DoctorView doct = el as DoctorView;
+                    if (doct != null)
+                    {
+                        if (doct.id == id) return ++idx;
+                    }
+                    idx++;
+                }
+            }
+            return -1;
         }
 
         private void OnPatientChanged(object sender, EventArgs e)
@@ -87,6 +114,7 @@ namespace DisabilityList
             if(codeform.ShowDialog() == DialogResult.OK)
             {
                 m_recordview.relative_code = codeform.code == "00" ? string.Empty : codeform.code;
+                relativeCode_textBox.Text = m_recordview.relative_code;
             }
         }
 
@@ -105,10 +133,16 @@ namespace DisabilityList
 
         private void ok_button_Click(object sender, EventArgs e)
         {
-            m_recordview.idlist = m_idlist;
             m_recordview.datefrom = from_dateTimePicker.Value;
             m_recordview.dateto = to_dateTimePicker.Value;
-            m_recordview.idhospital = m_idhospital;
+            m_recordview.relative_code = relativeCode_textBox.Text;
+
+            if(m_recordview.datefrom > m_recordview.dateto)
+            {
+                Program.ShowErrorMessage("Начало периода освобождения от работы не может быть позже окончания периода");
+                DialogResult = DialogResult.Cancel;
+                return;
+            }
 
             DialogResult = DialogResult.OK;
         }
