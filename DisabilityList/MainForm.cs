@@ -206,5 +206,15 @@ namespace DisabilityList
                 MessageBox.Show("Не найден документ листка нетрудоспособности");
 
         }
+        /// <summary>
+        /// Выдача отчётной формы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void info_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReportForm reportForm = new ReportForm();
+            reportForm.ShowDialog();
+        }
     }
 }

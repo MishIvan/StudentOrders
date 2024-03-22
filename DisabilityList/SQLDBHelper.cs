@@ -92,7 +92,7 @@ namespace DisabilityList
 
         }
         /// <summary>
-        /// Получить список листков нетрудоспособности
+        /// Получить список листков нетрудоспособности для отображения на главной форме
         /// </summary>
         /// <returns></returns>
         public async Task<List<DisabilityListView>> GetDiasabilityListsForView()
@@ -102,6 +102,27 @@ namespace DisabilityList
             try
             {
                 var t = await conn.QueryAsync<DisabilityListView>(sqlText);
+                lst = t.ToList();
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+            }
+            return lst;
+
+        }
+        /// <summary>
+        /// Получить список листков нетрудоспособности для отображения на отчётной форме
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<DisabilityListViewReport>> GetDisabilityListReport()
+        {
+            List<DisabilityListViewReport> lst = null;
+            string sqlText = "select id, delivery_date, reason_code, add_reason_code, datefrom, dateto,"+
+                "regnum, code_sub, patientid, patient, birth_date,inn, snils, passport, hospid, hospital, govregnum from dbo.report_view order by delivery_date";
+            try
+            {
+                var t = await conn.QueryAsync<DisabilityListViewReport>(sqlText);
                 lst = t.ToList();
             }
             catch (Exception ex)

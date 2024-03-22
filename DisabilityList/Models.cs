@@ -81,7 +81,7 @@ namespace DisabilityList
     }
 
     /// <summary>
-    /// Запись о листке нетрудоспособности на виде отображения
+    /// Запись о листке нетрудоспособности на главной форме
     /// </summary>
     public class DisabilityListView
     {
@@ -94,6 +94,21 @@ namespace DisabilityList
         public string patient { get; set; }
         public string hospital { get; set; }
 
+    }
+    /// <summary>
+    /// Запись о листке нетрудоспособности на отчётной форме
+    /// </summary>
+    public class DisabilityListViewReport : DisabilityListView
+    {
+      public string regnum {  set; get; }
+      public string code_sub { get; set; }
+      public long patientid { get; set; }
+      public DateTime birth_date { get; set; }
+      public string inn { get; set; }
+      public string snils { get; set; }
+      public string passport { get; set; }
+      public long hospid { get; set; }
+      public string govregnum { get; set; }
     }
 
     /// <summary>
