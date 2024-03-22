@@ -138,7 +138,7 @@ namespace DisabilityList
             int idx = hospital_comboBox.SelectedIndex;
             if (idx < 0) return;
             Hospital hosp = hospital_comboBox.Items[idx] as Hospital;
-            if (hosp != null) 
+            if (hosp != null && m_dlist != null) 
             { 
                 m_dlist.idhospital = hosp.id;   
             }
@@ -154,7 +154,7 @@ namespace DisabilityList
             int idx = patient_comboBox.SelectedIndex;
             if (idx < 0) return;
             Patient p = patient_comboBox.Items[idx] as Patient;
-            if (p != null)
+            if (p != null && m_dlist != null)
             {
                 m_dlist.idpatient = p.id;
             }
@@ -319,7 +319,7 @@ namespace DisabilityList
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.InitialDirectory = Environment.CurrentDirectory;
-                openFileDialog.Filter = "Документы Word|*.docx;*.doc|*.doc|Файлы PDF|*.pdf|" +
+                openFileDialog.Filter = "Файлы PDF|*.pdf|" +
                     "Сканы документов|*.jpeg;*.jpg;*.png;*.gif;*.tif;*.tiff|Все файлы|*.*";
                 openFileDialog.FilterIndex = 3;
                 openFileDialog.RestoreDirectory = true;
@@ -380,8 +380,15 @@ namespace DisabilityList
         private void ok_button_Click(object sender, EventArgs e)
         {
             m_dlist.delivery_date = deliveryDate_dateTimePicker.Value;
+          
+            if (m_fwlist.IsNullOrEmpty())
+            {
+                Program.ShowErrorMessage("Не заполнен список освобождений от работы");
+                DialogResult = DialogResult.Cancel;
+                return;
+            }
 
-            string rc = code_button.Text;
+            string rc = code_textBox.Text;
             if (string.IsNullOrEmpty(rc) || rc.Length < 2)
             {
                 Program.ShowErrorMessage("Не задан код причины нетрудоспособности");
@@ -401,7 +408,7 @@ namespace DisabilityList
             m_dlist.regnum = rn;
 
             string csub = submitCode_maskedTextBox.Text;
-            if (string.IsNullOrEmpty(csub) || csub.Length < 10)
+            if (string.IsNullOrEmpty(csub) || csub.Length < 5)
             {
                 Program.ShowErrorMessage("Не задан код подчинённости или задан неверно");
                 DialogResult = DialogResult.Cancel;
@@ -433,6 +440,7 @@ namespace DisabilityList
                 DialogResult = DialogResult.Cancel;
                 return;
             }
+            m_dlist.salary = salary;
 
             var lst = m_fwlist.ToList();
             int nrec = m_id > 0 ? Program.m_helper.UpdateDisabilityList(m_dlist, lst) : 
@@ -457,6 +465,51 @@ namespace DisabilityList
         private void cancel_button_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
+        }
+
+        private void calcwelfare_button_Click(object sender, EventArgs e)
+        {
+            DateTime deliveryDate = deliveryDate_dateTimePicker.Value;
+            if (m_fwlist.IsNullOrEmpty())
+            {
+                Program.ShowErrorMessage("Не заполнен список освобождений от работы");
+                return;
+            }
+            DateTime minDate = m_fwlist.Min(d => d.datefrom);
+            DateTime maxDate = m_fwlist.Max(d => d.dateto); 
+            //foreach (var fw in m_fwlist) 
+            //{ 
+            //    if(fw.datefrom < minDate) { minDate = fw.datefrom;}
+            //    if(fw.dateto > maxDate) {  maxDate = fw.dateto;}
+            //}
+
+            double tserv = 0.0;
+            try
+            {
+                tserv = ConvertToDoubleYears(Convert.ToInt32(yearService_textBox.Text), Convert.ToInt32(monthService_textBox.Text));
+            }
+            catch (Exception)
+            {
+                Program.ShowErrorMessage("Неверно задан стаж");
+                DialogResult = DialogResult.Cancel;
+                return;
+            }
+
+            double salary = 0.0;
+            try
+            {
+                salary = Convert.ToDouble(salary_textBox.Text);
+            }
+            catch (Exception)
+            {
+                Program.ShowErrorMessage("Неверно задан средний заработок для исчисления пособия");
+                DialogResult = DialogResult.Cancel;
+                return;
+            }
+
+            double wfpay = Program.CalculateWelfare(deliveryDate, minDate, maxDate, salary, tserv);
+            welfare_textBox.Text = wfpay.ToString();
+
         }
     }
 }

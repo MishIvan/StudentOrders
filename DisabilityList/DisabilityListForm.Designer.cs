@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.deliveryDate_dateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
@@ -53,6 +53,16 @@
             this.submitCode_maskedTextBox = new System.Windows.Forms.MaskedTextBox();
             this.delete_button = new System.Windows.Forms.Button();
             this.free_dataGridView = new System.Windows.Forms.DataGridView();
+            this.idlist = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.relative_code = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.datefrom = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dateto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idpatient = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.patient = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.iddoctor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.doct_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idhospital = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.speciality = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.edit_button = new System.Windows.Forms.Button();
             this.add_button = new System.Windows.Forms.Button();
             this.calcwelfare_button = new System.Windows.Forms.Button();
@@ -68,16 +78,6 @@
             this.label12 = new System.Windows.Forms.Label();
             this.free_groupBox = new System.Windows.Forms.GroupBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.idlist = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.relative_code = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.datefrom = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dateto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idpatient = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.patient = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.iddoctor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.doct_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idhospital = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.speciality = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.free_dataGridView)).BeginInit();
             this.free_groupBox.SuspendLayout();
             this.SuspendLayout();
@@ -209,7 +209,7 @@
             // salary_textBox
             // 
             this.salary_textBox.Location = new System.Drawing.Point(380, 215);
-            this.salary_textBox.MaxLength = 3;
+            this.salary_textBox.MaxLength = 15;
             this.salary_textBox.Name = "salary_textBox";
             this.salary_textBox.Size = new System.Drawing.Size(82, 20);
             this.salary_textBox.TabIndex = 36;
@@ -218,8 +218,9 @@
             // welfare_textBox
             // 
             this.welfare_textBox.Location = new System.Drawing.Point(574, 215);
-            this.welfare_textBox.MaxLength = 3;
+            this.welfare_textBox.MaxLength = 15;
             this.welfare_textBox.Name = "welfare_textBox";
+            this.welfare_textBox.ReadOnly = true;
             this.welfare_textBox.Size = new System.Drawing.Size(82, 20);
             this.welfare_textBox.TabIndex = 39;
             this.list_toolTip.SetToolTip(this.welfare_textBox, "Страховой стаж, число лет");
@@ -299,6 +300,91 @@
             this.free_dataGridView.TabIndex = 0;
             this.list_toolTip.SetToolTip(this.free_dataGridView, "Таблица с информацией об освобождении от работы");
             // 
+            // idlist
+            // 
+            this.idlist.DataPropertyName = "idlist";
+            this.idlist.HeaderText = "ИД листка";
+            this.idlist.Name = "idlist";
+            this.idlist.ReadOnly = true;
+            this.idlist.Visible = false;
+            // 
+            // relative_code
+            // 
+            this.relative_code.DataPropertyName = "relative_code";
+            this.relative_code.HeaderText = "Родственная связь";
+            this.relative_code.Name = "relative_code";
+            this.relative_code.ReadOnly = true;
+            this.relative_code.Width = 80;
+            // 
+            // datefrom
+            // 
+            this.datefrom.DataPropertyName = "datefrom";
+            dataGridViewCellStyle5.Format = "d";
+            dataGridViewCellStyle5.NullValue = null;
+            this.datefrom.DefaultCellStyle = dataGridViewCellStyle5;
+            this.datefrom.HeaderText = "Начало";
+            this.datefrom.Name = "datefrom";
+            this.datefrom.ReadOnly = true;
+            this.datefrom.Width = 70;
+            // 
+            // dateto
+            // 
+            this.dateto.DataPropertyName = "dateto";
+            dataGridViewCellStyle6.Format = "d";
+            dataGridViewCellStyle6.NullValue = null;
+            this.dateto.DefaultCellStyle = dataGridViewCellStyle6;
+            this.dateto.HeaderText = "Окончание";
+            this.dateto.Name = "dateto";
+            this.dateto.ReadOnly = true;
+            this.dateto.Width = 70;
+            // 
+            // idpatient
+            // 
+            this.idpatient.DataPropertyName = "idpatient";
+            this.idpatient.HeaderText = "ИД пациента";
+            this.idpatient.Name = "idpatient";
+            this.idpatient.ReadOnly = true;
+            this.idpatient.Visible = false;
+            // 
+            // patient
+            // 
+            this.patient.DataPropertyName = "patient";
+            this.patient.HeaderText = "Пациент";
+            this.patient.Name = "patient";
+            this.patient.ReadOnly = true;
+            this.patient.Width = 180;
+            // 
+            // iddoctor
+            // 
+            this.iddoctor.DataPropertyName = "iddoctor";
+            this.iddoctor.HeaderText = "ИД врача";
+            this.iddoctor.Name = "iddoctor";
+            this.iddoctor.ReadOnly = true;
+            this.iddoctor.Visible = false;
+            // 
+            // doct_name
+            // 
+            this.doct_name.DataPropertyName = "doct_name";
+            this.doct_name.HeaderText = "Врач";
+            this.doct_name.Name = "doct_name";
+            this.doct_name.ReadOnly = true;
+            this.doct_name.Width = 180;
+            // 
+            // idhospital
+            // 
+            this.idhospital.DataPropertyName = "idhospital";
+            this.idhospital.HeaderText = "ИД лечебного учреждения";
+            this.idhospital.Name = "idhospital";
+            this.idhospital.ReadOnly = true;
+            this.idhospital.Visible = false;
+            // 
+            // speciality
+            // 
+            this.speciality.DataPropertyName = "speciality";
+            this.speciality.HeaderText = "Должность врача";
+            this.speciality.Name = "speciality";
+            this.speciality.ReadOnly = true;
+            // 
             // edit_button
             // 
             this.edit_button.Location = new System.Drawing.Point(132, 21);
@@ -330,6 +416,7 @@
             this.calcwelfare_button.Text = "Рассчитать";
             this.list_toolTip.SetToolTip(this.calcwelfare_button, "Рассчитать сумму пособия");
             this.calcwelfare_button.UseVisualStyleBackColor = true;
+            this.calcwelfare_button.Click += new System.EventHandler(this.calcwelfare_button_Click);
             // 
             // add_code_button
             // 
@@ -447,91 +534,6 @@
             this.label13.Size = new System.Drawing.Size(89, 13);
             this.label13.TabIndex = 38;
             this.label13.Text = "Сумма пособия:";
-            // 
-            // idlist
-            // 
-            this.idlist.DataPropertyName = "idlist";
-            this.idlist.HeaderText = "ИД листка";
-            this.idlist.Name = "idlist";
-            this.idlist.ReadOnly = true;
-            this.idlist.Visible = false;
-            // 
-            // relative_code
-            // 
-            this.relative_code.DataPropertyName = "relative_code";
-            this.relative_code.HeaderText = "Родственная связь";
-            this.relative_code.Name = "relative_code";
-            this.relative_code.ReadOnly = true;
-            this.relative_code.Width = 80;
-            // 
-            // datefrom
-            // 
-            this.datefrom.DataPropertyName = "datefrom";
-            dataGridViewCellStyle1.Format = "d";
-            dataGridViewCellStyle1.NullValue = null;
-            this.datefrom.DefaultCellStyle = dataGridViewCellStyle1;
-            this.datefrom.HeaderText = "Начало";
-            this.datefrom.Name = "datefrom";
-            this.datefrom.ReadOnly = true;
-            this.datefrom.Width = 70;
-            // 
-            // dateto
-            // 
-            this.dateto.DataPropertyName = "dateto";
-            dataGridViewCellStyle2.Format = "d";
-            dataGridViewCellStyle2.NullValue = null;
-            this.dateto.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dateto.HeaderText = "Окончание";
-            this.dateto.Name = "dateto";
-            this.dateto.ReadOnly = true;
-            this.dateto.Width = 70;
-            // 
-            // idpatient
-            // 
-            this.idpatient.DataPropertyName = "idpatient";
-            this.idpatient.HeaderText = "ИД пациента";
-            this.idpatient.Name = "idpatient";
-            this.idpatient.ReadOnly = true;
-            this.idpatient.Visible = false;
-            // 
-            // patient
-            // 
-            this.patient.DataPropertyName = "patient";
-            this.patient.HeaderText = "Пациент";
-            this.patient.Name = "patient";
-            this.patient.ReadOnly = true;
-            this.patient.Width = 180;
-            // 
-            // iddoctor
-            // 
-            this.iddoctor.DataPropertyName = "iddoctor";
-            this.iddoctor.HeaderText = "ИД врача";
-            this.iddoctor.Name = "iddoctor";
-            this.iddoctor.ReadOnly = true;
-            this.iddoctor.Visible = false;
-            // 
-            // doct_name
-            // 
-            this.doct_name.DataPropertyName = "doct_name";
-            this.doct_name.HeaderText = "Врач";
-            this.doct_name.Name = "doct_name";
-            this.doct_name.ReadOnly = true;
-            this.doct_name.Width = 180;
-            // 
-            // idhospital
-            // 
-            this.idhospital.DataPropertyName = "idhospital";
-            this.idhospital.HeaderText = "ИД лечебного учреждения";
-            this.idhospital.Name = "idhospital";
-            this.idhospital.ReadOnly = true;
-            this.idhospital.Visible = false;
-            // 
-            // speciality
-            // 
-            this.speciality.DataPropertyName = "speciality";
-            this.speciality.HeaderText = "Должность врача";
-            this.speciality.Name = "speciality";
-            this.speciality.ReadOnly = true;
             // 
             // DisabilityListForm
             // 

@@ -42,7 +42,7 @@ namespace DisabilityList
         public string speciality { get; set; }  
         public override string ToString()
         {
-            return doct_name;
+            return $"{doct_name}, {speciality}";
         }
     }
     public class Patient : Simple
@@ -86,6 +86,8 @@ namespace DisabilityList
     public class DisabilityListView
     {
         public long id { get; set; }
+        public string reason_code { get; set; }
+        public string add_reason_code { get; set; }
         public DateTime delivery_date { get; set; } 
         public DateTime datefrom { get; set; }
         public DateTime dateto { get; set; }

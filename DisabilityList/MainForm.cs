@@ -23,6 +23,8 @@ namespace DisabilityList
         {
             Icon = Properties.Resources.illness32;
             var lst = await Program.m_helper.GetDiasabilityListsForView();
+            list_dataGridView.DataSource = lst;
+
         }
 
         private void справочникиToolStripMenuItem_Click(object sender, EventArgs e)
@@ -72,6 +74,8 @@ namespace DisabilityList
                 var lst = await Program.m_helper.GetDiasabilityListsForView();
                 if(!string.IsNullOrEmpty(m_patientFilter.Trim()))
                     list_dataGridView.DataSource = lst.Where(el => el.patient.Contains(m_patientFilter)).ToList();
+                else
+                    list_dataGridView.DataSource = lst;
             }
         }
 
@@ -105,6 +109,8 @@ namespace DisabilityList
                 var lst = await Program.m_helper.GetDiasabilityListsForView();
                 if (!string.IsNullOrEmpty(m_patientFilter.Trim()))
                     list_dataGridView.DataSource = lst.Where(el => el.patient.Contains(m_patientFilter)).ToList();
+                else
+                    list_dataGridView.DataSource = lst;
             }
 
         }
@@ -125,6 +131,8 @@ namespace DisabilityList
                 var lst = await Program.m_helper.GetDiasabilityListsForView();
                 if (!string.IsNullOrEmpty(m_patientFilter.Trim()))
                     list_dataGridView.DataSource = lst.Where(el => el.patient.Contains(m_patientFilter)).ToList();
+                else
+                    list_dataGridView.DataSource = lst;
 
             }
             else
@@ -150,6 +158,9 @@ namespace DisabilityList
             var lst = await Program.m_helper.GetDiasabilityListsForView();
             if (!string.IsNullOrEmpty(m_patientFilter.Trim()))
                 list_dataGridView.DataSource = lst.Where(el => el.patient.Contains(m_patientFilter)).ToList();
+            else
+                list_dataGridView.DataSource = lst;
+
 
         }
 

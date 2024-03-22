@@ -98,7 +98,7 @@ namespace DisabilityList
         public async Task<List<DisabilityListView>> GetDiasabilityListsForView()
         {
             List<DisabilityListView> lst = null;
-            string sqlText = "select id, delivery_date, date_from, date_to, patient, hospital from dbo.list_view order by delivery_date";
+            string sqlText = "select id, delivery_date, reason_code, add_reason_code, datefrom, dateto, patient, hospital from dbo.list_view order by delivery_date";
             try
             {
                 var t = await conn.QueryAsync<DisabilityListView>(sqlText);
@@ -120,7 +120,7 @@ namespace DisabilityList
         {
             List <FreeRecordView> lst = null;
             string sqlText = "select idlist, relative_code,datefrom, dateto, idpatient, patient, " +
-                "iddoctor, doctor, idhospital, speciality from dbo.free_list_view where idlist = @pid";
+                "iddoctor, doct_name, idhospital, speciality from dbo.free_list_view where idlist = @pid";
             try
             {
                 var t = await conn.QueryAsync<FreeRecordView>(sqlText, new {pid = idl});
@@ -147,17 +147,20 @@ namespace DisabilityList
             {
                 string ddt = dlist.delivery_date.ToString("yyyyMMdd");
                 string sqlText = "insert into dbo.list_headers (delivery_date, reason_code, add_reason_code,idhospital, idpatient, regnum, code_sub,"+
-                    "time_service, salary, list_content,  content_type) "
-                    +$"values('{ddt}', @pcode, @paddcode, @pidhospital, @pidpatient, @pregnum, @pcs, @pts, @ps, @plc, @pct)";
-                conn.Execute("set identity_insert dbo.free_list on");
+                    "time_service, salary, list_content,  content_type) " // 
+                    + $"values('{ddt}', @pcode, @paddcode, @pidhospital, @pidpatient, @pregnum, @pcs, @pts, @ps, @plc, @pct)"; // 
+                //conn.Execute("set identity_insert dbo.free_list on");
                 using (var tran = conn.BeginTransaction())
                 {
                     nrec = conn.Execute(sqlText, transaction: tran, 
                         param: new { pcode = dlist.reason_code, paddcode = dlist.add_reason_code, 
                             pidhospital = dlist.idhospital, pidpatient = dlist.idpatient, 
                             pregnum = dlist.regnum, pcs = dlist.code_sub, 
-                            pts = dlist.time_service, ps = dlist.salary, 
-                            plc = dlist.list_content, pct = dlist.content_type });
+                            pts = dlist.time_service, ps = dlist.salary,
+                            plc = dlist.list_content,
+                            pct = dlist.content_type
+                        });
+                    // 
                     if (nrec > 0)
                     {
                         long idlist = conn.QueryFirstOrDefault<long>("select ident_current('dbo.list_headers')", transaction: tran);
@@ -200,8 +203,8 @@ namespace DisabilityList
                 string ddt = dlist.delivery_date.ToString("yyyyMMdd");
                 string sqlText = $"update dbo.list_headers set delivery_date = '{ddt}', reason_code = @pcode, add_reason_code = @paddcode, " +
                     "idhospital = @pidhospital, idpatient = @pidpatient, regnum = @pregnum, code_sub = @pcs, " +
-                    "time_service = @pts, salary = @ps, list_content = @plc,  content_type = @pct) where id = @pid";
-                conn.Execute("set identity_insert dbo.free_list on");
+                    "time_service = @pts, salary = @ps, list_content = @plc,  content_type = @pct where id = @pid";
+                //conn.Execute("set identity_insert dbo.free_list on");
                 using (var tran = conn.BeginTransaction())
                 {
                     nrec = conn.Execute(sqlText, transaction: tran,
@@ -262,16 +265,21 @@ namespace DisabilityList
         {
             int recs = 0;
             string sqlText = "delete from dbo.list_headers where id  = @pid";
-            try
+            using (var tran = conn.BeginTransaction())
             {
-                recs = conn.Execute(sqlText, new { pid = id });
-            }
-            catch (Exception ex)
-            {
-                _errorText = ex.Message;
+
+                try
+                {
+                    recs = conn.Execute("delete from dbo.free_list where idlist = @pid", transaction: tran, param: new { pid = id });
+                    recs = conn.Execute(sqlText, transaction: tran, param: new { pid = id });
+                }
+                catch (Exception ex)
+                {
+                    _errorText = ex.Message;
+                }
+                tran.Commit();
             }
             return recs;
-
         }
         /// <summary>
         /// Выдать спиcок лечебных учреждений
@@ -582,7 +590,7 @@ namespace DisabilityList
         public DisabilityListWithContent GetDisalbilityListByID(long id)
         {
             DisabilityListWithContent dl = null;
-            string sqlText = "select id, name,delivery_date, reason_code, add_reason_code, idhospital, idpatient, " + 
+            string sqlText = "select id, delivery_date, reason_code, add_reason_code, idhospital, idpatient, " + 
                 "regnum, code_sub, time_service, salary, list_content, content_type from dbo.list_headers where id = @pid";
                 try
                 {
