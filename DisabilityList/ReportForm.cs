@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace DisabilityList
 {
@@ -78,6 +80,44 @@ namespace DisabilityList
             return (d3 >= d1 && d3 <= d2 && d4 >= d1 && d4 <= d2) ||
                 (d3 <= d1 && d3 <= d2 && d4 >= d1 && d4 <= d2) ||
                 (d3 >= d1 && d3 <= d2 && d4 >= d1 && d4 >= d2);
+        }
+
+        /// <summary>
+        /// Экспорт отфильтрованных данных в json
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void export_button_Click(object sender, EventArgs e)
+        {
+            var lst = list_dataGridView.DataSource as List<DisabilityListViewReport>;
+            if (lst.IsNullOrEmpty()) return;
+            DisabilityListViewReport[] arr = lst.ToArray(); 
+            string content = await Task.Run<string>( ()=> { return JsonConvert.SerializeObject(arr); });
+            if(string.IsNullOrEmpty(content)) return;
+
+            using (SaveFileDialog writeFileDialog = new SaveFileDialog())
+            {
+                writeFileDialog.InitialDirectory = Environment.CurrentDirectory;
+                writeFileDialog.Filter = "Файлы JSON|*.json|Все файлы|*.*";
+                writeFileDialog.FilterIndex = 0;
+                writeFileDialog.RestoreDirectory = true;
+                writeFileDialog.Title = "Экспорт данных в json";
+                writeFileDialog.AddExtension = true;
+
+                if (writeFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Get the path of specified file
+                    string filePath = writeFileDialog.FileName;
+
+                    await Task.Run(() =>
+                    {
+                        byte[] arrc = Encoding.UTF8.GetBytes(content);
+                        System.IO.File.WriteAllBytes(filePath, arrc);
+                    });
+                }
+            }
+
+
         }
     }
 }

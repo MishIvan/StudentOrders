@@ -29,23 +29,21 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.filter_groupBox = new System.Windows.Forms.GroupBox();
-            this.filterApply_button = new System.Windows.Forms.Button();
-            this.filterCode_textBox = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.list_dataGridView = new System.Windows.Forms.DataGridView();
+            this.code_button = new System.Windows.Forms.Button();
+            this.filterPatient_textBox = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.to_dateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
             this.from_dateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
-            this.filterPatient_textBox = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.code_button = new System.Windows.Forms.Button();
-            this.export_button = new System.Windows.Forms.Button();
-            this.report_toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.filterApply_button = new System.Windows.Forms.Button();
+            this.filterCode_textBox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.list_dataGridView = new System.Windows.Forms.DataGridView();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.delivery_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.reason_code = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -63,6 +61,8 @@
             this.hospid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.hospital = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.govregnum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.export_button = new System.Windows.Forms.Button();
+            this.report_toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.filter_groupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.list_dataGridView)).BeginInit();
             this.SuspendLayout();
@@ -86,6 +86,70 @@
             this.filter_groupBox.TabStop = false;
             this.filter_groupBox.Text = "Фильтры";
             // 
+            // code_button
+            // 
+            this.code_button.Location = new System.Drawing.Point(1060, 23);
+            this.code_button.Name = "code_button";
+            this.code_button.Size = new System.Drawing.Size(30, 20);
+            this.code_button.TabIndex = 21;
+            this.code_button.Text = "...";
+            this.report_toolTip.SetToolTip(this.code_button, "Выбор кода причины нетрудоспособности из списка");
+            this.code_button.UseVisualStyleBackColor = true;
+            this.code_button.Click += new System.EventHandler(this.code_button_Click);
+            // 
+            // filterPatient_textBox
+            // 
+            this.filterPatient_textBox.Location = new System.Drawing.Point(568, 23);
+            this.filterPatient_textBox.Name = "filterPatient_textBox";
+            this.filterPatient_textBox.Size = new System.Drawing.Size(211, 20);
+            this.filterPatient_textBox.TabIndex = 16;
+            this.report_toolTip.SetToolTip(this.filterPatient_textBox, "Отбор по фрагиенту в ФИО работника");
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(504, 27);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(58, 13);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "Работник:";
+            // 
+            // to_dateTimePicker
+            // 
+            this.to_dateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.to_dateTimePicker.Location = new System.Drawing.Point(364, 23);
+            this.to_dateTimePicker.Name = "to_dateTimePicker";
+            this.to_dateTimePicker.Size = new System.Drawing.Size(108, 20);
+            this.to_dateTimePicker.TabIndex = 14;
+            this.report_toolTip.SetToolTip(this.to_dateTimePicker, "Дата окончания периода отбора листков нетрудоспособности");
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(241, 27);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(118, 13);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Завершение периода:";
+            // 
+            // from_dateTimePicker
+            // 
+            this.from_dateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.from_dateTimePicker.Location = new System.Drawing.Point(113, 23);
+            this.from_dateTimePicker.Name = "from_dateTimePicker";
+            this.from_dateTimePicker.Size = new System.Drawing.Size(108, 20);
+            this.from_dateTimePicker.TabIndex = 12;
+            this.report_toolTip.SetToolTip(this.from_dateTimePicker, "Дата начала периода отбора листков нетрудоспособности");
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(14, 27);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(92, 13);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "Начало периода:";
+            // 
             // filterApply_button
             // 
             this.filterApply_button.Location = new System.Drawing.Point(1125, 23);
@@ -93,6 +157,7 @@
             this.filterApply_button.Size = new System.Drawing.Size(75, 20);
             this.filterApply_button.TabIndex = 4;
             this.filterApply_button.Text = "Применить";
+            this.report_toolTip.SetToolTip(this.filterApply_button, "Применить фильтры");
             this.filterApply_button.UseVisualStyleBackColor = true;
             this.filterApply_button.Click += new System.EventHandler(this.filterApply_button_Click);
             // 
@@ -144,78 +209,6 @@
             this.list_dataGridView.Size = new System.Drawing.Size(1358, 460);
             this.list_dataGridView.TabIndex = 3;
             // 
-            // to_dateTimePicker
-            // 
-            this.to_dateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.to_dateTimePicker.Location = new System.Drawing.Point(364, 23);
-            this.to_dateTimePicker.Name = "to_dateTimePicker";
-            this.to_dateTimePicker.Size = new System.Drawing.Size(108, 20);
-            this.to_dateTimePicker.TabIndex = 14;
-            this.report_toolTip.SetToolTip(this.to_dateTimePicker, "Дата окончания периода отбора листков нетрудоспособности");
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(241, 27);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(118, 13);
-            this.label4.TabIndex = 13;
-            this.label4.Text = "Завершение периода:";
-            // 
-            // from_dateTimePicker
-            // 
-            this.from_dateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.from_dateTimePicker.Location = new System.Drawing.Point(113, 23);
-            this.from_dateTimePicker.Name = "from_dateTimePicker";
-            this.from_dateTimePicker.Size = new System.Drawing.Size(108, 20);
-            this.from_dateTimePicker.TabIndex = 12;
-            this.report_toolTip.SetToolTip(this.from_dateTimePicker, "Дата начала периода отбора листков нетрудоспособности");
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(14, 27);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(92, 13);
-            this.label1.TabIndex = 11;
-            this.label1.Text = "Начало периода:";
-            // 
-            // filterPatient_textBox
-            // 
-            this.filterPatient_textBox.Location = new System.Drawing.Point(568, 23);
-            this.filterPatient_textBox.Name = "filterPatient_textBox";
-            this.filterPatient_textBox.Size = new System.Drawing.Size(211, 20);
-            this.filterPatient_textBox.TabIndex = 16;
-            this.report_toolTip.SetToolTip(this.filterPatient_textBox, "Отбор по фрагиенту в ФИО работника");
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(504, 27);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(58, 13);
-            this.label3.TabIndex = 15;
-            this.label3.Text = "Работник:";
-            // 
-            // code_button
-            // 
-            this.code_button.Location = new System.Drawing.Point(1060, 23);
-            this.code_button.Name = "code_button";
-            this.code_button.Size = new System.Drawing.Size(30, 20);
-            this.code_button.TabIndex = 21;
-            this.code_button.Text = "...";
-            this.code_button.UseVisualStyleBackColor = true;
-            this.code_button.Click += new System.EventHandler(this.code_button_Click);
-            // 
-            // export_button
-            // 
-            this.export_button.Location = new System.Drawing.Point(1252, 30);
-            this.export_button.Name = "export_button";
-            this.export_button.Size = new System.Drawing.Size(75, 20);
-            this.export_button.TabIndex = 5;
-            this.export_button.Text = "Экспорт";
-            this.export_button.UseVisualStyleBackColor = true;
-            // 
             // id
             // 
             this.id.DataPropertyName = "id";
@@ -228,8 +221,8 @@
             // delivery_date
             // 
             this.delivery_date.DataPropertyName = "delivery_date";
-            dataGridViewCellStyle7.Format = "d";
-            this.delivery_date.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle4.Format = "d";
+            this.delivery_date.DefaultCellStyle = dataGridViewCellStyle4;
             this.delivery_date.HeaderText = "Дата выдачи";
             this.delivery_date.Name = "delivery_date";
             this.delivery_date.ReadOnly = true;
@@ -273,9 +266,9 @@
             // datefrom
             // 
             this.datefrom.DataPropertyName = "datefrom";
-            dataGridViewCellStyle8.Format = "d";
-            dataGridViewCellStyle8.NullValue = null;
-            this.datefrom.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle5.Format = "d";
+            dataGridViewCellStyle5.NullValue = null;
+            this.datefrom.DefaultCellStyle = dataGridViewCellStyle5;
             this.datefrom.HeaderText = "Начало";
             this.datefrom.Name = "datefrom";
             this.datefrom.ReadOnly = true;
@@ -285,8 +278,8 @@
             // dateto
             // 
             this.dateto.DataPropertyName = "dateto";
-            dataGridViewCellStyle9.Format = "d";
-            this.dateto.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle6.Format = "d";
+            this.dateto.DefaultCellStyle = dataGridViewCellStyle6;
             this.dateto.HeaderText = "Окончание";
             this.dateto.Name = "dateto";
             this.dateto.ReadOnly = true;
@@ -364,6 +357,17 @@
             this.govregnum.Name = "govregnum";
             this.govregnum.ReadOnly = true;
             this.govregnum.Visible = false;
+            // 
+            // export_button
+            // 
+            this.export_button.Location = new System.Drawing.Point(1252, 30);
+            this.export_button.Name = "export_button";
+            this.export_button.Size = new System.Drawing.Size(75, 20);
+            this.export_button.TabIndex = 5;
+            this.export_button.Text = "Экспорт";
+            this.report_toolTip.SetToolTip(this.export_button, "Экспорт отфильтрованных данных в json");
+            this.export_button.UseVisualStyleBackColor = true;
+            this.export_button.Click += new System.EventHandler(this.export_button_Click);
             // 
             // ReportForm
             // 
