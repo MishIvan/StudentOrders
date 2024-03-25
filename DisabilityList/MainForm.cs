@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -216,5 +217,28 @@ namespace DisabilityList
             ReportForm reportForm = new ReportForm();
             reportForm.ShowDialog();
         }
+
+        private void help_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string helpFileName = "DisabilityListHelp.html";
+            string path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + helpFileName;
+            if(System.IO.File.Exists(path)) 
+            {
+                Program.m_tmpFiles.Add(path);
+                try
+                {
+                    System.Diagnostics.Process.Start(path);
+                }
+                catch (Exception)
+                {
+                    Program.ShowErrorMessage("Не удаётся отобразить файл помощи");
+                }
+
+            }
+            else
+                Program.ShowErrorMessage("Не найден файл помощи");
+
+        }
+
     }
 }

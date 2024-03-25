@@ -65,6 +65,8 @@
             this.filterPatient_textBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.main_toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.about_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.help_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.main_menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.list_dataGridView)).BeginInit();
             this.main_contextMenuStrip.SuspendLayout();
@@ -76,7 +78,8 @@
             this.main_menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lists_ToolStripMenuItem,
             this.references_ToolStripMenuItem,
-            this.отчётыToolStripMenuItem});
+            this.отчётыToolStripMenuItem,
+            this.about_ToolStripMenuItem});
             this.main_menuStrip.Location = new System.Drawing.Point(0, 0);
             this.main_menuStrip.Name = "main_menuStrip";
             this.main_menuStrip.Size = new System.Drawing.Size(932, 24);
@@ -373,6 +376,21 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Работник:";
             // 
+            // about_ToolStripMenuItem
+            // 
+            this.about_ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.help_ToolStripMenuItem});
+            this.about_ToolStripMenuItem.Name = "about_ToolStripMenuItem";
+            this.about_ToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
+            this.about_ToolStripMenuItem.Text = "О программе";
+            // 
+            // help_ToolStripMenuItem
+            // 
+            this.help_ToolStripMenuItem.Name = "help_ToolStripMenuItem";
+            this.help_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.help_ToolStripMenuItem.Text = "Помощь";
+            this.help_ToolStripMenuItem.Click += new System.EventHandler(this.help_ToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -433,6 +451,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn patient;
         private System.Windows.Forms.DataGridViewTextBoxColumn hospital;
         private System.Windows.Forms.ToolStripMenuItem info_ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem about_ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem help_ToolStripMenuItem;
     }
 }
 
