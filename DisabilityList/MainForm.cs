@@ -224,7 +224,6 @@ namespace DisabilityList
             string path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + helpFileName;
             if(System.IO.File.Exists(path)) 
             {
-                Program.m_tmpFiles.Add(path);
                 try
                 {
                     System.Diagnostics.Process.Start(path);
